@@ -1,3 +1,5 @@
+export const dynamic = "force-static";
+
 import type { MetadataRoute } from "next";
 import { treatments } from "@/content/site";
 const base = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com";

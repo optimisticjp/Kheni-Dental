@@ -8,7 +8,7 @@ export type AccordionItem = {
 };
 
 type AccordionProps = React.ComponentProps<"div"> & {
-  items: AccordionItem[];
+  items: readonly AccordionItem[];
 };
 
 /**

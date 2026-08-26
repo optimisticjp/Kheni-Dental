@@ -7,7 +7,7 @@ export function AnalyticsScripts() {
 
   return (
     <>
-      <Script id="gtm-consent-default" strategy="beforeInteractive">
+      <Script id="gtm-consent-default" strategy="afterInteractive">
         {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',wait_for_update:500});`}
       </Script>
       <Script id="gtm-loader" strategy="afterInteractive">
