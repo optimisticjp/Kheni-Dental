@@ -1,0 +1,8 @@
+import type { Metadata } from "next";
+import { Microscope, ScanLine, ShieldCheck, Sparkles } from "lucide-react";
+import { PageHero } from "@/components/kheni/page-hero";
+import { MediaPlaceholder } from "@/components/kheni/media-placeholder";
+import { Container } from "@/components/ui/container";
+import { Section } from "@/components/ui/section";
+export const metadata:Metadata={title:"Clinic & Technology",description:"Explore the Kheni Elite clinic experience and the technology used in diagnosis and treatment planning."};
+export default function TechnologyPage(){const items=[{icon:ScanLine,title:"Digital diagnostics"},{icon:Microscope,title:"Treatment planning"},{icon:ShieldCheck,title:"Sterilisation workflow"},{icon:Sparkles,title:"Patient experience"}];return <><PageHero eyebrow="Clinic & technology" title="Technology should make care clearer, not just sound impressive." copy="Build this page from the clinic's actual equipment, sterilisation processes and treatment environment once verified."/><Section spacing="lg"><Container width="7xl"><div className="grid gap-5 md:grid-cols-2">{items.map((item,i)=><article key={item.title} className="rounded-[2rem] border border-border bg-card p-7"><item.icon className="size-6 text-gold"/><h2 className="mt-8 font-serif text-3xl">{item.title}</h2><p className="mt-4 text-sm leading-6 text-muted-foreground">Replace with verified equipment/process information and explain the practical patient benefit. Avoid generic claims such as “world-class technology.”</p><MediaPlaceholder label={`${item.title} photography`} className="mt-6 min-h-64"/></article>)}</div></Container></Section></>}

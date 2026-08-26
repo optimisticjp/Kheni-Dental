@@ -1,0 +1,3 @@
+import Link from "next/link";
+import { Container } from "@/components/ui/container";
+export default function NotFound(){return <section className="bg-ink py-28 text-white"><Container width="4xl" className="text-center"><p className="text-xs font-semibold uppercase tracking-[.24em] text-gold">404</p><h1 className="mt-5 font-serif text-6xl">This page isn’t here.</h1><p className="mt-5 text-white/55">Return to the clinic website or explore available treatments.</p><div className="mt-8 flex justify-center gap-3"><Link href="/" className="rounded-full bg-gold px-6 py-3 text-sm font-semibold text-ink">Home</Link><Link href="/treatments" className="rounded-full border border-white/15 px-6 py-3 text-sm">Treatments</Link></div></Container></section>}

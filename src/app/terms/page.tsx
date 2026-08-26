@@ -1,0 +1,6 @@
+import type { Metadata } from "next";
+import { PageHero } from "@/components/kheni/page-hero";
+import { Container } from "@/components/ui/container";
+import { Section } from "@/components/ui/section";
+export const metadata:Metadata={title:"Terms & Medical Disclaimer"};
+export default function TermsPage(){return <><PageHero eyebrow="Terms & disclaimer" title="Educational content is not a diagnosis." copy="This page provides launch-ready structure only. Final legal language should be reviewed against the clinic's actual services and applicable requirements."/><Section><Container width="4xl" className="prose-kheni"><h2>Medical information</h2><p>Website content is general educational information and does not replace examination, diagnosis or an individualized treatment plan from a qualified dental professional.</p><h2>Results and testimonials</h2><p>Any cases, testimonials or before-and-after images should be genuine, appropriately consented and should not imply guaranteed outcomes for other patients.</p><h2>Emergency care</h2><p>Do not rely on website messages for a medical or dental emergency. The clinic should publish its verified urgent-contact guidance before launch.</p><h2>Final review required</h2><p>Replace this template text with clinic-approved terms, disclaimers and applicable legal notices before public launch.</p></Container></Section></>}

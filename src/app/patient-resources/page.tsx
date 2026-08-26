@@ -1,0 +1,9 @@
+import type { Metadata } from "next";
+import { ArrowDownToLine, BookOpen } from "lucide-react";
+import { PageHero } from "@/components/kheni/page-hero";
+import { SectionHeading } from "@/components/kheni/section-heading";
+import { Container } from "@/components/ui/container";
+import { Section } from "@/components/ui/section";
+import { resources } from "@/content/site";
+export const metadata:Metadata={title:"Patient Resources",description:"Educational guides, first-visit information and aftercare resources for Kheni Elite patients."};
+export default function ResourcesPage(){return <><PageHero eyebrow="Patient resources" title="Useful information beyond the appointment." copy="Inspired by the resource depth of leading specialist clinics, this area is structured for clinician-approved guides, downloads, videos and aftercare instructions."/><Section spacing="lg"><Container width="7xl"><SectionHeading eyebrow="Education library" title="Build this into a trusted patient resource center." copy="Do not publish post-operative instructions until the treating clinicians approve the exact content."/><div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">{resources.map((r,i)=><article id={r.href.split("#")[1]} key={r.title} className="scroll-mt-28 rounded-[1.5rem] border border-border bg-card p-6"><div className="flex items-center justify-between"><BookOpen className="size-5 text-gold"/><span className="font-mono text-xs text-muted-foreground">0{i+1}</span></div><h2 className="mt-8 font-serif text-2xl">{r.title}</h2><p className="mt-3 text-sm leading-6 text-muted-foreground">{r.description}</p><button disabled className="mt-6 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.16em] text-muted-foreground"><ArrowDownToLine className="size-4"/>Clinician content pending</button></article>)}</div></Container></Section></>}

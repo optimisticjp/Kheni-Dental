@@ -1,0 +1,8 @@
+import type { Metadata } from "next";
+import { Star } from "lucide-react";
+import { PageHero } from "@/components/kheni/page-hero";
+import { Container } from "@/components/ui/container";
+import { Section } from "@/components/ui/section";
+import { site } from "@/content/site";
+export const metadata:Metadata={title:"Patient Reviews",description:"Patient review and testimonial section for Kheni Elite, using genuine approved review content only."};
+export default function ReviewsPage(){return <><PageHero eyebrow="Patient reviews" title="Trust should come from real patient experiences." copy="The layout is ready. Replace every placeholder with a genuine review sourced and displayed in accordance with platform rules and clinic approval."/><Section spacing="lg"><Container width="7xl"><div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">{Array.from({length:9}).map((_,i)=><article key={i} className="rounded-[1.5rem] border border-border bg-card p-6"><div className="flex gap-1 text-gold">{Array.from({length:5}).map((_,j)=><Star key={j} className="size-4 fill-current"/>)}</div><blockquote className="mt-6 font-serif text-xl leading-8">“Genuine patient review placeholder. Replace before publication.”</blockquote><p className="mt-5 text-xs uppercase tracking-[.16em] text-muted-foreground">Verified source required</p></article>)}</div><div className="mt-10 text-center"><a href={site.reviewUrl} target="_blank" rel="noreferrer" data-track="review_click" data-placement="reviews_page" className="inline-flex rounded-full bg-ink px-6 py-3 text-sm font-semibold text-white">View reviews on Google</a></div></Container></Section></>}
