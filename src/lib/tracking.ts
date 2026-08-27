@@ -16,6 +16,7 @@ export type TrackingPayload = {
   event: TrackingEventName;
   placement?: string;
   interaction?: string;
+  branch?: string;
 };
 
 declare global {
@@ -28,7 +29,7 @@ declare global {
 export function pushTrackingEvent(payload: TrackingPayload) {
   if (typeof window === "undefined") return;
   window.dataLayer = window.dataLayer || [];
-  // Intentionally generic: do not send symptoms, diagnoses, form values,
-  // treatment-specific patient data or other sensitive health information.
+  // Keep marketing events generic. Do not send symptoms, diagnoses, form values,
+  // medical history or other sensitive health information to analytics platforms.
   window.dataLayer.push(payload);
 }

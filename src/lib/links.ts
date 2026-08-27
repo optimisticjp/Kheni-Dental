@@ -1,5 +1,5 @@
 import { site } from "@/content/site";
 
-export function whatsappUrl(message: string = site.consultationMessage) {
-  return `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(message)}`;
+export function whatsappUrl(message: string = site.consultationMessage, number = site.whatsappNumber) {
+  return `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
 }

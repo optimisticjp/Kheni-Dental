@@ -26,7 +26,7 @@ export function ProblemsInteractive({ limit }: { limit?: number }) {
             onMouseEnter={() => setActive(index)}
             className={cn(
               "relative flex min-h-48 flex-col overflow-hidden rounded-[1.5rem] border transition-[grid-column,background-color,border-color] duration-500 lg:min-h-72",
-              selected ? "border-gold/50 bg-[#171714] text-white lg:col-span-5" : "border-white/10 bg-[#121211] text-white lg:col-span-1",
+              selected ? (items.length <= 6 ? "border-gold/50 bg-[#171714] text-white lg:col-span-7" : "border-gold/50 bg-[#171714] text-white lg:col-span-5") : "border-white/10 bg-[#121211] text-white lg:col-span-1",
             )}
           >
             <button type="button" onClick={() => activate(index)} aria-expanded={selected} className="flex w-full flex-1 flex-col p-5 text-left">

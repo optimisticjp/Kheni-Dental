@@ -1,13 +1,12 @@
 import Link from "next/link";
-import { cn } from "@/lib/utils";
 
-export function BrandMark({ className }: { className?: string }) {
+export function BrandMark() {
   return (
-    <Link href="/" aria-label="Kheni Elite home" className={cn("group inline-flex items-center gap-3", className)}>
-      <span aria-hidden="true" className="grid size-10 place-items-center rounded-full border border-gold/60 bg-gold/10 font-serif text-lg text-gold shadow-[inset_0_0_0_1px_rgba(255,255,255,.04)]">K</span>
-      <span className="leading-none">
-        <span className="block font-serif text-lg tracking-[0.08em] text-current">KHENI ELITE</span>
-        <span className="mt-1 block text-[0.58rem] font-medium uppercase tracking-[0.24em] text-current/55">Dental & Implant Center</span>
+    <Link href="/" className="group inline-flex min-w-0 items-center gap-3" aria-label="Kheni Dental home">
+      <span className="grid size-10 shrink-0 place-items-center rounded-full border border-gold/35 bg-gold/8 font-serif text-xl text-gold">K</span>
+      <span className="min-w-0 leading-none">
+        <span className="block truncate text-sm font-semibold uppercase tracking-[.12em] text-white">Kheni Dental</span>
+        <span className="mt-1 block truncate text-[.62rem] uppercase tracking-[.18em] text-gold/85">Elite Implant Center</span>
       </span>
     </Link>
   );

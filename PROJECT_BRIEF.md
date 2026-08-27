@@ -1,88 +1,49 @@
-# Kheni Elite Website Project Brief
+# Kheni Dental Website Project Brief
 
-## Objective
-Build a premium, mobile-first, conversion-oriented website for **Kheni Elite Dental & Implant Center, Surat**. The site must feel clinically trustworthy and high-end without looking flashy or making unsupported medical claims.
+## Goal
 
-## Doctor-approved reference direction
-Use references as inspiration only. Do not copy layouts, code, imagery, or text.
+Create a premium, fast and patient-friendly dental website that turns local search, Google Ads, social traffic and referrals into qualified calls, WhatsApp conversations, consultation requests and directions to one of the two Surat branches.
 
-- **Aakash Dental Clinic**: black + gold palette; premium doctor/specialist profile treatment; credential badges; consultation/WhatsApp CTAs.
-- **Dental Point**: interactive “Problems We Treat” discovery concept where the patient starts with a concern rather than a procedure name.
-- **Delhi Dental Cosmetics**: homepage hierarchy and treatment/services presentation.
-- **Dallas Periodontal Associates**: patient resources / education center concept.
-- **Dental tourism / international**: prominent but responsible Surat positioning, moving top ticker, dedicated international-patient pathway.
+## Positioning
 
-## Brand direction
-- Near-black, warm off-white and muted premium gold.
-- Gold is an accent, not a fill color everywhere.
-- Editorial serif headlines + highly readable modern sans-serif UI/body.
-- Real doctors and clinic photography. Avoid fake AI/stock clinical imagery for production.
-- Calm, premium, precise, human, clinically credible.
-- Animation is restrained: ticker, soft reveal, controlled hover expansion, subtle card movement. Respect reduced motion.
+Kheni Dental should feel clinically credible without sounding cold. The visual system is dark, editorial and premium. The language is warm, reassuring and easy to understand.
 
-## Primary audiences
-1. Local Surat patients with immediate dental needs.
-2. High-value implant/restorative patients researching alternatives.
-3. NRI and international patients considering treatment while visiting Gujarat/India.
-4. Family/general dentistry patients who need reassurance and easy contact.
+The site should not behave like a hospital brochure. It should help people answer four questions:
 
-## Core conversion actions
-- WhatsApp
-- Phone
-- Book consultation / request appointment options
-- Directions
+1. Do these doctors understand what I am dealing with?
+2. Can I trust the team and the clinic?
+3. What might the next step look like?
+4. How do I contact the right branch easily?
 
-No payment capture is required.
+## Core audiences
 
-## Main site architecture
-- Home
-- About
-- Doctors / Specialists
-- Treatments
-- Individual treatment pages
-- Problems We Treat
-- Smile Gallery / Results
-- Patient Reviews
-- Patient Resources
-- International Patients / Dental Tourism
-- Clinic & Technology
-- Contact / Book Consultation
-- Privacy
-- Terms & Medical Disclaimer
+- Local patients in and around Yogi Chowk, Varachha and Hirabaug
+- Implant and complex restorative patients
+- Cosmetic and smile-design patients
+- Parents looking for kids dental care
+- Families needing routine and restorative dentistry
+- NRI and international patients planning dental care while in Surat
 
-## Priority treatment pages
-- Dental Implants
-- Full Mouth Rehabilitation
-- Root Canal Treatment
-- Crowns & Bridges
-- Braces & Clear Aligners
-- Cosmetic & Smile Dentistry
-- Wisdom Tooth & Oral Surgery
-- General & Family Dentistry
+## Primary conversions
 
-## Homepage order
-1. Moving premium ticker
-2. Sticky navigation with WhatsApp + Book Consultation
-3. Hero with lead doctor/clinic visual, trust signals and CTA
-4. Immediate trust strip
-5. Treatment/service architecture
-6. Interactive Problems We Treat
-7. Premium specialist/doctor profiles
-8. Why Kheni / technology proof
-9. International patient pathway
-10. Patient journey
-11. Real reviews / patient proof
-12. Patient resources
-13. FAQ
-14. Strong final conversion section
-15. Mobile sticky CTA: Call / WhatsApp / Book
+1. WhatsApp enquiry
+2. Phone call
+3. Consultation request
+4. Directions to a branch
 
-## Non-negotiables
-- 360px mobile quality first.
-- WCAG 2.1 AA baseline.
-- Fast Core Web Vitals.
-- No unsupported “best”, “#1”, guaranteed result or painless claims.
-- Real patient cases only with appropriate clinic consent.
-- Do not send symptoms, diagnoses, medical history or treatment-specific patient information into analytics/advertising custom events.
-- Clinic owns domain, GTM, GA4, Google Ads, Meta assets, Search Console, GitHub and Cloudflare accounts.
-- Any facts marked placeholder must be verified before launch.
+## Visual direction
+
+- Near-black foundation
+- Warm off-white content sections
+- Muted premium gold accents
+- Large editorial serif headings
+- Real clinic and doctor photography
+- Minimal animation
+- Interactive Problems We Treat section
+- Persistent mobile Call, WhatsApp and Book actions
+
+## Copy direction
+
+Patient concern first, clinical explanation second.
+
+The tone should be calm, specific and human. It should not sound like an ad agency, an AI assistant or a medical textbook.

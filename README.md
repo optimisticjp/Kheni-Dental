@@ -1,72 +1,54 @@
-# Kheni Elite Dental & Implant Center Website Starter
+# Kheni Dental & Elite Implant Center
 
-A premium, mobile-first Next.js 16 website starter prepared for Kheni Elite in Surat. It is intended to be opened and continued in **Claude Code Web**.
+Production-oriented website foundation for **Kheni Dental & Elite Implant Center, Surat**.
 
-## What is already built
-- Black / warm off-white / premium gold design system
-- Moving top tagline
-- Premium responsive header + mobile menu
-- Hero and clinic trust architecture
-- Treatment/service system
-- Interactive “Problems We Treat” section
-- Premium doctor profile cards
-- Technology section
-- International/NRI patient pathway
-- Patient journey and social-proof sections
-- Patient Resources architecture
-- Treatment-specific static pages
-- Contact + WhatsApp consultation flow
-- Mobile sticky Call / WhatsApp / Book bar
-- GTM loader and consent mode defaults
-- consent banner
-- healthcare-safe generic dataLayer events
-- sitemap and robots
-- schema component disabled until facts are verified
-- static export for inexpensive hosting
+## Current brand setup
 
-## Start here in Claude Code
-Read:
-1. `PROJECT_BRIEF.md`
-2. `CONTENT_NEEDED.md`
-3. `REFERENCES.md`
-4. `TRACKING_PLAN.md`
-5. `DEPLOYMENT.md`
-6. `CLAUDE_PROJECT_HANDOFF.md`
+- Domain: `https://www.khenidentalcare.com`
+- Patient email: `smile@khenidentalcare.com`
+- Locations: Yogi Chowk and Hirabaug, Surat
+- Framework: Next.js 16, React 19, TypeScript, Tailwind CSS 4
+- Cloudflare deployment: vinext + Cloudflare Workers
+- Tracking: GTM-ready, disabled until a GTM ID is configured
+- Search indexing: disabled by default until launch approval
 
-Then:
+## First commands
+
 ```bash
 npm install
-npm run dev
 npm run typecheck
 npm run lint
 npm run build
 ```
 
-## Important editable clinic data
-`src/content/site.ts`
+For the Cloudflare build:
 
-This file centralizes:
-- clinic contact placeholders
-- reviews / proof-point placeholders
-- doctors
-- treatments
-- problem pathways
-- patient resources
-
-Replace placeholder content only with verified clinic data.
-
-## Tracking
-Set in hosting environment:
 ```bash
-NEXT_PUBLIC_SITE_URL=https://yourdomain.com
-NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
-NEXT_PUBLIC_ENABLE_SCHEMA=false
+npm run build:vinext
 ```
 
-Keep schema disabled until address, phone, email and other clinic facts are verified.
+## Content rule
 
-## Hosting
-The current project uses Next static export (`out/`) because there is no payment capture or server-side patient portal. It can be hosted inexpensively through Cloudflare static hosting. If server features are needed later, remove `output: "export"` and migrate deployment without rebuilding the design system.
+Do not turn this site into a list of dental procedures. Copy should start with the patient's concern, uncertainty or desired outcome, then explain the clinical option in plain language.
 
-## Original template capabilities
-This project retains the original `.claude/skills`, `.agents`, GitHub Spec Kit files, shadcn compatibility and Claude Code web-building workflow from the uploaded standard template.
+Examples of the intended approach:
+
+- Missing tooth: focus on eating, speaking and smiling with confidence before explaining implants.
+- Root canal: start with tooth pain and relief before explaining the procedure.
+- Kids dentistry: start with comfort and a calmer first experience.
+- International patients: start with planning and certainty before discussing treatment logistics.
+
+Avoid hype, unsupported superlatives, guaranteed results, absolute pain claims and generic AI-style phrases. Do not use em dashes in visitor-facing copy.
+
+## Before production launch
+
+Read:
+
+- `CONTENT_TO_VERIFY.md`
+- `SOURCE_FACTS.md`
+- `COPY_STYLE_GUIDE.md`
+- `TRACKING_PLAN.md`
+- `DEPLOYMENT.md`
+- `SENIOR_AUDIT.md`
+
+Real doctor and clinic photography is still required. Do not open search indexing until content, legal pages, tracking consent and location details have been reviewed.
