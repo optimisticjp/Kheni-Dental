@@ -21,18 +21,18 @@ export function Navbar() {
         <Container width="7xl">
           <div className="flex h-[74px] items-center justify-between gap-4">
             <BrandMark />
-            <nav aria-label="Primary" className="hidden items-center gap-5 xl:flex">
+            <nav aria-label="Primary" className="hidden items-center gap-4 xl:flex">
               {links.map((link) => (
-                <Link key={link.href} href={link.href} className="text-sm text-white/65 transition-colors hover:text-gold">
+                <Link key={link.href} href={link.href} className="whitespace-nowrap text-sm text-white/65 transition-colors hover:text-gold">
                   {link.label}
                 </Link>
               ))}
             </nav>
             <div className="hidden items-center gap-2 xl:flex">
-              <a href={whatsappUrl()} target="_blank" rel="noreferrer" data-track="whatsapp_click" data-placement="header" className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2.5 text-sm text-white/85 hover:border-gold/40 hover:text-gold">
+              <a href={whatsappUrl()} target="_blank" rel="noreferrer" data-track="whatsapp_click" data-placement="header" className="inline-flex items-center gap-2 rounded-full border border-white/15 px-3.5 py-2.5 text-sm text-white/85 hover:border-gold/40 hover:text-gold">
                 <MessageCircle className="size-4" /> WhatsApp
               </a>
-              <Link href="/contact#book" data-track="appointment_start" data-placement="header" className="rounded-full bg-gold px-5 py-2.5 text-sm font-semibold text-ink transition-transform hover:-translate-y-0.5">
+              <Link href="/contact#book" data-track="appointment_start" data-placement="header" className="whitespace-nowrap rounded-full bg-gold px-4 py-2.5 text-sm font-semibold text-ink transition-transform hover:-translate-y-0.5">
                 Book a consultation
               </Link>
             </div>

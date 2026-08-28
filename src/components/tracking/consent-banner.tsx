@@ -88,7 +88,7 @@ export function ConsentBanner() {
   };
 
   return (
-    <div className="fixed inset-x-3 bottom-24 z-[70] mx-auto max-w-3xl rounded-2xl border border-gold/25 bg-ink/95 p-4 text-sm text-white shadow-2xl backdrop-blur md:bottom-5 md:p-5">
+    <div className="fixed inset-x-3 bottom-[calc(4rem+env(safe-area-inset-bottom)+0.75rem)] z-[70] mx-auto max-w-3xl rounded-2xl border border-gold/25 bg-ink/95 p-4 text-sm text-white shadow-2xl backdrop-blur md:bottom-5 md:p-5">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <p className="max-w-2xl leading-6 text-white/75">
           We use optional analytics and marketing technologies to understand how

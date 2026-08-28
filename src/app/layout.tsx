@@ -24,7 +24,7 @@ export const viewport: Viewport = { width: "device-width", initialScale: 1, them
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className="flex min-h-dvh flex-col pb-16 md:pb-0">
+      <body className="flex min-h-dvh flex-col pb-[calc(4rem+1px+env(safe-area-inset-bottom))] md:pb-0">
         <AnalyticsScripts />
         <StructuredData />
         <TrackLinks />
