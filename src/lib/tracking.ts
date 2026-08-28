@@ -10,7 +10,13 @@ export type TrackingEventName =
   | "resource_download"
   | "review_click"
   | "problem_interaction"
-  | "gallery_interaction";
+  | "gallery_interaction"
+  // Implant experience. Section-level engagement only. The navigator event
+  // never carries which situation was chosen, because that could describe the
+  // visitor's own mouth. See TRACKING_PLAN.md.
+  | "implant_navigator_interaction"
+  | "implant_comparison_view"
+  | "implant_section_navigation";
 
 export type TrackingPayload = {
   event: TrackingEventName;

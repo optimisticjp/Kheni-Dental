@@ -8,7 +8,9 @@ import { LocationCard } from "@/components/kheni/location-card";
 import { MediaPlaceholder } from "@/components/kheni/media-placeholder";
 import { ProblemsInteractive } from "@/components/kheni/problems-interactive";
 import { SectionHeading } from "@/components/kheni/section-heading";
+import { ImplantDiagram } from "@/components/kheni/implant/implant-diagram";
 import { homepageFaqs, locations, resources, site, treatments } from "@/content/site";
+import { implantHero, startingPoints } from "@/content/implant-center";
 import { GoogleProofStrip } from "@/components/kheni/google-proof-strip";
 import { GoogleReputationSection } from "@/components/kheni/google-reputation-section";
 import { whatsappUrl } from "@/lib/links";
@@ -66,6 +68,39 @@ export default function Home() {
           <SectionHeading eyebrow="Common concerns" title="Which of these sounds closest to you?" copy="Pick the one nearest your situation to see what is usually involved. Reading helps you prepare, but only an examination can name the cause." />
           <div className="mt-12"><ProblemsInteractive limit={6} /></div>
           <div className="mt-8"><Link href="/problems-we-treat" className="inline-flex items-center gap-2 text-sm font-semibold text-gold">See the full list of concerns <ArrowRight className="size-4" /></Link></div>
+        </Container>
+      </Section>
+
+      {/* Implant spotlight. The practice name carries "Elite Implant Center", so
+          implants get one section with real weight here. Kept to a single
+          moment: family dentistry still leads the treatment grid below. */}
+      <Section className="bg-ink text-white" spacing="lg">
+        <Container width="7xl">
+          <div className="grid gap-12 lg:grid-cols-[1.08fr_.92fr] lg:items-center lg:gap-16">
+            <div>
+              <p className="text-[.7rem] font-semibold uppercase tracking-[.26em] text-gold">Elite Implant Center</p>
+              <div aria-hidden="true" className="rule-gold mt-5 h-px w-24" />
+              <h2 className="mt-6 max-w-xl font-serif text-[clamp(2.1rem,5vw,4rem)] leading-[.98] tracking-[-.045em]">{implantHero.headline}</h2>
+              <p className="mt-6 max-w-lg text-base leading-7 text-white/58">A missing tooth changes how you eat before you notice it. If a gap, a set of gaps or a denture that shifts is the reason you are here, start with the situation closest to yours.</p>
+              <ul className="mt-8 grid gap-2 sm:grid-cols-2">
+                {startingPoints.map((point) => (
+                  <li key={point.id}>
+                    <Link href={`/treatments/dental-implants-surat/#your-situation`} className="flex min-h-12 items-center gap-3 rounded-xl border border-white/10 px-4 text-sm text-white/75 transition-colors hover:border-gold/40 hover:text-white">
+                      <span aria-hidden="true" className="size-1.5 shrink-0 rounded-full bg-gold" />
+                      {point.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+                <Link href="/treatments/dental-implants-surat/" data-track="treatment_view" data-placement="home_implant_spotlight" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-gold px-6 text-sm font-semibold text-ink">Explore implant options <ArrowRight className="size-4" /></Link>
+                <Link href="/doctors/dr-mayur-kheni/" data-track="doctor_profile_view" data-placement="home_implant_spotlight" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/15 px-6 text-sm font-semibold">Meet Dr. Mayur</Link>
+              </div>
+            </div>
+            <div className="rounded-[2rem] border border-gold/15 bg-white/[.02] p-6 sm:p-8">
+              <ImplantDiagram className="mx-auto w-full max-w-[22rem] text-white" />
+            </div>
+          </div>
         </Container>
       </Section>
 

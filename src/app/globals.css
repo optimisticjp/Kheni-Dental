@@ -94,6 +94,26 @@
 
 @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
+/* Implant experience -------------------------------------------------- */
+
+/* Keeps an anchored heading clear of the sticky header, and of the sticky
+   in-page section nav that appears from lg up. */
+.implant-anchor { scroll-margin-top: 6rem; }
+@media (min-width: 1024px) { .implant-anchor { scroll-margin-top: 9.5rem; } }
+
+/* Hairline rule used to open the editorial sections. Drawn rather than
+   decorative: it marks where a new part of the explanation begins. */
+.rule-gold {
+  background: linear-gradient(90deg, rgba(202,169,104,.85), rgba(202,169,104,.15) 62%, transparent);
+}
+
+/* Restrained draw-in for the implant diagram. Fades the labels after the
+   structure, so the diagram reads as a drawing being annotated. Disabled by
+   the prefers-reduced-motion rule above. */
+.implant-diagram { animation: implant-diagram-in .9s ease-out both; }
+.implant-diagram-labels { animation: implant-diagram-in .9s ease-out .45s both; }
+@keyframes implant-diagram-in { from { opacity: 0; } to { opacity: 1; } }
+
 .prose-kheni h2 { font-family: var(--font-serif); font-size: clamp(2rem,4vw,3.3rem); letter-spacing: -.035em; line-height: 1.05; margin-top: 3.5rem; }
 .prose-kheni h3 { font-family: var(--font-serif); font-size: 1.6rem; margin-top: 2rem; }
 .prose-kheni p, .prose-kheni li { color: var(--muted-foreground); line-height: 1.8; margin-top: 1rem; }

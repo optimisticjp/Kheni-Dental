@@ -11,11 +11,19 @@ import { SectionHeading } from "@/components/kheni/section-heading";
 import { doctors, treatments } from "@/content/site";
 import { whatsappUrl } from "@/lib/links";
 
-export function generateStaticParams(){return treatments.map(t=>({slug:t.slug}))}
-export async function generateMetadata({params}:{params:Promise<{slug:string}>}):Promise<Metadata>{const {slug}=await params;const t=treatments.find(x=>x.slug===slug);if(!t)return{};return{title:t.seoTitle,description:t.metaDescription}}
+/**
+ * Dental implants has its own flagship route at
+ * `src/app/treatments/dental-implants-surat/page.tsx`. It is excluded here so
+ * the slug is never prerendered twice and there is no duplicate content. Every
+ * other treatment continues to use this generic template unchanged.
+ */
+const SPECIALIZED_SLUGS = new Set(["dental-implants-surat"]);
+
+export function generateStaticParams(){return treatments.filter(t=>!SPECIALIZED_SLUGS.has(t.slug)).map(t=>({slug:t.slug}))}
+export async function generateMetadata({params}:{params:Promise<{slug:string}>}):Promise<Metadata>{const {slug}=await params;if(SPECIALIZED_SLUGS.has(slug))return{};const t=treatments.find(x=>x.slug===slug);if(!t)return{};return{title:t.seoTitle,description:t.metaDescription}}
 
 export default async function TreatmentPage({params}:{params:Promise<{slug:string}>}){
-  const {slug}=await params;const t=treatments.find(x=>x.slug===slug);if(!t)notFound();
+  const {slug}=await params;if(SPECIALIZED_SLUGS.has(slug))notFound();const t=treatments.find(x=>x.slug===slug);if(!t)notFound();
   const relatedDoctors=doctors.filter(doctor=>doctor.relatedTreatmentSlugs.includes(t.slug));
   const message=`Hello Kheni Dental, I would like to ask about ${t.title}. Please share the available consultation options.`;
   return <>
