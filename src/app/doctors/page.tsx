@@ -6,10 +6,10 @@ import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
 
 export const metadata: Metadata = {
-  title: "Dentists at Kheni Dental Surat",
-  description: "Meet Dr. Mayur Kheni, Dr. Jinal Monapara, Dr. Ishita Dobariya and Dr. Parita Vastarpara at Kheni Dental in Surat.",
+  title: "Meet Our Dentists in Surat",
+  description: "Dr. Mayur Kheni, Dr. Jinal Monapara, Dr. Ishita Dobariya and Dr. Parita Vastarpara. See each dentist's degree, years of experience and areas of work in Surat.",
 };
 
 export default function DoctorsPage() {
-  return <><PageHero eyebrow="Dental team" title="Meet the people behind your care." copy="See each doctor's experience, listed area of focus and the treatments most closely connected with their profile."/><Section spacing="lg"><Container width="7xl"><DoctorsGrid /></Container></Section><Section className="bg-[#f1eee7]" spacing="lg"><Container width="7xl" className="grid gap-8 lg:grid-cols-[.85fr_1.15fr] lg:items-center"><div><p className="text-xs font-semibold uppercase tracking-[.2em] text-gold">Patient proof</p><h2 className="mt-4 font-serif text-4xl sm:text-5xl">Credentials matter. So does how patients feel in the chair.</h2><p className="mt-5 text-sm leading-7 text-muted-foreground">Use Google reviews as an independent view of the clinic experience, then meet the doctor and ask your own questions.</p></div><GoogleTrustCard placement="doctors_google" /></Container></Section></>;
+  return <><PageHero eyebrow="Dental team" title="Know who is treating you before you sit down." copy="Dr. Mayur Kheni leads the practice and three colleagues work alongside him. Each profile lists the degree, the years of experience and the areas of care that doctor covers."/><Section spacing="lg"><Container width="7xl"><DoctorsGrid /></Container></Section><Section className="bg-[#f1eee7]" spacing="lg"><Container width="7xl" className="grid gap-8 lg:grid-cols-[.85fr_1.15fr] lg:items-center"><div><p className="text-xs font-semibold uppercase tracking-[.2em] text-gold">From Google</p><h2 className="mt-4 font-serif text-4xl sm:text-5xl">A degree explains the training, not the appointment.</h2><p className="mt-5 text-sm leading-7 text-muted-foreground">Patients describe the appointments on Google. Read a few there, then come and ask the doctor whatever is still on your mind.</p></div><GoogleTrustCard placement="doctors_google" /></Container></Section></>;
 }

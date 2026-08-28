@@ -73,7 +73,7 @@ export function MobileMenu({ open, onClose, links }: { open: boolean; onClose: (
           </Link>
         </div>
         <div className="mt-auto grid gap-3 pt-8 pb-[max(1rem,env(safe-area-inset-bottom))]">
-          <Link href="/contact#book" onClick={onClose} data-track="appointment_start" data-placement="mobile_menu" className="rounded-full bg-gold px-5 py-3.5 text-center font-semibold text-ink">Book consultation</Link>
+          <Link href="/contact#book" onClick={onClose} data-track="appointment_start" data-placement="mobile_menu" className="rounded-full bg-gold px-5 py-3.5 text-center font-semibold text-ink">Book a consultation</Link>
           <a href={whatsappUrl()} target="_blank" rel="noreferrer" data-track="whatsapp_click" data-placement="mobile_menu" className="rounded-full border border-white/15 px-5 py-3.5 text-center">Ask us on WhatsApp</a>
         </div>
       </nav>

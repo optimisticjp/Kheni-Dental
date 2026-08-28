@@ -7,14 +7,14 @@ import { Section } from "@/components/ui/section";
 import { locations, reviewHighlights, site } from "@/content/site";
 
 export const metadata: Metadata = {
-  title: "Patient Reviews | Kheni Dental Surat",
-  description: "See Kheni Dental's Google rating, public patient review themes and direct links to the clinic's Google profiles in Surat.",
+  title: "Patient Reviews on Google",
+  description: "Kheni Dental has two Surat clinics with separate Google profiles. See the Swastik Plaza rating, read review themes and open each profile yourself.",
 };
 
 export default function ReviewsPage() {
   return (
     <>
-      <PageHero eyebrow="Patient reviews" title="Do not just take our word for it." copy="Choosing a dentist is personal. Read patient feedback where it was originally shared, then decide whether Kheni Dental feels right for you." />
+      <PageHero eyebrow="Patient reviews" title="We would rather you checked Google first." copy="Anything we quote here is a small selection. So this page gives you the rating, a few patient comments and a direct link to each clinic profile, where you can read the rest yourself." />
 
       <Section spacing="lg">
         <Container width="7xl">
@@ -36,9 +36,9 @@ export default function ReviewsPage() {
       <Section className="bg-ink text-white" spacing="lg">
         <Container width="7xl">
           <div className="max-w-3xl">
-            <p className="text-xs font-semibold uppercase tracking-[.22em] text-gold">Google and Maps</p>
-            <h2 className="mt-4 font-serif text-4xl leading-tight sm:text-5xl">Read reviews. Check the location. Open directions. All at the source.</h2>
-            <p className="mt-5 text-base leading-7 text-white/58">Each clinic card links straight to its Google profile. The established Swastik Plaza profile has a verified public rating. Hirabaug stays separate so we do not mix ratings between branches.</p>
+            <p className="text-xs font-semibold uppercase tracking-[.22em] text-gold">Two clinics, two profiles</p>
+            <h2 className="mt-4 font-serif text-4xl leading-tight sm:text-5xl">We keep the two clinics listed separately.</h2>
+            <p className="mt-5 text-base leading-7 text-white/58">It would be easy to add the two profiles together and show one bigger number. That would not be true. The rating below belongs to Swastik Plaza. Hirabaug has its own Google listing, and its own card.</p>
           </div>
           <div className="mt-10 grid gap-5 lg:grid-cols-2">
             {locations.map((location) => (
@@ -48,7 +48,7 @@ export default function ReviewsPage() {
                 {location.rating ? (
                   <div className="mt-6 flex items-end gap-4"><span className="font-serif text-6xl text-gold">{location.rating}</span><div className="pb-1"><div className="flex gap-1 text-gold">{Array.from({ length: 5 }).map((_, index) => <Star key={index} className="size-4 fill-current" />)}</div><p className="mt-2 text-xs text-white/45">{location.reviewCount} Google reviews</p></div></div>
                 ) : (
-                  <p className="mt-6 text-sm leading-6 text-white/55">This branch has its own Google profile. We are keeping its rating separate until a current rating is reliably available.</p>
+                  <p className="mt-6 text-sm leading-6 text-white/55">This clinic has its own listing on Google. We could not confirm a current public rating for it, so we are not showing a number here. The link below opens the listing as it stands today.</p>
                 )}
                 <div className="mt-7 flex flex-wrap gap-4 text-sm font-semibold">
                   <a href={location.googleProfileUrl} target="_blank" rel="noreferrer" data-track="review_click" data-placement={`reviews_${location.slug}`} data-branch={location.slug} className="inline-flex items-center gap-2 text-gold">View Google profile <ArrowUpRight className="size-4" /></a>
@@ -63,8 +63,8 @@ export default function ReviewsPage() {
 
       <section className="bg-gold py-14 text-ink">
         <Container width="7xl" className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-          <div><p className="text-xs font-semibold uppercase tracking-[.18em]">Independent proof</p><h2 className="mt-2 font-serif text-4xl">{site.googleReviewDisplay} reviews are easier to trust when you can read them yourself.</h2></div>
-          <a href={site.googleProfileUrl} target="_blank" rel="noreferrer" data-track="review_click" data-placement="reviews_final" className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-ink px-6 py-3.5 text-sm font-semibold text-white">Open Google Reviews <ArrowUpRight className="size-4" /></a>
+          <div><p className="text-xs font-semibold uppercase tracking-[.18em]">Check it yourself</p><h2 className="mt-2 font-serif text-4xl">{site.googleReviewDisplay} reviews sit on the Swastik Plaza profile. Read a few before you decide.</h2></div>
+          <a href={site.googleProfileUrl} target="_blank" rel="noreferrer" data-track="review_click" data-placement="reviews_final" className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-ink px-6 py-3.5 text-sm font-semibold text-white">Open the Swastik Plaza profile <ArrowUpRight className="size-4" /></a>
         </Container>
       </section>
     </>

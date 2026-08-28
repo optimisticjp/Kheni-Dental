@@ -17,8 +17,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const location = locations.find((item) => item.slug === slug);
   if (!location) return {};
   return {
-    title: `Kheni Dental ${location.shortName} | Dentist in Surat`,
-    description: `Visit Kheni Dental at ${location.shortName}, ${location.areaLabel}. Find the address, phone, WhatsApp, clinic hours and Google Maps directions.`,
+    title: `${location.shortName} Clinic, ${location.areaLabel}`,
+    description: `Address, phone number, WhatsApp and visiting hours for Kheni Dental at ${location.shortName}, ${location.areaLabel}, plus a Google Maps link for directions.`,
   };
 }
 
@@ -44,7 +44,7 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
               </a>
             )}
             <div className="mt-8 flex flex-wrap gap-3">
-              <a href={whatsappUrl(message, location.whatsappNumber)} target="_blank" rel="noreferrer" data-track="whatsapp_click" data-placement={`location_hero_${location.slug}`} data-branch={location.slug} className="inline-flex items-center gap-2 rounded-full bg-gold px-5 py-3 text-sm font-semibold text-ink"><MessageCircle className="size-4" />WhatsApp clinic</a>
+              <a href={whatsappUrl(message, location.whatsappNumber)} target="_blank" rel="noreferrer" data-track="whatsapp_click" data-placement={`location_hero_${location.slug}`} data-branch={location.slug} className="inline-flex items-center gap-2 rounded-full bg-gold px-5 py-3 text-sm font-semibold text-ink"><MessageCircle className="size-4" />WhatsApp this clinic</a>
               <a href={location.mapsUrl} target="_blank" rel="noreferrer" data-track="directions_click" data-placement={`location_hero_${location.slug}`} data-branch={location.slug} className="inline-flex items-center gap-2 rounded-full border border-white/15 px-5 py-3 text-sm font-semibold">Open Google Maps <ArrowUpRight className="size-4" /></a>
             </div>
           </div>
@@ -60,9 +60,9 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
       <Section spacing="lg">
         <Container width="7xl">
           <div className="grid gap-5 md:grid-cols-3">
-            <div className="rounded-2xl border border-border bg-card p-6"><MapPin className="size-5 text-gold" /><h2 className="mt-4 font-serif text-2xl">Address</h2><p className="mt-3 text-sm leading-6 text-muted-foreground">{location.address}</p><a href={location.mapsUrl} target="_blank" rel="noreferrer" data-track="directions_click" data-placement={`location_details_${location.slug}`} data-branch={location.slug} className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-gold">Directions <ArrowUpRight className="size-4" /></a></div>
-            <a href={`tel:${location.phoneHref}`} data-track="phone_click" data-placement={`location_details_${location.slug}`} data-branch={location.slug} className="rounded-2xl border border-border bg-card p-6"><Phone className="size-5 text-gold" /><h2 className="mt-4 font-serif text-2xl">Call</h2><p className="mt-3 text-sm text-muted-foreground">{location.phoneDisplay}</p><p className="mt-5 text-xs text-muted-foreground">Tap to call this clinic directly.</p></a>
-            <div className="rounded-2xl border border-border bg-card p-6"><Clock className="size-5 text-gold" /><h2 className="mt-4 font-serif text-2xl">Visiting hours</h2><p className="mt-3 text-sm leading-6 text-muted-foreground">{location.hours}</p>{location.hoursNote && <p className="mt-3 text-xs leading-5 text-muted-foreground">{location.hoursNote}</p>}</div>
+            <div className="rounded-2xl border border-border bg-card p-6"><MapPin className="size-5 text-gold" /><h2 className="mt-4 font-serif text-2xl">Where to find us</h2><p className="mt-3 text-sm leading-6 text-muted-foreground">{location.address}</p><a href={location.mapsUrl} target="_blank" rel="noreferrer" data-track="directions_click" data-placement={`location_details_${location.slug}`} data-branch={location.slug} className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-gold">Open directions <ArrowUpRight className="size-4" /></a></div>
+            <a href={`tel:${location.phoneHref}`} data-track="phone_click" data-placement={`location_details_${location.slug}`} data-branch={location.slug} className="rounded-2xl border border-border bg-card p-6"><Phone className="size-5 text-gold" /><h2 className="mt-4 font-serif text-2xl">Call this branch</h2><p className="mt-3 text-sm text-muted-foreground">{location.phoneDisplay}</p><p className="mt-5 text-xs text-muted-foreground">Tap to call. Each of our clinics has its own number.</p></a>
+            <div className="rounded-2xl border border-border bg-card p-6"><Clock className="size-5 text-gold" /><h2 className="mt-4 font-serif text-2xl">When we are open</h2><p className="mt-3 text-sm leading-6 text-muted-foreground">{location.hours}</p>{location.hoursNote && <p className="mt-3 text-xs leading-5 text-muted-foreground">{location.hoursNote}</p>}</div>
           </div>
         </Container>
       </Section>
@@ -70,9 +70,9 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
       <Section className="bg-[#f1eee7]" spacing="lg">
         <Container width="7xl">
           {location.rating ? (
-            <div className="grid gap-8 lg:grid-cols-[.9fr_1.1fr] lg:items-center"><div><p className="text-xs font-semibold uppercase tracking-[.2em] text-gold">Patient proof</p><h2 className="mt-4 font-serif text-4xl sm:text-5xl">Check what patients say before you visit.</h2><p className="mt-5 text-sm leading-7 text-muted-foreground">The rating belongs to this clinic&apos;s established Google profile. Open Google to read the full reviews directly.</p></div><GoogleTrustCard placement={`location_google_${location.slug}`} /></div>
+            <div className="grid gap-8 lg:grid-cols-[.9fr_1.1fr] lg:items-center"><div><p className="text-xs font-semibold uppercase tracking-[.2em] text-gold">Reviews on Google</p><h2 className="mt-4 font-serif text-4xl sm:text-5xl">Have a look at Google before you decide.</h2><p className="mt-5 text-sm leading-7 text-muted-foreground">This rating sits on the Google profile for this clinic alone, because we do not pool reviews between our two branches. Open it and read them in full.</p></div><GoogleTrustCard placement={`location_google_${location.slug}`} /></div>
           ) : (
-            <div className="rounded-[2rem] bg-ink p-8 text-white sm:p-10"><p className="text-xs font-semibold uppercase tracking-[.2em] text-gold">Google profile</p><h2 className="mt-4 font-serif text-4xl">Check this clinic on Google before you travel.</h2><p className="mt-5 max-w-2xl text-sm leading-7 text-white/55">We keep branch ratings separate. Open the Hirabaug profile to check current listing details and directions at the source.</p><a href={location.googleProfileUrl} target="_blank" rel="noreferrer" data-track="review_click" data-placement={`location_google_${location.slug}`} data-branch={location.slug} className="mt-7 inline-flex items-center gap-2 rounded-full bg-gold px-5 py-3 text-sm font-semibold text-ink">View on Google <ArrowUpRight className="size-4" /></a></div>
+            <div className="rounded-[2rem] bg-ink p-8 text-white sm:p-10"><p className="text-xs font-semibold uppercase tracking-[.2em] text-gold">This branch on Google</p><h2 className="mt-4 font-serif text-4xl">This clinic has its own Google listing.</h2><p className="mt-5 max-w-2xl text-sm leading-7 text-white/55">Hirabaug is listed separately from Swastik Plaza, and one branch rating is not the other. We are not showing a star figure here until we can confirm the current one for this listing, so open the profile and read what Google has today.</p><a href={location.googleProfileUrl} target="_blank" rel="noreferrer" data-track="review_click" data-placement={`location_google_${location.slug}`} data-branch={location.slug} className="mt-7 inline-flex items-center gap-2 rounded-full bg-gold px-5 py-3 text-sm font-semibold text-ink">See this branch on Google <ArrowUpRight className="size-4" /></a></div>
           )}
         </Container>
       </Section>

@@ -12,29 +12,29 @@ import { Section } from "@/components/ui/section";
 import { locations, site } from "@/content/site";
 
 export const metadata: Metadata = {
-  title: "About Kheni Dental",
-  description: "Learn about Kheni Dental & Elite Implant Center, its four-doctor team, 15 years in Surat and clinics at Swastik Plaza and Hirabaug.",
+  title: "About Our Dental Practice in Surat",
+  description: "Kheni Dental has treated patients in Surat for around 15 years. Meet the four doctors led by Dr. Mayur Kheni and see how care is explained at both clinics.",
 };
 
 export default function AboutPage() {
   return (
     <>
-      <PageHero eyebrow="About Kheni Dental" title="15 years of dental care in Surat. Still personal at every visit." copy="Kheni Dental is led by Dr. Mayur Kheni and supported by a four-doctor team across two Surat clinics." />
+      <PageHero eyebrow="About the practice" title="Fifteen years in Surat, still explaining every step." copy="Dr. Mayur Kheni leads the practice, and three more doctors now see patients alongside him across two clinics in Surat. A visit still begins the same way, by asking what brought you in and listening to the answer." />
       <Section spacing="lg">
         <Container width="7xl">
           <div className="grid gap-12 lg:grid-cols-[.9fr_1.1fr] lg:items-center">
             <div>
-              <SectionHeading eyebrow="Our story" title="A clinic can grow without making care feel impersonal." copy="Over 15 years in Surat, Kheni Dental has grown from a local practice into a four-doctor team across two clinics. The approach has stayed personal: listen first, explain the reason behind a recommendation and help patients know what comes next." />
-              <div className="mt-8 grid grid-cols-2 gap-4"><div className="rounded-2xl bg-[#f1eee7] p-5"><p className="font-serif text-4xl text-gold">{site.yearsInSurat}</p><p className="mt-2 text-sm text-muted-foreground">years in Surat</p></div><div className="rounded-2xl bg-[#f1eee7] p-5"><p className="font-serif text-4xl text-gold">2</p><p className="mt-2 text-sm text-muted-foreground">Surat clinics</p></div></div>
+              <SectionHeading eyebrow="Our story" title="More doctors now, the same length of appointment." copy="Kheni Dental has been treating patients in Surat for around fifteen years. There are four doctors now and two clinics, so you can pick the branch that suits your day and see a dentist whose focus fits your problem. What has not changed is the pace of an appointment. Questions are expected, and no treatment is suggested until an examination explains the reason for it." />
+              <div className="mt-8 grid grid-cols-2 gap-4"><div className="rounded-2xl bg-[#f1eee7] p-5"><p className="font-serif text-4xl text-gold">{site.yearsInSurat}</p><p className="mt-2 text-sm text-muted-foreground">years treating patients in Surat</p></div><div className="rounded-2xl bg-[#f1eee7] p-5"><p className="font-serif text-4xl text-gold">2</p><p className="mt-2 text-sm text-muted-foreground">clinics across the city</p></div></div>
               <GoogleTrustCard className="mt-5" placement="about_google" />
             </div>
-            <MediaPlaceholder label="Dr. Mayur, team and clinic history photography" className="min-h-[34rem]" />
+            <MediaPlaceholder label="Dr. Mayur Kheni and the Kheni Dental team" className="min-h-[34rem]" />
           </div>
         </Container>
       </Section>
-      <Section className="bg-ink text-white" spacing="lg"><Container width="7xl"><SectionHeading eyebrow="How we want care to feel" title="Clear enough to understand. Calm enough to ask questions." copy="Start with the patient's concern, explain options in plain language and avoid making treatment sound predetermined." /><div className="mt-10 grid gap-4 md:grid-cols-3">{[["Listen first","What is bothering you and what are you hoping to change?"],["Explain the why","Understand the findings, options and trade-offs before deciding."],["Plan responsibly","Treatment should be based on examination, clinical need and realistic expectations."]].map(([title,copy]) => <div key={title} className="rounded-2xl border border-white/10 p-6"><h2 className="font-serif text-2xl">{title}</h2><p className="mt-3 text-sm leading-6 text-white/58">{copy}</p></div>)}</div></Container></Section>
-      <Section spacing="lg"><Container width="7xl"><SectionHeading eyebrow="Dental team" title="Four doctors. Different areas of focus. One patient journey." copy="Meet the four doctors currently caring for patients at Kheni Dental, with their confirmed degrees, experience and listed areas of focus." /><div className="mt-12"><DoctorsGrid /></div></Container></Section>
-      <Section className="bg-[#f1eee7]" spacing="lg"><Container width="7xl"><SectionHeading eyebrow="Visit us" title="Find your Kheni." copy="Choose the clinic that is easier for your day, then open directions directly in Google Maps." /><div className="mt-10 grid gap-5 lg:grid-cols-2">{locations.map((location) => <LocationCard key={location.slug} location={location} />)}</div><Link href="/contact" className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-gold"><MapPin className="size-4" />Contact the clinic <ArrowRight className="size-4" /></Link></Container></Section>
+      <Section className="bg-ink text-white" spacing="lg"><Container width="7xl"><SectionHeading eyebrow="How we want care to feel" title="Nobody should leave the chair still guessing." copy="Most dental worry comes from not knowing what is happening in your own mouth. So findings are said out loud, options are named in plain words, and you get time to think before anything is booked." /><div className="mt-10 grid gap-4 md:grid-cols-3">{[["You talk first","The appointment opens with your description of the problem, when it started and what it stops you doing. That usually tells the dentist where to look first."],["Plain words, not jargon","Findings are explained in words you could repeat to your family at home. If a clinical term matters to your decision, you will hear what it actually means."],["Some things can wait","Not every finding needs treatment straight away. Where watching is the sensible option, the dentist will say so and tell you what to look out for."]].map(([title,copy]) => <div key={title} className="rounded-2xl border border-white/10 p-6"><h2 className="font-serif text-2xl">{title}</h2><p className="mt-3 text-sm leading-6 text-white/58">{copy}</p></div>)}</div></Container></Section>
+      <Section spacing="lg"><Container width="7xl"><SectionHeading eyebrow="Who will see you" title="Four doctors, and what each one handles." copy="Dr. Mayur Kheni leads the practice. Three more doctors work alongside him, with listed areas of focus covering smile design, children's dentistry and everyday dental care. Degrees and years in practice are listed exactly as each doctor gave them." /><div className="mt-12"><DoctorsGrid /></div></Container></Section>
+      <Section className="bg-[#f1eee7]" spacing="lg"><Container width="7xl"><SectionHeading eyebrow="Both addresses" title="Come to whichever clinic is nearer." copy="Swastik Plaza in Nana Varachha and Hirabaug on Varachha Main Road. Each card carries the phone number for that branch and a link that opens the route in Google Maps." /><div className="mt-10 grid gap-5 lg:grid-cols-2">{locations.map((location) => <LocationCard key={location.slug} location={location} />)}</div><Link href="/contact" className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-gold"><MapPin className="size-4" />Ask us which branch suits you <ArrowRight className="size-4" /></Link></Container></Section>
     </>
   );
 }

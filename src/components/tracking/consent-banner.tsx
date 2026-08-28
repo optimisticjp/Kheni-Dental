@@ -91,9 +91,10 @@ export function ConsentBanner() {
     <div className="fixed inset-x-3 bottom-24 z-[70] mx-auto max-w-3xl rounded-2xl border border-gold/25 bg-ink/95 p-4 text-sm text-white shadow-2xl backdrop-blur md:bottom-5 md:p-5">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <p className="max-w-2xl leading-6 text-white/75">
-          We use optional analytics and marketing technologies to understand
-          website performance. Essential functions work without them. Do not
-          submit sensitive medical information through marketing forms. See our{" "}
+          We use optional analytics and marketing technologies to understand how
+          this website is used. Everything on the site works if you decline them.
+          Please do not send sensitive medical details through website forms. Read
+          our{" "}
           <Link
             href="/privacy"
             className="text-gold underline underline-offset-4"
@@ -113,7 +114,7 @@ export function ConsentBanner() {
           </Button>
 
           <Button onClick={() => choose("accepted")}>
-            Accept
+            Accept all
           </Button>
         </div>
       </div>

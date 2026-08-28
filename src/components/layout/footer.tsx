@@ -37,7 +37,7 @@ export function Footer() {
                   <Link href={`/locations/${location.slug}`} className="font-medium text-white hover:text-gold">{location.shortName}</Link>
                   <p className="mt-2 flex gap-2 text-xs leading-5 text-white/50"><MapPin className="mt-0.5 size-3.5 shrink-0 text-gold" />{location.address}</p>
                   <a className="mt-2 flex gap-2 text-sm text-white/60 hover:text-white" href={`tel:${location.phoneHref}`} data-track="phone_click" data-placement="footer"><Phone className="size-4 text-gold" />{location.phoneDisplay}</a>
-                  <a className="mt-2 inline-flex text-xs font-semibold text-gold hover:text-gold-soft" href={location.googleProfileUrl} target="_blank" rel="noreferrer" data-track="review_click" data-placement={`footer_${location.slug}`}>Google profile ↗</a>
+                  <a className="mt-2 inline-flex text-xs font-semibold text-gold hover:text-gold-soft" href={location.googleProfileUrl} target="_blank" rel="noreferrer" data-track="review_click" data-placement={`footer_${location.slug}`}>See this clinic on Google ↗</a>
                 </div>
               ))}
             </div>

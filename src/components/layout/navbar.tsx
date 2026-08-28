@@ -33,7 +33,7 @@ export function Navbar() {
                 <MessageCircle className="size-4" /> WhatsApp
               </a>
               <Link href="/contact#book" data-track="appointment_start" data-placement="header" className="rounded-full bg-gold px-5 py-2.5 text-sm font-semibold text-ink transition-transform hover:-translate-y-0.5">
-                Book consultation
+                Book a consultation
               </Link>
             </div>
             <button type="button" onClick={() => setOpen(true)} aria-label="Open menu" aria-expanded={open} aria-controls="mobile-menu" className="grid size-11 place-items-center rounded-full border border-white/15 text-white xl:hidden">

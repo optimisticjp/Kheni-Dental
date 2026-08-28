@@ -25,17 +25,17 @@ export function LocationCard({ location }: { location: Location }) {
             <a href={location.googleProfileUrl} target="_blank" rel="noreferrer" data-track="review_click" data-placement={`location_${location.slug}_google`} data-branch={location.slug} className="shrink-0 rounded-full border border-white/12 px-3 py-2 text-[.68rem] font-semibold uppercase tracking-[.12em] text-white/65 hover:border-gold/40 hover:text-gold">View on Google</a>
           )}
         </div>
-        <div className="relative mt-8 inline-flex items-center gap-2 text-sm text-white/60"><MapPin className="size-4 text-gold" />Open directions in Google Maps</div>
+        <div className="relative mt-8 inline-flex items-center gap-2 text-sm text-white/60"><MapPin className="size-4 text-gold" />Tap Directions below to open Google Maps</div>
       </div>
 
       <div className="flex flex-1 flex-col p-6 sm:p-8">
         <p className="text-sm leading-6 text-muted-foreground">{location.note}</p>
         <p className="mt-5 flex gap-3 text-sm leading-6 text-muted-foreground"><MapPin className="mt-1 size-4 shrink-0 text-gold" />{location.address}</p>
-        <p className="mt-4 flex gap-3 text-sm leading-6 text-muted-foreground"><Clock3 className="mt-1 size-4 shrink-0 text-gold" />{location.hours}</p>
+        <p className="mt-4 flex gap-3 text-sm leading-6 text-muted-foreground"><Clock3 className="mt-1 size-4 shrink-0 text-gold" /><span>{location.hours}{location.hoursNote && <span className="mt-1 block text-xs text-muted-foreground/80">Please call before you set out, in case the day has changed.</span>}</span></p>
 
         {location.rating && (
           <a href={location.googleProfileUrl} target="_blank" rel="noreferrer" data-track="review_click" data-placement={`location_${location.slug}_reviews`} data-branch={location.slug} className="mt-6 flex items-center justify-between rounded-2xl bg-[#f1eee7] px-4 py-3 text-sm">
-            <span><strong>{location.reviewCount}</strong> patient reviews on Google</span>
+            <span><strong>{location.reviewCount}</strong> Google reviews for this branch</span>
             <ArrowUpRight className="size-4 text-gold" />
           </a>
         )}

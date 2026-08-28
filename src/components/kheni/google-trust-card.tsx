@@ -7,7 +7,7 @@ export function GoogleTrustCard({ className = "", dark = false, placement = "goo
     <div className={cn("rounded-[1.6rem] border p-5 sm:p-6", dark ? "border-white/10 bg-white/[.04] text-white" : "border-border bg-card", className)}>
       <div className="flex items-start justify-between gap-5">
         <div>
-          <p className="text-[.68rem] font-semibold uppercase tracking-[.2em] text-gold">Independent patient proof</p>
+          <p className="text-[.68rem] font-semibold uppercase tracking-[.2em] text-gold">Rating on Google</p>
           <div className="mt-3 flex items-center gap-3">
             <div className="flex items-center gap-1 text-gold" aria-label={`${site.googleRating} out of 5 stars on Google`}>
               {Array.from({ length: 5 }).map((_, index) => <Star key={index} className="size-4 fill-current" aria-hidden="true" />)}
@@ -18,7 +18,7 @@ export function GoogleTrustCard({ className = "", dark = false, placement = "goo
         <span className="font-serif text-5xl leading-none text-gold">{site.googleRating}</span>
       </div>
       <p className={cn("mt-5 text-sm leading-6", dark ? "text-white/62" : "text-muted-foreground")}>
-        Based on {site.googleReviewCount} reviews on Kheni Dental&apos;s established Google profile.
+        From {site.googleReviewCount} reviews on the Swastik Plaza profile. Our Hirabaug clinic is listed on Google separately.
       </p>
       <div className="mt-5 flex flex-wrap gap-4 text-sm font-semibold">
         <a href={site.googleProfileUrl} target="_blank" rel="noreferrer" data-track="review_click" data-placement={placement} className="inline-flex items-center gap-2 text-gold">Read Google reviews <ArrowUpRight className="size-4" /></a>
