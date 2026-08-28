@@ -8,7 +8,7 @@ import { locations } from "@/content/site";
 
 export const metadata: Metadata = {
   title: "Our Two Clinics in Surat",
-  description: "Kheni Dental has two clinics in Surat, at Swastik Plaza in Nana Varachha and at Hirabaug on Varachha Main Road. Get the address, phone and directions.",
+  description: "Kheni Dental has two clinics in Surat, at Swastik Plaza in Yogi Chowk and at Hirabaug on Varachha Main Road. Get the address, phone and directions.",
 };
 
 export default function LocationsPage() {

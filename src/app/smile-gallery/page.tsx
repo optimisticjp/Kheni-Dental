@@ -1,7 +1,66 @@
 import type { Metadata } from "next";
-import { PageHero } from "@/components/kheni/page-hero";
-import { MediaPlaceholder } from "@/components/kheni/media-placeholder";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+
+import { CaseResultsGrid } from "@/components/kheni/case-results";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
-export const metadata:Metadata={title:"Smile Gallery in Surat",description:"Kheni Dental is building a smile gallery from real Surat cases, shown only with patient permission. No stock photos and no borrowed before and after images."};
-export default function SmileGallery(){return <><PageHero eyebrow="Smile gallery" title="Nothing here yet, and that is deliberate." copy="A gallery is only worth looking at if the cases in it are real. We are building ours the slow way, with our own patients and our own work, shown only where the patient has given permission and the treating doctor has approved the case. Until then this page stays empty rather than borrowed."/><Section spacing="lg"><Container width="7xl"><div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{['A missing tooth replaced with an implant','Front teeth reshaped in a smile design','A broken tooth rebuilt with a crown','Crowded teeth brought into line','A full mouth restored in stages','Preventive care for a young patient'].map(label=><MediaPlaceholder key={label} label={label} className="min-h-[24rem]"/>)}</div><p className="mt-8 text-sm leading-6 text-muted-foreground">When cases do appear here, each one will say what treatment was carried out. Read them as examples rather than as a forecast. Teeth, gums, bite and general health differ from person to person, so two people having the same procedure can end up with different results.</p></Container></Section></>}
+import { caseCategories } from "@/content/cases";
+
+export const metadata: Metadata = {
+  title: "Before & After Results",
+  description:
+    "Before and after dental results from Kheni Dental in Surat. Implants, full mouth rehabilitation, smile design, crowns and braces, shown with patient permission.",
+};
+
+export default function SmileGalleryPage() {
+  return (
+    <>
+      <section className="bg-ink text-white">
+        <Container width="7xl" className="py-12 lg:py-16">
+          <p className="text-[.7rem] font-semibold uppercase tracking-[.24em] text-gold">Our work</p>
+          <h1 className="mt-4 max-w-3xl font-serif text-[clamp(2.1rem,5.4vw,3.8rem)] leading-[1] tracking-[-.045em]">
+            Before &amp; after
+          </h1>
+          <p className="mt-5 max-w-xl text-base leading-7 text-white/60">
+            Cases treated at our Surat clinics, published only where the patient has given permission.
+          </p>
+          <ul className="mt-8 flex flex-wrap gap-2">
+            {caseCategories.map((category) => (
+              <li
+                key={category}
+                className="inline-flex min-h-11 items-center rounded-full border border-white/15 px-4 text-sm text-white/70"
+              >
+                {category}
+              </li>
+            ))}
+          </ul>
+        </Container>
+      </section>
+
+      <Section spacing="md">
+        <Container width="7xl">
+          <CaseResultsGrid />
+        </Container>
+      </Section>
+
+      <Section className="bg-[#f1eee7]" spacing="md">
+        <Container width="7xl">
+          <div className="flex flex-wrap items-center justify-between gap-5">
+            <p className="max-w-xl font-serif text-2xl leading-tight sm:text-3xl">
+              Want to know what is possible in your case?
+            </p>
+            <Link
+              href="/contact/#book"
+              data-track="appointment_start"
+              data-placement="gallery_cta"
+              className="inline-flex min-h-12 items-center gap-2 rounded-full bg-ink px-6 text-sm font-semibold text-white"
+            >
+              Book Appointment <ArrowRight className="size-4 text-gold" aria-hidden="true" />
+            </Link>
+          </div>
+        </Container>
+      </Section>
+    </>
+  );
+}

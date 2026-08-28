@@ -1,33 +1,179 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowRight, BadgeCheck, MessageCircle } from "lucide-react";
-import { MediaPlaceholder } from "@/components/kheni/media-placeholder";
-import { SectionHeading } from "@/components/kheni/section-heading";
+import { ArrowRight, ArrowUpRight, MessageCircle, Phone } from "lucide-react";
+
+import { InitialsPortrait, PendingTag } from "@/components/kheni/pending";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
-import { doctors, treatments } from "@/content/site";
+import { languages } from "@/content/clinic-proof";
+import { doctors, site, treatments } from "@/content/site";
 import { whatsappUrl } from "@/lib/links";
 
-export function generateStaticParams() { return doctors.map((doctor) => ({ slug: doctor.slug })); }
+export function generateStaticParams() {
+  return doctors.map((doctor) => ({ slug: doctor.slug }));
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const doctor = doctors.find((item) => item.slug === slug);
   if (!doctor) return {};
-  return { title: `${doctor.name} | Dentist in Surat`, description: doctor.metaDescription };
+  return { title: `${doctor.name}, ${doctor.credentials}`, description: doctor.metaDescription };
 }
 
-export default async function DoctorProfilePage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function DoctorPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const doctor = doctors.find((item) => item.slug === slug);
   if (!doctor) notFound();
-  const related = treatments.filter((treatment) => doctor.relatedTreatmentSlugs.includes(treatment.slug));
-  const message = `Hello Kheni Dental, I would like to request a consultation with ${doctor.name}. Please share the available appointment options.`;
 
-  return <>
-    <section className="bg-ink text-white"><Container width="7xl" className="grid min-h-[68vh] items-center gap-12 py-16 lg:grid-cols-[.92fr_1.08fr] lg:py-24"><MediaPlaceholder label={doctor.name} className="min-h-[32rem] lg:order-1"/><div><p className="text-xs font-semibold uppercase tracking-[.22em] text-gold">{doctor.specialty}</p><h1 className="mt-5 font-serif text-5xl leading-[.95] tracking-[-.04em] sm:text-6xl">{doctor.name}</h1><p className="mt-4 text-lg text-white/60">{doctor.credentials} · {doctor.yearsExperience} years of experience</p><div className="mt-6 flex flex-wrap gap-2">{doctor.badges.map((badge) => <span key={badge} className="inline-flex items-center gap-1.5 rounded-full border border-gold/25 bg-gold/8 px-3 py-1.5 text-xs text-gold"><BadgeCheck className="size-3.5" />{badge}</span>)}</div><p className="mt-7 max-w-xl text-base leading-7 text-white/65">{doctor.bio}</p><div className="mt-8 flex flex-wrap gap-3"><a href={whatsappUrl(message)} target="_blank" rel="noreferrer" data-track="whatsapp_click" data-placement="doctor_profile" className="inline-flex items-center gap-2 rounded-full bg-gold px-5 py-3 text-sm font-semibold text-ink"><MessageCircle className="size-4" />Ask about an appointment</a><Link href="/contact#book" className="rounded-full border border-white/15 px-5 py-3 text-sm font-semibold">Book a consultation</Link></div></div></Container></section>
-    <Section spacing="lg"><Container width="7xl"><div className="grid gap-10 lg:grid-cols-[.75fr_1.25fr]"><SectionHeading eyebrow="Approach to care" title={doctor.approachHeading}/><blockquote className="rounded-[2rem] bg-[#f1eee7] p-7 font-serif text-3xl leading-tight">“{doctor.philosophy}”</blockquote></div></Container></Section>
-    <Section className="bg-ink text-white" spacing="lg"><Container width="7xl"><SectionHeading eyebrow="Related care" title={`Treatments listed under ${doctor.name}.`} copy="Treat these as reading, not as a booking rule. The clinic confirms who you will see when your appointment is arranged."/><div className="mt-10 grid gap-4 md:grid-cols-3">{related.map((treatment) => <Link key={treatment.slug} href={`/treatments/${treatment.slug}`} className="group rounded-2xl border border-white/10 p-6"><p className="text-xs uppercase tracking-[.18em] text-gold">{treatment.eyebrow}</p><h2 className="mt-4 font-serif text-2xl">{treatment.title}</h2><p className="mt-3 text-sm leading-6 text-white/55">{treatment.short}</p><span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-gold">See what is involved <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" /></span></Link>)}</div></Container></Section>
-  </>;
+  const message = `Hello Kheni Dental, I would like to book an appointment with ${doctor.name}.`;
+  const related = treatments.filter((t) => doctor.relatedTreatmentSlugs.includes(t.slug));
+
+  return (
+    <>
+      {/* Facts first: name, degree, specialty, years, what they treat, book. */}
+      <section className="bg-ink text-white">
+        <Container width="7xl" className="grid gap-10 py-12 lg:grid-cols-[.75fr_1.25fr] lg:items-center lg:gap-14 lg:py-16">
+          <InitialsPortrait name={doctor.name} className="aspect-[4/5] w-full" />
+
+          <div>
+            <p className="text-[.7rem] font-semibold uppercase tracking-[.24em] text-gold">{doctor.specialty}</p>
+            <h1 className="mt-4 font-serif text-[clamp(2.2rem,5.6vw,4rem)] leading-[1] tracking-[-.045em]">
+              {doctor.name}
+            </h1>
+
+            <dl className="mt-6 flex flex-wrap gap-x-10 gap-y-4 border-y border-white/10 py-5">
+              <div>
+                <dt className="text-[.6rem] uppercase tracking-[.14em] text-white/40">Qualification</dt>
+                <dd className="mt-1 text-sm font-semibold">{doctor.credentials}</dd>
+              </div>
+              <div>
+                <dt className="text-[.6rem] uppercase tracking-[.14em] text-white/40">Experience</dt>
+                <dd className="mt-1 text-sm font-semibold text-gold">{doctor.yearsExperience} years</dd>
+              </div>
+              <div>
+                <dt className="text-[.6rem] uppercase tracking-[.14em] text-white/40">Speaks</dt>
+                <dd className="mt-1 text-sm font-semibold">{languages.join(", ")}</dd>
+              </div>
+            </dl>
+
+            <ul className="mt-6 flex flex-wrap gap-2">
+              {doctor.badges.map((badge) => (
+                <li
+                  key={badge}
+                  className="inline-flex rounded-full border border-gold/25 bg-gold/[.07] px-3 py-1.5 text-xs text-gold"
+                >
+                  {badge}
+                </li>
+              ))}
+            </ul>
+
+            <p className="mt-6 max-w-xl text-base leading-7 text-white/62">{doctor.bio}</p>
+
+            <div className="mt-8 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
+              <Link
+                href="/contact/#book"
+                data-track="appointment_start"
+                data-placement="doctor_profile"
+                className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-gold px-6 text-sm font-semibold text-ink sm:whitespace-nowrap"
+              >
+                Book Appointment
+                <ArrowRight className="size-4" aria-hidden="true" />
+              </Link>
+              <a
+                href={`tel:${site.primaryPhoneHref}`}
+                data-track="phone_click"
+                data-placement="doctor_profile"
+                className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-white/15 px-6 text-sm font-semibold sm:whitespace-nowrap"
+              >
+                <Phone className="size-4 text-gold" aria-hidden="true" />
+                Call Clinic
+              </a>
+              <a
+                href={whatsappUrl(message)}
+                target="_blank"
+                rel="noreferrer"
+                data-track="whatsapp_click"
+                data-placement="doctor_profile"
+                className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-white/15 px-6 text-sm font-semibold sm:whitespace-nowrap"
+              >
+                <MessageCircle className="size-4 text-gold" aria-hidden="true" />
+                WhatsApp
+              </a>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      <Section spacing="md">
+        <Container width="7xl">
+          <div className="grid gap-10 lg:grid-cols-[1.1fr_.9fr] lg:gap-16">
+            <div>
+              <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">
+                {doctor.approachHeading}
+              </h2>
+              <blockquote className="mt-6 border-l-2 border-gold/50 pl-5 font-serif text-xl leading-snug">
+                &ldquo;{doctor.philosophy}&rdquo;
+              </blockquote>
+            </div>
+
+            {/* Structured credential slots so the doctor can fill them in. */}
+            <div className="rounded-2xl border border-border bg-card p-6">
+              <h2 className="font-serif text-xl leading-tight">Training and memberships</h2>
+              <ul className="mt-4 space-y-3">
+                {["Postgraduate training", "Professional membership", "Certification"].map((item) => (
+                  <li key={item} className="flex items-center justify-between gap-3 border-b border-border pb-3 text-sm last:border-0 last:pb-0">
+                    <span className="text-muted-foreground">{item}</span>
+                    <PendingTag label="To confirm" />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      {related.length > 0 && (
+        <Section className="bg-[#f1eee7]" spacing="md">
+          <Container width="7xl">
+            <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">
+              Treatments {doctor.name.split(" ").slice(0, 2).join(" ")} works with
+            </h2>
+            <ul className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {related.map((t) => (
+                <li key={t.slug}>
+                  <Link
+                    href={`/treatments/${t.slug}/`}
+                    data-track="treatment_view"
+                    data-placement="doctor_profile"
+                    className="group flex min-h-[4.5rem] items-center justify-between gap-4 rounded-2xl border border-border bg-white px-5 py-4"
+                  >
+                    <span className="font-serif text-lg leading-tight">{t.title}</span>
+                    <ArrowUpRight
+                      className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-gold"
+                      aria-hidden="true"
+                    />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </Container>
+        </Section>
+      )}
+
+      <Section spacing="md">
+        <Container width="7xl">
+          <div className="flex flex-wrap items-center justify-between gap-5 rounded-2xl border border-border bg-card p-6 sm:p-8">
+            <p className="font-serif text-2xl leading-tight">Meet the rest of the team</p>
+            <Link
+              href="/doctors/"
+              className="inline-flex min-h-12 items-center gap-2 rounded-full border border-border px-5 text-sm font-semibold text-gold"
+            >
+              All doctors <ArrowRight className="size-4" aria-hidden="true" />
+            </Link>
+          </div>
+        </Container>
+      </Section>
+    </>
+  );
 }

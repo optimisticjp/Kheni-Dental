@@ -1,70 +1,126 @@
 import type { Metadata } from "next";
-import { ArrowUpRight, Quote, Star } from "lucide-react";
-import { GoogleTrustCard } from "@/components/kheni/google-trust-card";
-import { PageHero } from "@/components/kheni/page-hero";
+import Link from "next/link";
+import { ArrowRight, MessageCircle, Quote } from "lucide-react";
+
+import { BranchGoogleCard } from "@/components/kheni/branch-google-card";
+import { CaseResultsGrid } from "@/components/kheni/case-results";
+import { PatientStoryGrid, VideoStoryGrid } from "@/components/kheni/stories";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
 import { locations, reviewHighlights, site } from "@/content/site";
+import { whatsappUrl } from "@/lib/links";
 
 export const metadata: Metadata = {
-  title: "Patient Reviews on Google",
-  description: "Kheni Dental has two Surat clinics with separate Google profiles. See the Swastik Plaza rating, read review themes and open each profile yourself.",
+  title: "Patient Reviews",
+  description:
+    "Google reviews for both Kheni Dental clinics in Surat, at Yogi Chowk and Hirabaug, plus patient stories and treatment results.",
 };
 
 export default function ReviewsPage() {
   return (
     <>
-      <PageHero eyebrow="Patient reviews" title="We would rather you checked Google first." copy="Anything we quote here is a small selection. So this page gives you the rating, a few patient comments and a direct link to each clinic profile, where you can read the rest yourself." />
+      {/* Compact hero. The proof starts immediately below it, not after an essay. */}
+      <section className="bg-ink text-white">
+        <Container width="7xl" className="py-12 lg:py-16">
+          <p className="text-[.7rem] font-semibold uppercase tracking-[.24em] text-gold">Patient reviews</p>
+          <h1 className="mt-4 max-w-3xl font-serif text-[clamp(2.1rem,5.4vw,3.8rem)] leading-[1] tracking-[-.045em]">
+            What patients say about both our clinics.
+          </h1>
 
-      <Section spacing="lg">
-        <Container width="7xl">
-          <div className="grid gap-8 lg:grid-cols-[.8fr_1.2fr] lg:items-start">
-            <GoogleTrustCard placement="reviews_page_primary" />
-            <div className="grid gap-4 sm:grid-cols-2">
-              {reviewHighlights.map((item, index) => (
-                <article key={item.theme} className={`rounded-[1.8rem] border border-border bg-card p-6 ${index === 0 ? "sm:col-span-2" : ""}`}>
-                  <div className="flex items-center justify-between gap-4"><span className="text-xs font-semibold uppercase tracking-[.18em] text-gold">{item.theme}</span><Quote className="size-5 text-gold/50" /></div>
-                  <p className={`mt-7 font-serif leading-snug ${index === 0 ? "text-3xl" : "text-2xl"}`}>“{item.quote}”</p>
-                  <p className="mt-5 text-xs uppercase tracking-[.14em] text-muted-foreground">{item.source}</p>
-                </article>
-              ))}
-            </div>
+          <div className="mt-9 grid gap-4 md:grid-cols-2">
+            {locations.map((location) => (
+              <BranchGoogleCard key={location.slug} location={location} dark placement={`reviews_google_${location.slug}`} />
+            ))}
           </div>
         </Container>
-      </Section>
+      </section>
 
-      <Section className="bg-ink text-white" spacing="lg">
+      {/* Real Google excerpts. Never edited, never added to. */}
+      <Section spacing="md">
         <Container width="7xl">
-          <div className="max-w-3xl">
-            <p className="text-xs font-semibold uppercase tracking-[.22em] text-gold">Two clinics, two profiles</p>
-            <h2 className="mt-4 font-serif text-4xl leading-tight sm:text-5xl">We keep the two clinics listed separately.</h2>
-            <p className="mt-5 text-base leading-7 text-white/58">It would be easy to add the two profiles together and show one bigger number. That would not be true. The rating below belongs to Swastik Plaza. Hirabaug has its own Google listing, and its own card.</p>
-          </div>
-          <div className="mt-10 grid gap-5 lg:grid-cols-2">
-            {locations.map((location) => (
-              <article key={location.slug} className="rounded-[2rem] border border-white/10 bg-white/[.035] p-7">
-                <p className="text-xs font-semibold uppercase tracking-[.18em] text-gold">Kheni Dental · {location.areaLabel}</p>
-                <h3 className="mt-3 font-serif text-3xl">{location.shortName}</h3>
-                {location.rating ? (
-                  <div className="mt-6 flex items-end gap-4"><span className="font-serif text-6xl text-gold">{location.rating}</span><div className="pb-1"><div className="flex gap-1 text-gold">{Array.from({ length: 5 }).map((_, index) => <Star key={index} className="size-4 fill-current" />)}</div><p className="mt-2 text-xs text-white/45">{location.reviewCount} Google reviews</p></div></div>
-                ) : (
-                  <p className="mt-6 text-sm leading-6 text-white/55">This clinic has its own listing on Google. We could not confirm a current public rating for it, so we are not showing a number here. The link below opens the listing as it stands today.</p>
-                )}
-                <div className="mt-7 flex flex-wrap gap-4 text-sm font-semibold">
-                  <a href={location.googleProfileUrl} target="_blank" rel="noreferrer" data-track="review_click" data-placement={`reviews_${location.slug}`} data-branch={location.slug} className="inline-flex items-center gap-2 text-gold">View Google profile <ArrowUpRight className="size-4" /></a>
-                  <a href={location.mapsUrl} target="_blank" rel="noreferrer" data-track="directions_click" data-placement={`reviews_${location.slug}`} data-branch={location.slug} className="inline-flex items-center gap-2 text-white/65">Get directions <ArrowUpRight className="size-4" /></a>
-                  <a href={location.googleWriteReviewUrl} target="_blank" rel="noreferrer" data-track="review_click" data-placement={`reviews_${location.slug}_write`} data-branch={location.slug} className="inline-flex items-center gap-2 text-white/65">Write a review <ArrowUpRight className="size-4" /></a>
+          <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">From our Google reviews</h2>
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {reviewHighlights.map((item) => (
+              <figure key={item.theme} className="flex h-full flex-col rounded-2xl border border-border bg-card p-6">
+                <div className="flex items-center justify-between gap-4">
+                  <span className="text-[.62rem] font-semibold uppercase tracking-[.16em] text-gold">{item.theme}</span>
+                  <Quote className="size-4 text-gold/45" aria-hidden="true" />
                 </div>
-              </article>
+                <blockquote className="mt-5 flex-1 font-serif text-xl leading-snug">&ldquo;{item.quote}&rdquo;</blockquote>
+                <figcaption className="mt-5 text-xs uppercase tracking-[.12em] text-muted-foreground">{item.source}</figcaption>
+              </figure>
             ))}
           </div>
         </Container>
       </Section>
 
-      <section className="bg-gold py-14 text-ink">
-        <Container width="7xl" className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-          <div><p className="text-xs font-semibold uppercase tracking-[.18em]">Check it yourself</p><h2 className="mt-2 font-serif text-4xl">{site.googleReviewDisplay} reviews sit on the Swastik Plaza profile. Read a few before you decide.</h2></div>
-          <a href={site.googleProfileUrl} target="_blank" rel="noreferrer" data-track="review_click" data-placement="reviews_final" className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-ink px-6 py-3.5 text-sm font-semibold text-white">Open the Swastik Plaza profile <ArrowUpRight className="size-4" /></a>
+      {/* Clinic testimonials, which are a different thing from Google reviews. */}
+      <Section className="bg-[#f1eee7]" spacing="md">
+        <Container width="7xl">
+          <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Patient stories</h2>
+          <p className="mt-3 max-w-xl text-sm leading-6 text-muted-foreground">
+            Told to us directly by our own patients, published with their permission.
+          </p>
+          <div className="mt-8">
+            <PatientStoryGrid />
+          </div>
+        </Container>
+      </Section>
+
+      {/* Video */}
+      <Section className="bg-ink text-white" spacing="md">
+        <Container width="7xl">
+          <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Patient videos</h2>
+          <p className="mt-3 max-w-xl text-sm leading-6 text-white/55">In Gujarati, Hindi and English.</p>
+          <div className="mt-8">
+            <VideoStoryGrid tone="dark" />
+          </div>
+        </Container>
+      </Section>
+
+      {/* Results */}
+      <Section spacing="md">
+        <Container width="7xl">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Treatment results</h2>
+            <Link href="/smile-gallery/" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-gold">
+              See all results <ArrowRight className="size-4" aria-hidden="true" />
+            </Link>
+          </div>
+          <div className="mt-8">
+            <CaseResultsGrid limit={3} />
+          </div>
+        </Container>
+      </Section>
+
+      <section className="bg-gold py-12 text-ink sm:py-14">
+        <Container width="7xl" className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+          <h2 className="max-w-xl font-serif text-2xl leading-tight tracking-[-.03em] sm:text-3xl">
+            Been treated with us? Your review helps the next patient decide.
+          </h2>
+          <div className="flex flex-col gap-2.5 sm:flex-row">
+            <a
+              href={site.googleWriteReviewUrl}
+              target="_blank"
+              rel="noreferrer"
+              data-track="review_click"
+              data-placement="reviews_write_cta"
+              className="inline-flex min-h-12 items-center justify-center rounded-full bg-ink px-6 text-sm font-semibold text-white sm:whitespace-nowrap"
+            >
+              Write a Google review
+            </a>
+            <a
+              href={whatsappUrl()}
+              target="_blank"
+              rel="noreferrer"
+              data-track="whatsapp_click"
+              data-placement="reviews_cta"
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-ink/25 px-6 text-sm font-semibold sm:whitespace-nowrap"
+            >
+              <MessageCircle className="size-4" aria-hidden="true" />
+              WhatsApp
+            </a>
+          </div>
         </Container>
       </section>
     </>

@@ -1,50 +1,133 @@
 import Link from "next/link";
 import { ArrowUpRight, Clock3, MapPin, MessageCircle, Phone, Star } from "lucide-react";
+
+import { BranchMap } from "@/components/kheni/branch-map";
+import { PendingTag } from "@/components/kheni/pending";
 import type { Location } from "@/content/site";
 import { whatsappUrl } from "@/lib/links";
+import { cn } from "@/lib/utils";
 
-export function LocationCard({ location }: { location: Location }) {
-  const message = `Hello Kheni Dental, I would like to ask about an appointment at ${location.shortName}.`;
+/**
+ * Branch card.
+ *
+ * Everything a patient needs to choose a clinic and get there, in one card:
+ * which area it is in, what Google says about *this* branch, where it is on a
+ * map, when it is open, and four actions sized for a thumb.
+ *
+ * The map is orientation. "Get Directions" is the action, and it opens the
+ * branch's own Google profile.
+ */
+export function LocationCard({ location, showMap = true }: { location: Location; showMap?: boolean }) {
+  const message = `Hello Kheni Dental, I would like to book an appointment at ${location.shortName}, ${location.areaLabel}.`;
+  const verified = location.google.status === "verified";
 
   return (
-    <article className="group relative flex h-full flex-col overflow-hidden rounded-[2rem] border border-border bg-card">
-      <div className="relative min-h-52 overflow-hidden bg-ink p-6 text-white sm:p-8">
-        <div className="map-grid absolute inset-0 opacity-20" aria-hidden="true" /><div className="absolute -right-20 -top-20 size-64 rounded-full bg-gold/12 blur-3xl" />
-        <div className="relative flex items-start justify-between gap-4">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[.2em] text-gold">Kheni Dental · Surat</p>
-            <h3 className="mt-3 font-serif text-4xl">{location.shortName}</h3>
-            <p className="mt-2 text-sm text-white/48">{location.areaLabel}</p>
+    <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card">
+      {showMap && <BranchMap location={location} ratio="16 / 9" className="rounded-none border-0 border-b border-border" />}
+
+      <div className="flex flex-1 flex-col p-5 sm:p-6">
+        <div className="flex items-start justify-between gap-4">
+          <div className="min-w-0">
+            {location.implantCentre && (
+              <p className="mb-2 inline-flex rounded-full bg-gold/15 px-2.5 py-0.5 text-[.6rem] font-semibold uppercase tracking-[.14em] text-gold">
+                Elite Implant Center
+              </p>
+            )}
+            <h3 className="font-serif text-2xl leading-tight sm:text-3xl">{location.shortName}</h3>
+            <p className="mt-1 text-sm text-muted-foreground">{location.areaLabel}</p>
           </div>
-          {location.rating ? (
-            <a href={location.googleProfileUrl} target="_blank" rel="noreferrer" data-track="review_click" data-placement={`location_${location.slug}_rating`} data-branch={location.slug} className="shrink-0 rounded-2xl border border-gold/20 bg-gold/[.07] px-3 py-2.5 text-right transition hover:bg-gold/[.12]">
-              <p className="flex items-center justify-end gap-1 font-semibold text-gold"><Star className="size-4 fill-current" />{location.rating}</p>
-              <p className="mt-1 text-[.62rem] uppercase tracking-[.12em] text-white/45">{location.reviewSource}</p>
-            </a>
-          ) : (
-            <a href={location.googleProfileUrl} target="_blank" rel="noreferrer" data-track="review_click" data-placement={`location_${location.slug}_google`} data-branch={location.slug} className="inline-flex min-h-11 shrink-0 items-center rounded-full border border-white/12 px-3.5 text-[.68rem] font-semibold uppercase tracking-[.12em] text-white/65 hover:border-gold/40 hover:text-gold">View on Google</a>
-          )}
-        </div>
-        <div className="relative mt-8 inline-flex items-center gap-2 text-sm text-white/60"><MapPin className="size-4 text-gold" />Tap Directions below to open Google Maps</div>
-      </div>
 
-      <div className="flex flex-1 flex-col p-6 sm:p-8">
-        <p className="text-sm leading-6 text-muted-foreground">{location.note}</p>
-        <p className="mt-5 flex gap-3 text-sm leading-6 text-muted-foreground"><MapPin className="mt-1 size-4 shrink-0 text-gold" />{location.address}</p>
-        <p className="mt-4 flex gap-3 text-sm leading-6 text-muted-foreground"><Clock3 className="mt-1 size-4 shrink-0 text-gold" /><span>{location.hours}{location.hoursNote && <span className="mt-1 block text-xs text-muted-foreground/80">Please call before you set out, in case the day has changed.</span>}</span></p>
-
-        {location.rating && (
-          <a href={location.googleProfileUrl} target="_blank" rel="noreferrer" data-track="review_click" data-placement={`location_${location.slug}_reviews`} data-branch={location.slug} className="mt-6 flex items-center justify-between rounded-2xl bg-[#f1eee7] px-4 py-3 text-sm">
-            <span><strong>{location.reviewCount}</strong> Google reviews for this branch</span>
-            <ArrowUpRight className="size-4 text-gold" />
+          <a
+            href={location.googleProfileUrl}
+            target="_blank"
+            rel="noreferrer"
+            data-track="review_click"
+            data-placement={`location_${location.slug}_rating`}
+            data-branch={location.slug}
+            className="inline-flex min-h-11 shrink-0 flex-col items-end justify-center rounded-xl border border-border px-3 py-1.5 text-right hover:border-gold/50"
+          >
+            {verified ? (
+              <>
+                <span className="inline-flex items-center gap-1 font-semibold text-gold">
+                  <Star className="size-3.5 fill-current" aria-hidden="true" />
+                  {location.google.rating}
+                </span>
+                <span className="text-[.6rem] uppercase tracking-[.1em] text-muted-foreground">
+                  {location.google.reviewCount} reviews
+                </span>
+              </>
+            ) : (
+              <>
+                <span className="inline-flex items-center gap-1 font-semibold text-gold/45">
+                  <Star className="size-3.5 fill-current" aria-hidden="true" />
+                  4.X
+                </span>
+                <span className="text-[.6rem] uppercase tracking-[.1em] text-muted-foreground">On Google</span>
+              </>
+            )}
           </a>
-        )}
+        </div>
+
+        {!verified && <PendingTag className="mt-3 self-start" label="Rating to confirm" />}
+
+        <p className="mt-4 text-sm leading-6 text-muted-foreground">{location.note}</p>
+
+        <dl className="mt-5 space-y-2.5 text-sm">
+          <div className="flex gap-3">
+            <dt className="sr-only">Address</dt>
+            <MapPin className="mt-0.5 size-4 shrink-0 text-gold" aria-hidden="true" />
+            <dd className="leading-6 text-muted-foreground">{location.address}</dd>
+          </div>
+          <div className="flex gap-3">
+            <dt className="sr-only">Opening hours</dt>
+            <Clock3 className="mt-0.5 size-4 shrink-0 text-gold" aria-hidden="true" />
+            <dd className="leading-6 text-muted-foreground">{location.hours}</dd>
+          </div>
+        </dl>
 
         <div className="mt-auto grid grid-cols-2 gap-2 pt-6 sm:grid-cols-4">
-          <a href={`tel:${location.phoneHref}`} data-track="phone_click" data-placement={`location_${location.slug}`} data-branch={location.slug} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-ink px-3 text-xs font-semibold text-white"><Phone className="size-3.5 text-gold" />Call</a>
-          <a href={whatsappUrl(message, location.whatsappNumber)} target="_blank" rel="noreferrer" data-track="whatsapp_click" data-placement={`location_${location.slug}`} data-branch={location.slug} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-border px-3 text-xs font-semibold"><MessageCircle className="size-3.5 text-gold" />WhatsApp</a>
-          <a href={location.mapsUrl} target="_blank" rel="noreferrer" data-track="directions_click" data-placement={`location_${location.slug}`} data-branch={location.slug} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-border px-3 text-xs font-semibold">Directions <ArrowUpRight className="size-3.5" /></a>
-          <Link href={`/locations/${location.slug}`} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-border px-3 text-xs font-semibold text-gold">Clinic details</Link>
+          <a
+            href={`tel:${location.phoneHref}`}
+            data-track="phone_click"
+            data-placement={`location_${location.slug}`}
+            data-branch={location.slug}
+            className={cn(
+              "inline-flex min-h-11 items-center justify-center gap-1.5 rounded-full bg-ink px-3 text-xs font-semibold text-white",
+            )}
+          >
+            <Phone className="size-3.5 text-gold" aria-hidden="true" />
+            Call
+          </a>
+          <a
+            href={whatsappUrl(message, location.whatsappNumber)}
+            target="_blank"
+            rel="noreferrer"
+            data-track="whatsapp_click"
+            data-placement={`location_${location.slug}`}
+            data-branch={location.slug}
+            className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-full border border-border px-3 text-xs font-semibold"
+          >
+            <MessageCircle className="size-3.5 text-gold" aria-hidden="true" />
+            WhatsApp
+          </a>
+          <a
+            href={location.mapsUrl}
+            target="_blank"
+            rel="noreferrer"
+            data-track="directions_click"
+            data-placement={`location_${location.slug}`}
+            data-branch={location.slug}
+            className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-full border border-border px-3 text-xs font-semibold"
+          >
+            Directions
+            <ArrowUpRight className="size-3.5" aria-hidden="true" />
+          </a>
+          <Link
+            href={`/locations/${location.slug}/`}
+            className="inline-flex min-h-11 items-center justify-center rounded-full border border-border px-3 text-xs font-semibold text-gold"
+          >
+            Clinic page
+          </Link>
         </div>
       </div>
     </article>

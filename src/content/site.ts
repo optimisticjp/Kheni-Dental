@@ -24,36 +24,90 @@ export const site = {
     "Hello Kheni Dental, I would like to book a consultation. Please let me know which days and times are open. Thank you.",
 } as const;
 
+/**
+ * Primary navigation. Six choices, matching how Indian dental sites that
+ * convert well prioritise: treatments, the flagship treatment, who treats you,
+ * where to go, proof, and how to reach us. Treatments opens a menu of the
+ * high-intent treatments rather than sending people to an index page first.
+ */
+export type NavItem = { href: string; label: string; hasMenu?: boolean; featured?: boolean };
+
+export const primaryNav: NavItem[] = [
+  { href: "/treatments", label: "Treatments", hasMenu: true },
+  { href: "/treatments/dental-implants-surat", label: "Dental Implants", featured: true },
+  { href: "/doctors", label: "Doctors" },
+  { href: "/locations", label: "Our Clinics" },
+  { href: "/reviews", label: "Reviews" },
+  { href: "/contact", label: "Contact" },
+];
+
+/** Lower-priority pages. Shown quietly, never as equal-weight rows. */
+export const secondaryNav: NavItem[] = [
+  { href: "/about", label: "About the clinic" },
+  { href: "/problems-we-treat", label: "Problems we treat" },
+  { href: "/international-patients", label: "International & NRI" },
+  { href: "/clinic-technology", label: "Our technology" },
+  { href: "/smile-gallery", label: "Before & after" },
+  { href: "/patient-resources", label: "Patient guides" },
+];
+
+/** Full list, used by the footer sitemap. */
 export const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
   { href: "/treatments", label: "Treatments" },
   { href: "/doctors", label: "Doctors" },
-  { href: "/locations", label: "Locations" },
-  { href: "/international-patients", label: "International & NRI" },
+  { href: "/locations", label: "Our Clinics" },
   { href: "/reviews", label: "Reviews" },
+  { href: "/contact", label: "Contact" },
+  { href: "/about", label: "About" },
+  { href: "/international-patients", label: "International & NRI" },
   { href: "/patient-resources", label: "Resources" },
+] as const;
+
+/** Treatments surfaced directly in the navigation menu, in patient language. */
+export const featuredTreatmentSlugs = [
+  "dental-implants-surat",
+  "root-canal-treatment-surat",
+  "crowns-and-bridges",
+  "braces-clear-aligners",
+  "cosmetic-smile-dentistry",
+  "kids-dentistry-surat",
 ] as const;
 
 export type Location = {
   slug: string;
   name: string;
   shortName: string;
+  /** How patients recognise the area. Yogi Chowk, not the postal locality. */
   areaLabel: string;
+  /** Full postal address. May still contain the official locality name. */
   address: string;
   phoneDisplay: string;
   phoneHref: string;
   whatsappNumber: string;
   mapsUrl: string;
+  /** Query used by the lazy Google Maps embed for this branch. */
+  mapEmbedQuery: string;
   googleProfileUrl: string;
   googleWriteReviewUrl: string;
   googlePlaceId: string;
-  rating?: string;
-  reviewCount?: string;
-  reviewSource?: string;
+  /**
+   * Google reputation is tracked per branch. `status` decides whether the
+   * review card shows a real figure or a labelled placeholder, so one branch
+   * can never silently borrow the other branch's rating.
+   */
+  google: {
+    status: "verified" | "pending-verification";
+    rating?: string;
+    reviewCount?: string;
+    verifiedOn?: string;
+  };
   hours: string;
   hoursNote?: string;
+  /** One short line a patient can act on. Not a paragraph. */
   note: string;
+  /** True for the branch that carries the Elite Implant Center. */
+  implantCentre?: boolean;
 };
 
 export const locations: Location[] = [
@@ -61,22 +115,21 @@ export const locations: Location[] = [
     slug: "swastik-plaza",
     name: "Kheni Dental, Swastik Plaza",
     shortName: "Swastik Plaza",
-    areaLabel: "Nana Varachha, Surat",
+    areaLabel: "Yogi Chowk, Surat",
     address:
       "Shop No. 38-39, Swastik Plaza, Yogi Chowk Ground, Chikuwadi, Nana Varachha, Surat, Gujarat 395011, India",
     phoneDisplay: "+91 95101 12354",
     phoneHref: "+919510112354",
     whatsappNumber: "919510112354",
     mapsUrl: "https://maps.app.goo.gl/iKskGAZuZL92Tm7G7",
+    mapEmbedQuery: "Kheni+Dental+Clinic,+Swastik+Plaza,+Yogi+Chowk,+Nana+Varachha,+Surat,+Gujarat+395011",
     googleProfileUrl: "https://maps.app.goo.gl/iKskGAZuZL92Tm7G7",
     googleWriteReviewUrl: "https://search.google.com/local/writereview?placeid=ChIJddZdiXpP4DsRvtrOvXjbQqA",
     googlePlaceId: "ChIJddZdiXpP4DsRvtrOvXjbQqA",
-    rating: "4.9",
-    reviewCount: "1,593",
-    reviewSource: "Google",
+    google: { status: "verified", rating: "4.9", reviewCount: "1,593", verifiedOn: "27 August 2026" },
     hours: "Mon-Sat 9:30 AM-1:00 PM and 4:00 PM-8:00 PM",
     hoursNote: "Clinic-provided hours. Call before travelling if your visit is time-sensitive.",
-    note: "The clinic Kheni Dental grew from, in Nana Varachha, and the branch our Google rating and reviews belong to. If you live on this side of Surat, or you have been visiting Kheni Dental for years, this is the familiar address.",
+    note: "Our original clinic at Yogi Chowk, next to Apple Square. Family dentistry, root canals, braces and kids treatment, with implant care too.",
   },
   {
     slug: "hirabaug",
@@ -89,12 +142,18 @@ export const locations: Location[] = [
     phoneHref: "+919737997543",
     whatsappNumber: "919737997543",
     mapsUrl: "https://maps.app.goo.gl/hkHmTr8ZxLYaH8Vc9",
+    mapEmbedQuery: "Kheni+Dental+Elite+Implant+Center,+Varachha+Main+Road,+Hirabaug,+Surat,+Gujarat+395006",
     googleProfileUrl: "https://maps.app.goo.gl/hkHmTr8ZxLYaH8Vc9",
     googleWriteReviewUrl: "https://search.google.com/local/writereview?placeid=ChIJ89yBAKVP4DsR3TYY_211oRg",
     googlePlaceId: "ChIJ89yBAKVP4DsR3TYY_211oRg",
+    // Google did not surface a confirmable live rating for this profile during
+    // the research pass. The card renders with a labelled placeholder rather
+    // than reusing the Yogi Chowk figure. See docs/CLINIC-CONTENT-NEEDED.md.
+    google: { status: "pending-verification" },
     hours: "Mon-Sat 9:30 AM-1:00 PM and 4:00 PM-8:00 PM",
     hoursNote: "Clinic-provided hours. Call before travelling if your visit is time-sensitive.",
-    note: "This is the Elite Implant Center clinic, on Varachha Main Road above Shiv Plywood. It keeps its own Google profile, separate from Swastik Plaza, and it is the easier one to reach if you are already travelling along the main road.",
+    note: "Our Elite Implant Center on Varachha Main Road, above Shiv Plywood. Implants, full mouth cases and smile design are led from here.",
+    implantCentre: true,
   },
 ];
 
@@ -840,6 +899,26 @@ export const treatments: Treatment[] = [
   },
 ];
 
+/**
+ * "How can we help?" entry points.
+ *
+ * Nine things a patient can recognise about their own mouth in a second, in
+ * the words they would actually use. This is the fastest route into the site
+ * and deliberately carries no explanation: tapping one goes straight to the
+ * relevant treatment.
+ */
+export const helpTopics = [
+  { label: "Tooth pain", href: "/treatments/root-canal-treatment-surat/" },
+  { label: "Missing tooth", href: "/treatments/dental-implants-surat/" },
+  { label: "Loose denture", href: "/treatments/dental-implants-surat/" },
+  { label: "Broken tooth", href: "/treatments/crowns-and-bridges/" },
+  { label: "Yellow or stained teeth", href: "/treatments/cosmetic-smile-dentistry/" },
+  { label: "Crooked teeth", href: "/treatments/braces-clear-aligners/" },
+  { label: "Bleeding gums", href: "/treatments/gum-care-surat/" },
+  { label: "My child's teeth", href: "/treatments/kids-dentistry-surat/" },
+  { label: "Just a check-up", href: "/treatments/general-family-dentistry/" },
+] as const;
+
 export const problems = [
   {
     title: "I am missing a tooth",
@@ -920,7 +999,7 @@ export const homepageFaqs = [
   {
     question: "Which of the two clinics should I go to?",
     answer:
-      "Either one. Swastik Plaza in Nana Varachha is the older clinic, and Hirabaug sits on Varachha Main Road. If you are not sure, call or message and we will point you to whichever is easier for you to reach.",
+      "Either one. Swastik Plaza is at Yogi Chowk and Hirabaug is on Varachha Main Road. Call or WhatsApp us and we will tell you which is easier for you to reach.",
   },
   {
     question: "Can I message on WhatsApp instead of calling?",
@@ -937,7 +1016,7 @@ export const homepageFaqs = [
 export const tickerItems = [
   "15 years in Surat",
   "Two clinics, one practice",
-  "Nana Varachha and Varachha Main Road",
+  "Yogi Chowk and Varachha Main Road",
   "A team of four dentists",
   "Implant and full mouth care",
   "Kids and family dentistry",

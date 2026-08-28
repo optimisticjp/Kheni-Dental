@@ -34,11 +34,13 @@ export function StructuredData() {
         parentOrganization: { "@id": `${base}/#organization` },
       };
 
-      if (location.rating && location.reviewCount) {
+      // Only emit a rating for a branch whose figure is actually verified.
+      // A pending branch must never inherit the other branch's numbers.
+      if (location.google.status === "verified" && location.google.rating && location.google.reviewCount) {
         data.aggregateRating = {
           "@type": "AggregateRating",
-          ratingValue: location.rating,
-          reviewCount: location.reviewCount.replace(/,/g, ""),
+          ratingValue: location.google.rating,
+          reviewCount: location.google.reviewCount.replace(/,/g, ""),
           bestRating: "5",
           worstRating: "1",
         };

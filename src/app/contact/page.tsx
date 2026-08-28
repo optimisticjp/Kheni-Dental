@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
-import { GoogleTrustCard } from "@/components/kheni/google-trust-card";
+import { BranchGoogleCard } from "@/components/kheni/branch-google-card";
 import { PageHero } from "@/components/kheni/page-hero";
 import { ConsultationForm } from "@/components/kheni/consultation-form";
 import { LocationCard } from "@/components/kheni/location-card";
@@ -30,7 +30,7 @@ export default function ContactPage() {
                 <a href={`mailto:${site.email}`} className="mt-5 flex items-center gap-3 text-sm text-white/65"><Mail className="size-4 text-gold" />{site.email}</a>
               </div>
               <div className="mt-5 rounded-2xl border border-border bg-card p-6"><MapPin className="size-5 text-gold" /><h2 className="mt-4 font-serif text-2xl">Not sure which branch to pick?</h2><p className="mt-3 text-sm leading-6 text-muted-foreground">Tell us where you are travelling from and what the visit is about. We will point you to whichever branch is easier to reach, Swastik Plaza or Hirabaug.</p></div>
-              <GoogleTrustCard className="mt-5" placement="contact_google" />
+              <div className="mt-5 grid gap-4">{locations.map((location) => <BranchGoogleCard key={location.slug} location={location} placement={`contact_google_${location.slug}`} />)}</div>
             </div>
             <ConsultationForm />
           </div>

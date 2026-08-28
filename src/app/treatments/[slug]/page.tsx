@@ -1,38 +1,268 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowRight, Check, MessageCircle } from "lucide-react";
+import { notFound } from "next/navigation";
+import { ArrowRight, ArrowUpRight, MessageCircle, Phone, Star } from "lucide-react";
+
 import { Accordion } from "@/components/ui/accordion";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
-import { MediaPlaceholder } from "@/components/kheni/media-placeholder";
-import { GoogleTrustCard } from "@/components/kheni/google-trust-card";
-import { SectionHeading } from "@/components/kheni/section-heading";
-import { doctors, treatments } from "@/content/site";
+import { BranchGoogleCard } from "@/components/kheni/branch-google-card";
+import { PriceTable, TickList } from "@/components/kheni/capability-grids";
+import { CaseResultsGrid } from "@/components/kheni/case-results";
+import { InitialsPortrait, MediaFrame } from "@/components/kheni/pending";
+import { doctors, locations, site, treatments } from "@/content/site";
 import { whatsappUrl } from "@/lib/links";
 
 /**
  * Dental implants has its own flagship route at
  * `src/app/treatments/dental-implants-surat/page.tsx`. It is excluded here so
- * the slug is never prerendered twice and there is no duplicate content. Every
- * other treatment continues to use this generic template unchanged.
+ * the slug is never prerendered twice and there is no duplicate content.
  */
 const SPECIALIZED_SLUGS = new Set(["dental-implants-surat"]);
 
-export function generateStaticParams(){return treatments.filter(t=>!SPECIALIZED_SLUGS.has(t.slug)).map(t=>({slug:t.slug}))}
-export async function generateMetadata({params}:{params:Promise<{slug:string}>}):Promise<Metadata>{const {slug}=await params;if(SPECIALIZED_SLUGS.has(slug))return{};const t=treatments.find(x=>x.slug===slug);if(!t)return{};return{title:t.seoTitle,description:t.metaDescription}}
+export function generateStaticParams() {
+  return treatments.filter((t) => !SPECIALIZED_SLUGS.has(t.slug)).map((t) => ({ slug: t.slug }));
+}
 
-export default async function TreatmentPage({params}:{params:Promise<{slug:string}>}){
-  const {slug}=await params;if(SPECIALIZED_SLUGS.has(slug))notFound();const t=treatments.find(x=>x.slug===slug);if(!t)notFound();
-  const relatedDoctors=doctors.filter(doctor=>doctor.relatedTreatmentSlugs.includes(t.slug));
-  const message=`Hello Kheni Dental, I would like to ask about ${t.title}. Please share the available consultation options.`;
-  return <>
-    <section className="bg-ink text-white"><Container width="7xl" className="grid min-h-[68vh] items-center gap-12 py-16 lg:grid-cols-[1fr_.9fr] lg:py-24"><div><p className="text-xs font-semibold uppercase tracking-[.24em] text-gold">{t.eyebrow}</p><h1 className="mt-6 font-serif text-5xl leading-[.94] tracking-[-.045em] sm:text-6xl lg:text-7xl">{t.emotionalHeadline}</h1><p className="mt-5 font-serif text-2xl text-gold">{t.title}</p><p className="mt-6 max-w-xl text-base leading-7 text-white/60 sm:text-lg">{t.short}</p><div className="mt-8 flex flex-col gap-3 sm:flex-row"><Link href="/contact#book" data-track="appointment_start" data-placement="treatment_hero" className="rounded-full bg-gold px-6 py-3.5 text-center text-sm font-semibold text-ink">Book a consultation</Link><a href={whatsappUrl(message)} target="_blank" rel="noreferrer" data-track="whatsapp_click" data-placement="treatment_hero" className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 px-6 py-3.5 text-sm"><MessageCircle className="size-4 text-gold"/>Ask on WhatsApp</a></div></div><MediaPlaceholder label={`${t.title} at Kheni Dental, Surat`} className="min-h-[30rem]"/></Container></section>
-    <Section spacing="lg"><Container width="7xl"><div className="grid gap-12 lg:grid-cols-[1.1fr_.9fr]"><div><SectionHeading eyebrow="What patients come in with" title={t.problem} copy={t.intro}/><div className="mt-8 grid gap-3 sm:grid-cols-2">{t.benefits.map(b=><div key={b} className="flex gap-3 rounded-2xl border border-border bg-card p-5 text-sm"><span className="grid size-7 shrink-0 place-items-center rounded-full bg-gold/15 text-gold"><Check className="size-4"/></span><span>{b}</span></div>)}</div></div><div className="rounded-[2rem] bg-[#f1eee7] p-7"><p className="text-xs uppercase tracking-[.2em] text-gold">Important</p><p className="mt-4 font-serif text-3xl">{t.aside.title}</p><p className="mt-4 text-sm leading-6 text-muted-foreground">{t.aside.copy}</p></div></div></Container></Section>
-    <Section className="bg-ink text-white" spacing="lg"><Container width="7xl"><SectionHeading eyebrow="How planning usually works" title={t.processHeading}/><div className="mt-10 grid gap-3 md:grid-cols-4">{t.process.map((step,i)=><article key={step.title} className="rounded-2xl border border-white/10 p-6"><span className="font-mono text-xs text-gold">0{i+1}</span><h2 className="mt-8 font-serif text-2xl">{step.title}</h2><p className="mt-3 text-sm leading-6 text-white/55">{step.copy}</p></article>)}</div></Container></Section>
-    {relatedDoctors.length>0&&<Section spacing="lg"><Container width="7xl"><SectionHeading eyebrow="Who you may see" title="The doctors who work in this area." copy="Who treats you depends on the clinic schedule and on what the dentist finds. These profiles tell you what each doctor works on."/><div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">{relatedDoctors.map(doctor=><Link key={doctor.slug} href={`/doctors/${doctor.slug}`} className="rounded-2xl border border-border bg-card p-6"><p className="text-xs uppercase tracking-[.18em] text-gold">{doctor.specialty}</p><h2 className="mt-3 font-serif text-2xl">{doctor.name}</h2><p className="mt-2 text-sm text-muted-foreground">{doctor.credentials} · {doctor.yearsExperience} years of experience</p><span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-gold">View profile <ArrowRight className="size-4"/></span></Link>)}</div></Container></Section>}
-    <Section className="bg-ink text-white" spacing="lg"><Container width="7xl"><div className="grid gap-8 lg:grid-cols-[.85fr_1.15fr] lg:items-center"><SectionHeading eyebrow="Before you decide" title="Reviews you can check for yourself, on Google." copy="A review cannot tell you what is happening in your own mouth. It can tell you how a clinic talks to people and how patients describe their visits."/><GoogleTrustCard dark placement={`treatment_${t.slug}_google`} /></div></Container></Section>
-    <Section className="bg-[#f1eee7]" spacing="lg"><Container width="7xl"><div className="grid gap-10 lg:grid-cols-[.8fr_1.2fr]"><SectionHeading eyebrow="Patient questions" title={`Common questions about ${t.title.toLowerCase()}.`} copy="These answers are general. What applies to you can only be settled after an examination."/><Accordion items={t.faqs} className="bg-white"/></div></Container></Section>
-    <section className="bg-gold py-14"><Container width="7xl" className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between"><div><p className="text-xs font-semibold uppercase tracking-[.2em]">Next step</p><h2 className="mt-2 font-serif text-4xl">{t.ctaTitle}</h2></div><Link href="/contact#book" className="inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-ink px-6 py-3.5 text-sm font-semibold text-white">Book a consultation <ArrowRight className="size-4"/></Link></Container></section>
-  </>;
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  if (SPECIALIZED_SLUGS.has(slug)) return {};
+  const t = treatments.find((x) => x.slug === slug);
+  if (!t) return {};
+  return { title: t.seoTitle, description: t.metaDescription };
+}
+
+export default async function TreatmentPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  if (SPECIALIZED_SLUGS.has(slug)) notFound();
+  const t = treatments.find((x) => x.slug === slug);
+  if (!t) notFound();
+
+  const relatedDoctors = doctors.filter((doctor) => doctor.relatedTreatmentSlugs.includes(t.slug));
+  const message = `Hello Kheni Dental, I would like to book an appointment for ${t.title}.`;
+
+  return (
+    <>
+      {/* Hero: what it is, then the three ways to reach us. */}
+      <section className="bg-ink text-white">
+        <Container width="7xl" className="grid gap-10 py-12 lg:grid-cols-[1.1fr_.9fr] lg:items-center lg:gap-14 lg:py-16">
+          <div>
+            <p className="text-[.7rem] font-semibold uppercase tracking-[.24em] text-gold">{t.eyebrow}</p>
+            <h1 className="mt-5 font-serif text-[clamp(2.2rem,5.8vw,4.2rem)] leading-[1] tracking-[-.045em]">
+              {t.title} in Surat
+            </h1>
+            <p className="mt-5 max-w-xl text-base leading-7 text-white/65">{t.short}</p>
+
+            <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
+              <a
+                href={site.googleProfileUrl}
+                target="_blank"
+                rel="noreferrer"
+                data-track="review_click"
+                data-placement={`treatment_${t.slug}_google`}
+                className="inline-flex min-h-11 items-center gap-2 rounded-full border border-gold/25 bg-gold/[.07] px-4 text-sm"
+              >
+                <span className="flex gap-0.5 text-gold" aria-hidden="true">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star key={i} className="size-3.5 fill-current" />
+                  ))}
+                </span>
+                <strong className="text-white">{site.googleRating}</strong>
+                <span className="text-white/50">Yogi Chowk</span>
+              </a>
+              <span className="text-sm text-white/45">Two clinics in Surat</span>
+            </div>
+
+            <div className="mt-7 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
+              <Link
+                href="/contact/#book"
+                data-track="appointment_start"
+                data-placement="treatment_hero"
+                className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-gold px-6 text-sm font-semibold text-ink sm:whitespace-nowrap"
+              >
+                Book Appointment
+                <ArrowRight className="size-4" aria-hidden="true" />
+              </Link>
+              <a
+                href={`tel:${site.primaryPhoneHref}`}
+                data-track="phone_click"
+                data-placement="treatment_hero"
+                className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-white/15 px-6 text-sm font-semibold sm:whitespace-nowrap"
+              >
+                <Phone className="size-4 text-gold" aria-hidden="true" />
+                Call Clinic
+              </a>
+              <a
+                href={whatsappUrl(message)}
+                target="_blank"
+                rel="noreferrer"
+                data-track="whatsapp_click"
+                data-placement="treatment_hero"
+                className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-white/15 px-6 text-sm font-semibold sm:whitespace-nowrap"
+              >
+                <MessageCircle className="size-4 text-gold" aria-hidden="true" />
+                WhatsApp
+              </a>
+            </div>
+          </div>
+
+          <MediaFrame shot={`${t.title} at Kheni Dental`} ratio="4 / 3" className="w-full" />
+        </Container>
+      </section>
+
+      {/* What it helps with */}
+      <Section spacing="md">
+        <Container width="7xl">
+          <div className="grid gap-10 lg:grid-cols-[1.1fr_.9fr] lg:gap-16">
+            <div>
+              <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">{t.problem}</h2>
+              <p className="mt-5 max-w-2xl text-base leading-7 text-muted-foreground">{t.intro}</p>
+              <div className="mt-8">
+                <TickList items={t.benefits} />
+              </div>
+            </div>
+            <aside className="self-start rounded-2xl bg-[#f1eee7] p-6 sm:p-7">
+              <p className="text-[.66rem] font-semibold uppercase tracking-[.18em] text-gold">Worth knowing</p>
+              <p className="mt-3 font-serif text-xl leading-tight">{t.aside.title}</p>
+              <p className="mt-3 text-sm leading-6 text-muted-foreground">{t.aside.copy}</p>
+            </aside>
+          </div>
+        </Container>
+      </Section>
+
+      {/* Steps */}
+      <Section className="bg-[#f1eee7]" spacing="md">
+        <Container width="7xl">
+          <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">{t.processHeading}</h2>
+          <ol className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {t.process.map((step, i) => (
+              <li key={step.title} className="rounded-2xl border border-border bg-white p-5">
+                <span aria-hidden="true" className="font-serif text-2xl text-gold/50">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <h3 className="mt-3 font-serif text-lg leading-tight">{step.title}</h3>
+                <p className="mt-2 text-sm leading-6 text-muted-foreground">{step.copy}</p>
+              </li>
+            ))}
+          </ol>
+        </Container>
+      </Section>
+
+      {/* Cost */}
+      <Section spacing="md">
+        <Container width="7xl">
+          <div className="grid gap-8 lg:grid-cols-[.85fr_1.15fr] lg:gap-14">
+            <div>
+              <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Cost and EMI</h2>
+              <p className="mt-4 text-sm leading-6 text-muted-foreground">
+                You get the full plan with the cost of each stage before treatment starts.
+              </p>
+            </div>
+            <PriceTable limit={4} />
+          </div>
+        </Container>
+      </Section>
+
+      {/* Doctors */}
+      {relatedDoctors.length > 0 && (
+        <Section className="bg-[#f1eee7]" spacing="md">
+          <Container width="7xl">
+            <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Your doctors</h2>
+            <ul className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {relatedDoctors.map((doctor) => (
+                <li key={doctor.slug}>
+                  <Link
+                    href={`/doctors/${doctor.slug}/`}
+                    data-track="doctor_profile_view"
+                    data-placement="treatment_doctors"
+                    className="flex h-full gap-4 rounded-2xl border border-border bg-white p-4 hover:border-gold/50"
+                  >
+                    <InitialsPortrait name={doctor.name} tone="light" className="size-20 shrink-0 rounded-xl" />
+                    <span className="min-w-0">
+                      <span className="block font-serif text-lg leading-tight">{doctor.name}</span>
+                      <span className="mt-1 block text-xs text-muted-foreground">{doctor.credentials}</span>
+                      <span className="mt-2 block text-xs font-semibold uppercase tracking-[.1em] text-gold">
+                        {doctor.yearsExperience} years
+                      </span>
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </Container>
+        </Section>
+      )}
+
+      {/* Results */}
+      <Section spacing="md">
+        <Container width="7xl">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Results</h2>
+            <Link href="/smile-gallery/" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-gold">
+              All results <ArrowUpRight className="size-4" aria-hidden="true" />
+            </Link>
+          </div>
+          <div className="mt-8">
+            <CaseResultsGrid limit={3} />
+          </div>
+        </Container>
+      </Section>
+
+      {/* Reviews for both branches */}
+      <Section className="bg-ink text-white" spacing="md">
+        <Container width="7xl">
+          <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">What patients say</h2>
+          <div className="mt-8 grid gap-4 md:grid-cols-2">
+            {locations.map((location) => (
+              <BranchGoogleCard
+                key={location.slug}
+                location={location}
+                dark
+                placement={`treatment_${t.slug}_google_${location.slug}`}
+              />
+            ))}
+          </div>
+        </Container>
+      </Section>
+
+      {/* FAQ */}
+      <Section className="bg-[#f1eee7]" spacing="md">
+        <Container width="7xl">
+          <div className="grid gap-8 lg:grid-cols-[.7fr_1.3fr] lg:gap-14">
+            <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Common questions</h2>
+            <Accordion items={t.faqs} className="bg-white" />
+          </div>
+        </Container>
+      </Section>
+
+      <section className="bg-gold py-14 text-ink sm:py-16">
+        <Container width="7xl" className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
+          <h2 className="max-w-xl font-serif text-[clamp(1.9rem,4.4vw,3rem)] leading-[1.02] tracking-[-.04em]">
+            {t.ctaTitle}
+          </h2>
+          <div className="flex flex-col gap-2.5 sm:flex-row">
+            <Link
+              href="/contact/#book"
+              data-track="appointment_start"
+              data-placement="treatment_final_cta"
+              className="inline-flex min-h-13 items-center justify-center rounded-full bg-ink px-6 text-sm font-semibold text-white sm:whitespace-nowrap"
+            >
+              Book Appointment
+            </Link>
+            <a
+              href={whatsappUrl(message)}
+              target="_blank"
+              rel="noreferrer"
+              data-track="whatsapp_click"
+              data-placement="treatment_final_cta"
+              className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-ink/25 px-6 text-sm font-semibold sm:whitespace-nowrap"
+            >
+              <MessageCircle className="size-4" aria-hidden="true" />
+              WhatsApp
+            </a>
+          </div>
+        </Container>
+      </section>
+    </>
+  );
 }

@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowUpRight, Clock, MapPin, MessageCircle, Phone, Star } from "lucide-react";
-import { GoogleTrustCard } from "@/components/kheni/google-trust-card";
-import { MediaPlaceholder } from "@/components/kheni/media-placeholder";
+import { ArrowRight, Clock, MapPin, MessageCircle, Phone } from "lucide-react";
+
+import { BranchGoogleCard } from "@/components/kheni/branch-google-card";
+import { BranchMap, DirectionsButton } from "@/components/kheni/branch-map";
+import { MediaFrame } from "@/components/kheni/pending";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
-import { locations } from "@/content/site";
+import { clinicGallerySlots } from "@/content/capabilities";
+import { doctors, locations } from "@/content/site";
 import { whatsappUrl } from "@/lib/links";
 
 export function generateStaticParams() {
@@ -17,8 +21,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const location = locations.find((item) => item.slug === slug);
   if (!location) return {};
   return {
-    title: `${location.shortName} Clinic, ${location.areaLabel}`,
-    description: `Address, phone number, WhatsApp and visiting hours for Kheni Dental at ${location.shortName}, ${location.areaLabel}, plus a Google Maps link for directions.`,
+    title: `Dental Clinic in ${location.areaLabel.split(",")[0]} | ${location.shortName}`,
+    description: `Kheni Dental at ${location.shortName}, ${location.areaLabel}. Address, phone, WhatsApp, opening hours and directions.`,
   };
 }
 
@@ -26,56 +30,149 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
   const { slug } = await params;
   const location = locations.find((item) => item.slug === slug);
   if (!location) notFound();
-  const message = `Hello Kheni Dental, I would like to book an appointment at ${location.shortName}. Please share the available options.`;
+
+  const message = `Hello Kheni Dental, I would like to book an appointment at ${location.shortName}, ${location.areaLabel}.`;
+  const other = locations.find((item) => item.slug !== location.slug);
 
   return (
     <>
-      <section className="relative overflow-hidden bg-ink text-white">
-        <div className="absolute -right-32 top-10 size-[30rem] rounded-full bg-gold/10 blur-3xl" />
-        <Container width="7xl" className="relative grid min-h-[66vh] items-center gap-12 py-16 lg:grid-cols-[1fr_.9fr] lg:py-24">
+      {/* Hero: name, area, and the three actions, straight away. */}
+      <section className="bg-ink text-white">
+        <Container width="7xl" className="grid gap-10 py-12 lg:grid-cols-[1fr_.85fr] lg:items-center lg:py-16">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[.22em] text-gold">Kheni Dental · Surat</p>
-            <h1 className="mt-5 font-serif text-5xl leading-[.95] tracking-[-.04em] sm:text-6xl">{location.shortName}</h1>
-            <p className="mt-3 text-sm uppercase tracking-[.14em] text-white/38">{location.areaLabel}</p>
-            <p className="mt-6 max-w-xl text-lg leading-8 text-white/60">{location.note}</p>
-            {location.rating && (
-              <a href={location.googleProfileUrl} target="_blank" rel="noreferrer" data-track="review_click" data-placement={`location_hero_${location.slug}`} data-branch={location.slug} className="mt-6 inline-flex items-center gap-3 rounded-full border border-gold/20 px-4 py-2 text-sm">
-                <Star className="size-4 fill-current text-gold" /><strong>{location.rating}</strong><span className="text-white/50">{location.reviewCount} Google reviews</span><ArrowUpRight className="size-4 text-gold" />
-              </a>
+            {location.implantCentre && (
+              <p className="mb-3 inline-flex rounded-full bg-gold/15 px-2.5 py-1 text-[.6rem] font-semibold uppercase tracking-[.14em] text-gold">
+                Elite Implant Center
+              </p>
             )}
-            <div className="mt-8 flex flex-wrap gap-3">
-              <a href={whatsappUrl(message, location.whatsappNumber)} target="_blank" rel="noreferrer" data-track="whatsapp_click" data-placement={`location_hero_${location.slug}`} data-branch={location.slug} className="inline-flex items-center gap-2 rounded-full bg-gold px-5 py-3 text-sm font-semibold text-ink"><MessageCircle className="size-4" />WhatsApp this clinic</a>
-              <a href={location.mapsUrl} target="_blank" rel="noreferrer" data-track="directions_click" data-placement={`location_hero_${location.slug}`} data-branch={location.slug} className="inline-flex items-center gap-2 rounded-full border border-white/15 px-5 py-3 text-sm font-semibold">Open Google Maps <ArrowUpRight className="size-4" /></a>
+            <h1 className="font-serif text-[clamp(2.2rem,5.6vw,4rem)] leading-[1] tracking-[-.045em]">
+              {location.shortName}
+            </h1>
+            <p className="mt-3 text-sm uppercase tracking-[.14em] text-white/40">{location.areaLabel}</p>
+            <p className="mt-5 max-w-xl text-base leading-7 text-white/60">{location.note}</p>
+
+            <dl className="mt-7 space-y-3 text-sm">
+              <div className="flex gap-3">
+                <dt className="sr-only">Address</dt>
+                <MapPin className="mt-0.5 size-4 shrink-0 text-gold" aria-hidden="true" />
+                <dd className="leading-6 text-white/65">{location.address}</dd>
+              </div>
+              <div className="flex gap-3">
+                <dt className="sr-only">Hours</dt>
+                <Clock className="mt-0.5 size-4 shrink-0 text-gold" aria-hidden="true" />
+                <dd className="leading-6 text-white/65">
+                  {location.hours}
+                  {location.hoursNote && <span className="mt-1 block text-xs text-white/35">{location.hoursNote}</span>}
+                </dd>
+              </div>
+            </dl>
+
+            <div className="mt-8 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
+              <a
+                href={`tel:${location.phoneHref}`}
+                data-track="phone_click"
+                data-placement={`location_hero_${location.slug}`}
+                data-branch={location.slug}
+                className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-gold px-6 text-sm font-semibold text-ink sm:whitespace-nowrap"
+              >
+                <Phone className="size-4" aria-hidden="true" />
+                {location.phoneDisplay}
+              </a>
+              <a
+                href={whatsappUrl(message, location.whatsappNumber)}
+                target="_blank"
+                rel="noreferrer"
+                data-track="whatsapp_click"
+                data-placement={`location_hero_${location.slug}`}
+                data-branch={location.slug}
+                className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-white/15 px-6 text-sm font-semibold sm:whitespace-nowrap"
+              >
+                <MessageCircle className="size-4 text-gold" aria-hidden="true" />
+                WhatsApp
+              </a>
+              <DirectionsButton
+                location={location}
+                placement={`location_hero_${location.slug}`}
+                className="border border-white/15 bg-transparent text-white sm:whitespace-nowrap"
+              />
             </div>
           </div>
-          <div className="relative">
-            <MediaPlaceholder label={`${location.shortName} clinic exterior and interior`} className="min-h-[30rem]" />
-            <div className="absolute bottom-4 left-4 right-4 rounded-2xl border border-white/10 bg-ink/92 p-4 backdrop-blur">
-              <p className="flex items-center gap-2 text-sm text-white/70"><MapPin className="size-4 shrink-0 text-gold" />{location.address}</p>
-            </div>
-          </div>
+
+          <BranchMap location={location} ratio="4 / 3" className="border-white/10" />
         </Container>
       </section>
 
-      <Section spacing="lg">
+      {/* This branch on Google. Its own figure, never the other branch's. */}
+      <Section spacing="md">
         <Container width="7xl">
-          <div className="grid gap-5 md:grid-cols-3">
-            <div className="rounded-2xl border border-border bg-card p-6"><MapPin className="size-5 text-gold" /><h2 className="mt-4 font-serif text-2xl">Where to find us</h2><p className="mt-3 text-sm leading-6 text-muted-foreground">{location.address}</p><a href={location.mapsUrl} target="_blank" rel="noreferrer" data-track="directions_click" data-placement={`location_details_${location.slug}`} data-branch={location.slug} className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-gold">Open directions <ArrowUpRight className="size-4" /></a></div>
-            <a href={`tel:${location.phoneHref}`} data-track="phone_click" data-placement={`location_details_${location.slug}`} data-branch={location.slug} className="rounded-2xl border border-border bg-card p-6"><Phone className="size-5 text-gold" /><h2 className="mt-4 font-serif text-2xl">Call this branch</h2><p className="mt-3 text-sm text-muted-foreground">{location.phoneDisplay}</p><p className="mt-5 text-xs text-muted-foreground">Tap to call. Each of our clinics has its own number.</p></a>
-            <div className="rounded-2xl border border-border bg-card p-6"><Clock className="size-5 text-gold" /><h2 className="mt-4 font-serif text-2xl">When we are open</h2><p className="mt-3 text-sm leading-6 text-muted-foreground">{location.hours}</p>{location.hoursNote && <p className="mt-3 text-xs leading-5 text-muted-foreground">{location.hoursNote}</p>}</div>
+          <div className="grid gap-6 lg:grid-cols-[1fr_1fr] lg:items-stretch">
+            <BranchGoogleCard location={location} placement={`location_google_${location.slug}`} />
+            <div className="rounded-2xl border border-border bg-card p-6">
+              <h2 className="font-serif text-2xl leading-tight">Book at this clinic</h2>
+              <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                Call the number above, message us on WhatsApp, or send an appointment request.
+              </p>
+              <Link
+                href="/contact/#book"
+                data-track="appointment_start"
+                data-placement={`location_${location.slug}`}
+                className="mt-5 inline-flex min-h-12 items-center gap-2 rounded-full bg-ink px-6 text-sm font-semibold text-white"
+              >
+                Book Appointment
+                <ArrowRight className="size-4 text-gold" aria-hidden="true" />
+              </Link>
+              <p className="mt-6 border-t border-border pt-5 text-xs uppercase tracking-[.14em] text-muted-foreground">
+                Doctors at this clinic
+              </p>
+              <ul className="mt-3 flex flex-wrap gap-2">
+                {doctors.map((doctor) => (
+                  <li key={doctor.slug}>
+                    <Link
+                      href={`/doctors/${doctor.slug}/`}
+                      className="inline-flex min-h-11 items-center rounded-full border border-border px-3.5 text-xs font-medium hover:border-gold/50"
+                    >
+                      {doctor.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </Container>
       </Section>
 
-      <Section className="bg-[#f1eee7]" spacing="lg">
+      {/* Clinic photography */}
+      <Section className="bg-[#f1eee7]" spacing="md">
         <Container width="7xl">
-          {location.rating ? (
-            <div className="grid gap-8 lg:grid-cols-[.9fr_1.1fr] lg:items-center"><div><p className="text-xs font-semibold uppercase tracking-[.2em] text-gold">Reviews on Google</p><h2 className="mt-4 font-serif text-4xl sm:text-5xl">Have a look at Google before you decide.</h2><p className="mt-5 text-sm leading-7 text-muted-foreground">This rating sits on the Google profile for this clinic alone, because we do not pool reviews between our two branches. Open it and read them in full.</p></div><GoogleTrustCard placement={`location_google_${location.slug}`} /></div>
-          ) : (
-            <div className="rounded-[2rem] bg-ink p-8 text-white sm:p-10"><p className="text-xs font-semibold uppercase tracking-[.2em] text-gold">This branch on Google</p><h2 className="mt-4 font-serif text-4xl">This clinic has its own Google listing.</h2><p className="mt-5 max-w-2xl text-sm leading-7 text-white/55">Hirabaug is listed separately from Swastik Plaza, and one branch rating is not the other. We are not showing a star figure here until we can confirm the current one for this listing, so open the profile and read what Google has today.</p><a href={location.googleProfileUrl} target="_blank" rel="noreferrer" data-track="review_click" data-placement={`location_google_${location.slug}`} data-branch={location.slug} className="mt-7 inline-flex items-center gap-2 rounded-full bg-gold px-5 py-3 text-sm font-semibold text-ink">See this branch on Google <ArrowUpRight className="size-4" /></a></div>
-          )}
+          <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Inside the clinic</h2>
+          <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {clinicGallerySlots.slice(0, 4).map((shot) => (
+              <MediaFrame key={shot} shot={shot} tone="light" ratio="4 / 3" />
+            ))}
+          </div>
         </Container>
       </Section>
+
+      {/* The other branch */}
+      {other && (
+        <Section spacing="md">
+          <Container width="7xl">
+            <div className="flex flex-wrap items-center justify-between gap-5 rounded-2xl border border-border bg-card p-6 sm:p-8">
+              <div>
+                <p className="text-[.66rem] font-semibold uppercase tracking-[.18em] text-gold">Our other clinic</p>
+                <p className="mt-2 font-serif text-2xl leading-tight">{other.shortName}</p>
+                <p className="mt-1 text-sm text-muted-foreground">{other.areaLabel}</p>
+              </div>
+              <Link
+                href={`/locations/${other.slug}/`}
+                className="inline-flex min-h-12 items-center gap-2 rounded-full border border-border px-5 text-sm font-semibold text-gold"
+              >
+                View clinic <ArrowRight className="size-4" aria-hidden="true" />
+              </Link>
+            </div>
+          </Container>
+        </Section>
+      )}
     </>
   );
 }
