@@ -16,6 +16,9 @@ export const site = {
   yearsInSurat: 15,
   googleRating: "4.9",
   googleReviewCount: "1,593",
+  googleReviewDisplay: "1,500+",
+  googleProfileUrl: "https://maps.app.goo.gl/iKskGAZuZL92Tm7G7",
+  googleWriteReviewUrl: "https://search.google.com/local/writereview?placeid=ChIJddZdiXpP4DsRvtrOvXjbQqA",
   consultationMessage:
     "Hello Kheni Dental, I would like to book a dental consultation. Please share the available appointment options.",
 } as const;
@@ -26,6 +29,7 @@ export const navLinks = [
   { href: "/doctors", label: "Doctors" },
   { href: "/locations", label: "Locations" },
   { href: "/international-patients", label: "International Patients" },
+  { href: "/reviews", label: "Reviews" },
   { href: "/patient-resources", label: "Resources" },
 ] as const;
 
@@ -33,52 +37,82 @@ export type Location = {
   slug: string;
   name: string;
   shortName: string;
+  areaLabel: string;
   address: string;
   phoneDisplay: string;
   phoneHref: string;
   whatsappNumber: string;
   mapsUrl: string;
+  googleProfileUrl: string;
+  googleWriteReviewUrl: string;
+  googlePlaceId: string;
   rating?: string;
   reviewCount?: string;
   reviewSource?: string;
   hours: string;
+  hoursNote?: string;
   note: string;
 };
 
 export const locations: Location[] = [
   {
-    slug: "yogi-chowk",
-    name: "Kheni Dental Clinic, Yogi Chowk",
-    shortName: "Yogi Chowk",
+    slug: "swastik-plaza",
+    name: "Kheni Dental, Swastik Plaza",
+    shortName: "Swastik Plaza",
+    areaLabel: "Nana Varachha, Surat",
     address:
       "Shop No. 38-39, Swastik Plaza, Yogi Chowk Ground, Chikuwadi, Nana Varachha, Surat, Gujarat 395011, India",
     phoneDisplay: "+91 95101 12354",
     phoneHref: "+919510112354",
     whatsappNumber: "919510112354",
     mapsUrl: "https://maps.app.goo.gl/iKskGAZuZL92Tm7G7",
+    googleProfileUrl: "https://maps.app.goo.gl/iKskGAZuZL92Tm7G7",
+    googleWriteReviewUrl: "https://search.google.com/local/writereview?placeid=ChIJddZdiXpP4DsRvtrOvXjbQqA",
+    googlePlaceId: "ChIJddZdiXpP4DsRvtrOvXjbQqA",
     rating: "4.9",
     reviewCount: "1,593",
     reviewSource: "Google",
-    hours: "Please call to confirm today's clinic hours.",
-    note: "The Yogi Chowk branch is the clinic's established local location and main online review profile.",
+    hours: "Mon-Sat 9:30 AM-1:00 PM and 4:00 PM-8:00 PM",
+    hoursNote: "Clinic-provided hours. Call before travelling if your visit is time-sensitive.",
+    note: "The long-standing Kheni Dental clinic at Swastik Plaza, serving families across Surat.",
   },
   {
     slug: "hirabaug",
-    name: "Kheni Dental Clinic & Elite Implant Center, Hirabaug",
+    name: "Kheni Dental & Elite Implant Center, Hirabaug",
     shortName: "Hirabaug",
+    areaLabel: "Varachha Main Road, Surat",
     address:
       "2, Varachha Main Road, above Shiv Plywood, near New Shakti Vijay Society, opposite Surat Super Store, Hirabaug, Surat, Gujarat 395006, India",
     phoneDisplay: "+91 97379 97543",
     phoneHref: "+919737997543",
     whatsappNumber: "919737997543",
     mapsUrl: "https://maps.app.goo.gl/hkHmTr8ZxLYaH8Vc9",
-    rating: "4.8",
-    reviewCount: "190",
-    reviewSource: "Justdial",
-    hours: "Please call to confirm today's clinic hours.",
-    note: "The Hirabaug branch serves patients on Varachha Main Road and is the Elite Implant Center location shown in clinic materials.",
+    googleProfileUrl: "https://maps.app.goo.gl/hkHmTr8ZxLYaH8Vc9",
+    googleWriteReviewUrl: "https://search.google.com/local/writereview?placeid=ChIJ89yBAKVP4DsR3TYY_211oRg",
+    googlePlaceId: "ChIJ89yBAKVP4DsR3TYY_211oRg",
+    hours: "Mon-Sat 9:30 AM-1:00 PM and 4:00 PM-8:00 PM",
+    hoursNote: "Clinic-provided hours. Call before travelling if your visit is time-sensitive.",
+    note: "The Elite Implant Center location on Varachha Main Road, with direct access from Hirabaug.",
   },
 ];
+
+export const reviewHighlights = [
+  {
+    theme: "Comfort",
+    quote: "The doctor and staff were super helpful, and the environment was comfortable.",
+    source: "Google review",
+  },
+  {
+    theme: "Service",
+    quote: "Highly recommend for top quality dental care👍😃 Amazing service👍",
+    source: "Google review",
+  },
+  {
+    theme: "Team",
+    quote: "Amazing work Good Co operation Good behavior and service of doctors",
+    source: "Google review",
+  },
+] as const;
 
 export type Doctor = {
   slug: string;
@@ -101,7 +135,7 @@ export const doctors: Doctor[] = [
     yearsExperience: 15,
     badges: ["Dental Implants", "Cosmetic Dentistry", "Restorative Care"],
     bio:
-      "Dr. Mayur Kheni leads Kheni Dental with 15 years of clinical experience. His listed areas of focus include implantology and cosmetic dental surgery. Additional training, memberships and case credentials will be added after the clinic verifies them.",
+      "Dr. Mayur Kheni leads Kheni Dental with 15 years of clinical experience. His listed areas of focus include implantology, cosmetic dental surgery and restorative care.",
     philosophy:
       "Patients should understand what is happening, why a treatment is being suggested and what the next step looks like before they decide.",
     relatedTreatmentSlugs: ["dental-implants-surat", "cosmetic-smile-dentistry", "full-mouth-rehabilitation"],
@@ -114,7 +148,7 @@ export const doctors: Doctor[] = [
     yearsExperience: 9,
     badges: ["Smile Designing", "Cosmetic Care", "General Dentistry"],
     bio:
-      "Dr. Jinal Monapara has 9 years of experience and is presented by the clinic as a dental surgeon and smile designing specialist. Her profile will be expanded with verified training and clinical interests once supplied by the clinic.",
+      "Dr. Jinal Monapara has 9 years of experience as a dental surgeon and smile designing specialist, with a focus on helping patients understand aesthetic options without losing sight of oral health and function.",
     philosophy:
       "A smile plan should feel personal. The goal is to understand what the patient wants to change and choose an approach that respects oral health and function.",
     relatedTreatmentSlugs: ["cosmetic-smile-dentistry", "crowns-and-bridges", "general-family-dentistry"],
@@ -140,7 +174,7 @@ export const doctors: Doctor[] = [
     yearsExperience: 4,
     badges: ["Dental Care", "Patient Education", "Preventive Dentistry"],
     bio:
-      "Dr. Parita Vastarpara has 4 years of experience as a dental surgeon. A more specific clinical focus will be added only after the clinic confirms it.",
+      "Dr. Parita Vastarpara has 4 years of experience as a dental surgeon, with a patient-first approach to everyday dental care and prevention.",
     philosophy:
       "Good dental care starts with listening carefully, explaining options in plain language and helping patients feel comfortable asking questions.",
     relatedTreatmentSlugs: ["general-family-dentistry", "root-canal-treatment-surat", "crowns-and-bridges"],
@@ -431,11 +465,11 @@ export const homepageFaqs = [
   {
     question: "Which Kheni Dental branch should I visit?",
     answer:
-      "Kheni Dental currently operates in Yogi Chowk and Hirabaug, Surat. Call or WhatsApp the clinic if you are unsure which location is best for the treatment or doctor you need.",
+      "Kheni Dental currently operates at Swastik Plaza and Hirabaug in Surat. Call or WhatsApp if you are unsure which clinic is more convenient for the doctor or treatment you need.",
   },
   {
     question: "Do you help NRI or international patients plan visits?",
     answer:
-      "The website provides a dedicated international-patient enquiry path. Exact travel, accommodation and remote-consultation support should be confirmed with the clinic before you make travel plans.",
+      "Yes. International and NRI patients can start with a dedicated enquiry. Share your travel window first so the clinic can explain what can realistically be assessed or planned during your stay.",
   },
 ] as const;

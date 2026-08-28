@@ -10,7 +10,7 @@ export function ConsultationForm({ international = false }: { international?: bo
   const [country, setCountry] = useState(international ? "" : "India");
   const [contact, setContact] = useState("");
   const [preference, setPreference] = useState("WhatsApp");
-  const [branch, setBranch] = useState("yogi-chowk");
+  const [branch, setBranch] = useState("swastik-plaza");
 
   const submit = (event: FormEvent) => {
     event.preventDefault();
@@ -62,7 +62,7 @@ export function ConsultationForm({ international = false }: { international?: bo
           </select>
         </div>
       </div>
-      <p className="text-xs leading-5 text-muted-foreground">Please do not enter diagnosis, symptoms, medical history or other sensitive health information in general website forms.</p>
+      <p className="text-xs leading-5 text-muted-foreground">Please do not enter diagnosis, symptoms, medical history or other sensitive health information in this form.</p>
       <button type="submit" className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-gold px-5 text-sm font-semibold text-ink transition-transform hover:-translate-y-0.5">Continue on WhatsApp <ArrowRight className="size-4" /></button>
     </form>
   );

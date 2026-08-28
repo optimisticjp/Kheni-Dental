@@ -16,16 +16,16 @@ Snapshot prepared 27 August 2026. Recheck public ratings and hours immediately b
 - Dr. Parita Vastarpara, B.D.S., Dental Surgeon, 4 years experience
 
 ### Branch phone numbers from clinic material
-- Yogi Chowk: +91 95101 12354
+- Swastik Plaza branch: +91 95101 12354
 - Hirabaug: +91 97379 97543
 
 ### Maps links provided by the client
-- Yogi Chowk: https://maps.app.goo.gl/iKskGAZuZL92Tm7G7
+- Swastik Plaza Google Maps profile: https://maps.app.goo.gl/iKskGAZuZL92Tm7G7
 - Hirabaug: https://maps.app.goo.gl/hkHmTr8ZxLYaH8Vc9
 
 ## Public profile snapshot
 
-### Yogi Chowk
+### Swastik Plaza / Nana Varachha
 Google business result observed on 27 August 2026:
 - Rating: 4.9
 - Review count: 1,593
@@ -47,6 +47,6 @@ Justdial snapshot:
 Reference:
 https://www.justdial.com/Surat/Kheni-Dental-Clinic-Elite-Implant-Center-Above-Shiv-Plywood-Near-New-Shakti-Vijay-Societyopposite-Surat-Varachha-Road/0261PX261-X261-220319203844-X7U8_BZDET
 
-## Hours warning
+## Hours note
 
-Public sources conflict with older clinic material on visiting hours. The website therefore says to call and confirm today's hours until the clinic gives final current timings for both branches.
+Clinic material supplied by the client lists Monday-Saturday 9:30 AM-1:00 PM and 4:00 PM-8:00 PM. The current Google result for the Swastik Plaza profile surfaces different hours, so the site shows the clinic-provided schedule with a reminder to call before a time-sensitive visit. Reconfirm both branches immediately before production launch.

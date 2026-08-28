@@ -6,7 +6,7 @@ Production-oriented website foundation for **Kheni Dental & Elite Implant Center
 
 - Domain: `https://www.khenidentalcare.com`
 - Patient email: `smile@khenidentalcare.com`
-- Locations: Yogi Chowk and Hirabaug, Surat
+- Public-facing clinic names: Swastik Plaza and Hirabaug, Surat
 - Framework: Next.js 16, React 19, TypeScript, Tailwind CSS 4
 - Cloudflare deployment: vinext + Cloudflare Workers
 - Tracking: GTM-ready, disabled until a GTM ID is configured
@@ -52,3 +52,9 @@ Read:
 - `SENIOR_AUDIT.md`
 
 Real doctor and clinic photography is still required. Do not open search indexing until content, legal pages, tracking consent and location details have been reviewed.
+
+## August 2026 reputation + Maps pass
+
+The latest build makes Google reputation and two-clinic navigation part of the primary patient journey. See `GOOGLE_REPUTATION_AND_MAPS.md` and `MOBILE_MENU_FIX.md`.
+
+Public-facing location naming uses **Swastik Plaza** and **Hirabaug**. The exact postal address still contains locality wording where required for accurate directions and local SEO.

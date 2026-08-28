@@ -8,7 +8,7 @@ export function MediaPlaceholder({ label, className }: { label: string; classNam
       <div className="relative flex h-full min-h-64 flex-col items-center justify-center p-8 text-center">
         <span className="grid size-12 place-items-center rounded-full border border-gold/30 bg-gold/10 text-gold"><Camera className="size-5" /></span>
         <p className="mt-4 max-w-xs text-sm font-medium text-white/80">{label}</p>
-        <p className="mt-2 max-w-xs text-xs leading-5 text-white/40">Professional Kheni Dental photography will be added in the final polish.</p>
+        <p className="mt-2 max-w-xs text-xs leading-5 text-white/40">Professional Kheni Dental photography coming soon.</p>
       </div>
     </div>
   );

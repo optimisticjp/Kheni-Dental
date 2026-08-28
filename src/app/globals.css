@@ -84,6 +84,14 @@
 }
 
 .ticker-track { animation: ticker 30s linear infinite; }
+.map-grid {
+  background-image:
+    linear-gradient(rgba(202,169,104,.16) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(202,169,104,.16) 1px, transparent 1px);
+  background-size: 38px 38px;
+  mask-image: radial-gradient(circle at 70% 35%, #000 0, rgba(0,0,0,.7) 42%, transparent 78%);
+}
+
 @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
 .prose-kheni h2 { font-family: var(--font-serif); font-size: clamp(2rem,4vw,3.3rem); letter-spacing: -.035em; line-height: 1.05; margin-top: 3.5rem; }
@@ -95,4 +103,10 @@
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
   html { scroll-behavior: auto; }
+}
+
+@layer utilities {
+  /* Darker gold for small text on light surfaces; brighter gold inside dark sections. */
+  .text-gold { color: #8b6428; }
+  .bg-ink .text-gold, .dark-gold .text-gold, .dark-gold.text-gold { color: #d2b56f; }
 }

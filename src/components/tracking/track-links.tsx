@@ -15,6 +15,7 @@ export function TrackLinks() {
         event: eventName,
         placement: tracked.dataset.placement || "unspecified",
         interaction: tracked.dataset.interaction || "click",
+        branch: tracked.dataset.branch,
       });
     };
 

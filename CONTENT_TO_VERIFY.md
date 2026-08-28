@@ -38,3 +38,9 @@
 - "Best" or "No. 1" claims
 - Pain-free or guaranteed outcome claims
 - Dental tourism support services not confirmed by the clinic
+
+## Google reputation before final launch
+- Refresh the Swastik Plaza Google rating and review count immediately before launch.
+- Re-check whether the Hirabaug Google profile exposes a current rating and review count.
+- Confirm the direct Google review links for both clinics.
+- Confirm the final visiting hours for both clinics.

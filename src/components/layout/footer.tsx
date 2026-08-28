@@ -23,7 +23,7 @@ export function Footer() {
           </div>
           <div>
             <h3 className="text-xs font-semibold uppercase tracking-[.2em] text-gold">Explore</h3>
-            <ul className="mt-5 space-y-3">{navLinks.slice(0,5).map(link => <li key={link.href}><Link className="text-sm text-white/60 hover:text-white" href={link.href}>{link.label}</Link></li>)}<li><Link className="text-sm text-white/60 hover:text-white" href="/contact">Contact</Link></li></ul>
+            <ul className="mt-5 space-y-3">{navLinks.map(link => <li key={link.href}><Link className="text-sm text-white/60 hover:text-white" href={link.href}>{link.label}</Link></li>)}<li><Link className="text-sm text-white/60 hover:text-white" href="/contact">Contact</Link></li></ul>
           </div>
           <div>
             <h3 className="text-xs font-semibold uppercase tracking-[.2em] text-gold">Treatments</h3>
@@ -37,6 +37,7 @@ export function Footer() {
                   <Link href={`/locations/${location.slug}`} className="font-medium text-white hover:text-gold">{location.shortName}</Link>
                   <p className="mt-2 flex gap-2 text-xs leading-5 text-white/50"><MapPin className="mt-0.5 size-3.5 shrink-0 text-gold" />{location.address}</p>
                   <a className="mt-2 flex gap-2 text-sm text-white/60 hover:text-white" href={`tel:${location.phoneHref}`} data-track="phone_click" data-placement="footer"><Phone className="size-4 text-gold" />{location.phoneDisplay}</a>
+                  <a className="mt-2 inline-flex text-xs font-semibold text-gold hover:text-gold-soft" href={location.googleProfileUrl} target="_blank" rel="noreferrer" data-track="review_click" data-placement={`footer_${location.slug}`}>Google profile ↗</a>
                 </div>
               ))}
             </div>
