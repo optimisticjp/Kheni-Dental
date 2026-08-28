@@ -154,7 +154,7 @@ export function StartingPointNavigator() {
 
         <div className="mt-8 rounded-2xl border border-white/8 bg-ink/40 p-5 sm:p-6">
           <p className="text-[.68rem] font-semibold uppercase tracking-[.2em] text-gold">
-            What the dentist would examine
+            What the dentist needs to assess
           </p>
           <ul className="mt-4 grid gap-2.5 sm:grid-cols-2">
             {point.examined.map((item) => (

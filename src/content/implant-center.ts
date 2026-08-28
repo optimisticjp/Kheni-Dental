@@ -28,7 +28,7 @@ export type StartingPoint = {
   questions: string[];
   /** Options that are usually worth discussing. Never a recommendation. */
   options: string[];
-  /** What a dentist would need to look at before anything is decided. */
+  /** What a dentist needs to assess, clinically and with imaging, before anything is decided. */
   examined: string[];
   ctaLabel: string;
   whatsappMessage: string;
@@ -128,7 +128,7 @@ export const startingPoints: StartingPoint[] = [
       "Leaving the gap for now, with a clear reason and a date to review it",
     ],
     examined: [
-      "The bone under the gap and whether it can support an implant",
+      "Whether the bone can support an implant, assessed with appropriate imaging",
       "The health of the gums around the site",
       "The condition of the teeth on either side, and whether they already need work",
       "Your bite, and whether the opposing tooth has started to drift",
@@ -169,7 +169,7 @@ export const startingPoints: StartingPoint[] = [
     label: "A denture that moves",
     teaser: "It slips when you eat or talk, and you have stopped trusting it.",
     summary:
-      "A denture that shifts is usually a support problem rather than a fitting problem, and people often put up with it far longer than they need to. What can be done depends on how much bone is left underneath and how the denture is currently held.",
+      "A denture that moves can become hard to trust when you are eating or speaking, and people often put up with it far longer than they need to. What can be done depends on how it fits, on the tissues and bone underneath, and on how your bite meets.",
     questions: [
       "Can my existing denture be made more stable?",
       "Would implants help, and how many would be involved?",
@@ -182,8 +182,8 @@ export const startingPoints: StartingPoint[] = [
       "Reviewing and remaking the existing denture, if that is the more sensible first step",
     ],
     examined: [
-      "How much bone remains in the ridge under the denture",
-      "The condition of the gum tissue that has been carrying the load",
+      "The bone in the ridge underneath, assessed with appropriate imaging",
+      "The condition of the gum tissue under the denture",
       "How the current denture sits and where it loses grip",
       "Your bite and how the upper and lower jaws meet",
     ],
@@ -279,11 +279,11 @@ export const decisionStages: Stage[] = [
   },
   {
     title: "Examination",
-    copy: "The dentist examines your gums, the bone under the gap, your bite and the teeth on either side. This is where most of the answer comes from.",
+    copy: "The dentist examines the site itself, your gums, your bite and the teeth on either side. That is where the picture starts, and it decides what else needs looking at.",
   },
   {
-    title: "Imaging where it is needed",
-    copy: "Imaging is used when there is a question it can answer, usually about the bone. It is not routine, and if it is suggested for your case you should ask what it will show.",
+    title: "Imaging to assess the bone",
+    copy: "Planning an implant commonly needs radiographic assessment, so the bone and the nearby structures can be evaluated before anything is placed. The dentist decides which imaging is appropriate for your case, and you can always ask what it is expected to show.",
   },
   {
     title: "Compare the options",
@@ -291,7 +291,7 @@ export const decisionStages: Stage[] = [
   },
   {
     title: "Agree the plan and the stages",
-    copy: "Once you know the options, the plan is written out in stages so you can see what happens when. Nothing is booked until you have had the chance to ask what you still do not understand.",
+    copy: "Once you know the options, the plan is set out in stages so you can see what happens when. The aim is that you understand the stages, and the questions you still want answered, before you decide what happens next.",
   },
 ];
 
@@ -307,11 +307,11 @@ export const consultation = {
     },
     {
       title: "An examination",
-      copy: "The gums, the bone, the bite and the teeth around the space are checked properly.",
+      copy: "The site, the gums, the bite and the teeth around the space are checked properly.",
     },
     {
-      title: "Imaging if it is needed",
-      copy: "Only where it answers a question about your case, most often about the bone.",
+      title: "Imaging to assess the bone",
+      copy: "Implant planning commonly needs radiographic assessment of the bone and the structures near it. The dentist decides what is appropriate for your case.",
     },
     {
       title: "The options, in plain words",
@@ -327,7 +327,7 @@ export const consultation = {
     },
     {
       title: "Your decision",
-      copy: "Taken in your own time. You are not asked to commit in the chair.",
+      copy: "You should leave understanding the options well enough to decide what you want to do next.",
     },
   ] satisfies Stage[],
 } as const;
@@ -342,7 +342,7 @@ export const planFactors: FactorGroup = {
     },
     {
       title: "Bone support",
-      copy: "An implant needs enough bone to hold it. How much is there, and its shape, is what imaging is usually for.",
+      copy: "An implant needs enough bone to hold it. How much there is, and the shape of it, is assessed with appropriate imaging when the case is planned.",
     },
     {
       title: "General health",
@@ -475,7 +475,7 @@ export const implantFaqs = [
   {
     question: "I have been told I do not have enough bone. What now?",
     answer:
-      "That is a common finding and it does not automatically rule anything out. Depending on the site, the options may include building up the area before an implant is placed, choosing a different position, or looking at another way of replacing the tooth altogether. It is a conversation worth having in person, with imaging where it is needed, rather than a yes or no from a website.",
+      "That is a common finding and it does not automatically rule anything out. Depending on the site, the options may include building up the area before an implant is placed, choosing a different position, or looking at another way of replacing the tooth altogether. It is a conversation worth having in person, with the imaging needed to assess the site properly, rather than a yes or no from a website.",
   },
   {
     question: "Can I have an implant if I smoke?",

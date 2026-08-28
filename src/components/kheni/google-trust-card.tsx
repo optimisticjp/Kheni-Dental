@@ -20,9 +20,12 @@ export function GoogleTrustCard({ className = "", dark = false, placement = "goo
       <p className={cn("mt-5 text-sm leading-6", dark ? "text-white/62" : "text-muted-foreground")}>
         From {site.googleReviewCount} reviews on the Swastik Plaza profile. Our Hirabaug clinic is listed on Google separately.
       </p>
-      <div className="mt-5 flex flex-wrap gap-4 text-sm font-semibold">
-        <a href={site.googleProfileUrl} target="_blank" rel="noreferrer" data-track="review_click" data-placement={placement} className="inline-flex items-center gap-2 text-gold">Read Google reviews <ArrowUpRight className="size-4" /></a>
-        <a href={site.googleWriteReviewUrl} target="_blank" rel="noreferrer" data-track="review_click" data-placement={`${placement}_write`} className={dark ? "text-white/65 hover:text-white" : "text-muted-foreground hover:text-foreground"}>Share your experience</a>
+      {/* Both actions stay visually light text links, but each carries a 44px
+          practical hit area on touch. The extra height is absorbed by the
+          negative margins here, so the card's spacing is unchanged. */}
+      <div className="mt-2 -mb-3 flex flex-wrap items-center gap-x-5 text-sm font-semibold">
+        <a href={site.googleProfileUrl} target="_blank" rel="noreferrer" data-track="review_click" data-placement={placement} className="inline-flex min-h-11 items-center gap-2 text-gold">Read Google reviews <ArrowUpRight className="size-4" /></a>
+        <a href={site.googleWriteReviewUrl} target="_blank" rel="noreferrer" data-track="review_click" data-placement={`${placement}_write`} className={cn("inline-flex min-h-11 items-center", dark ? "text-white/65 hover:text-white" : "text-muted-foreground hover:text-foreground")}>Share your experience</a>
       </div>
     </div>
   );

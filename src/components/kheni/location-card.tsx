@@ -22,7 +22,7 @@ export function LocationCard({ location }: { location: Location }) {
               <p className="mt-1 text-[.62rem] uppercase tracking-[.12em] text-white/45">{location.reviewSource}</p>
             </a>
           ) : (
-            <a href={location.googleProfileUrl} target="_blank" rel="noreferrer" data-track="review_click" data-placement={`location_${location.slug}_google`} data-branch={location.slug} className="shrink-0 rounded-full border border-white/12 px-3 py-2 text-[.68rem] font-semibold uppercase tracking-[.12em] text-white/65 hover:border-gold/40 hover:text-gold">View on Google</a>
+            <a href={location.googleProfileUrl} target="_blank" rel="noreferrer" data-track="review_click" data-placement={`location_${location.slug}_google`} data-branch={location.slug} className="inline-flex min-h-11 shrink-0 items-center rounded-full border border-white/12 px-3.5 text-[.68rem] font-semibold uppercase tracking-[.12em] text-white/65 hover:border-gold/40 hover:text-gold">View on Google</a>
           )}
         </div>
         <div className="relative mt-8 inline-flex items-center gap-2 text-sm text-white/60"><MapPin className="size-4 text-gold" />Tap Directions below to open Google Maps</div>
