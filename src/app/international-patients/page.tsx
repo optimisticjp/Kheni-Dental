@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { GoogleTrustBar } from "@/components/kheni/google-trust";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { ArrowRight, Globe2, MessageCircle, Plane } from "lucide-react";
@@ -18,6 +19,7 @@ import { locations, treatments } from "@/content/site";
 import { whatsappUrl } from "@/lib/links";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/international-patients/" },
   title: "International & NRI Patients",
   description:
     "Dental treatment in Surat for NRI and international patients. Send records and travel dates before you fly, get a plan and an estimate, and know how many visits your case needs.",
@@ -125,6 +127,7 @@ export default function InternationalPage() {
             className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-gold px-6 text-sm font-semibold text-ink sm:whitespace-nowrap"
           >
             <MessageCircle className="size-4" aria-hidden="true" />
+
             Send your dates on WhatsApp
           </a>
           <Link
@@ -159,6 +162,15 @@ export default function InternationalPage() {
           </div>
         </Container>
       </section>
+
+      {/* Independent proof. The only thing on this site a patient can
+          go and check for themselves, so it is restated wherever they
+          might be deciding. */}
+      <Section spacing="sm">
+        <Container width="7xl">
+          <GoogleTrustBar placement="international-patients_trust" />
+        </Container>
+      </Section>
 
       {/* ── The journey ──────────────────────────────────────────────────── */}
       <Section className="grain relative isolate bg-ink text-white" spacing="md">

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { GoogleTrustBar } from "@/components/kheni/google-trust";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight, ArrowUpRight, MessageCircle, Phone, Star } from "lucide-react";
@@ -30,7 +31,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (SPECIALIZED_SLUGS.has(slug)) return {};
   const t = treatments.find((x) => x.slug === slug);
   if (!t) return {};
-  return { title: t.seoTitle, description: t.metaDescription };
+  return {
+    title: t.seoTitle,
+    description: t.metaDescription,
+    alternates: { canonical: `/treatments/${slug}/` },
+  };
 }
 
 export default async function TreatmentPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -108,6 +113,10 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
           </div>
 
           <MediaFrame shot={`${t.title} at Kheni Dental`} ratio="4 / 3" className="w-full" />
+
+          {/* Independent proof, on the page where the patient is deciding
+              whether this clinic is the one. */}
+          <GoogleTrustBar placement={`treatment_${slug}`} className="mt-4" />
         </Container>
       </section>
 

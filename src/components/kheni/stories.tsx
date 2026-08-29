@@ -70,10 +70,17 @@ export function PatientStoryGrid({ tone = "light" }: { tone?: "dark" | "light" }
  * opens the video, which also keeps the page light.
  */
 export function VideoStoryGrid({ tone = "dark" }: { tone?: "dark" | "light" }) {
-  if (videoStories.length > 0) {
+  // A story without a poster frame is not a video tile. The markup below
+  // layers white type over a gradient over the thumbnail, so an empty `src`
+  // renders that type onto whatever is behind it — on the reviews page that
+  // was white on white. Playable stories only; the rest fall through to the
+  // plates, which is what they are.
+  const playable = videoStories.filter((video) => video.thumbnail && video.videoUrl);
+
+  if (playable.length > 0) {
     return (
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {videoStories.map((video) => (
+        {playable.map((video) => (
           <a
             key={video.id}
             href={video.videoUrl}

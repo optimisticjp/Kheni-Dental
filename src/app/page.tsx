@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { GoogleReviewQuotes } from "@/components/kheni/google-trust";
 import { ArrowRight, ArrowUpRight, MapPin, MessageCircle, Phone, Plane } from "lucide-react";
 
 import { Accordion } from "@/components/ui/accordion";
@@ -258,6 +259,10 @@ export default function Home() {
             belongs here is the part the hero cannot show: what patients
             actually said.
           */}
+          {/* Three things patients actually wrote on Google, verbatim. These
+              are independent of us in a way nothing else on the page is. */}
+          <GoogleReviewQuotes tone="dark" placement="home_google_quotes" className="mt-9" />
+
           <div className="mt-10">
             <VideoStoryGrid />
             <div className="mt-4">

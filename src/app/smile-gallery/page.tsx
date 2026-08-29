@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { GoogleTrustBar } from "@/components/kheni/google-trust";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
@@ -9,6 +10,7 @@ import { Section } from "@/components/ui/section";
 import { caseDisclaimer } from "@/content/cases";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/smile-gallery/" },
   title: "Before & After Results",
   description:
     "Before and after dental results from Kheni Dental in Surat. Implants, full mouth rehabilitation, smile design, crowns and braces, shown with patient permission.",
@@ -32,9 +34,19 @@ export default function SmileGalleryPage() {
         copy={`Implants, full mouth rehabilitation, smile design, crowns and braces. Every case here was treated at one of our two Surat clinics and is published only with the patient's written permission.`}
       />
 
+
       <Section spacing="md">
         <Container width="7xl">
           <FeaturedCase />
+        </Container>
+      </Section>
+
+      {/* Independent proof. The only thing on this site a patient can
+          go and check for themselves, so it is restated wherever they
+          might be deciding. */}
+      <Section spacing="sm">
+        <Container width="7xl">
+          <GoogleTrustBar placement="smile-gallery_trust" />
         </Container>
       </Section>
 

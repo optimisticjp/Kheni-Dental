@@ -10,6 +10,7 @@ import { Section } from "@/components/ui/section";
 import { whatsappUrl } from "@/lib/links";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/locations/" },
   title: "Our Two Clinics in Surat",
   description:
     "Kheni Dental has two clinics in Surat: Swastik Plaza at Yogi Chowk, and the Elite Implant Center at Hirabaug on Varachha Main Road. Address, phone, hours and directions.",

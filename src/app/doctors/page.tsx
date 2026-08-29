@@ -13,6 +13,7 @@ import { doctors, locations } from "@/content/site";
 import { whatsappUrl } from "@/lib/links";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/doctors/" },
   title: "Meet Our Dentists in Surat",
   description:
     "Dr. Mayur Kheni, Dr. Jinal Monapara, Dr. Ishita Dobariya and Dr. Parita Vastarpara. Degrees, years of experience and areas of work at both Kheni Dental clinics in Surat.",

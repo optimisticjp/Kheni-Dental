@@ -33,6 +33,7 @@ const SLUG = "dental-implants-surat";
 const treatment = treatments.find((item) => item.slug === SLUG);
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/treatments/dental-implants-surat/" },
   title: treatment?.seoTitle ?? "Dental Implants in Surat",
   description:
     "Dental implants in Surat at Kheni Dental & Elite Implant Center, Hirabaug and Yogi Chowk. Single, multiple and full mouth implants led by Dr. Mayur Kheni.",

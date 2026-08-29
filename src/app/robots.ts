@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { site } from "@/content/site";
 
 export const dynamic = "force-static";
 
@@ -7,7 +8,7 @@ export default function robots(): MetadataRoute.Robots {
   if (!allowIndexing) {
     return { rules: { userAgent: "*", disallow: "/" } };
   }
-  const base = process.env.NEXT_PUBLIC_SITE_URL || "https://www.khenidentalcare.com";
+  const base = process.env.NEXT_PUBLIC_SITE_URL || site.domain;
   return {
     rules: { userAgent: "*", allow: "/" },
     sitemap: `${base}/sitemap.xml`,

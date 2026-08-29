@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { GoogleTrustBar } from "@/components/kheni/google-trust";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, MessageCircle } from "lucide-react";
 
@@ -9,6 +10,7 @@ import { helpTopics, problems } from "@/content/site";
 import { whatsappUrl } from "@/lib/links";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/problems-we-treat/" },
   title: "Dental Problems We Treat in Surat",
   description:
     "Tooth pain, bleeding gums, a missing tooth, a nervous child, crowded teeth. Start with the problem you have and see what usually comes next at our Surat clinics.",
@@ -64,6 +66,7 @@ export default function ProblemsPage() {
                       {String(index + 1).padStart(2, "0")}
                     </span>
                     <span aria-hidden="true" className="rule-gold h-px w-10" />
+
                   </div>
                   <h2 className="mt-4 font-serif text-2xl leading-snug tracking-[-.02em]">
                     &ldquo;{problem.title}&rdquo;
@@ -80,6 +83,15 @@ export default function ProblemsPage() {
               </li>
             ))}
           </ul>
+        </Container>
+      </Section>
+
+      {/* Independent proof. The only thing on this site a patient can
+          go and check for themselves, so it is restated wherever they
+          might be deciding. */}
+      <Section spacing="sm">
+        <Container width="7xl">
+          <GoogleTrustBar placement="problems-we-treat_trust" />
         </Container>
       </Section>
 

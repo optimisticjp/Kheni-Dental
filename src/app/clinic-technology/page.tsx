@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { GoogleTrustBar } from "@/components/kheni/google-trust";
 import Link from "next/link";
 import { ArrowRight, MessageCircle } from "lucide-react";
 
@@ -11,6 +12,7 @@ import { Section } from "@/components/ui/section";
 import { whatsappUrl } from "@/lib/links";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/clinic-technology/" },
   title: "What We Check Before We Treat You",
   description:
     "How Kheni Dental in Surat assesses a tooth before treating it, and where implant work is planned. Two clinics, at Yogi Chowk and Hirabaug.",
@@ -64,6 +66,7 @@ export default function ClinicTechnologyPage() {
         copy="Most of what goes wrong with dental work goes wrong at the planning stage. This is what an assessment at Kheni Dental actually involves."
       />
 
+
       {/* ── The assessment sequence ───────────────────────────────────────── */}
       <Section spacing="md">
         <Container width="7xl">
@@ -78,6 +81,15 @@ export default function ClinicTechnologyPage() {
               </li>
             ))}
           </ol>
+        </Container>
+      </Section>
+
+      {/* Independent proof. The only thing on this site a patient can
+          go and check for themselves, so it is restated wherever they
+          might be deciding. */}
+      <Section spacing="sm">
+        <Container width="7xl">
+          <GoogleTrustBar placement="clinic-technology_trust" />
         </Container>
       </Section>
 

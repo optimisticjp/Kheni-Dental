@@ -7,6 +7,7 @@ import { Section } from "@/components/ui/section";
 import { treatments } from "@/content/site";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/treatments/" },
   title: "Dental Treatments in Surat",
   description: "Dental implants, root canals, crowns, braces, gum care, kids dentistry and smile design in Surat. See what each treatment involves before you decide anything.",
 };

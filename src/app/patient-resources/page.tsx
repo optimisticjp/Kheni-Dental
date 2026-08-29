@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { GoogleTrustBar } from "@/components/kheni/google-trust";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { AlertTriangle, ArrowRight, MessageCircle, Phone } from "lucide-react";
@@ -12,6 +13,7 @@ import { site } from "@/content/site";
 import { whatsappUrl } from "@/lib/links";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/patient-resources/" },
   title: "Patient Resources & Aftercare",
   description:
     "Practical guides from Kheni Dental, Surat: what to bring to a first visit, aftercare for root canals and implants, kids dental advice and when to call the clinic.",
@@ -41,6 +43,7 @@ export default function ResourcesPage() {
             className="inline-flex min-h-11 items-center gap-2 rounded-full border border-gold/45 bg-gold/[.08] px-4 text-sm font-semibold text-gold"
           >
             <AlertTriangle className="size-3.5" aria-hidden="true" />
+
             Something is wrong now
           </a>
         </nav>
@@ -94,6 +97,15 @@ export default function ResourcesPage() {
               </div>
             </div>
           </div>
+        </Container>
+      </Section>
+
+      {/* Independent proof. The only thing on this site a patient can
+          go and check for themselves, so it is restated wherever they
+          might be deciding. */}
+      <Section spacing="sm">
+        <Container width="7xl">
+          <GoogleTrustBar placement="patient-resources_trust" />
         </Container>
       </Section>
 

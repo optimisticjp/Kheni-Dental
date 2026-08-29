@@ -1,8 +1,8 @@
 import type { MetadataRoute } from "next";
-import { doctors, locations, treatments } from "@/content/site";
+import { doctors, locations, site, treatments } from "@/content/site";
 
 export const dynamic = "force-static";
-const base = process.env.NEXT_PUBLIC_SITE_URL || "https://www.khenidentalcare.com";
+const base = process.env.NEXT_PUBLIC_SITE_URL || site.domain;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages = ["", "/about", "/doctors", "/locations", "/treatments", "/problems-we-treat", "/smile-gallery", "/reviews", "/patient-resources", "/international-patients", "/clinic-technology", "/contact", "/privacy", "/terms"];

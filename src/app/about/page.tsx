@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { GoogleTrustBar } from "@/components/kheni/google-trust";
 import Link from "next/link";
 import { ArrowRight, MapPin } from "lucide-react";
 import { DoctorRoster, PrincipalDoctor } from "@/components/kheni/doctor-authority";
@@ -12,6 +13,7 @@ import { Section } from "@/components/ui/section";
 import { locations, site } from "@/content/site";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/about/" },
   title: "About Our Dental Practice in Surat",
   description: "Kheni Dental has treated patients in Surat for around 15 years. Meet the four doctors led by Dr. Mayur Kheni and see how care is explained at both clinics.",
 };
@@ -20,6 +22,7 @@ export default function AboutPage() {
   return (
     <>
       <PageHero eyebrow="About the practice" title="Fifteen years in Surat, still explaining every step." copy="Dr. Mayur Kheni leads the practice, and three more doctors now see patients alongside him across two clinics in Surat. A visit still begins the same way, by asking what brought you in and listening to the answer." />
+
       <Section spacing="lg">
         <Container width="7xl">
           <div className="grid gap-12 lg:grid-cols-[.9fr_1.1fr] lg:items-center">
@@ -30,6 +33,15 @@ export default function AboutPage() {
             </div>
             <MediaFrame shot="The team at Kheni Dental" ratio="4 / 5" className="w-full" />
           </div>
+        </Container>
+      </Section>
+
+      {/* Independent proof. The only thing on this site a patient can
+          go and check for themselves, so it is restated wherever they
+          might be deciding. */}
+      <Section spacing="sm">
+        <Container width="7xl">
+          <GoogleTrustBar placement="about_trust" />
         </Container>
       </Section>
       <Section className="bg-ink text-white" spacing="lg"><Container width="7xl"><SectionHeading eyebrow="How we want care to feel" title="Nobody should leave the chair still guessing." copy="Most dental worry comes from not knowing what is happening in your own mouth. So findings are said out loud, options are named in plain words, and you get time to think before anything is booked." /><div className="mt-10 grid gap-4 md:grid-cols-3">{[["You talk first","The appointment opens with your description of the problem, when it started and what it stops you doing. That usually tells the dentist where to look first."],["Plain words, not jargon","Findings are explained in words you could repeat to your family at home. If a clinical term matters to your decision, you will hear what it actually means."],["Some things can wait","Not every finding needs treatment straight away. Where watching is the sensible option, the dentist will say so and tell you what to look out for."]].map(([title,copy]) => <div key={title} className="rounded-2xl border border-white/10 p-6"><h2 className="font-serif text-2xl">{title}</h2><p className="mt-3 text-sm leading-6 text-white/58">{copy}</p></div>)}</div></Container></Section>

@@ -9,6 +9,8 @@
  * See docs/CLINIC-CONTENT-NEEDED.md for the shot list.
  */
 
+import { demoCases, demoContentActive } from "@/content/demo";
+
 export type CaseCategory =
   | "Dental Implants"
   | "Full Mouth Rehabilitation"
@@ -46,7 +48,7 @@ export type CaseResult = {
 };
 
 /** TODO(clinic): add consented cases. */
-export const caseResults: CaseResult[] = [];
+export const caseResults: CaseResult[] = demoContentActive ? demoCases : [];
 
 /** Filter chips shown above the gallery. Order is deliberate. */
 export const caseCategories: CaseCategory[] = [

@@ -16,6 +16,7 @@
  * docs/CLINIC-CONTENT-NEEDED.md.
  */
 
+import { demoContentActive, demoCredentials, demoStats } from "@/content/demo";
 import { googleReputation } from "@/content/google-reputation";
 
 export type ProofValue =
@@ -57,21 +58,21 @@ export const proofStats: ProofStat[] = [
         } satisfies ProofStat,
       ]
     : []),
-  { id: "patients", value: pending("XX,XXX+"), label: "Patients treated" },
+  { id: "patients", value: demoContentActive ? verified(demoStats.patients) : pending("XX,XXX+"), label: "Patients treated" },
 ];
 
 /** Treatment-volume counters. Used on the implant page and the proof band. */
 export const treatmentStats: ProofStat[] = [
-  { id: "implants", value: pending("X,XXX+"), label: "Implants placed" },
-  { id: "full-mouth", value: pending("XXX+"), label: "Full mouth cases" },
-  { id: "smile", value: pending("XXX+"), label: "Smile makeovers" },
-  { id: "root-canals", value: pending("XX,XXX+"), label: "Root canals completed" },
+  { id: "implants", value: demoContentActive ? verified(demoStats.implants) : pending("X,XXX+"), label: "Implants placed" },
+  { id: "full-mouth", value: demoContentActive ? verified(demoStats.fullMouth) : pending("XXX+"), label: "Full mouth cases" },
+  { id: "smile", value: demoContentActive ? verified(demoStats.smileMakeovers) : pending("XXX+"), label: "Smile makeovers" },
+  { id: "root-canals", value: demoContentActive ? verified(demoStats.rootCanals) : pending("XX,XXX+"), label: "Root canals completed" },
 ];
 
 /** Shown on the international page. */
 export const nriStats: ProofStat[] = [
-  { id: "countries", value: pending("XX+"), label: "Countries patients travel from" },
-  { id: "nri-cases", value: pending("XXX+"), label: "NRI patients treated" },
+  { id: "countries", value: demoContentActive ? verified(demoStats.nriCountries) : pending("XX+"), label: "Countries patients travel from" },
+  { id: "nri-cases", value: demoContentActive ? verified(demoStats.nriPatients) : pending("XXX+"), label: "NRI patients treated" },
 ];
 
 export type Credential = {
@@ -87,12 +88,14 @@ export type Credential = {
  * TODO(clinic): replace with the real list. Do not add anything the doctors
  * have not confirmed in writing.
  */
-export const credentials: Credential[] = [
-  { id: "cred-1", title: "Professional membership", status: "pending" },
-  { id: "cred-2", title: "Implantology training", status: "pending" },
-  { id: "cred-3", title: "Certification", status: "pending" },
-  { id: "cred-4", title: "Award or recognition", status: "pending" },
-];
+export const credentials: Credential[] = demoContentActive
+  ? demoCredentials.map((c) => ({ id: c.id, title: c.title, issuer: c.issuer, status: "verified" as const }))
+  : [
+      { id: "cred-1", title: "Professional membership", status: "pending" },
+      { id: "cred-2", title: "Implantology training", status: "pending" },
+      { id: "cred-3", title: "Certification", status: "pending" },
+      { id: "cred-4", title: "Award or recognition", status: "pending" },
+    ];
 
 /**
  * Languages the team consults in. Surat patients frequently prefer Gujarati,

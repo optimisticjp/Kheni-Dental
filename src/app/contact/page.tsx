@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { GoogleTrustBar } from "@/components/kheni/google-trust";
 import { Mail, MessageCircle, Phone } from "lucide-react";
 
 import { BranchLocator } from "@/components/kheni/branch-locator";
@@ -10,6 +11,7 @@ import { locations, site } from "@/content/site";
 import { whatsappUrl } from "@/lib/links";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/contact/" },
   title: "Contact the Clinic in Surat",
   description:
     "Call Kheni Dental in Surat, message us on WhatsApp or email the clinic. You do not need to know which treatment you need before you get in touch.",
@@ -36,6 +38,7 @@ export default function ContactPage() {
         title="Getting in touch should be the easy part."
         copy="You do not need a diagnosis or the name of a treatment to start. Say what is troubling you, in whatever words you would use, and the team will take it from there."
       />
+
 
       {/* ── Reach us now ─────────────────────────────────────────────────── */}
       <Section spacing="sm">
@@ -93,6 +96,15 @@ export default function ContactPage() {
               <Mail className="size-5 shrink-0 text-gold" aria-hidden="true" />
             </a>
           </div>
+        </Container>
+      </Section>
+
+      {/* Independent proof. The only thing on this site a patient can
+          go and check for themselves, so it is restated wherever they
+          might be deciding. */}
+      <Section spacing="sm">
+        <Container width="7xl">
+          <GoogleTrustBar placement="contact_trust" />
         </Container>
       </Section>
 

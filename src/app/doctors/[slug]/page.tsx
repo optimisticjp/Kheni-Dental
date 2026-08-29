@@ -18,7 +18,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const doctor = doctors.find((item) => item.slug === slug);
   if (!doctor) return {};
-  return { title: `${doctor.name}, ${doctor.credentials}`, description: doctor.metaDescription };
+  return {
+    title: `${doctor.name}, ${doctor.credentials}`,
+    description: doctor.metaDescription,
+    alternates: { canonical: `/doctors/${slug}/` },
+  };
 }
 
 export default async function DoctorPage({ params }: { params: Promise<{ slug: string }> }) {

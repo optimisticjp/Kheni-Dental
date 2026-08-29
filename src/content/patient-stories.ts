@@ -11,6 +11,8 @@
  * See docs/CLINIC-CONTENT-NEEDED.md.
  */
 
+import { demoContentActive, demoPatientStories, demoVideoStories } from "@/content/demo";
+
 export type PatientStory = {
   id: string;
   /** First name plus initial is usually the most a clinic should publish. */
@@ -49,7 +51,7 @@ export type VideoStory = {
  * Needed per story: patient first name, city, treatment, the quote in their
  * own words, and written consent.
  */
-export const patientStories: PatientStory[] = [];
+export const patientStories: PatientStory[] = demoContentActive ? demoPatientStories : [];
 
 /**
  * TODO(clinic): add consented video testimonials.
@@ -57,7 +59,7 @@ export const patientStories: PatientStory[] = [];
  * spoken language, and written consent. Gujarati videos are the most useful
  * for Surat patients.
  */
-export const videoStories: VideoStory[] = [];
+export const videoStories: VideoStory[] = demoContentActive ? demoVideoStories : [];
 
 /** How many placeholder tiles to show while the real material is pending. */
 export const PENDING_STORY_TILES = 3;

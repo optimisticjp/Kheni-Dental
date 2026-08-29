@@ -13,6 +13,7 @@ import { locations, reviewHighlights } from "@/content/site";
 import { writeReviewUrl } from "@/lib/maps";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/reviews/" },
   title: "Patient Reviews",
   description:
     "Google reviews for both Kheni Dental clinics in Surat, at Yogi Chowk and Hirabaug, plus patient videos, written testimonials and treatment results.",
