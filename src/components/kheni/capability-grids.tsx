@@ -14,7 +14,7 @@ export function TechnologyGrid({ tone = "light" }: { tone?: "dark" | "light" }) 
   // Four cards reading "[ Equipment name ]" over an empty photo plate told a
   // patient nothing and made the page look broken. A machine we cannot name
   // is not proof of anything, so it is not shown.
-  const shown = technologies.filter((tech) => tech.name);
+  const shown = showContentGaps ? technologies : technologies.filter((tech) => tech.name);
   if (shown.length === 0) return null;
 
   return (
@@ -38,11 +38,11 @@ export function TechnologyGrid({ tone = "light" }: { tone?: "dark" | "light" }) 
             <span aria-hidden="true" className="font-mono text-[.6rem] text-gold">
               {String(index + 1).padStart(2, "0")}
             </span>
-            <p className="mt-2 font-serif text-xl leading-snug">
-              {tech.name}
+            <p className={cn("mt-2 font-serif text-xl leading-snug", !tech.name && "text-muted-foreground/60")}>
+              {tech.name ?? "Equipment to be named"}
             </p>
             <p className={cn("mt-2 text-sm leading-6", tone === "dark" ? "text-white/55" : "text-muted-foreground")}>
-              {tech.purpose}
+              {tech.purpose ?? "What it lets the dentist assess or plan."}
             </p>
             {tech.experience && (
               <p className={cn("mt-2 text-xs leading-5", tone === "dark" ? "text-white/40" : "text-muted-foreground/80")}>
@@ -69,7 +69,7 @@ export function ImplantSystemRail({ tone = "dark" }: { tone?: "dark" | "light" }
   const dark = tone === "dark";
   // "Implant system 01" beside a box reading LOGO is not a brand, and naming a
   // system the clinic has not confirmed would be worse than naming none.
-  const shown = implantSystems.filter((system) => system.name);
+  const shown = showContentGaps ? implantSystems : implantSystems.filter((system) => system.name);
   if (shown.length === 0) return null;
 
   return (
@@ -95,7 +95,9 @@ export function ImplantSystemRail({ tone = "dark" }: { tone?: "dark" | "light" }
             </span>
           </div>
           <div>
-            <p className="font-serif text-base leading-tight">{system.name}</p>
+            <p className={cn("font-serif text-base leading-tight", !system.name && "text-muted-foreground/70")}>
+              {system.name ?? "System to be named"}
+            </p>
             {system.origin && (
               <p className={cn("mt-1 text-xs", dark ? "text-white/40" : "text-muted-foreground")}>{system.origin}</p>
             )}
@@ -144,7 +146,7 @@ export function ImplantWorkflowPending({ tone = "dark" }: { tone?: "dark" | "lig
  * approves a real one.
  */
 export function PriceTable({ limit, tone = "light" }: { limit?: number; tone?: "dark" | "light" }) {
-  const priced = priceList.filter((row) => row.from.status === "verified");
+  const priced = showContentGaps ? priceList : priceList.filter((row) => row.from.status === "verified");
 
   // Every figure is still a placeholder, so the table would read "₹XX,XXX" down
   // the whole column. Indian patients ask about cost early and being evasive

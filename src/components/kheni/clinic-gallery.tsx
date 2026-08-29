@@ -1,4 +1,4 @@
-import { MediaFrame } from "@/components/kheni/pending";
+import { MediaFrame, showContentGaps } from "@/components/kheni/pending";
 import { clinicGallerySlots } from "@/content/capabilities";
 import { cn } from "@/lib/utils";
 
@@ -41,7 +41,7 @@ export function ClinicGallery({
   className?: string;
 }) {
   const shot = (slot: string) => (branchLabel ? `${slot}, ${branchLabel}` : slot);
-  const shown = slots.slice(0, 3);
+  const shown = showContentGaps ? slots : slots.slice(0, 3);
   const [lead, ...rest] = shown;
 
   return (

@@ -1,4 +1,4 @@
-import { ProofNumber } from "@/components/kheni/pending";
+import { PendingTag, ProofNumber, showContentGaps } from "@/components/kheni/pending";
 import { Container } from "@/components/ui/container";
 import { credentials, type ProofStat } from "@/content/clinic-proof";
 import { cn } from "@/lib/utils";
@@ -26,7 +26,7 @@ export function ProofBand({
   // more trust than the missing number ever earned. The pending entries stay
   // in `clinic-proof.ts` so the clinic checklist is unchanged and filling one
   // in makes it appear here on its own.
-  const shown = stats.filter((stat) => stat.value.status === "verified");
+  const shown = showContentGaps ? stats : stats.filter((stat) => stat.value.status === "verified");
   if (shown.length === 0) return null;
 
   return (
@@ -71,7 +71,7 @@ export function CredentialStrip({ tone = "light" }: { tone?: "dark" | "light" })
   // Four dashed boxes reading "Professional membership - to confirm" tell a
   // patient nothing except that nobody filled them in. Until at least one is
   // real, the strip does not exist.
-  const shown = credentials.filter((item) => item.status === "verified");
+  const shown = showContentGaps ? credentials : credentials.filter((item) => item.status === "verified");
   if (shown.length === 0) return null;
 
   return (
@@ -87,6 +87,7 @@ export function CredentialStrip({ tone = "light" }: { tone?: "dark" | "light" })
           <p className={cn("text-sm font-medium", tone === "dark" ? "text-white/70" : "text-foreground")}>
             {item.title}
           </p>
+          {item.status === "pending" && <PendingTag className="mt-2 self-start" label="To confirm" />}
         </div>
       ))}
     </div>
