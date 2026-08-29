@@ -17,14 +17,22 @@ export function ProofBand({
   className?: string;
   tone?: "dark" | "light";
 }) {
+  // Verified figures lead. Reading order is trust order, and a row that
+  // opens on two greyed-out placeholders spends its first impression on what
+  // the clinic has not sent yet.
+  const ordered = [...stats].sort((a, b) => {
+    const rank = (s: ProofStat) => (s.value.status === "verified" ? 0 : 1);
+    return rank(a) - rank(b);
+  });
+
   return (
     <div
       className={cn(
-        "grid grid-cols-2 gap-x-6 gap-y-8 sm:gap-x-8 lg:grid-cols-4",
+        "grid grid-cols-2 gap-x-6 gap-y-9 sm:gap-x-8 lg:grid-cols-4",
         className,
       )}
     >
-      {stats.map((stat) => (
+      {ordered.map((stat) => (
         <ProofNumber
           key={stat.id}
           value={stat.value}

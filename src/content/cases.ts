@@ -23,6 +23,16 @@ export type CaseResult = {
   startingConcern: string;
   /** One line on the outcome. No superlatives, no guarantees. */
   resultSummary: string;
+  /** What was actually carried out, in plain words. Featured cases only. */
+  whatWasDone?: string;
+  /** Why this approach rather than another. Featured cases only. */
+  whyThisApproach?: string;
+  /** Ordered treatment stages, for a case worth telling as a story. */
+  stages?: string[];
+  /** Optional consented patient line. Never write this on their behalf. */
+  patientComment?: string;
+  /** Marks the one case that leads the gallery. At most one. */
+  featured?: boolean;
   doctorSlug: string;
   branchSlug: string;
   beforeImage: string;

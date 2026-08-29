@@ -77,23 +77,19 @@ export function PrincipalDoctor({ doctor = doctors[0] }: { doctor?: Doctor }) {
         {/* Portrait. Falls back to initials in the brand serif; a real
             photograph drops into the same frame with no layout change. */}
         <div className="relative">
-          <InitialsPortrait name={doctor.name} className="aspect-[4/5] w-full rounded-[1.2rem]" />
-          <span
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 rounded-[1.2rem] ring-1 ring-inset ring-gold/25"
-          />
+          <InitialsPortrait name={doctor.name} className="aspect-[3/2] w-full rounded-[1.2rem] sm:aspect-[4/5]" />
           <PendingTag className="absolute bottom-3 left-3" label="Portrait needed" />
         </div>
 
         <div>
           <div className="flex items-center gap-3">
-            <span className="text-[.66rem] font-semibold uppercase tracking-[.2em] text-gold">
+            <span className="t-eyebrow text-gold">
               Meet the principal dentist
             </span>
             <span aria-hidden="true" className="rule-gold h-px flex-1" />
           </div>
 
-          <h2 className="mt-5 font-serif text-[clamp(2.1rem,4.6vw,3.4rem)] leading-[1] tracking-[-.04em]">
+          <h2 className="mt-5 t-h1">
             {doctor.name}
           </h2>
           <p className="mt-3 text-sm text-white/50">{doctor.credentials}</p>
@@ -115,7 +111,7 @@ export function PrincipalDoctor({ doctor = doctors[0] }: { doctor?: Doctor }) {
               className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-gold px-6 text-sm font-semibold text-ink sm:whitespace-nowrap"
             >
               Consult {doctor.name.split(" ").slice(0, 2).join(" ")}
-              <ArrowRight className="size-4" aria-hidden="true" />
+              <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
             </Link>
             <a
               href={whatsappUrl(message)}
@@ -148,7 +144,7 @@ export function DoctorCard({ doctor, tone = "light" }: { doctor: Doctor; tone?: 
       )}
     >
       <div className="relative">
-        <InitialsPortrait name={doctor.name} tone={tone} className="aspect-[5/4] w-full rounded-none" />
+        <InitialsPortrait name={doctor.name} tone={tone} className="aspect-[16/9] w-full rounded-none border-0 border-b border-dashed" />
         <span
           className={cn(
             "absolute bottom-3 left-3 inline-flex items-center rounded-full px-2.5 py-1 text-[.6rem] font-semibold uppercase tracking-[.12em]",

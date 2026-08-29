@@ -23,7 +23,7 @@ export default function ContactPage() {
           <div className="grid gap-10 lg:grid-cols-[.85fr_1.15fr]">
             <div>
               <div className="rounded-[2rem] bg-ink p-7 text-white">
-                <p className="text-xs font-semibold uppercase tracking-[.2em] text-gold">Reach us directly</p>
+                <p className="t-eyebrow text-gold">Reach us directly</p>
                 <a href={whatsappUrl()} target="_blank" rel="noreferrer" data-track="whatsapp_click" data-placement="contact_page" className="mt-4 inline-flex min-h-12 items-center gap-3 font-serif text-2xl"><MessageCircle className="size-5 text-gold" />Message us on WhatsApp</a>
                 <a href={`tel:${site.primaryPhoneHref}`} data-track="phone_click" data-placement="contact_page" className="mt-4 inline-flex min-h-12 items-center gap-3 font-serif text-2xl"><Phone className="size-5 text-gold" />{site.primaryPhoneDisplay}</a>
                 <p className="mt-2 text-xs text-white/45">That number reaches Swastik Plaza. Hirabaug has its own line, listed with the clinics below.</p>
@@ -38,7 +38,7 @@ export default function ContactPage() {
       </Section>
       <Section className="bg-[#f1eee7]" spacing="lg">
         <Container width="7xl">
-          <div className="mb-10 max-w-2xl"><p className="text-xs font-semibold uppercase tracking-[.2em] text-gold">Choose your clinic</p><h2 className="mt-4 font-serif text-4xl sm:text-5xl">Both clinics are one tap away here.</h2></div>
+          <div className="mb-10 max-w-2xl"><p className="t-eyebrow text-gold">Choose your clinic</p><h2 className="t-h1 mt-4">Both clinics are one tap away here.</h2></div>
           <div className="grid gap-5 lg:grid-cols-2">{locations.map((location) => <LocationCard key={location.slug} location={location} />)}</div>
         </Container>
       </Section>

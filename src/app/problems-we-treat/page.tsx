@@ -85,7 +85,7 @@ export default function ProblemsPage() {
 
       <section className="bg-gold py-14 text-ink sm:py-16">
         <Container width="7xl" className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
-          <h2 className="max-w-xl font-serif text-[clamp(1.9rem,4.4vw,3rem)] leading-[1.02] tracking-[-.04em]">
+          <h2 className="max-w-xl t-h1">
             Not on the list? Describe it in your own words.
           </h2>
           <div className="flex flex-col gap-2.5 sm:flex-row">
@@ -96,7 +96,7 @@ export default function ProblemsPage() {
               className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-ink px-6 text-sm font-semibold text-white sm:whitespace-nowrap"
             >
               Book Appointment
-              <ArrowRight className="size-4 text-gold" aria-hidden="true" />
+              <ArrowRight className="cta-arrow size-4 text-gold" aria-hidden="true" />
             </Link>
             <a
               href={whatsappUrl()}

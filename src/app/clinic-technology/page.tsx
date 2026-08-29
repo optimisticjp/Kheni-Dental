@@ -27,7 +27,7 @@ export default function ClinicTechnologyPage() {
 
       <Section spacing="md">
         <Container width="7xl">
-          <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Equipment</h2>
+          <h2 className="t-h2">Equipment</h2>
           <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">
             The clinic has the equipment; we are waiting on the exact names and photographs before publishing any of
             it. No scanner, imaging system or technique is claimed until then.
@@ -40,7 +40,7 @@ export default function ClinicTechnologyPage() {
 
       <Section className="bg-[#f1eee7]" spacing="md">
         <Container width="7xl">
-          <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Implant systems</h2>
+          <h2 className="t-h2">Implant systems</h2>
           <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">
             Which systems we place, and at which branch. This is the single most useful thing an implant patient can
             compare, so it will carry real brand names as soon as they are confirmed.
@@ -69,13 +69,13 @@ export default function ClinicTechnologyPage() {
 
       <Section spacing="md">
         <Container width="7xl">
-          <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Inside our clinics</h2>
+          <h2 className="t-h2">Inside our clinics</h2>
           <ClinicGallery tone="light" className="mt-8" />
           <Link
             href="/locations/"
             className="mt-8 inline-flex min-h-12 items-center gap-2 text-sm font-semibold text-gold"
           >
-            See both clinics <ArrowRight className="size-4" aria-hidden="true" />
+            See both clinics <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
           </Link>
         </Container>
       </Section>

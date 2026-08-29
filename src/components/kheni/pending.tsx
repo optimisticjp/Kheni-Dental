@@ -6,37 +6,56 @@ import { cn } from "@/lib/utils";
 /**
  * The placeholder system.
  *
- * Two kinds of content are missing while the clinic gathers material:
+ * WHY THIS LOOKS QUIET
+ * An earlier version drew every pending marker in gold. On a site whose
+ * content is still arriving that meant the accent colour landed almost
+ * entirely on things we do *not* have: nine gold "photo needed" pills sat in
+ * one viewport of the gallery, and the empty frame in the homepage hero was
+ * the largest object on the page. The site advertised its own gaps.
  *
- *   DATA   a number, price, technology name or rating we do not have yet
- *   VISUAL a photo, portrait, case image or video thumbnail
+ * So the rule is now explicit and one-way:
  *
- * In both cases the component renders *finished*. What is missing is marked
- * clearly enough that nobody could mistake it for real information, and
- * replacing it later is a one-line data change. Nothing here says "this
- * section will contain X later"; it shows the real component with the value
- * flagged.
+ *   REAL PROOF IS LOUD. MISSING CONTENT IS QUIET.
+ *
+ * Placeholders hold the final composition, stay legible enough that the
+ * clinic can see exactly what is wanted, and otherwise recede. Gold is
+ * reserved for real numbers, primary actions and selected states.
+ *
+ * `tone="marked"` restores the louder treatment, for the few places whose
+ * whole purpose is to show the doctor what to send.
  */
 
-/** Small tag that marks an unfilled value. Deliberately hard to miss. */
-export function PendingTag({ label = "Clinic data needed", className }: { label?: string; className?: string }) {
+type PendingTone = "quiet" | "marked";
+
+/** Small tag marking an unfilled value. Neutral unless explicitly marked. */
+export function PendingTag({
+  label = "Clinic data needed",
+  tone = "quiet",
+  className,
+}: {
+  label?: string;
+  tone?: PendingTone;
+  className?: string;
+}) {
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full border border-dashed border-gold/55 px-2 py-0.5 text-[.58rem] font-semibold uppercase tracking-[.14em] text-gold",
+        "inline-flex items-center gap-1.5 rounded-full border border-dashed px-2 py-0.5 text-[.58rem] font-medium uppercase tracking-[.12em]",
+        tone === "marked"
+          ? "border-gold/50 text-gold"
+          : "border-current/25 text-current opacity-45",
         className,
       )}
     >
-      <span aria-hidden="true" className="size-1 rounded-full bg-gold" />
       {label}
     </span>
   );
 }
 
 /**
- * A single proof number. Renders the real figure when verified, otherwise the
- * masked shape of the number plus a pending tag, so the layout is identical
- * either way.
+ * A single proof number. A verified figure gets the gold and the full weight;
+ * a pending one keeps the exact same footprint so the layout never shifts,
+ * but drops back to the surrounding text colour.
  */
 export function ProofNumber({
   value,
@@ -59,35 +78,46 @@ export function ProofNumber({
     <div className={cn(align === "center" && "text-center")}>
       <p
         className={cn(
-          "font-serif leading-none tracking-[-.03em]",
-          size === "lg" ? "text-4xl sm:text-5xl" : "text-3xl sm:text-4xl",
-          isPending ? "text-gold/45" : "text-gold",
+          "t-proof",
+          size === "lg" && "text-[clamp(2.3rem,3.6vw,3.2rem)]",
+          isPending
+            ? tone === "dark"
+              ? "text-white/25"
+              : "text-foreground/20"
+            : "text-gold",
         )}
       >
         {shown}
       </p>
       <p
         className={cn(
-          "mt-2 text-[.7rem] font-semibold uppercase tracking-[.14em]",
-          tone === "dark" ? "text-white/55" : "text-muted-foreground",
+          "t-eyebrow mt-2.5",
+          isPending
+            ? tone === "dark"
+              ? "text-white/35"
+              : "text-muted-foreground/70"
+            : tone === "dark"
+              ? "text-white/60"
+              : "text-muted-foreground",
         )}
       >
         {label}
       </p>
       {detail && !isPending && (
-        <p className={cn("mt-1 text-xs", tone === "dark" ? "text-white/35" : "text-muted-foreground/80")}>{detail}</p>
+        <p className={cn("t-small mt-1", tone === "dark" ? "text-white/35" : "text-muted-foreground/80")}>{detail}</p>
       )}
-      {isPending && <PendingTag className="mt-2" />}
+      {isPending && <PendingTag className="mt-2" label="Figure needed" />}
     </div>
   );
 }
 
 /**
- * Neutral visual placeholder for photography that has not arrived.
+ * Photography that has not arrived.
  *
- * Designed to look like an intentional part of the layout rather than a note
- * to the developer. The caption names the shot the clinic needs to take, in
- * the smallest type in the frame.
+ * Holds the final crop so a real image drops in without touching layout. The
+ * frame is a plain recessed panel: no gold, no grid pattern, no badge. The
+ * caption names the shot at the smallest legible size and nothing else in the
+ * frame competes with the page around it.
  */
 export function MediaFrame({
   shot,
@@ -95,49 +125,46 @@ export function MediaFrame({
   tone = "dark",
   icon = "photo",
   ratio,
+  compact = false,
 }: {
   shot: string;
   className?: string;
   tone?: "dark" | "light";
   icon?: "photo" | "portrait" | "video";
   ratio?: string;
+  /** Drops the caption, for small repeated frames where it would be noise. */
+  compact?: boolean;
 }) {
   const Icon = icon === "video" ? Play : icon === "portrait" ? Camera : ImageIcon;
   return (
     <div
       className={cn(
-        "relative isolate flex flex-col items-center justify-center overflow-hidden rounded-2xl border border-dashed p-6 text-center",
-        tone === "dark"
-          ? "border-white/12 bg-[linear-gradient(150deg,#171714,#0c0c0b)]"
-          : "border-border bg-[linear-gradient(150deg,#f6f3ec,#efeae0)]",
+        "relative flex flex-col items-center justify-center overflow-hidden rounded-2xl border border-dashed p-5 text-center",
+        tone === "dark" ? "border-white/10 bg-white/[.02]" : "border-border/70 bg-[#f4f1ea]",
         className,
       )}
       style={ratio ? { aspectRatio: ratio } : undefined}
     >
-      <div
+      <Icon
+        className={cn("size-5 shrink-0", tone === "dark" ? "text-white/20" : "text-foreground/15")}
         aria-hidden="true"
-        className="absolute inset-0 opacity-[.35] [background-image:linear-gradient(currentColor_1px,transparent_1px),linear-gradient(90deg,currentColor_1px,transparent_1px)] [background-size:34px_34px] [color:rgba(202,169,104,.10)]"
       />
-      <span
-        className={cn(
-          "relative grid size-10 place-items-center rounded-full border",
-          tone === "dark" ? "border-gold/25 bg-gold/8 text-gold" : "border-gold/30 bg-gold/10 text-gold",
-        )}
-      >
-        <Icon className="size-4" aria-hidden="true" />
-      </span>
-      <p className={cn("relative mt-3 text-xs font-medium", tone === "dark" ? "text-white/60" : "text-muted-foreground")}>
-        {shot}
-      </p>
-      <PendingTag label="Photo needed" className="relative mt-2.5" />
+      {!compact && (
+        <p className={cn("t-small mt-2.5 max-w-[24ch]", tone === "dark" ? "text-white/30" : "text-muted-foreground/60")}>
+          {shot}
+        </p>
+      )}
     </div>
   );
 }
 
 /**
- * Doctor portrait stand-in. Uses the doctor's initials in the brand type
- * rather than a grey avatar, so a profile still looks composed without a
- * photograph.
+ * Doctor portrait stand-in.
+ *
+ * The initials sit at a confident but not enormous size, and the frame is the
+ * same recessed panel as any other missing photograph. Previously this drew a
+ * gold radial bloom and set the initials huge, which made an absent portrait
+ * the most decorated element on a doctor's own page.
  */
 export function InitialsPortrait({
   name,
@@ -159,18 +186,16 @@ export function InitialsPortrait({
   return (
     <div
       className={cn(
-        "relative flex items-center justify-center overflow-hidden rounded-2xl",
-        tone === "dark"
-          ? "bg-[radial-gradient(circle_at_50%_18%,rgba(202,169,104,.20),transparent_62%),linear-gradient(160deg,#191916,#0b0b0a)]"
-          : "bg-[radial-gradient(circle_at_50%_18%,rgba(202,169,104,.22),transparent_62%),linear-gradient(160deg,#f7f4ed,#ebe5d9)]",
+        "relative flex items-center justify-center overflow-hidden rounded-2xl border border-dashed",
+        tone === "dark" ? "border-white/10 bg-white/[.02]" : "border-border/70 bg-[#f4f1ea]",
         className,
       )}
     >
       <span
         aria-hidden="true"
         className={cn(
-          "font-serif text-[clamp(3rem,9vw,5.5rem)] leading-none tracking-[-.04em]",
-          tone === "dark" ? "text-gold/40" : "text-gold/55",
+          "font-serif text-[clamp(2rem,4vw,3rem)] leading-none tracking-[-.03em]",
+          tone === "dark" ? "text-white/20" : "text-foreground/15",
         )}
       >
         {initials}

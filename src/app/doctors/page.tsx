@@ -43,7 +43,7 @@ export default function DoctorsPage() {
 
       <Section className="bg-[#f1eee7]" spacing="md">
         <Container width="7xl">
-          <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">
+          <h2 className="t-h2">
             The rest of the team
           </h2>
           <p className="mt-3 max-w-xl text-sm leading-6 text-muted-foreground">
@@ -60,7 +60,7 @@ export default function DoctorsPage() {
         <Container width="7xl">
           <div className="grid gap-8 lg:grid-cols-[.8fr_1.2fr] lg:gap-14">
             <div>
-              <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">
+              <h2 className="t-h2">
                 Training and memberships
               </h2>
               <p className="mt-4 text-sm leading-6 text-muted-foreground">
@@ -94,8 +94,8 @@ export default function DoctorsPage() {
         <Container width="7xl">
           <div className="grid gap-8 lg:grid-cols-[.85fr_1.15fr] lg:items-center lg:gap-14">
             <div>
-              <p className="text-[.66rem] font-semibold uppercase tracking-[.2em] text-gold">From Google</p>
-              <h2 className="mt-4 font-serif text-[clamp(1.9rem,4vw,2.9rem)] leading-[1.03] tracking-[-.04em]">
+              <p className="t-eyebrow text-gold">From Google</p>
+              <h2 className="mt-4 t-h1">
                 What patients say about our clinics.
               </h2>
               <div className="mt-7 flex flex-col gap-2.5 sm:flex-row">
@@ -106,7 +106,7 @@ export default function DoctorsPage() {
                   className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-gold px-6 text-sm font-semibold text-ink sm:whitespace-nowrap"
                 >
                   Book Appointment
-                  <ArrowRight className="size-4" aria-hidden="true" />
+                  <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
                 </Link>
                 <a
                   href={whatsappUrl()}

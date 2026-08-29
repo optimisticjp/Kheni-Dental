@@ -147,7 +147,7 @@ export function TreatmentRail() {
                         <span aria-hidden="true" className="rule-gold h-px w-14" />
                       </div>
                       <p className="mt-7 max-w-md font-serif text-[1.45rem] leading-snug text-gold">{item.question}</p>
-                      <h3 className="mt-4 font-serif text-[clamp(1.9rem,2.3vw,2.6rem)] leading-[1.05] tracking-[-.035em] text-white">
+                      <h3 className="mt-4 t-h1 text-white">
                         {item.title}
                       </h3>
                       <p className="mt-4 max-w-md text-sm leading-6 text-white/55">{item.body}</p>
@@ -164,11 +164,11 @@ export function TreatmentRail() {
                           className="inline-flex min-h-11 items-center gap-2 rounded-full border border-gold/40 bg-gold/[.08] px-5 text-sm font-semibold text-gold transition-colors hover:bg-gold hover:text-ink"
                         >
                           {item.cta}
-                          <ArrowRight className="size-4" aria-hidden="true" />
+                          <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
                         </Link>
                       </div>
                     </div>
-                    <MediaFrame shot={item.shot} className="m-2.5 rounded-[1.05rem]" />
+                    <MediaFrame shot={item.shot} className="rail-media m-2.5 rounded-[1.05rem]" />
                   </div>
                 )}
               </div>
@@ -221,7 +221,7 @@ export function TreatmentRail() {
               <span aria-hidden="true" className="rule-gold h-px w-12" />
             </div>
             <p className="mt-4 font-serif text-lg leading-snug text-gold">{panel.question}</p>
-            <h3 className="mt-3 font-serif text-[clamp(1.7rem,7vw,2.2rem)] leading-[1.05] tracking-[-.035em] text-white">
+            <h3 className="mt-3 t-h1 text-white">
               {panel.title}
             </h3>
             <p className="mt-3 text-sm leading-6 text-white/55">{panel.body}</p>
@@ -235,7 +235,7 @@ export function TreatmentRail() {
               className="mt-6 inline-flex min-h-12 items-center gap-2 rounded-full border border-gold/40 bg-gold/[.08] px-5 text-sm font-semibold text-gold"
             >
               {panel.cta}
-              <ArrowRight className="size-4" aria-hidden="true" />
+              <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
             </Link>
           </div>
         </div>

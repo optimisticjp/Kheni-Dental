@@ -40,7 +40,7 @@ export default function LocationsPage() {
       {/* Maps, one per branch. Lazy iframes, so nothing loads until scrolled to. */}
       <Section className="bg-[#f1eee7]" spacing="md">
         <Container width="7xl">
-          <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Getting here</h2>
+          <h2 className="t-h2">Getting here</h2>
           <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">
             The maps below load only when you scroll to them, so the page stays quick on mobile data. Tap Get
             Directions and the live route opens in your own maps app.
@@ -69,7 +69,7 @@ export default function LocationsPage() {
 
       <section className="bg-gold py-14 text-ink sm:py-16">
         <Container width="7xl" className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
-          <h2 className="max-w-xl font-serif text-[clamp(1.9rem,4.4vw,3rem)] leading-[1.02] tracking-[-.04em]">
+          <h2 className="max-w-xl t-h1">
             Not sure which clinic suits you? Ask us.
           </h2>
           <div className="flex flex-col gap-2.5 sm:flex-row">
@@ -80,7 +80,7 @@ export default function LocationsPage() {
               className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-ink px-6 text-sm font-semibold text-white sm:whitespace-nowrap"
             >
               Book Appointment
-              <ArrowRight className="size-4 text-gold" aria-hidden="true" />
+              <ArrowRight className="cta-arrow size-4 text-gold" aria-hidden="true" />
             </Link>
             <a
               href={whatsappUrl()}

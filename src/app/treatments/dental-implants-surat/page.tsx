@@ -66,8 +66,8 @@ export default function DentalImplantsPage() {
         <div aria-hidden="true" className="bloom-gold pointer-events-none absolute inset-0 -z-10" />
         <Container width="7xl" className="relative grid gap-10 py-12 lg:grid-cols-[1.05fr_.95fr] lg:items-center lg:gap-14 lg:py-16">
           <div>
-            <p className="text-[.7rem] font-semibold uppercase tracking-[.24em] text-gold">{implantHero.eyebrow}</p>
-            <h1 className="mt-5 font-serif text-[clamp(2.3rem,6.2vw,4.4rem)] leading-[.98] tracking-[-.045em]">
+            <p className="t-eyebrow text-gold">{implantHero.eyebrow}</p>
+            <h1 className="mt-5 t-h1">
               Dental Implants in Surat
             </h1>
             <p className="mt-5 max-w-lg text-base leading-7 text-white/65">
@@ -103,7 +103,7 @@ export default function DentalImplantsPage() {
                 className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-gold px-6 text-sm font-semibold text-ink sm:whitespace-nowrap"
               >
                 Book Appointment
-                <ArrowRight className="size-4" aria-hidden="true" />
+                <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
               </Link>
               <a
                 href={`tel:${hirabaug?.phoneHref ?? site.primaryPhoneHref}`}
@@ -150,7 +150,7 @@ export default function DentalImplantsPage() {
         <Container width="7xl">
           <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
             <div>
-              <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">
+              <h2 className="t-h2">
                 What kind of case is yours?
               </h2>
               <ul className="mt-7 grid gap-2.5">
@@ -163,7 +163,7 @@ export default function DentalImplantsPage() {
               </ul>
             </div>
             <div>
-              <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Why an implant</h2>
+              <h2 className="t-h2">Why an implant</h2>
               <div className="mt-7">
                 <TickList items={benefits} />
               </div>
@@ -188,7 +188,7 @@ export default function DentalImplantsPage() {
       {/* ── Your situation ───────────────────────────────────────────────── */}
       <Section className="grain relative isolate bg-ink text-white" spacing="md">
         <Container width="7xl">
-          <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">
+          <h2 className="t-h2">
             What are you trying to solve?
           </h2>
           <div className="mt-8">
@@ -200,7 +200,7 @@ export default function DentalImplantsPage() {
       {/* ── Process ──────────────────────────────────────────────────────── */}
       <Section className="bg-[#f1eee7]" spacing="md">
         <Container width="7xl">
-          <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">How treatment works</h2>
+          <h2 className="t-h2">How treatment works</h2>
           <ol className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
             {decisionStages.map((stage, index) => (
               <li key={stage.title} className="rounded-2xl border border-border bg-white p-5">
@@ -248,7 +248,7 @@ export default function DentalImplantsPage() {
       {/* ── Technology and systems ───────────────────────────────────────── */}
       <Section spacing="md">
         <Container width="7xl">
-          <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Technology and systems</h2>
+          <h2 className="t-h2">Technology and systems</h2>
           <div className="mt-8">
             <TechnologyGrid />
           </div>
@@ -272,7 +272,7 @@ export default function DentalImplantsPage() {
       {/* ── Results ──────────────────────────────────────────────────────── */}
       <Section className="bg-[#f1eee7]" spacing="md">
         <Container width="7xl">
-          <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Implant results</h2>
+          <h2 className="t-h2">Implant results</h2>
           <div className="mt-8">
             <CaseResultsGrid limit={3} />
           </div>
@@ -284,7 +284,7 @@ export default function DentalImplantsPage() {
         <Container width="7xl">
           <div className="grid gap-8 lg:grid-cols-[.85fr_1.15fr] lg:gap-14">
             <div>
-              <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Cost and EMI</h2>
+              <h2 className="t-h2">Cost and EMI</h2>
               <p className="mt-4 text-sm leading-6 text-muted-foreground">
                 What an implant costs depends on how many teeth are involved, the condition of the bone and the
                 final tooth that goes on top. You get the full plan, stage by stage, before treatment starts.
@@ -298,7 +298,7 @@ export default function DentalImplantsPage() {
       {/* ── Proof ────────────────────────────────────────────────────────── */}
       <Section className="grain relative isolate bg-ink text-white" spacing="md">
         <Container width="7xl">
-          <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">What patients say</h2>
+          <h2 className="t-h2">What patients say</h2>
           <div className="mt-8 grid gap-4 md:grid-cols-2">
             {locations.map((location) => (
               <BranchGoogleCard
@@ -319,7 +319,7 @@ export default function DentalImplantsPage() {
       <Section className="bg-[#f1eee7]" spacing="md">
         <Container width="7xl">
           <div className="grid gap-8 lg:grid-cols-[.7fr_1.3fr] lg:gap-14">
-            <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Implant questions</h2>
+            <h2 className="t-h2">Implant questions</h2>
             <Accordion items={implantFaqs} className="bg-white" />
           </div>
         </Container>
@@ -329,7 +329,7 @@ export default function DentalImplantsPage() {
       <section className="bg-gold py-14 text-ink sm:py-16">
         <Container width="7xl" className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
           <div>
-            <h2 className="max-w-xl font-serif text-[clamp(1.9rem,4.4vw,3rem)] leading-[1.02] tracking-[-.04em]">
+            <h2 className="max-w-xl t-h1">
               Talk to us about an implant.
             </h2>
             <p className="mt-3 max-w-lg text-sm leading-6 text-ink/70">

@@ -34,11 +34,13 @@ export default async function DoctorPage({ params }: { params: Promise<{ slug: s
       {/* Facts first: name, degree, specialty, years, what they treat, book. */}
       <section className="bg-ink text-white">
         <Container width="7xl" className="grid gap-10 py-12 lg:grid-cols-[.75fr_1.25fr] lg:items-center lg:gap-14 lg:py-16">
-          <InitialsPortrait name={doctor.name} className="aspect-[4/5] w-full" />
-
-          <div>
-            <p className="text-[.7rem] font-semibold uppercase tracking-[.24em] text-gold">{doctor.specialty}</p>
-            <h1 className="mt-4 font-serif text-[clamp(2.2rem,5.6vw,4rem)] leading-[1] tracking-[-.045em]">
+          {/* On a phone this used to open with 460px of empty portrait frame
+              before the doctor's own name. The name leads in the DOM now and
+              the frame follows; lg:order-first restores the portrait-left
+              composition on desktop, where there is room for both at once. */}
+          <div className="lg:order-last">
+            <p className="t-eyebrow text-gold">{doctor.specialty}</p>
+            <h1 className="mt-4 t-h1">
               {doctor.name}
             </h1>
 
@@ -78,7 +80,7 @@ export default async function DoctorPage({ params }: { params: Promise<{ slug: s
                 className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-gold px-6 text-sm font-semibold text-ink sm:whitespace-nowrap"
               >
                 Book Appointment
-                <ArrowRight className="size-4" aria-hidden="true" />
+                <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
               </Link>
               <a
                 href={`tel:${site.primaryPhoneHref}`}
@@ -102,6 +104,11 @@ export default async function DoctorPage({ params }: { params: Promise<{ slug: s
               </a>
             </div>
           </div>
+
+          <InitialsPortrait
+            name={doctor.name}
+            className="aspect-[3/2] w-full lg:order-first lg:aspect-[4/5]"
+          />
         </Container>
       </section>
 
@@ -109,7 +116,7 @@ export default async function DoctorPage({ params }: { params: Promise<{ slug: s
         <Container width="7xl">
           <div className="grid gap-10 lg:grid-cols-[1.1fr_.9fr] lg:gap-16">
             <div>
-              <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">
+              <h2 className="t-h2">
                 {doctor.approachHeading}
               </h2>
               <blockquote className="mt-6 border-l-2 border-gold/50 pl-5 font-serif text-xl leading-snug">
@@ -136,7 +143,7 @@ export default async function DoctorPage({ params }: { params: Promise<{ slug: s
       {related.length > 0 && (
         <Section className="bg-[#f1eee7]" spacing="md">
           <Container width="7xl">
-            <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">
+            <h2 className="t-h2">
               Treatments {doctor.name.split(" ").slice(0, 2).join(" ")} works with
             </h2>
             <ul className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -169,7 +176,7 @@ export default async function DoctorPage({ params }: { params: Promise<{ slug: s
               href="/doctors/"
               className="inline-flex min-h-12 items-center gap-2 rounded-full border border-border px-5 text-sm font-semibold text-gold"
             >
-              All doctors <ArrowRight className="size-4" aria-hidden="true" />
+              All doctors <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
             </Link>
           </div>
         </Container>

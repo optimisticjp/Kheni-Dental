@@ -138,26 +138,23 @@ export default function InternationalPage() {
       {/* ── Reach ────────────────────────────────────────────────────────── */}
       <section className="border-b border-border bg-[#f1eee7] py-10 sm:py-12">
         <Container width="7xl">
+          {/* Confirmed reach first, then the two counts the clinic still owes
+              us. A row that opens on greyed placeholders spends its first
+              impression on what is missing. */}
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            <div>
+              <p className="t-proof text-gold">{languages.length}</p>
+              <p className="t-eyebrow mt-2.5 text-muted-foreground">Languages we consult in</p>
+              <p className="t-small mt-1 text-muted-foreground/80">{languages.join(", ")}</p>
+            </div>
+            <div>
+              <p className="t-proof text-gold">2</p>
+              <p className="t-eyebrow mt-2.5 text-muted-foreground">Clinics in Surat</p>
+              <p className="t-small mt-1 text-muted-foreground/80">Yogi Chowk and Hirabaug</p>
+            </div>
             {nriStats.map((stat) => (
               <ProofNumber key={stat.id} value={stat.value} label={stat.label} tone="light" />
             ))}
-            <div>
-              <p className="font-serif text-3xl leading-none tracking-[-.03em] text-gold sm:text-4xl">
-                {languages.length}
-              </p>
-              <p className="mt-2 text-[.7rem] font-semibold uppercase tracking-[.14em] text-muted-foreground">
-                Languages we consult in
-              </p>
-              <p className="mt-1 text-xs text-muted-foreground/80">{languages.join(", ")}</p>
-            </div>
-            <div>
-              <p className="font-serif text-3xl leading-none tracking-[-.03em] text-gold sm:text-4xl">2</p>
-              <p className="mt-2 text-[.7rem] font-semibold uppercase tracking-[.14em] text-muted-foreground">
-                Clinics in Surat
-              </p>
-              <p className="mt-1 text-xs text-muted-foreground/80">Yogi Chowk and Hirabaug</p>
-            </div>
           </div>
         </Container>
       </section>
@@ -167,8 +164,8 @@ export default function InternationalPage() {
         <Container width="7xl">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div>
-              <p className="text-[.66rem] font-semibold uppercase tracking-[.2em] text-gold">How a trip works</p>
-              <h2 className="mt-4 max-w-2xl font-serif text-[clamp(2rem,4.4vw,3.2rem)] leading-[1.02] tracking-[-.04em]">
+              <p className="t-eyebrow text-gold">How a trip works</p>
+              <h2 className="mt-4 max-w-2xl t-h1">
                 From your first message to getting home.
               </h2>
             </div>
@@ -199,7 +196,7 @@ export default function InternationalPage() {
         <Container width="7xl">
           <div className="grid gap-10 lg:grid-cols-[.85fr_1.15fr] lg:gap-14">
             <div>
-              <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">
+              <h2 className="t-h2">
                 What patients travel for
               </h2>
               <p className="mt-4 text-sm leading-6 text-muted-foreground">
@@ -223,7 +220,7 @@ export default function InternationalPage() {
             </div>
 
             <div>
-              <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Treatment cost</h2>
+              <h2 className="t-h2">Treatment cost</h2>
               <p className="mt-4 text-sm leading-6 text-muted-foreground">
                 Ask for a written plan with the cost of each stage before you travel, so there is nothing to work out
                 once you have landed.
@@ -245,7 +242,7 @@ export default function InternationalPage() {
                 <Globe2 className="size-3.5" aria-hidden="true" />
                 Where patients travel from
               </span>
-              <h2 className="mt-5 font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">
+              <h2 className="t-h2 mt-5">
                 Surat is a short trip from most of the world.
               </h2>
               <p className="mt-4 text-sm leading-6 text-muted-foreground">
@@ -269,7 +266,7 @@ export default function InternationalPage() {
             </div>
 
             <div>
-              <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Practical support</h2>
+              <h2 className="t-h2">Practical support</h2>
               <p className="mt-4 text-sm leading-6 text-muted-foreground">
                 We will not promise travel help the clinic has not agreed to provide. These four are with the doctors
                 for confirmation.
@@ -299,7 +296,7 @@ export default function InternationalPage() {
       {/* ── Proof ────────────────────────────────────────────────────────── */}
       <Section className="grain relative isolate bg-ink text-white" spacing="md">
         <Container width="7xl">
-          <h2 className="font-serif text-[clamp(2rem,4.4vw,3.2rem)] leading-[1.02] tracking-[-.04em]">
+          <h2 className="t-h1">
             Before you decide from far away.
           </h2>
           <p className="mt-4 max-w-xl text-sm leading-6 text-white/50">
@@ -314,7 +311,7 @@ export default function InternationalPage() {
           </div>
 
           <div className="mt-10">
-            <h3 className="font-serif text-2xl leading-tight tracking-[-.02em]">Patient videos</h3>
+            <h3 className="t-h3">Patient videos</h3>
             <div className="mt-6">
               <VideoStoryGrid />
             </div>
@@ -324,7 +321,7 @@ export default function InternationalPage() {
 
       <Section spacing="md">
         <Container width="7xl">
-          <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Results</h2>
+          <h2 className="t-h2">Results</h2>
           <div className="mt-8">
             <CaseResultsGrid limit={3} />
           </div>
@@ -336,7 +333,7 @@ export default function InternationalPage() {
         <Container width="7xl">
           <div className="grid gap-10 lg:grid-cols-[.8fr_1.2fr]">
             <div>
-              <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Start before you fly</h2>
+              <h2 className="t-h2">Start before you fly</h2>
               <p className="mt-4 text-sm leading-6 text-muted-foreground">
                 Your travel dates and the treatment you are asking about are enough to start. Please do not send
                 medical reports in the first message; we will tell you where to send them.
@@ -351,7 +348,7 @@ export default function InternationalPage() {
               >
                 <MessageCircle className="size-4" aria-hidden="true" />
                 Or message us directly
-                <ArrowRight className="size-4" aria-hidden="true" />
+                <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
               </a>
               <MediaFrame shot="Clinic exterior, Hirabaug" tone="light" ratio="4 / 3" className="mt-8" />
             </div>
@@ -363,7 +360,7 @@ export default function InternationalPage() {
       <Section spacing="md">
         <Container width="7xl">
           <div className="grid gap-8 lg:grid-cols-[.7fr_1.3fr] lg:gap-14">
-            <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">
+            <h2 className="t-h2">
               Questions patients ask from abroad
             </h2>
             <Accordion items={faqs} />

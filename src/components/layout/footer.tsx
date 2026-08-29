@@ -22,15 +22,15 @@ export function Footer() {
             </div>
           </div>
           <div>
-            <h3 className="text-xs font-semibold uppercase tracking-[.2em] text-gold">Explore</h3>
+            <h3 className="t-eyebrow text-gold">Explore</h3>
             <ul className="mt-3 space-y-0.5">{navLinks.map(link => <li key={link.href}><Link className="inline-flex min-h-11 items-center text-sm text-white/60 hover:text-white" href={link.href}>{link.label}</Link></li>)}<li><Link className="inline-flex min-h-11 items-center text-sm text-white/60 hover:text-white" href="/contact/">Contact</Link></li></ul>
           </div>
           <div>
-            <h3 className="text-xs font-semibold uppercase tracking-[.2em] text-gold">Treatments</h3>
+            <h3 className="t-eyebrow text-gold">Treatments</h3>
             <ul className="mt-3 space-y-0.5">{treatments.slice(0,6).map(t => <li key={t.slug}><Link className="inline-flex min-h-11 items-center text-sm text-white/60 hover:text-white" href={`/treatments/${t.slug}/`}>{t.title}</Link></li>)}</ul>
           </div>
           <div>
-            <h3 className="text-xs font-semibold uppercase tracking-[.2em] text-gold">Visit in Surat</h3>
+            <h3 className="t-eyebrow text-gold">Visit in Surat</h3>
             <div className="mt-5 space-y-5">
               {locations.map((location) => (
                 <div key={location.slug} className="border-b border-white/10 pb-5 last:border-0 last:pb-0">

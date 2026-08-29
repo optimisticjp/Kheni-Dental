@@ -30,7 +30,7 @@ export function ConsultationForm({ international = false }: { international?: bo
   return (
     <form onSubmit={submit} className="grid gap-4 rounded-[2rem] border border-gold/20 bg-card p-6 shadow-sm sm:p-8" id="book">
       <div>
-        <p className="text-xs font-semibold uppercase tracking-[.2em] text-gold">Request a consultation</p>
+        <p className="t-eyebrow text-gold">Request a consultation</p>
         <h2 className="mt-3 font-serif text-3xl">Fill this in and WhatsApp opens.</h2>
         <p className="mt-3 text-sm leading-6 text-muted-foreground">We only ask for the basics. When you press the button, WhatsApp opens with what you entered already typed into a message, so you can add anything else in your own words before you send it.</p>
       </div>

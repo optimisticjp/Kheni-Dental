@@ -46,7 +46,7 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
                 Elite Implant Center
               </p>
             )}
-            <h1 className="font-serif text-[clamp(2.2rem,5.6vw,4rem)] leading-[1] tracking-[-.045em]">
+            <h1 className="t-h1">
               {location.shortName}
             </h1>
             <p className="mt-3 text-sm uppercase tracking-[.14em] text-white/40">{location.areaLabel}</p>
@@ -133,7 +133,7 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
                 className="mt-5 inline-flex min-h-12 items-center gap-2 rounded-full bg-ink px-6 text-sm font-semibold text-white"
               >
                 Book Appointment
-                <ArrowRight className="size-4 text-gold" aria-hidden="true" />
+                <ArrowRight className="cta-arrow size-4 text-gold" aria-hidden="true" />
               </Link>
               <p className="mt-6 border-t border-border pt-5 text-xs uppercase tracking-[.14em] text-muted-foreground">
                 Doctors at this clinic
@@ -161,7 +161,7 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
       {/* Clinic photography */}
       <Section className="bg-[#f1eee7]" spacing="md">
         <Container width="7xl">
-          <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Inside the clinic</h2>
+          <h2 className="t-h2">Inside the clinic</h2>
           <p className="mt-3 max-w-xl text-sm leading-6 text-muted-foreground">
             Photography for this branch specifically, so patients see the clinic they are actually walking into.
           </p>
@@ -183,7 +183,7 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
                 href={`/locations/${other.slug}/`}
                 className="inline-flex min-h-12 items-center gap-2 rounded-full border border-border px-5 text-sm font-semibold text-gold"
               >
-                View clinic <ArrowRight className="size-4" aria-hidden="true" />
+                View clinic <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
               </Link>
             </div>
           </Container>

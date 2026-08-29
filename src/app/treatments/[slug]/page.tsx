@@ -49,8 +49,8 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
         <div aria-hidden="true" className="bloom-gold pointer-events-none absolute inset-0 -z-10" />
         <Container width="7xl" className="relative grid gap-10 py-12 lg:grid-cols-[1.1fr_.9fr] lg:items-center lg:gap-14 lg:py-16">
           <div>
-            <p className="text-[.7rem] font-semibold uppercase tracking-[.24em] text-gold">{t.eyebrow}</p>
-            <h1 className="mt-5 font-serif text-[clamp(2.2rem,5.8vw,4.2rem)] leading-[1] tracking-[-.045em]">
+            <p className="t-eyebrow text-gold">{t.eyebrow}</p>
+            <h1 className="mt-5 t-h1">
               {t.title} in Surat
             </h1>
             <p className="mt-5 max-w-xl text-base leading-7 text-white/65">{t.short}</p>
@@ -82,7 +82,7 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
                 className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-gold px-6 text-sm font-semibold text-ink sm:whitespace-nowrap"
               >
                 Book Appointment
-                <ArrowRight className="size-4" aria-hidden="true" />
+                <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
               </Link>
               <a
                 href={`tel:${site.primaryPhoneHref}`}
@@ -116,7 +116,7 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
         <Container width="7xl">
           <div className="grid gap-10 lg:grid-cols-[1.1fr_.9fr] lg:gap-16">
             <div>
-              <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">{t.problem}</h2>
+              <h2 className="t-h2">{t.problem}</h2>
               <p className="mt-5 max-w-2xl text-base leading-7 text-muted-foreground">{t.intro}</p>
               <div className="mt-8">
                 <TickList items={t.benefits} />
@@ -134,7 +134,7 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
       {/* Steps */}
       <Section className="bg-[#f1eee7]" spacing="md">
         <Container width="7xl">
-          <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">{t.processHeading}</h2>
+          <h2 className="t-h2">{t.processHeading}</h2>
           <ol className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {t.process.map((step, i) => (
               <li key={step.title} className="rounded-2xl border border-border bg-white p-5">
@@ -154,7 +154,7 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
         <Container width="7xl">
           <div className="grid gap-8 lg:grid-cols-[.85fr_1.15fr] lg:gap-14">
             <div>
-              <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Cost and EMI</h2>
+              <h2 className="t-h2">Cost and EMI</h2>
               <p className="mt-4 text-sm leading-6 text-muted-foreground">
                 You get the full plan with the cost of each stage before treatment starts.
               </p>
@@ -168,7 +168,7 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
       {relatedDoctors.length > 0 && (
         <Section className="bg-[#f1eee7]" spacing="md">
           <Container width="7xl">
-            <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Your doctors</h2>
+            <h2 className="t-h2">Your doctors</h2>
             <ul className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {relatedDoctors.map((doctor) => (
                 <li key={doctor.slug}>
@@ -198,9 +198,9 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
       <Section spacing="md">
         <Container width="7xl">
           <div className="flex flex-wrap items-end justify-between gap-4">
-            <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Results</h2>
+            <h2 className="t-h2">Results</h2>
             <Link href="/smile-gallery/" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-gold">
-              All results <ArrowUpRight className="size-4" aria-hidden="true" />
+              All results <ArrowUpRight className="cta-arrow size-4" aria-hidden="true" />
             </Link>
           </div>
           <div className="mt-8">
@@ -212,7 +212,7 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
       {/* Reviews for both branches */}
       <Section className="grain relative isolate bg-ink text-white" spacing="md">
         <Container width="7xl">
-          <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">What patients say</h2>
+          <h2 className="t-h2">What patients say</h2>
           <div className="mt-8 grid gap-4 md:grid-cols-2">
             {locations.map((location) => (
               <BranchGoogleCard
@@ -230,7 +230,7 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
       <Section className="bg-[#f1eee7]" spacing="md">
         <Container width="7xl">
           <div className="grid gap-8 lg:grid-cols-[.7fr_1.3fr] lg:gap-14">
-            <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Common questions</h2>
+            <h2 className="t-h2">Common questions</h2>
             <Accordion items={t.faqs} className="bg-white" />
           </div>
         </Container>
@@ -238,7 +238,7 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
 
       <section className="bg-gold py-14 text-ink sm:py-16">
         <Container width="7xl" className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
-          <h2 className="max-w-xl font-serif text-[clamp(1.9rem,4.4vw,3rem)] leading-[1.02] tracking-[-.04em]">
+          <h2 className="max-w-xl t-h1">
             {t.ctaTitle}
           </h2>
           <div className="flex flex-col gap-2.5 sm:flex-row">

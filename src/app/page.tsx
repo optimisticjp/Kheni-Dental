@@ -38,56 +38,60 @@ const nriMessage =
 export default function Home() {
   return (
     <>
-      {/* ── Hero ─────────────────────────────────────────────────────────── */}
+      {/* ── Hero ─────────────────────────────────────────────────────────
+          No photography slot here on purpose. While the clinic's own images
+          are still coming, an empty frame was the largest object on the page
+          and the first screen advertised what we lack. The right column is
+          now the Google proof, which is real, external and the strongest
+          thing Kheni has. Photography slots remain everywhere they can carry
+          their own weight: the rail, the clinics, the gallery. */}
       <section className="grain relative isolate overflow-hidden bg-ink text-white">
         <div aria-hidden="true" className="bloom-gold pointer-events-none absolute inset-0 -z-10" />
         <Container
           width="7xl"
-          className="relative grid gap-12 py-12 lg:grid-cols-[1.08fr_.92fr] lg:items-center lg:gap-16 lg:py-20"
+          className="relative grid gap-9 py-12 lg:grid-cols-[1.15fr_.85fr] lg:items-center lg:gap-20 lg:py-20"
         >
           <div>
             <div className="flex items-center gap-3">
-              <span className="text-[.66rem] font-semibold uppercase tracking-[.22em] text-gold">
-                Kheni Dental &amp; Elite Implant Center
-              </span>
-              <span aria-hidden="true" className="rule-gold h-px flex-1 max-w-24" />
+              <span className="t-eyebrow text-gold">Kheni Dental &amp; Elite Implant Center</span>
+              <span aria-hidden="true" className="rule-gold h-px w-14" />
             </div>
 
-            {/* No hard break: text-balance distributes the line lengths, which
-                stops "to." being orphaned on a line of its own at wide widths. */}
-            <h1 className="mt-6 font-serif text-[clamp(2.3rem,4.6vw,3.75rem)] leading-[1.01] tracking-[-.045em] text-balance">
-              The dentist in Surat you keep going back to.
-            </h1>
+            <h1 className="t-display measure-display mt-6">The dentist in Surat you keep going back to.</h1>
 
-            <p className="mt-6 max-w-lg text-base leading-7 text-white/60">
+            <p className="t-stand measure-stand mt-5 text-white/60">
               Fifteen years, four dentists and two clinics at Yogi Chowk and Hirabaug. Dental implants, root canals,
               braces, kids dentistry and smile design, led by Dr. Mayur Kheni.
             </p>
 
-            <ul className="mt-7 flex flex-wrap gap-x-5 gap-y-2.5">
+            <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2">
               {heroAssurances.map((item) => (
-                <li key={item} className="flex items-center gap-2 text-[.8rem] text-white/45">
-                  <span aria-hidden="true" className="size-1 rounded-full bg-gold" />
+                <li key={item} className="t-small flex items-center gap-2 text-white/40">
+                  <span aria-hidden="true" className="size-1 rounded-full bg-gold/70" />
                   {item}
                 </li>
               ))}
             </ul>
 
-            <div className="mt-9 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
+            {/* Call and WhatsApp are permanently docked at the bottom of every
+                phone screen at 64px each, so repeating them here as two more
+                full-width buttons was pure duplication. They return from sm up,
+                where there is no dock. */}
+            <div className="mt-8 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
               <Link
                 href="/contact/#book"
                 data-track="appointment_start"
                 data-placement="home_hero"
-                className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-gold px-6 text-sm font-semibold text-ink sm:whitespace-nowrap"
+                className="group inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-gold px-6 text-sm font-semibold text-ink sm:whitespace-nowrap"
               >
                 Book Appointment
-                <ArrowRight className="size-4" aria-hidden="true" />
+                <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
               </Link>
               <a
                 href={`tel:${site.primaryPhoneHref}`}
                 data-track="phone_click"
                 data-placement="home_hero"
-                className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-white/18 px-6 text-sm font-semibold sm:whitespace-nowrap"
+                className="hidden min-h-13 items-center justify-center gap-2 rounded-full border border-white/18 px-6 text-sm font-semibold sm:inline-flex sm:whitespace-nowrap"
               >
                 <Phone className="size-4 text-gold" aria-hidden="true" />
                 {site.primaryPhoneDisplay}
@@ -98,7 +102,7 @@ export default function Home() {
                 rel="noreferrer"
                 data-track="whatsapp_click"
                 data-placement="home_hero"
-                className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-white/18 px-6 text-sm font-semibold sm:whitespace-nowrap"
+                className="hidden min-h-13 items-center justify-center gap-2 rounded-full border border-white/18 px-6 text-sm font-semibold sm:inline-flex sm:whitespace-nowrap"
               >
                 <MessageCircle className="size-4 text-gold" aria-hidden="true" />
                 WhatsApp
@@ -106,22 +110,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Photography slot with the Google proof overlapping its lower edge.
-              The overlap is what stops this reading as two stacked boxes. */}
-          {/* The panel hangs off the bottom-left corner of the photograph.
-              The overlap is deliberately shallow so the frame still reads as a
-              photograph and the proof still reads as a separate object. */}
-          <div className="relative">
-            <MediaFrame
-              shot="Dr. Mayur Kheni at the Elite Implant Center"
-              ratio="4 / 3"
-              className="ml-auto w-full lg:w-[88%]"
-            />
-            <GoogleProofPanel
-              placement="home_hero_google"
-              className="relative -mt-8 w-full shadow-[0_30px_70px_-24px_rgba(0,0,0,.85)] sm:max-w-md lg:-mt-14 lg:max-w-[21rem]"
-            />
-          </div>
+          <GoogleProofPanel placement="home_hero_google" className="w-full" />
         </Container>
       </section>
 
@@ -137,12 +126,12 @@ export default function Home() {
         <Container width="7xl">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div>
-              <p className="text-[.66rem] font-semibold uppercase tracking-[.2em] text-gold">Problems we treat</p>
-              <h2 className="mt-4 max-w-2xl font-serif text-[clamp(2rem,4.6vw,3.4rem)] leading-[1.02] tracking-[-.04em]">
+              <p className="t-eyebrow text-gold">Problems we treat</p>
+              <h2 className="t-h1 measure-head mt-4">
                 Start with what is bothering you.
               </h2>
             </div>
-            <p className="max-w-xs text-sm leading-6 text-white/45">
+            <p className="t-body measure-narrow text-white/45">
               Pick the one that sounds like you. You do not need to know the name of the treatment.
             </p>
           </div>
@@ -158,11 +147,11 @@ export default function Home() {
         <Container width="7xl">
           <div className="grid gap-10 lg:grid-cols-[1.05fr_.95fr] lg:items-center lg:gap-16">
             <div>
-              <p className="text-[.66rem] font-semibold uppercase tracking-[.2em] text-gold">Elite Implant Center</p>
-              <h2 className="mt-4 font-serif text-[clamp(2rem,4.4vw,3.2rem)] leading-[1.02] tracking-[-.04em]">
+              <p className="t-eyebrow text-gold">Elite Implant Center</p>
+              <h2 className="t-h1 mt-4">
                 Tooth replacement, planned properly.
               </h2>
-              <p className="mt-5 max-w-lg text-base leading-7 text-muted-foreground">
+              <p className="t-stand measure-body mt-5 text-muted-foreground">
                 Our implant work is led from the Hirabaug clinic by Dr. Mayur Kheni. Every case starts with an
                 examination and the imaging needed to assess the bone, before anything is recommended.
               </p>
@@ -183,7 +172,7 @@ export default function Home() {
                 className="mt-8 inline-flex min-h-13 items-center gap-2 rounded-full bg-ink px-6 text-sm font-semibold text-white"
               >
                 Inside the Elite Implant Center
-                <ArrowRight className="size-4" aria-hidden="true" />
+                <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
               </Link>
             </div>
 
@@ -200,9 +189,9 @@ export default function Home() {
           <PrincipalDoctor />
 
           <div className="mt-10 flex flex-wrap items-end justify-between gap-4">
-            <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">The rest of the team</h2>
+            <h2 className="t-h2">The rest of the team</h2>
             <Link href="/doctors/" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-gold">
-              All doctors <ArrowUpRight className="size-4" aria-hidden="true" />
+              All doctors <ArrowUpRight className="cta-arrow size-4" aria-hidden="true" />
             </Link>
           </div>
           <div className="mt-7">
@@ -216,14 +205,14 @@ export default function Home() {
         <Container width="7xl">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <p className="text-[.66rem] font-semibold uppercase tracking-[.2em] text-gold">Our work</p>
-              <h2 className="mt-4 font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Before &amp; after</h2>
+              <p className="t-eyebrow text-gold">Our work</p>
+              <h2 className="t-h2 mt-4">Before &amp; after</h2>
             </div>
             <Link
               href="/smile-gallery/"
               className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-gold"
             >
-              All results <ArrowUpRight className="size-4" aria-hidden="true" />
+              All results <ArrowUpRight className="cta-arrow size-4" aria-hidden="true" />
             </Link>
           </div>
           <div className="mt-8">
@@ -237,17 +226,17 @@ export default function Home() {
         <Container width="7xl">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div>
-              <p className="text-[.66rem] font-semibold uppercase tracking-[.2em] text-gold">Patient reviews</p>
-              <h2 className="mt-4 max-w-xl font-serif text-[clamp(2rem,4.4vw,3.2rem)] leading-[1.02] tracking-[-.04em]">
+              <p className="t-eyebrow text-gold">Patient reviews</p>
+              <h2 className="t-h1 measure-head mt-4">
                 {googleReputation.combinedReviews} reviews, on Google.
               </h2>
-              <p className="mt-3 max-w-md text-sm leading-6 text-white/45">
+              <p className="t-body measure-narrow mt-3 text-white/45">
                 Counted {googleReputation.combinedLabel.replace(/^Google reviews /, "")}. Each clinic keeps its own
                 listing, so you can read the one you plan to visit.
               </p>
             </div>
             <Link href="/reviews/" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-gold">
-              Reputation in full <ArrowUpRight className="size-4" aria-hidden="true" />
+              Reputation in full <ArrowUpRight className="cta-arrow size-4" aria-hidden="true" />
             </Link>
           </div>
 
@@ -263,7 +252,7 @@ export default function Home() {
           </div>
 
           <div className="mt-12">
-            <h3 className="font-serif text-2xl leading-tight tracking-[-.02em]">Patient stories</h3>
+            <h3 className="t-h3">Patient stories</h3>
             <div className="mt-6">
               <VideoStoryGrid />
             </div>
@@ -285,10 +274,10 @@ export default function Home() {
                   <Plane className="size-3.5" aria-hidden="true" />
                   International &amp; NRI
                 </span>
-                <h2 className="mt-5 max-w-xl font-serif text-[clamp(2rem,4.4vw,3.2rem)] leading-[1.02] tracking-[-.04em]">
+                <h2 className="t-h1 measure-head mt-5">
                   Planning dental treatment during your visit to India?
                 </h2>
-                <p className="mt-5 max-w-lg text-base leading-7 text-muted-foreground">
+                <p className="t-stand measure-body mt-5 text-muted-foreground">
                   Send your travel dates before you book flights. We will tell you what realistically fits into your
                   trip, what would need a second visit, and what to expect once you are back home.
                 </p>
@@ -300,7 +289,7 @@ export default function Home() {
                     className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-ink px-6 text-sm font-semibold text-white sm:whitespace-nowrap"
                   >
                     Plan your treatment
-                    <ArrowRight className="size-4" aria-hidden="true" />
+                    <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
                   </Link>
                   <a
                     href={whatsappUrl(nriMessage)}
@@ -327,8 +316,8 @@ export default function Home() {
         <Container width="7xl">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <p className="text-[.66rem] font-semibold uppercase tracking-[.2em] text-gold">Visit us</p>
-              <h2 className="mt-4 font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Our clinics</h2>
+              <p className="t-eyebrow text-gold">Visit us</p>
+              <h2 className="t-h2 mt-4">Our clinics</h2>
             </div>
             <Link href="/locations/" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-gold">
               <MapPin className="size-4" aria-hidden="true" />
@@ -347,7 +336,7 @@ export default function Home() {
       <Section spacing="md">
         <Container width="7xl">
           <div className="grid gap-8 lg:grid-cols-[.7fr_1.3fr] lg:gap-14">
-            <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Common questions</h2>
+            <h2 className="t-h2">Common questions</h2>
             <Accordion items={homepageFaqs} />
           </div>
         </Container>
@@ -356,7 +345,7 @@ export default function Home() {
       {/* ── Final action ─────────────────────────────────────────────────── */}
       <section className="bg-gold py-14 text-ink sm:py-16">
         <Container width="7xl" className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
-          <h2 className="max-w-2xl font-serif text-[clamp(2rem,4.6vw,3.2rem)] leading-[1] tracking-[-.04em]">
+          <h2 className="t-h1 measure-head">
             Tell us what is bothering you. We will take it from there.
           </h2>
           <div className="flex flex-col gap-2.5 sm:flex-row">

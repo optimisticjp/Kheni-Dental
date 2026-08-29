@@ -109,12 +109,15 @@ patient than `175,000`.
 
 File: `src/content/cases.ts`
 
-Per case:
+The gallery now leads with **one featured case told as a story**, with the rest
+behind it as an archive. So we need slightly more for the featured one.
+
+**Every case:**
 
 - Before photograph
 - After photograph, same angle and similar lighting
 - Category: implants, full mouth, smile design, crowns, or braces
-- What the patient came in with, one line
+- What the patient came in with, in their words if possible
 - What the result was, one line
 - Which doctor treated it
 - Which clinic
@@ -122,8 +125,17 @@ Per case:
 - Number of visits and over what period, if you track it
 - **Written patient consent**
 
-Nothing publishes without consent on file. Three cases per category is plenty
-to start.
+**The featured case only, additionally:**
+
+- What was actually done, in plain words
+- The treatment stages in order (three to five is ideal)
+- Why this approach was chosen over the alternatives
+- Optionally, one sentence from the patient — in their words, never ours
+
+Pick a case you are proud of and that a typical patient would recognise
+themselves in. One strong case told properly beats twenty pairs of photographs.
+
+Nothing publishes without consent on file.
 
 ---
 

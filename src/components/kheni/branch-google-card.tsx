@@ -116,7 +116,7 @@ export function BranchGoogleCard({
           className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-gold"
         >
           Read reviews
-          <ArrowUpRight className="size-4" aria-hidden="true" />
+          <ArrowUpRight className="cta-arrow size-4" aria-hidden="true" />
         </a>
         <a
           href={location.googleWriteReviewUrl}
@@ -173,7 +173,7 @@ export function GoogleProofPanel({
       <div className="mt-5 flex flex-wrap items-end gap-x-6 gap-y-3">
         {sharedRating && (
           <div className="flex items-end gap-3">
-            <span className="font-serif text-[clamp(3rem,8vw,4.2rem)] leading-[.85] tracking-[-.04em] text-gold">
+            <span className="t-h1 text-gold">
               {sharedRating}
             </span>
             <Stars className="mb-2" />
@@ -216,7 +216,7 @@ export function GoogleProofPanel({
                 aria-label={`Read Google reviews for ${branch.location.shortName}`}
                 className="inline-flex size-11 items-center justify-center rounded-full text-gold"
               >
-                <ArrowUpRight className="size-4" aria-hidden="true" />
+                <ArrowUpRight className="cta-arrow size-4" aria-hidden="true" />
               </a>
             </div>
           </li>

@@ -97,10 +97,10 @@ export function Navbar() {
                 data-track="phone_click"
                 data-placement="header"
                 aria-label={`Call the clinic on ${site.primaryPhoneDisplay}`}
-                className="inline-flex size-11 items-center justify-center gap-2 whitespace-nowrap rounded-full border border-white/15 text-sm text-white/85 hover:border-gold/40 hover:text-gold 2xl:size-auto 2xl:px-3.5 2xl:py-2.5"
+                className="inline-flex size-11 items-center justify-center gap-2 whitespace-nowrap rounded-full border border-white/15 text-sm text-white/85 hover:border-gold/40 hover:text-gold min-[1400px]:size-auto min-[1400px]:px-3.5 min-[1400px]:py-2.5"
               >
                 <Phone className="size-4 text-gold" aria-hidden="true" />
-                <span className="hidden 2xl:inline">{site.primaryPhoneDisplay}</span>
+                <span className="hidden min-[1400px]:inline">{site.primaryPhoneDisplay}</span>
               </a>
               <Link
                 href="/contact/#book"

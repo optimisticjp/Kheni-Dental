@@ -113,7 +113,7 @@ export default function ResourcesPage() {
                   </span>
                   <span aria-hidden="true" className="rule-gold h-px w-12" />
                 </div>
-                <h2 className="mt-4 font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">
+                <h2 className="t-h2 mt-4">
                   {category.label}
                 </h2>
                 <p className="mt-4 text-sm leading-6 text-muted-foreground">{category.intro}</p>
@@ -177,7 +177,7 @@ export default function ResourcesPage() {
               className="mt-6 inline-flex min-h-13 items-center gap-2 rounded-full bg-gold px-6 text-sm font-semibold text-ink"
             >
               Book Appointment
-              <ArrowRight className="size-4" aria-hidden="true" />
+              <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
             </Link>
           </div>
         </Container>

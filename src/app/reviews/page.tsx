@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Quote, Star } from "lucide-react";
 
-import { BranchGoogleCard, GoogleProofPanel } from "@/components/kheni/branch-google-card";
+import { BranchGoogleCard } from "@/components/kheni/branch-google-card";
 import { CaseResultsGrid } from "@/components/kheni/case-results";
 import { PageHero } from "@/components/kheni/page-hero";
 import { PatientStoryGrid, VideoStoryGrid } from "@/components/kheni/stories";
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
  * patient can tell.
  */
 export default function ReviewsPage() {
-  const { sharedRating, combinedReviews, combinedLabel, verifiedOn } = googleReputation;
+  const { sharedRating, combinedReviews, combinedLabel } = googleReputation;
 
   return (
     <>
@@ -43,19 +43,16 @@ export default function ReviewsPage() {
             : "What patients say about both our clinics."
         }
         copy={`${combinedReviews} ${combinedLabel}. Each clinic keeps its own listing, so you can read reviews for the one you are actually planning to visit.`}
-        aside={<GoogleProofPanel placement="reviews_hero_google" className="w-full" />}
       />
 
       {/* ── Per branch ───────────────────────────────────────────────────── */}
       <Section spacing="md">
         <Container width="7xl">
           <div className="flex flex-wrap items-end justify-between gap-4">
-            <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">
+            <h2 className="t-h2">
               Reviews by clinic
             </h2>
-            {verifiedOn && (
-              <p className="text-xs text-muted-foreground">Figures checked {verifiedOn}.</p>
-            )}
+
           </div>
           <div className="mt-8 grid gap-4 md:grid-cols-2">
             {locations.map((location) => (
@@ -74,8 +71,8 @@ export default function ReviewsPage() {
         <Container width="7xl">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div>
-              <p className="text-[.66rem] font-semibold uppercase tracking-[.2em] text-gold">In their words</p>
-              <h2 className="mt-4 max-w-xl font-serif text-[clamp(2rem,4.4vw,3.2rem)] leading-[1.02] tracking-[-.04em]">
+              <p className="t-eyebrow text-gold">In their words</p>
+              <h2 className="mt-4 max-w-xl t-h1">
                 Straight from the Google listings.
               </h2>
             </div>
@@ -113,8 +110,8 @@ export default function ReviewsPage() {
         <Container width="7xl">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div>
-              <p className="text-[.66rem] font-semibold uppercase tracking-[.2em] text-gold">Patient videos</p>
-              <h2 className="mt-4 font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">
+              <p className="t-eyebrow text-gold">Patient videos</p>
+              <h2 className="t-h2 mt-4">
                 Patients, in their own language.
               </h2>
             </div>
@@ -132,7 +129,7 @@ export default function ReviewsPage() {
       {/* ── Written testimonials ─────────────────────────────────────────── */}
       <Section className="bg-[#f1eee7]" spacing="md">
         <Container width="7xl">
-          <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">
+          <h2 className="t-h2">
             Testimonials given to the clinic
           </h2>
           <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">
@@ -148,12 +145,12 @@ export default function ReviewsPage() {
       <Section spacing="md">
         <Container width="7xl">
           <div className="flex flex-wrap items-end justify-between gap-4">
-            <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Before &amp; after</h2>
+            <h2 className="t-h2">Before &amp; after</h2>
             <Link
               href="/smile-gallery/"
               className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-gold"
             >
-              All results <ArrowUpRight className="size-4" aria-hidden="true" />
+              All results <ArrowUpRight className="cta-arrow size-4" aria-hidden="true" />
             </Link>
           </div>
           <div className="mt-8">
@@ -167,7 +164,7 @@ export default function ReviewsPage() {
         <Container width="7xl">
           <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
             <div>
-              <h2 className="max-w-xl font-serif text-[clamp(1.9rem,4.4vw,3rem)] leading-[1.02] tracking-[-.04em]">
+              <h2 className="max-w-xl t-h1">
                 Been treated with us? Say so where it helps someone else.
               </h2>
               <p className="mt-4 max-w-lg text-sm leading-6 text-ink/70">
@@ -187,7 +184,7 @@ export default function ReviewsPage() {
                   className="inline-flex min-h-13 items-center justify-between gap-4 rounded-full bg-ink px-6 text-sm font-semibold text-white"
                 >
                   Review {branch.location.displayArea}
-                  <ArrowRight className="size-4 text-gold" aria-hidden="true" />
+                  <ArrowRight className="cta-arrow size-4 text-gold" aria-hidden="true" />
                 </a>
               ))}
             </div>
