@@ -1,5 +1,5 @@
 import { locations } from "@/content/site";
-import { directionsUrl, placeUrl, placeUrlFromId, writeReviewUrl } from "@/lib/maps";
+import { directionsUrl, osmEmbedSrc, placeUrl, placeUrlFromId, writeReviewUrl } from "@/lib/maps";
 
 /**
  * Branch-data integrity, enforced at build time.
@@ -23,6 +23,36 @@ const KNOWN_PLACE_IDS: Record<string, string> = {
   "swastik-plaza": "ChIJddZdiXpP4DsRvtrOvXjbQqA",
   hirabaug: "ChIJ89yBAKVP4DsR3TYY_211oRg",
 };
+
+/** The pins the embedded map is drawn on, verified on 29 August 2026.
+ *
+ *  Taken from the `!8m2!3d<lat>!4d<lng>` place parameters of the canonical
+ *  Google URL each clinic-supplied short link redirects to — not the
+ *  `@lat,lng,zoom` camera in the same URL, which sits 3km west of the
+ *  Hirabaug clinic. Cross-checked against OpenStreetMap, which independently
+ *  places "Swastik plaza, Saavaliya circle, Yogi chowk" 33m from the first
+ *  pin, and puts the second on the Varachha Main Road corridor 410m from
+ *  "Hirabaug Health center".
+ *
+ *  Changing one of these means re-verifying it, not editing it in place. */
+const KNOWN_COORDS: Record<string, { lat: number; lng: number }> = {
+  "swastik-plaza": { lat: 21.2147921, lng: 72.8881639 },
+  hirabaug: { lat: 21.2127579, lng: 72.8584163 },
+};
+
+/** Surat, generously bounded. A coordinate outside this is a typo or a swap. */
+const SURAT_BOUNDS = { minLat: 21.0, maxLat: 21.4, minLng: 72.6, maxLng: 73.1 };
+
+/** Metres between two points, near enough at city scale. */
+function metresBetween(a: { lat: number; lng: number }, b: { lat: number; lng: number }): number {
+  const toRad = (d: number) => (d * Math.PI) / 180;
+  const R = 6_371_000;
+  const dLat = toRad(b.lat - a.lat);
+  const dLng = toRad(b.lng - a.lng);
+  const h =
+    Math.sin(dLat / 2) ** 2 + Math.cos(toRad(a.lat)) * Math.cos(toRad(b.lat)) * Math.sin(dLng / 2) ** 2;
+  return 2 * R * Math.asin(Math.sqrt(h));
+}
 
 function fail(message: string): never {
   throw new Error(`[branch-data] ${message}`);
@@ -62,6 +92,34 @@ export function assertBranchDataIntegrity(): void {
 
     if (!placeUrl(location).startsWith("https://maps.app.goo.gl/")) {
       fail(`${location.slug} profile link is not the clinic-supplied short link`);
+    }
+
+    // The map is drawn from coordinates now, so they are checked like an ID.
+    const pin = KNOWN_COORDS[location.slug];
+    if (!pin) fail(`unknown branch "${location.slug}" — add its verified coordinates to this check`);
+    if (location.coords.lat !== pin.lat || location.coords.lng !== pin.lng) {
+      fail(
+        `${location.slug} coordinates changed to ${location.coords.lat},${location.coords.lng}. ` +
+          `Re-verify against the Google listing before editing.`,
+      );
+    }
+    const { lat, lng } = location.coords;
+    if (lat < SURAT_BOUNDS.minLat || lat > SURAT_BOUNDS.maxLat || lng < SURAT_BOUNDS.minLng || lng > SURAT_BOUNDS.maxLng) {
+      fail(`${location.slug} coordinates ${lat},${lng} are not in Surat — likely swapped or mistyped`);
+    }
+
+    // The embed must carry this branch's own pin, centred on it.
+    const embed = osmEmbedSrc(location);
+    if (!embed.includes(`marker=${encodeURIComponent(`${lat},${lng}`)}`)) {
+      fail(`${location.slug} map embed is not marked on its own coordinates: ${embed}`);
+    }
+    for (const other of locations) {
+      if (other.slug === location.slug) continue;
+      if (embed.includes(`${other.coords.lat}`)) fail(`${location.slug} map embed contains ${other.slug}'s latitude`);
+      // Two clinics 3km apart must never resolve to overlapping map views.
+      if (metresBetween(location.coords, other.coords) < 200) {
+        fail(`${location.slug} and ${other.slug} are pinned within 200m of each other — one has inherited the other's map`);
+      }
     }
 
     // A branch that shows a rating must show its own review count and date.

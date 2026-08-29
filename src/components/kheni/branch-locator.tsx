@@ -17,15 +17,18 @@ import { cn } from "@/lib/utils";
  * Roughly nine in ten patients arrive on a phone, and the previous layout
  * asked them to scroll past four map frames for two clinics: one inside each
  * branch card, then both again under a separate "Getting here" heading. Four
- * Google iframes for two addresses is expensive on Indian mobile data and
- * reads as repetition.
+ * map iframes for two addresses is expensive on Indian mobile data and reads
+ * as repetition.
  *
  *   PHONE     a segmented switcher. One branch selected, one exact map, and
  *             that branch's own rating, hours, address and actions under it.
  *   TABLET +  both branches side by side, since there is room to compare.
  *
- * Only the visible map exists in the DOM on a phone, so exactly one iframe
- * loads however long the patient stays.
+ * The layout that is not in use stays in the markup but never paints, and
+ * because the maps are `loading="lazy"` a frame that never enters the
+ * viewport is never fetched. Measured, not assumed: a phone requests exactly
+ * one map, a second only when the patient switches branch, and a desktop
+ * requests two rather than three.
  */
 export function BranchLocator({ placement = "branch_locator" }: { placement?: string }) {
   const [active, setActive] = useState(0);
@@ -91,7 +94,7 @@ function BranchDetail({ location, placement }: { location: (typeof locations)[nu
 
   return (
     <div className="overflow-hidden rounded-2xl border border-border bg-card">
-      <BranchMap location={location} size="compact" variant="slot" className="rounded-none border-0 border-b border-border" />
+      <BranchMap location={location} size="compact" className="rounded-none border-0 border-b border-border" />
 
       <div className="p-4 sm:p-5">
         <div className="flex items-start justify-between gap-3">

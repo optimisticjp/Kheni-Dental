@@ -106,6 +106,18 @@ export type Location = {
   /** The exact short link the clinic supplied, resolved against the Place ID. */
   googleShortUrl: string;
   /**
+   * The listing's own pin, taken from the `!8m2!3d<lat>!4d<lng>` parameters of
+   * the canonical Google place URL each short link redirects to. Not the
+   * `@lat,lng,zoom` segment of the same URL, which is only where Google
+   * happened to park the camera and is nearly 3km off for Hirabaug.
+   *
+   * This is what the embedded OpenStreetMap map is centred and marked on, so
+   * an inaccurate value here is an inaccurate map. Verified per branch in
+   * `src/content/__checks__/branch-data.check.ts`; re-verify rather than
+   * edit in place.
+   */
+  coords: { lat: number; lng: number };
+  /**
    * Google reputation is tracked per branch. `status` decides whether the
    * review card shows a real figure or a labelled placeholder, so one branch
    * can never silently borrow the other branch's rating.
@@ -138,6 +150,7 @@ export const locations: Location[] = [
     whatsappNumber: "919510112354",
     googlePlaceId: "ChIJddZdiXpP4DsRvtrOvXjbQqA",
     googleShortUrl: "https://maps.app.goo.gl/WN2nDHXVK8RajDvE6",
+    coords: { lat: 21.2147921, lng: 72.8881639 },
     google: { status: "verified", rating: "4.9", reviewCount: "1,753", verifiedOn: "29 August 2026" },
     hours: "Mon-Sat 9:30 AM-1:00 PM and 4:00 PM-8:00 PM",
     hoursNote: "Clinic-provided hours. Call before travelling if your visit is time-sensitive.",
@@ -156,6 +169,7 @@ export const locations: Location[] = [
     whatsappNumber: "919737997543",
     googlePlaceId: "ChIJ89yBAKVP4DsR3TYY_211oRg",
     googleShortUrl: "https://maps.app.goo.gl/7TipkWprNZv2qEQk9",
+    coords: { lat: 21.2127579, lng: 72.8584163 },
     google: { status: "verified", rating: "4.9", reviewCount: "210", verifiedOn: "29 August 2026" },
     hours: "Mon-Sat 9:30 AM-1:00 PM and 4:00 PM-8:00 PM",
     hoursNote: "Clinic-provided hours. Call before travelling if your visit is time-sensitive.",
