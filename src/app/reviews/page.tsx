@@ -1,65 +1,142 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, MessageCircle, Quote } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Quote, Star } from "lucide-react";
 
-import { BranchGoogleCard } from "@/components/kheni/branch-google-card";
+import { BranchGoogleCard, GoogleProofPanel } from "@/components/kheni/branch-google-card";
 import { CaseResultsGrid } from "@/components/kheni/case-results";
+import { PageHero } from "@/components/kheni/page-hero";
 import { PatientStoryGrid, VideoStoryGrid } from "@/components/kheni/stories";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
-import { locations, reviewHighlights, site } from "@/content/site";
-import { whatsappUrl } from "@/lib/links";
+import { googleReputation, verifiedBranches } from "@/content/google-reputation";
+import { locations, reviewHighlights } from "@/content/site";
 
 export const metadata: Metadata = {
   title: "Patient Reviews",
   description:
-    "Google reviews for both Kheni Dental clinics in Surat, at Yogi Chowk and Hirabaug, plus patient stories and treatment results.",
+    "Google reviews for both Kheni Dental clinics in Surat, at Yogi Chowk and Hirabaug, plus patient videos, written testimonials and treatment results.",
 };
 
+/**
+ * The reputation hub.
+ *
+ * Three deliberately separate layers, in descending order of independence:
+ *
+ *   1. Google      other people's verdict, on Google's platform, per branch
+ *   2. Videos      the patient's own face and voice, with consent
+ *   3. Written     testimonials given to the clinic
+ *
+ * They are never blended into one carousel, because a clinic-collected quote
+ * and an independent Google rating are not the same kind of evidence and a
+ * patient can tell.
+ */
 export default function ReviewsPage() {
+  const { sharedRating, combinedReviews, combinedLabel, verifiedOn } = googleReputation;
+
   return (
     <>
-      {/* Compact hero. The proof starts immediately below it, not after an essay. */}
-      <section className="bg-ink text-white">
-        <Container width="7xl" className="py-12 lg:py-16">
-          <p className="text-[.7rem] font-semibold uppercase tracking-[.24em] text-gold">Patient reviews</p>
-          <h1 className="mt-4 max-w-3xl font-serif text-[clamp(2.1rem,5.4vw,3.8rem)] leading-[1] tracking-[-.045em]">
-            What patients say about both our clinics.
-          </h1>
+      <PageHero
+        eyebrow="Patient reviews"
+        title={
+          sharedRating
+            ? `${sharedRating} on Google, across both our clinics.`
+            : "What patients say about both our clinics."
+        }
+        copy={`${combinedReviews} ${combinedLabel}. Each clinic keeps its own listing, so you can read reviews for the one you are actually planning to visit.`}
+        aside={<GoogleProofPanel placement="reviews_hero_google" className="w-full" />}
+      />
 
-          <div className="mt-9 grid gap-4 md:grid-cols-2">
+      {/* ── Per branch ───────────────────────────────────────────────────── */}
+      <Section spacing="md">
+        <Container width="7xl">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">
+              Reviews by clinic
+            </h2>
+            {verifiedOn && (
+              <p className="text-xs text-muted-foreground">Figures checked {verifiedOn}.</p>
+            )}
+          </div>
+          <div className="mt-8 grid gap-4 md:grid-cols-2">
             {locations.map((location) => (
-              <BranchGoogleCard key={location.slug} location={location} dark placement={`reviews_google_${location.slug}`} />
+              <BranchGoogleCard
+                key={location.slug}
+                location={location}
+                placement={`reviews_google_${location.slug}`}
+              />
             ))}
           </div>
         </Container>
-      </section>
+      </Section>
 
-      {/* Real Google excerpts. Never edited, never added to. */}
-      <Section spacing="md">
+      {/* ── Real Google excerpts ─────────────────────────────────────────── */}
+      <Section className="grain relative isolate bg-ink text-white" spacing="md">
         <Container width="7xl">
-          <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">From our Google reviews</h2>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {reviewHighlights.map((item) => (
-              <figure key={item.theme} className="flex h-full flex-col rounded-2xl border border-border bg-card p-6">
-                <div className="flex items-center justify-between gap-4">
-                  <span className="text-[.62rem] font-semibold uppercase tracking-[.16em] text-gold">{item.theme}</span>
-                  <Quote className="size-4 text-gold/45" aria-hidden="true" />
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <div>
+              <p className="text-[.66rem] font-semibold uppercase tracking-[.2em] text-gold">In their words</p>
+              <h2 className="mt-4 max-w-xl font-serif text-[clamp(2rem,4.4vw,3.2rem)] leading-[1.02] tracking-[-.04em]">
+                Straight from the Google listings.
+              </h2>
+            </div>
+            <p className="max-w-xs text-sm leading-6 text-white/45">
+              Quoted exactly as written, including the spelling. Nothing here has been tidied up.
+            </p>
+          </div>
+
+          <div className="mt-9 grid gap-4 md:grid-cols-3">
+            {reviewHighlights.map((review) => (
+              <figure
+                key={review.quote}
+                className="flex h-full flex-col rounded-2xl border border-white/12 bg-white/[.04] p-6"
+              >
+                <div className="flex items-center justify-between">
+                  <Quote className="size-5 text-gold" aria-hidden="true" />
+                  <span className="flex gap-0.5 text-gold" aria-hidden="true">
+                    {Array.from({ length: 5 }).map((_, index) => (
+                      <Star key={index} className="size-3 fill-current" />
+                    ))}
+                  </span>
                 </div>
-                <blockquote className="mt-5 flex-1 font-serif text-xl leading-snug">&ldquo;{item.quote}&rdquo;</blockquote>
-                <figcaption className="mt-5 text-xs uppercase tracking-[.12em] text-muted-foreground">{item.source}</figcaption>
+                <blockquote className="mt-5 flex-1 font-serif text-lg leading-snug">{review.quote}</blockquote>
+                <figcaption className="mt-6 border-t border-white/10 pt-4 text-xs text-white/45">
+                  {review.theme} · {review.source}
+                </figcaption>
               </figure>
             ))}
           </div>
         </Container>
       </Section>
 
-      {/* Clinic testimonials, which are a different thing from Google reviews. */}
+      {/* ── Video stories ────────────────────────────────────────────────── */}
+      <Section spacing="md">
+        <Container width="7xl">
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <div>
+              <p className="text-[.66rem] font-semibold uppercase tracking-[.2em] text-gold">Patient videos</p>
+              <h2 className="mt-4 font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">
+                Patients, in their own language.
+              </h2>
+            </div>
+            <p className="max-w-sm text-sm leading-6 text-muted-foreground">
+              Nothing plays on its own. Gujarati first, because that is what most Surat patients would rather listen
+              to.
+            </p>
+          </div>
+          <div className="mt-8">
+            <VideoStoryGrid tone="light" />
+          </div>
+        </Container>
+      </Section>
+
+      {/* ── Written testimonials ─────────────────────────────────────────── */}
       <Section className="bg-[#f1eee7]" spacing="md">
         <Container width="7xl">
-          <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Patient stories</h2>
-          <p className="mt-3 max-w-xl text-sm leading-6 text-muted-foreground">
-            Told to us directly by our own patients, published with their permission.
+          <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">
+            Testimonials given to the clinic
+          </h2>
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">
+            Separate from Google, and published only where the patient has given written consent.
           </p>
           <div className="mt-8">
             <PatientStoryGrid />
@@ -67,24 +144,16 @@ export default function ReviewsPage() {
         </Container>
       </Section>
 
-      {/* Video */}
-      <Section className="bg-ink text-white" spacing="md">
-        <Container width="7xl">
-          <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Patient videos</h2>
-          <p className="mt-3 max-w-xl text-sm leading-6 text-white/55">In Gujarati, Hindi and English.</p>
-          <div className="mt-8">
-            <VideoStoryGrid tone="dark" />
-          </div>
-        </Container>
-      </Section>
-
-      {/* Results */}
+      {/* ── Results ──────────────────────────────────────────────────────── */}
       <Section spacing="md">
         <Container width="7xl">
           <div className="flex flex-wrap items-end justify-between gap-4">
-            <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Treatment results</h2>
-            <Link href="/smile-gallery/" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-gold">
-              See all results <ArrowRight className="size-4" aria-hidden="true" />
+            <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Before &amp; after</h2>
+            <Link
+              href="/smile-gallery/"
+              className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-gold"
+            >
+              All results <ArrowUpRight className="size-4" aria-hidden="true" />
             </Link>
           </div>
           <div className="mt-8">
@@ -93,33 +162,35 @@ export default function ReviewsPage() {
         </Container>
       </Section>
 
-      <section className="bg-gold py-12 text-ink sm:py-14">
-        <Container width="7xl" className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
-          <h2 className="max-w-xl font-serif text-2xl leading-tight tracking-[-.03em] sm:text-3xl">
-            Been treated with us? Your review helps the next patient decide.
-          </h2>
-          <div className="flex flex-col gap-2.5 sm:flex-row">
-            <a
-              href={site.googleWriteReviewUrl}
-              target="_blank"
-              rel="noreferrer"
-              data-track="review_click"
-              data-placement="reviews_write_cta"
-              className="inline-flex min-h-12 items-center justify-center rounded-full bg-ink px-6 text-sm font-semibold text-white sm:whitespace-nowrap"
-            >
-              Write a Google review
-            </a>
-            <a
-              href={whatsappUrl()}
-              target="_blank"
-              rel="noreferrer"
-              data-track="whatsapp_click"
-              data-placement="reviews_cta"
-              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-ink/25 px-6 text-sm font-semibold sm:whitespace-nowrap"
-            >
-              <MessageCircle className="size-4" aria-hidden="true" />
-              WhatsApp
-            </a>
+      {/* ── Leave a review ───────────────────────────────────────────────── */}
+      <section className="bg-gold py-14 text-ink sm:py-16">
+        <Container width="7xl">
+          <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
+            <div>
+              <h2 className="max-w-xl font-serif text-[clamp(1.9rem,4.4vw,3rem)] leading-[1.02] tracking-[-.04em]">
+                Been treated with us? Say so where it helps someone else.
+              </h2>
+              <p className="mt-4 max-w-lg text-sm leading-6 text-ink/70">
+                Pick the clinic you were seen at, so your review lands on the right listing.
+              </p>
+            </div>
+            <div className="flex flex-col gap-2.5">
+              {verifiedBranches.map((branch) => (
+                <a
+                  key={branch.location.slug}
+                  href={branch.location.googleWriteReviewUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  data-track="review_click"
+                  data-placement={`reviews_write_${branch.location.slug}`}
+                  data-branch={branch.location.slug}
+                  className="inline-flex min-h-13 items-center justify-between gap-4 rounded-full bg-ink px-6 text-sm font-semibold text-white"
+                >
+                  Review {branch.location.displayArea}
+                  <ArrowRight className="size-4 text-gold" aria-hidden="true" />
+                </a>
+              ))}
+            </div>
           </div>
         </Container>
       </section>

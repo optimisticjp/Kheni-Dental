@@ -1,33 +1,101 @@
 import type { Metadata } from "next";
-import { ArrowUpRight, MapPin } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, MessageCircle } from "lucide-react";
+
+import { GoogleProofPanel } from "@/components/kheni/branch-google-card";
+import { BranchMap, DirectionsButton } from "@/components/kheni/branch-map";
 import { LocationCard } from "@/components/kheni/location-card";
 import { PageHero } from "@/components/kheni/page-hero";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
 import { locations } from "@/content/site";
+import { whatsappUrl } from "@/lib/links";
 
 export const metadata: Metadata = {
   title: "Our Two Clinics in Surat",
-  description: "Kheni Dental has two clinics in Surat, at Swastik Plaza in Yogi Chowk and at Hirabaug on Varachha Main Road. Get the address, phone and directions.",
+  description:
+    "Kheni Dental has two clinics in Surat: Swastik Plaza at Yogi Chowk, and the Elite Implant Center at Hirabaug on Varachha Main Road. Address, phone, hours and directions.",
 };
 
 export default function LocationsPage() {
   return (
     <>
-      <PageHero eyebrow="Our two Surat clinics" title="Find your Kheni." copy="Both clinics belong to the same practice, so pick whichever is easier to reach on the day. Each card below has the address, the number for that branch and a map link that opens on your phone." />
-      <Section spacing="lg">
+      <PageHero
+        eyebrow="Our two Surat clinics"
+        title="Find your Kheni."
+        copy="Both clinics belong to the same practice, so pick whichever is easier to reach on the day. Each one keeps its own phone number, its own Google listing and its own team on the floor."
+        aside={<GoogleProofPanel placement="locations_hero_google" className="w-full" />}
+      />
+
+      <Section spacing="md">
         <Container width="7xl">
-          <div className="grid gap-5 lg:grid-cols-2">{locations.map((location) => <LocationCard key={location.slug} location={location} />)}</div>
-        </Container>
-      </Section>
-      <Section className="bg-ink text-white" spacing="lg">
-        <Container width="7xl" className="grid gap-10 lg:grid-cols-[.8fr_1.2fr] lg:items-center">
-          <div><p className="text-xs font-semibold uppercase tracking-[.2em] text-gold">Getting here</p><h2 className="mt-4 font-serif text-4xl leading-tight sm:text-5xl">Open the map before you leave the house.</h2><p className="mt-5 text-sm leading-7 text-white/55">We link straight out to Google Maps instead of loading a heavy map on this page, so the site stays quick on mobile data. Tap a clinic and you get the live route, the travel time from wherever you are and the current listing details.</p></div>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {locations.map((location) => <a key={location.slug} href={location.mapsUrl} target="_blank" rel="noreferrer" data-track="directions_click" data-placement={`locations_map_${location.slug}`} className="group rounded-[1.6rem] border border-white/10 p-6 transition hover:border-gold/35 hover:bg-white/[.03]"><MapPin className="size-5 text-gold" /><p className="mt-8 text-xs uppercase tracking-[.16em] text-white/40">Open in Google Maps</p><h3 className="mt-2 font-serif text-3xl">{location.shortName}</h3><p className="mt-2 text-sm text-white/45">{location.areaLabel}</p><span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-gold">Directions <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5" /></span></a>)}
+          <div className="grid gap-5 lg:grid-cols-2">
+            {locations.map((location) => (
+              <LocationCard key={location.slug} location={location} />
+            ))}
           </div>
         </Container>
       </Section>
+
+      {/* Maps, one per branch. Lazy iframes, so nothing loads until scrolled to. */}
+      <Section className="bg-[#f1eee7]" spacing="md">
+        <Container width="7xl">
+          <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Getting here</h2>
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">
+            The maps below load only when you scroll to them, so the page stays quick on mobile data. Tap Get
+            Directions and the live route opens in your own maps app.
+          </p>
+
+          <div className="mt-8 grid gap-6 lg:grid-cols-2">
+            {locations.map((location) => (
+              <div key={location.slug} className="rounded-2xl border border-border bg-white p-4 sm:p-5">
+                <BranchMap location={location} ratio="4 / 3" />
+                <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="font-serif text-xl leading-tight">{location.shortName}</p>
+                    <p className="mt-1 text-xs text-muted-foreground">{location.areaLabel}</p>
+                  </div>
+                  <DirectionsButton
+                    location={location}
+                    placement={`locations_map_${location.slug}`}
+                    className="border border-border sm:whitespace-nowrap"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </Section>
+
+      <section className="bg-gold py-14 text-ink sm:py-16">
+        <Container width="7xl" className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
+          <h2 className="max-w-xl font-serif text-[clamp(1.9rem,4.4vw,3rem)] leading-[1.02] tracking-[-.04em]">
+            Not sure which clinic suits you? Ask us.
+          </h2>
+          <div className="flex flex-col gap-2.5 sm:flex-row">
+            <Link
+              href="/contact/#book"
+              data-track="appointment_start"
+              data-placement="locations_cta"
+              className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-ink px-6 text-sm font-semibold text-white sm:whitespace-nowrap"
+            >
+              Book Appointment
+              <ArrowRight className="size-4 text-gold" aria-hidden="true" />
+            </Link>
+            <a
+              href={whatsappUrl()}
+              target="_blank"
+              rel="noreferrer"
+              data-track="whatsapp_click"
+              data-placement="locations_cta"
+              className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-ink/25 px-6 text-sm font-semibold sm:whitespace-nowrap"
+            >
+              <MessageCircle className="size-4" aria-hidden="true" />
+              WhatsApp
+            </a>
+          </div>
+        </Container>
+      </section>
     </>
   );
 }

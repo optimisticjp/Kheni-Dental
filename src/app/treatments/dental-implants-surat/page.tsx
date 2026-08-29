@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowRight, ArrowUpRight, ChevronDown, MessageCircle, Phone, Star } from "lucide-react";
+import { ArrowRight, ChevronDown, MessageCircle, Phone, Star } from "lucide-react";
 
 import { Accordion } from "@/components/ui/accordion";
 import { Container } from "@/components/ui/container";
@@ -18,7 +18,7 @@ import {
 import { ImplantDiagram } from "@/components/kheni/implant/implant-diagram";
 import { OptionComparison } from "@/components/kheni/implant/option-comparison";
 import { StartingPointNavigator } from "@/components/kheni/implant/starting-point-navigator";
-import { InitialsPortrait } from "@/components/kheni/pending";
+import { PrincipalDoctor } from "@/components/kheni/doctor-authority";
 import { ProofBand } from "@/components/kheni/proof-band";
 import { VideoStoryGrid } from "@/components/kheni/stories";
 import { implantCapabilities } from "@/content/capabilities";
@@ -62,11 +62,8 @@ export default function DentalImplantsPage() {
   return (
     <>
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-ink text-white">
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 bg-[radial-gradient(circle_at_80%_16%,rgba(206,173,108,.16),transparent_40%)]"
-        />
+      <section className="grain relative isolate overflow-hidden bg-ink text-white">
+        <div aria-hidden="true" className="bloom-gold pointer-events-none absolute inset-0 -z-10" />
         <Container width="7xl" className="relative grid gap-10 py-12 lg:grid-cols-[1.05fr_.95fr] lg:items-center lg:gap-14 lg:py-16">
           <div>
             <p className="text-[.7rem] font-semibold uppercase tracking-[.24em] text-gold">{implantHero.eyebrow}</p>
@@ -189,7 +186,7 @@ export default function DentalImplantsPage() {
       </Section>
 
       {/* ── Your situation ───────────────────────────────────────────────── */}
-      <Section className="bg-ink text-white" spacing="md">
+      <Section className="grain relative isolate bg-ink text-white" spacing="md">
         <Container width="7xl">
           <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">
             What are you trying to solve?
@@ -241,31 +238,9 @@ export default function DentalImplantsPage() {
 
       {/* ── Dr. Mayur ────────────────────────────────────────────────────── */}
       {doctor && (
-        <Section className="bg-ink text-white" spacing="md">
+        <Section spacing="md">
           <Container width="7xl">
-            <div className="grid gap-8 lg:grid-cols-[.7fr_1.3fr] lg:items-center lg:gap-14">
-              <InitialsPortrait name={doctor.name} className="aspect-[4/5] w-full" />
-              <div>
-                <p className="text-[.7rem] font-semibold uppercase tracking-[.24em] text-gold">Your implant surgeon</p>
-                <h2 className="mt-4 font-serif text-[clamp(2rem,4.4vw,3.2rem)] leading-[1] tracking-[-.04em]">
-                  {doctor.name}
-                </h2>
-                <p className="mt-3 text-sm text-white/55">
-                  {doctor.credentials} · {doctor.specialty} · {doctor.yearsExperience} years
-                </p>
-                <blockquote className="mt-6 border-l-2 border-gold/60 pl-5 font-serif text-xl leading-snug sm:text-2xl">
-                  &ldquo;{doctor.philosophy}&rdquo;
-                </blockquote>
-                <Link
-                  href={`/doctors/${doctor.slug}/`}
-                  data-track="doctor_profile_view"
-                  data-placement="implant_doctor"
-                  className="mt-7 inline-flex min-h-12 items-center gap-2 rounded-full border border-white/15 px-6 text-sm font-semibold"
-                >
-                  Full profile <ArrowUpRight className="size-4 text-gold" aria-hidden="true" />
-                </Link>
-              </div>
-            </div>
+            <PrincipalDoctor doctor={doctor} />
           </Container>
         </Section>
       )}
@@ -321,7 +296,7 @@ export default function DentalImplantsPage() {
       </Section>
 
       {/* ── Proof ────────────────────────────────────────────────────────── */}
-      <Section className="bg-ink text-white" spacing="md">
+      <Section className="grain relative isolate bg-ink text-white" spacing="md">
         <Container width="7xl">
           <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">What patients say</h2>
           <div className="mt-8 grid gap-4 md:grid-cols-2">

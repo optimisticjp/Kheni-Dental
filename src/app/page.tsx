@@ -1,70 +1,79 @@
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, MessageCircle, Phone, Star } from "lucide-react";
+import { ArrowRight, ArrowUpRight, MapPin, MessageCircle, Phone, Plane } from "lucide-react";
 
 import { Accordion } from "@/components/ui/accordion";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
-import { BranchGoogleCard } from "@/components/kheni/branch-google-card";
+import { BranchGoogleCard, GoogleProofPanel } from "@/components/kheni/branch-google-card";
 import { CaseResultsGrid } from "@/components/kheni/case-results";
+import { DoctorRoster, PrincipalDoctor } from "@/components/kheni/doctor-authority";
 import { ImplantDiagram } from "@/components/kheni/implant/implant-diagram";
-import { InitialsPortrait } from "@/components/kheni/pending";
 import { LocationCard } from "@/components/kheni/location-card";
+import { MediaFrame } from "@/components/kheni/pending";
 import { ProofBand } from "@/components/kheni/proof-band";
 import { PatientStoryGrid, VideoStoryGrid } from "@/components/kheni/stories";
-import { heroAssurances, proofStats, treatmentStats } from "@/content/clinic-proof";
+import { TreatmentRail } from "@/components/kheni/treatment-rail";
 import { implantCapabilities } from "@/content/capabilities";
-import { doctors, helpTopics, homepageFaqs, locations, site, treatments } from "@/content/site";
+import { heroAssurances, proofStats } from "@/content/clinic-proof";
+import { googleReputation } from "@/content/google-reputation";
+import { homepageFaqs, locations, site } from "@/content/site";
 import { whatsappUrl } from "@/lib/links";
 
-export default function Home() {
-  const implantDoctor = doctors.find((d) => d.slug === "dr-mayur-kheni");
+/**
+ * Homepage.
+ *
+ * Rhythm rather than a run of card grids: dark editorial hero, a proof strip,
+ * the interactive treatment rail as the centre of gravity, then alternating
+ * ivory and ink bands for the implant centre, the doctors, results, patient
+ * voices, international care and the two clinics.
+ *
+ * Discovery happens once. The rail is the only place treatments are browsed on
+ * this page; the full directory lives on /treatments and the problems index on
+ * /problems-we-treat, so the three do not repeat one another.
+ */
 
+const nriMessage =
+  "Hello Kheni Dental, I live abroad and would like to plan dental treatment during a visit to Surat. Here are my dates:";
+
+export default function Home() {
   return (
     <>
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-ink text-white">
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 bg-[radial-gradient(circle_at_80%_15%,rgba(206,173,108,.17),transparent_42%),radial-gradient(circle_at_5%_92%,rgba(206,173,108,.07),transparent_38%)]"
-        />
-        <Container width="7xl" className="relative grid gap-10 py-12 lg:grid-cols-[1.05fr_.95fr] lg:items-center lg:gap-14 lg:py-20">
+      <section className="grain relative isolate overflow-hidden bg-ink text-white">
+        <div aria-hidden="true" className="bloom-gold pointer-events-none absolute inset-0 -z-10" />
+        <Container
+          width="7xl"
+          className="relative grid gap-12 py-12 lg:grid-cols-[1.08fr_.92fr] lg:items-center lg:gap-16 lg:py-20"
+        >
           <div>
-            <p className="text-[.7rem] font-semibold uppercase tracking-[.24em] text-gold">
-              Kheni Dental &amp; Elite Implant Center
-            </p>
-            <h1 className="mt-5 font-serif text-[clamp(2.4rem,6.6vw,4.6rem)] leading-[.98] tracking-[-.045em]">
-              Dentist in Surat you can
-              <br className="hidden sm:block" /> keep going back to.
-            </h1>
-            <p className="mt-5 max-w-lg text-base leading-7 text-white/65">
-              Implants, root canals, braces, kids dentistry and smile design. Two clinics at Yogi Chowk and
-              Hirabaug, led by Dr. Mayur Kheni.
-            </p>
-
-            {/* Immediate proof, the way Indian patients scan for it. */}
-            <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
-              <a
-                href={site.googleProfileUrl}
-                target="_blank"
-                rel="noreferrer"
-                data-track="review_click"
-                data-placement="home_hero_google"
-                className="inline-flex min-h-11 items-center gap-2 rounded-full border border-gold/25 bg-gold/[.07] px-4 text-sm"
-              >
-                <span className="flex gap-0.5 text-gold" aria-hidden="true">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} className="size-3.5 fill-current" />
-                  ))}
-                </span>
-                <strong className="text-white">{site.googleRating}</strong>
-                <span className="text-white/50">
-                  {site.googleReviewCount} reviews · Yogi Chowk
-                </span>
-              </a>
-              <span className="text-sm text-white/45">15 years in Surat</span>
+            <div className="flex items-center gap-3">
+              <span className="text-[.66rem] font-semibold uppercase tracking-[.22em] text-gold">
+                Kheni Dental &amp; Elite Implant Center
+              </span>
+              <span aria-hidden="true" className="rule-gold h-px flex-1 max-w-24" />
             </div>
 
-            <div className="mt-7 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
+            {/* No hard break: text-balance distributes the line lengths, which
+                stops "to." being orphaned on a line of its own at wide widths. */}
+            <h1 className="mt-6 font-serif text-[clamp(2.3rem,4.6vw,3.75rem)] leading-[1.01] tracking-[-.045em] text-balance">
+              The dentist in Surat you keep going back to.
+            </h1>
+
+            <p className="mt-6 max-w-lg text-base leading-7 text-white/60">
+              Fifteen years, four dentists and two clinics at Yogi Chowk and Hirabaug. Dental implants, root canals,
+              braces, kids dentistry and smile design, led by Dr. Mayur Kheni.
+            </p>
+
+            <ul className="mt-7 flex flex-wrap gap-x-5 gap-y-2.5">
+              {heroAssurances.map((item) => (
+                <li key={item} className="flex items-center gap-2 text-[.8rem] text-white/45">
+                  <span aria-hidden="true" className="size-1 rounded-full bg-gold" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-9 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
               <Link
                 href="/contact/#book"
                 data-track="appointment_start"
@@ -78,10 +87,10 @@ export default function Home() {
                 href={`tel:${site.primaryPhoneHref}`}
                 data-track="phone_click"
                 data-placement="home_hero"
-                className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-white/15 px-6 text-sm font-semibold sm:whitespace-nowrap"
+                className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-white/18 px-6 text-sm font-semibold sm:whitespace-nowrap"
               >
                 <Phone className="size-4 text-gold" aria-hidden="true" />
-                Call Clinic
+                {site.primaryPhoneDisplay}
               </a>
               <a
                 href={whatsappUrl()}
@@ -89,197 +98,132 @@ export default function Home() {
                 rel="noreferrer"
                 data-track="whatsapp_click"
                 data-placement="home_hero"
-                className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-white/15 px-6 text-sm font-semibold sm:whitespace-nowrap"
+                className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-white/18 px-6 text-sm font-semibold sm:whitespace-nowrap"
               >
                 <MessageCircle className="size-4 text-gold" aria-hidden="true" />
                 WhatsApp
               </a>
             </div>
-
-            <ul className="mt-7 flex flex-wrap gap-x-5 gap-y-2 text-xs text-white/40">
-              {heroAssurances.map((item) => (
-                <li key={item} className="inline-flex items-center gap-2">
-                  <span aria-hidden="true" className="size-1 rounded-full bg-gold" />
-                  {item}
-                </li>
-              ))}
-            </ul>
           </div>
 
-          {/* Branch chooser: the second question every local patient has. */}
-          <div className="grid gap-3 sm:grid-cols-2 lg:gap-4">
-            {locations.map((location) => (
-              <div key={location.slug} className="rounded-2xl border border-white/10 bg-white/[.03] p-5">
-                {location.implantCentre && (
-                  <p className="mb-2 inline-flex rounded-full bg-gold/15 px-2 py-0.5 text-[.55rem] font-semibold uppercase tracking-[.14em] text-gold">
-                    Implant Center
-                  </p>
-                )}
-                <p className="font-serif text-2xl leading-tight">{location.shortName}</p>
-                <p className="mt-1 text-xs text-white/45">{location.areaLabel}</p>
-                <p className="mt-4 text-xs leading-5 text-white/40">{location.hours}</p>
-                <div className="mt-4 grid grid-cols-2 gap-2">
-                  <a
-                    href={`tel:${location.phoneHref}`}
-                    data-track="phone_click"
-                    data-placement="home_hero_branch"
-                    data-branch={location.slug}
-                    className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-full bg-white/[.07] text-xs font-semibold"
-                  >
-                    <Phone className="size-3.5 text-gold" aria-hidden="true" />
-                    Call
-                  </a>
-                  <a
-                    href={location.mapsUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    data-track="directions_click"
-                    data-placement="home_hero_branch"
-                    data-branch={location.slug}
-                    className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-full bg-white/[.07] text-xs font-semibold"
-                  >
-                    Directions
-                    <ArrowUpRight className="size-3.5 text-gold" aria-hidden="true" />
-                  </a>
-                </div>
-              </div>
-            ))}
+          {/* Photography slot with the Google proof overlapping its lower edge.
+              The overlap is what stops this reading as two stacked boxes. */}
+          {/* The panel hangs off the bottom-left corner of the photograph.
+              The overlap is deliberately shallow so the frame still reads as a
+              photograph and the proof still reads as a separate object. */}
+          <div className="relative">
+            <MediaFrame
+              shot="Dr. Mayur Kheni at the Elite Implant Center"
+              ratio="4 / 3"
+              className="ml-auto w-full lg:w-[88%]"
+            />
+            <GoogleProofPanel
+              placement="home_hero_google"
+              className="relative -mt-8 w-full shadow-[0_30px_70px_-24px_rgba(0,0,0,.85)] sm:max-w-md lg:-mt-14 lg:max-w-[21rem]"
+            />
           </div>
         </Container>
       </section>
 
       {/* ── Proof numbers ────────────────────────────────────────────────── */}
-      <section className="border-y border-white/10 bg-[#111110] py-9 text-white sm:py-11">
+      <section className="border-y border-white/10 bg-[#0a0a09] py-10 text-white sm:py-12">
         <Container width="7xl">
           <ProofBand stats={proofStats} />
         </Container>
       </section>
 
-      {/* ── How can we help ──────────────────────────────────────────────── */}
-      <Section spacing="md">
+      {/* ── Problems we treat: the signature rail ────────────────────────── */}
+      <Section className="bg-ink text-white" spacing="md">
         <Container width="7xl">
-          <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">How can we help you today?</h2>
-          <ul className="mt-7 flex flex-wrap gap-2.5">
-            {helpTopics.map((topic) => (
-              <li key={topic.label}>
-                <Link
-                  href={topic.href}
-                  data-track="problem_interaction"
-                  data-placement="home_help"
-                  className="inline-flex min-h-12 items-center gap-2 rounded-full border border-border bg-card px-5 text-sm font-medium transition-colors hover:border-gold/50 hover:bg-gold/[.06]"
-                >
-                  {topic.label}
-                  <ArrowUpRight className="size-3.5 text-gold" aria-hidden="true" />
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </Container>
-      </Section>
-
-      {/* ── Treatments ───────────────────────────────────────────────────── */}
-      <Section className="bg-[#f1eee7]" spacing="md">
-        <Container width="7xl">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Our treatments</h2>
-            <Link href="/treatments/" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-gold">
-              View all treatments <ArrowRight className="size-4" aria-hidden="true" />
-            </Link>
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <div>
+              <p className="text-[.66rem] font-semibold uppercase tracking-[.2em] text-gold">Problems we treat</p>
+              <h2 className="mt-4 max-w-2xl font-serif text-[clamp(2rem,4.6vw,3.4rem)] leading-[1.02] tracking-[-.04em]">
+                Start with what is bothering you.
+              </h2>
+            </div>
+            <p className="max-w-xs text-sm leading-6 text-white/45">
+              Pick the one that sounds like you. You do not need to know the name of the treatment.
+            </p>
           </div>
-          <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {treatments.map((treatment) => (
-              <li key={treatment.slug}>
-                <Link
-                  href={`/treatments/${treatment.slug}/`}
-                  data-track="treatment_view"
-                  data-placement="home_treatments"
-                  className="group flex min-h-[5.5rem] items-center justify-between gap-4 rounded-2xl border border-border bg-white p-5 transition-colors hover:border-gold/50"
-                >
-                  <span>
-                    <span className="block font-serif text-xl leading-tight">{treatment.title}</span>
-                    <span className="mt-1 block text-xs leading-5 text-muted-foreground">{treatment.problem}</span>
-                  </span>
-                  <ArrowUpRight
-                    className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-gold"
-                    aria-hidden="true"
-                  />
-                </Link>
-              </li>
-            ))}
-          </ul>
+
+          <div className="mt-10">
+            <TreatmentRail />
+          </div>
         </Container>
       </Section>
 
       {/* ── Elite Implant Center ─────────────────────────────────────────── */}
-      <Section className="bg-ink text-white" spacing="lg">
+      <Section className="bg-[#f1eee7]" spacing="md">
         <Container width="7xl">
           <div className="grid gap-10 lg:grid-cols-[1.05fr_.95fr] lg:items-center lg:gap-16">
             <div>
-              <p className="text-[.7rem] font-semibold uppercase tracking-[.24em] text-gold">Elite Implant Center</p>
-              <h2 className="mt-5 max-w-lg font-serif text-[clamp(2rem,4.6vw,3.4rem)] leading-[1] tracking-[-.04em]">
-                A tooth you do not have to think about.
+              <p className="text-[.66rem] font-semibold uppercase tracking-[.2em] text-gold">Elite Implant Center</p>
+              <h2 className="mt-4 font-serif text-[clamp(2rem,4.4vw,3.2rem)] leading-[1.02] tracking-[-.04em]">
+                Tooth replacement, planned properly.
               </h2>
-              <p className="mt-5 max-w-lg text-base leading-7 text-white/60">
-                Our Hirabaug clinic is built around implant treatment, led by Dr. Mayur Kheni.
+              <p className="mt-5 max-w-lg text-base leading-7 text-muted-foreground">
+                Our implant work is led from the Hirabaug clinic by Dr. Mayur Kheni. Every case starts with an
+                examination and the imaging needed to assess the bone, before anything is recommended.
               </p>
 
-              <ul className="mt-7 grid gap-2 sm:grid-cols-2">
+              <ul className="mt-8 grid gap-3 sm:grid-cols-2">
                 {implantCapabilities.map((item) => (
-                  <li
-                    key={item.id}
-                    className="rounded-xl border border-white/10 px-4 py-3 text-sm text-white/75"
-                  >
-                    {item.title}
+                  <li key={item.id} className="rounded-xl border border-border bg-white p-4">
+                    <p className="text-sm font-semibold">{item.title}</p>
+                    <p className="mt-1.5 text-xs leading-5 text-muted-foreground">{item.copy}</p>
                   </li>
                 ))}
               </ul>
 
-              <div className="mt-8 flex flex-col gap-2.5 sm:flex-row">
-                <Link
-                  href="/treatments/dental-implants-surat/"
-                  data-track="treatment_view"
-                  data-placement="home_implant"
-                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-gold px-6 text-sm font-semibold text-ink sm:whitespace-nowrap"
-                >
-                  Dental Implants
-                  <ArrowRight className="size-4" aria-hidden="true" />
-                </Link>
-                {implantDoctor && (
-                  <Link
-                    href={`/doctors/${implantDoctor.slug}/`}
-                    data-track="doctor_profile_view"
-                    data-placement="home_implant"
-                    className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/15 px-6 text-sm font-semibold sm:whitespace-nowrap"
-                  >
-                    Meet Dr. Mayur
-                  </Link>
-                )}
-              </div>
+              <Link
+                href="/treatments/dental-implants-surat/"
+                data-track="treatment_view"
+                data-placement="home_implant_centre"
+                className="mt-8 inline-flex min-h-13 items-center gap-2 rounded-full bg-ink px-6 text-sm font-semibold text-white"
+              >
+                Inside the Elite Implant Center
+                <ArrowRight className="size-4" aria-hidden="true" />
+              </Link>
             </div>
 
-            <div className="rounded-2xl border border-gold/15 bg-white/[.02] p-6 sm:p-8">
-              <ImplantDiagram className="mx-auto w-full max-w-[20rem] text-white" />
+            <div className="rounded-[1.4rem] border border-border bg-white p-6 sm:p-8">
+              <ImplantDiagram />
             </div>
-          </div>
-
-          <div className="mt-12 border-t border-white/10 pt-10">
-            <ProofBand stats={treatmentStats} />
           </div>
         </Container>
       </Section>
 
-      {/* ── Results ──────────────────────────────────────────────────────── */}
+      {/* ── Doctors ──────────────────────────────────────────────────────── */}
       <Section spacing="md">
+        <Container width="7xl">
+          <PrincipalDoctor />
+
+          <div className="mt-10 flex flex-wrap items-end justify-between gap-4">
+            <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">The rest of the team</h2>
+            <Link href="/doctors/" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-gold">
+              All doctors <ArrowUpRight className="size-4" aria-hidden="true" />
+            </Link>
+          </div>
+          <div className="mt-7">
+            <DoctorRoster exclude="dr-mayur-kheni" />
+          </div>
+        </Container>
+      </Section>
+
+      {/* ── Before and after ─────────────────────────────────────────────── */}
+      <Section className="bg-[#f1eee7]" spacing="md">
         <Container width="7xl">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Before &amp; after</h2>
-              <p className="mt-3 max-w-xl text-sm leading-6 text-muted-foreground">
-                Real cases from our own patients, shown with their permission.
-              </p>
+              <p className="text-[.66rem] font-semibold uppercase tracking-[.2em] text-gold">Our work</p>
+              <h2 className="mt-4 font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Before &amp; after</h2>
             </div>
-            <Link href="/smile-gallery/" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-gold">
-              See all results <ArrowRight className="size-4" aria-hidden="true" />
+            <Link
+              href="/smile-gallery/"
+              className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-gold"
+            >
+              All results <ArrowUpRight className="size-4" aria-hidden="true" />
             </Link>
           </div>
           <div className="mt-8">
@@ -288,121 +232,133 @@ export default function Home() {
         </Container>
       </Section>
 
-      {/* ── Doctors ──────────────────────────────────────────────────────── */}
-      <Section className="bg-[#f1eee7]" spacing="md">
+      {/* ── Reputation and patient voices ────────────────────────────────── */}
+      <Section className="grain relative isolate bg-ink text-white" spacing="md">
         <Container width="7xl">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Meet our doctors</h2>
-            <Link href="/doctors/" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-gold">
-              All doctors <ArrowRight className="size-4" aria-hidden="true" />
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <div>
+              <p className="text-[.66rem] font-semibold uppercase tracking-[.2em] text-gold">Patient reviews</p>
+              <h2 className="mt-4 max-w-xl font-serif text-[clamp(2rem,4.4vw,3.2rem)] leading-[1.02] tracking-[-.04em]">
+                {googleReputation.combinedReviews} reviews, on Google.
+              </h2>
+              <p className="mt-3 max-w-md text-sm leading-6 text-white/45">
+                Counted {googleReputation.combinedLabel.replace(/^Google reviews /, "")}. Each clinic keeps its own
+                listing, so you can read the one you plan to visit.
+              </p>
+            </div>
+            <Link href="/reviews/" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-gold">
+              Reputation in full <ArrowUpRight className="size-4" aria-hidden="true" />
             </Link>
           </div>
-          <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {doctors.map((doctor) => (
-              <li key={doctor.slug}>
-                <Link
-                  href={`/doctors/${doctor.slug}/`}
-                  data-track="doctor_profile_view"
-                  data-placement="home_doctors"
-                  className="group flex h-full items-stretch gap-4 overflow-hidden rounded-2xl border border-border bg-white p-4 sm:block sm:p-0"
-                >
-                  <InitialsPortrait
-                    name={doctor.name}
-                    tone="light"
-                    className="size-24 shrink-0 rounded-xl sm:aspect-[4/5] sm:size-auto sm:w-full sm:rounded-none"
-                  />
-                  <div className="min-w-0 sm:p-5">
-                    <p className="font-serif text-xl leading-tight">{doctor.name}</p>
-                    <p className="mt-1 text-xs text-muted-foreground">{doctor.credentials}</p>
-                    <p className="mt-1.5 text-sm leading-5">{doctor.specialty}</p>
-                    <p className="mt-2 text-xs font-semibold uppercase tracking-[.12em] text-gold">
-                      {doctor.yearsExperience} years
-                    </p>
-                  </div>
-                </Link>
-              </li>
+
+          <div className="mt-9 grid gap-4 md:grid-cols-2">
+            {locations.map((location) => (
+              <BranchGoogleCard
+                key={location.slug}
+                location={location}
+                dark
+                placement={`home_google_${location.slug}`}
+              />
             ))}
-          </ul>
+          </div>
+
+          <div className="mt-12">
+            <h3 className="font-serif text-2xl leading-tight tracking-[-.02em]">Patient stories</h3>
+            <div className="mt-6">
+              <VideoStoryGrid />
+            </div>
+            <div className="mt-4">
+              <PatientStoryGrid tone="dark" />
+            </div>
+          </div>
         </Container>
       </Section>
 
-      {/* ── What patients say: Google per branch + stories ───────────────── */}
-      <Section className="bg-ink text-white" spacing="lg">
+      {/* ── International and NRI ────────────────────────────────────────── */}
+      <Section spacing="md">
         <Container width="7xl">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">What patients say</h2>
-            <Link href="/reviews/" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-gold">
-              All reviews <ArrowRight className="size-4" aria-hidden="true" />
-            </Link>
-          </div>
+          <div className="relative overflow-hidden rounded-[1.6rem] border border-border bg-white">
+            <div aria-hidden="true" className="map-grid pointer-events-none absolute inset-0" />
+            <div className="relative grid gap-8 p-7 sm:p-10 lg:grid-cols-[1.15fr_.85fr] lg:items-center lg:gap-14">
+              <div>
+                <span className="inline-flex items-center gap-2 rounded-full border border-gold/35 bg-gold/[.08] px-3 py-1.5 text-[.66rem] font-semibold uppercase tracking-[.16em] text-gold">
+                  <Plane className="size-3.5" aria-hidden="true" />
+                  International &amp; NRI
+                </span>
+                <h2 className="mt-5 max-w-xl font-serif text-[clamp(2rem,4.4vw,3.2rem)] leading-[1.02] tracking-[-.04em]">
+                  Planning dental treatment during your visit to India?
+                </h2>
+                <p className="mt-5 max-w-lg text-base leading-7 text-muted-foreground">
+                  Send your travel dates before you book flights. We will tell you what realistically fits into your
+                  trip, what would need a second visit, and what to expect once you are back home.
+                </p>
+                <div className="mt-8 flex flex-col gap-2.5 sm:flex-row">
+                  <Link
+                    href="/international-patients/"
+                    data-track="international_patient_contact"
+                    data-placement="home_nri"
+                    className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-ink px-6 text-sm font-semibold text-white sm:whitespace-nowrap"
+                  >
+                    Plan your treatment
+                    <ArrowRight className="size-4" aria-hidden="true" />
+                  </Link>
+                  <a
+                    href={whatsappUrl(nriMessage)}
+                    target="_blank"
+                    rel="noreferrer"
+                    data-track="whatsapp_click"
+                    data-placement="home_nri"
+                    className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-border px-6 text-sm font-semibold sm:whitespace-nowrap"
+                  >
+                    <MessageCircle className="size-4 text-gold" aria-hidden="true" />
+                    Send your dates
+                  </a>
+                </div>
+              </div>
 
-          {/* Each branch shows its own Google profile. Neither borrows the other's. */}
-          <div className="mt-8 grid gap-4 md:grid-cols-2">
-            {locations.map((location) => (
-              <BranchGoogleCard key={location.slug} location={location} dark placement={`home_google_${location.slug}`} />
-            ))}
-          </div>
-
-          <div className="mt-10">
-            <h3 className="text-[.7rem] font-semibold uppercase tracking-[.2em] text-gold">Patient videos</h3>
-            <div className="mt-5">
-              <VideoStoryGrid tone="dark" />
+              <MediaFrame shot="NRI patient consultation" tone="light" ratio="4 / 3" />
             </div>
           </div>
         </Container>
       </Section>
 
       {/* ── Clinics ──────────────────────────────────────────────────────── */}
-      <Section spacing="md">
+      <Section className="bg-[#f1eee7]" spacing="md">
         <Container width="7xl">
-          <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Our clinics in Surat</h2>
-          <p className="mt-3 max-w-xl text-sm leading-6 text-muted-foreground">
-            Yogi Chowk and Hirabaug. Each clinic has its own number and its own Google listing.
-          </p>
-          <div className="mt-8 grid gap-5 lg:grid-cols-2">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p className="text-[.66rem] font-semibold uppercase tracking-[.2em] text-gold">Visit us</p>
+              <h2 className="mt-4 font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Our clinics</h2>
+            </div>
+            <Link href="/locations/" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-gold">
+              <MapPin className="size-4" aria-hidden="true" />
+              Both locations
+            </Link>
+          </div>
+          <div className="mt-8 grid gap-4 lg:grid-cols-2">
             {locations.map((location) => (
-              <LocationCard key={location.slug} location={location} showMap={false} />
+              <LocationCard key={location.slug} location={location} />
             ))}
           </div>
         </Container>
       </Section>
 
-      {/* ── Questions + NRI + book ───────────────────────────────────────── */}
-      <Section className="bg-[#f1eee7]" spacing="md">
+      {/* ── Questions ────────────────────────────────────────────────────── */}
+      <Section spacing="md">
         <Container width="7xl">
-          <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
-            <div>
-              <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Common questions</h2>
-              <div className="mt-6 rounded-2xl border border-gold/25 bg-white p-6">
-                <p className="text-[.68rem] font-semibold uppercase tracking-[.18em] text-gold">Coming from abroad</p>
-                <p className="mt-3 font-serif text-xl leading-tight">Planning treatment around a trip to Surat?</p>
-                <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                  Send your dates before you book flights and we will tell you what fits.
-                </p>
-                <Link
-                  href="/international-patients/"
-                  className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-gold"
-                >
-                  International &amp; NRI patients <ArrowRight className="size-4" aria-hidden="true" />
-                </Link>
-              </div>
-            </div>
-            <Accordion items={homepageFaqs.slice(0, 5)} className="bg-white" />
+          <div className="grid gap-8 lg:grid-cols-[.7fr_1.3fr] lg:gap-14">
+            <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Common questions</h2>
+            <Accordion items={homepageFaqs} />
           </div>
         </Container>
       </Section>
 
-      {/* ── Final CTA ────────────────────────────────────────────────────── */}
+      {/* ── Final action ─────────────────────────────────────────────────── */}
       <section className="bg-gold py-14 text-ink sm:py-16">
         <Container width="7xl" className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
-          <div>
-            <h2 className="max-w-2xl font-serif text-[clamp(1.9rem,4.4vw,3rem)] leading-[1.02] tracking-[-.04em]">
-              Book an appointment at Yogi Chowk or Hirabaug.
-            </h2>
-            <p className="mt-3 max-w-lg text-sm leading-6 text-ink/70">
-              Tell us what is bothering you and we will find you a time.
-            </p>
-          </div>
+          <h2 className="max-w-2xl font-serif text-[clamp(2rem,4.6vw,3.2rem)] leading-[1] tracking-[-.04em]">
+            Tell us what is bothering you. We will take it from there.
+          </h2>
           <div className="flex flex-col gap-2.5 sm:flex-row">
             <Link
               href="/contact/#book"
@@ -426,16 +382,6 @@ export default function Home() {
           </div>
         </Container>
       </section>
-
-      {/* Patient stories sit below the fold as supporting proof. */}
-      <Section spacing="md">
-        <Container width="7xl">
-          <h2 className="font-serif text-2xl leading-tight tracking-[-.03em] sm:text-3xl">In our patients&rsquo; words</h2>
-          <div className="mt-6">
-            <PatientStoryGrid />
-          </div>
-        </Container>
-      </Section>
     </>
   );
 }

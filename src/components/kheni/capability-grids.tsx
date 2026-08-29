@@ -5,28 +5,45 @@ import { implantSystems, implantWorkflowPending, technologies } from "@/content/
 import { finance, priceList, costNote } from "@/content/pricing";
 import { cn } from "@/lib/utils";
 
-/** Equipment grid. Each card answers "what does this let the dentist see?". */
+/**
+ * Equipment. Treated as visual proof rather than a specification list: each
+ * card is a photograph of the actual machine plus the one line a patient cares
+ * about, which is what it lets the dentist see.
+ */
 export function TechnologyGrid({ tone = "light" }: { tone?: "dark" | "light" }) {
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {technologies.map((tech) => (
+      {technologies.map((tech, index) => (
         <article
           key={tech.id}
           className={cn(
-            "overflow-hidden rounded-2xl border",
-            tech.status === "pending" ? "border-dashed" : "",
-            tone === "dark" ? "border-white/12" : "border-border bg-card",
+            "group overflow-hidden rounded-2xl border",
+            tech.status === "pending" && "border-dashed",
+            tone === "dark" ? "border-white/12 bg-white/[.03]" : "border-border bg-card",
           )}
         >
-          <MediaFrame shot="Equipment photo" tone={tone} ratio="4 / 3" className="rounded-none border-0 border-b border-dashed" />
+          <MediaFrame
+            shot={tech.name ? `${tech.name} in the clinic` : "Equipment photo"}
+            tone={tone}
+            ratio="4 / 3"
+            className="rounded-none border-0 border-b border-dashed"
+          />
           <div className="p-5">
-            <p className={cn("font-serif text-xl", tech.name ? "" : "text-muted-foreground/70")}>
-              {tech.name ?? "Equipment name"}
+            <span aria-hidden="true" className="font-mono text-[.6rem] text-gold">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <p className={cn("mt-2 font-serif text-xl leading-snug", !tech.name && "text-muted-foreground/60")}>
+              {tech.name ?? "[ Equipment name ]"}
             </p>
             <p className={cn("mt-2 text-sm leading-6", tone === "dark" ? "text-white/55" : "text-muted-foreground")}>
-              {tech.purpose ?? "What it helps the dentist assess."}
+              {tech.purpose ?? "What it lets the dentist assess or plan."}
             </p>
-            {tech.status === "pending" && <PendingTag className="mt-3" />}
+            {tech.experience && (
+              <p className={cn("mt-2 text-xs leading-5", tone === "dark" ? "text-white/40" : "text-muted-foreground/80")}>
+                {tech.experience}
+              </p>
+            )}
+            {tech.status === "pending" && <PendingTag className="mt-4" label="Name and photo needed" />}
           </div>
         </article>
       ))}
@@ -34,21 +51,46 @@ export function TechnologyGrid({ tone = "light" }: { tone?: "dark" | "light" }) 
   );
 }
 
-/** Implant system rail. Brand names stay blank until the clinic confirms them. */
+/**
+ * Implant systems.
+ *
+ * The strongest implant clinics use the system brands themselves as proof, so
+ * the rail is built at full weight now: a logo plate and a name per system.
+ * Brand names stay blank until the clinic confirms which systems it uses and
+ * at which branch. Never fill these in from a guess.
+ */
 export function ImplantSystemRail({ tone = "dark" }: { tone?: "dark" | "light" }) {
+  const dark = tone === "dark";
   return (
-    <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+    <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
       {implantSystems.map((system, index) => (
         <div
           key={system.id}
           className={cn(
-            "flex min-h-24 flex-col items-center justify-center gap-2 rounded-xl border border-dashed px-3 py-4 text-center",
-            tone === "dark" ? "border-white/12" : "border-border",
+            "flex flex-col items-center gap-4 rounded-2xl border p-5 text-center",
+            system.status === "pending" && "border-dashed",
+            dark ? "border-white/12 bg-white/[.03]" : "border-border bg-card",
           )}
         >
-          <p className={cn("text-sm font-semibold", tone === "dark" ? "text-white/70" : "text-foreground")}>
-            {system.name ?? `Implant system ${String(index + 1).padStart(2, "0")}`}
-          </p>
+          {/* Logo plate. A real logo drops in at exactly this size. */}
+          <div
+            className={cn(
+              "grid h-14 w-full place-items-center rounded-lg border border-dashed",
+              dark ? "border-white/12 bg-ink/40" : "border-border bg-[#f4f1ea]",
+            )}
+          >
+            <span aria-hidden="true" className="font-mono text-[.6rem] tracking-[.2em] text-gold/70">
+              {system.logo ? "" : "LOGO"}
+            </span>
+          </div>
+          <div>
+            <p className={cn("font-serif text-base leading-tight", !system.name && "text-muted-foreground/70")}>
+              {system.name ?? `Implant system ${String(index + 1).padStart(2, "0")}`}
+            </p>
+            {system.origin && (
+              <p className={cn("mt-1 text-xs", dark ? "text-white/40" : "text-muted-foreground")}>{system.origin}</p>
+            )}
+          </div>
           {system.status === "pending" && <PendingTag label="Brand to confirm" />}
         </div>
       ))}

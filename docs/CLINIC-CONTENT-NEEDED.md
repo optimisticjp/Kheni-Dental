@@ -1,24 +1,94 @@
-# Clinic content needed
+# What we need from the clinic
 
 Internal working document. Not visitor-facing and not linked from the website.
 
-Everything below is already built into the website and is rendering as a marked
-placeholder. Each item says exactly what format we need, so filling it in is a
-one-line change in the relevant content file. Nothing here has been guessed or
-approximated: if it is on this list, we are not publishing anything for it.
+Everything on this list is **already built and already rendering** on the site as
+a clearly marked placeholder. Nothing here has been guessed, rounded up or
+approximated: if it appears below, we are publishing nothing for it.
 
-Priority order: **numbers → photos → cases → prices → technology**. Those five
-do the most work for patient trust.
+Each item says the exact format we need, so filling one in is usually a
+one-line change in a content file.
 
 ---
 
-## 1. Numbers
+## Priority order
+
+| # | What | Why it is first |
+|---|---|---|
+| 1 | **Photographs** | The single biggest visual gap. Every dashed frame on the site is a photo we do not have. |
+| 2 | **Numbers** | Patients treated, implants placed, cases. Indian patients weigh these before anything else. |
+| 3 | **Before & after cases** | The strongest proof a dental clinic can show, and we have none. |
+| 4 | **Video testimonials** | Gujarati especially. More persuasive than any written copy we can produce. |
+| 5 | **Prices and EMI** | The first question most patients ask and the one the site currently cannot answer. |
+| 6 | **Technology and implant systems** | Turns the implant page from good to credible. |
+
+---
+
+## 1. Google reviews — ✅ COMPLETE
+
+Both branches are now verified and live on the site.
+
+| Branch | Rating | Reviews | Checked |
+|---|---|---|---|
+| Swastik Plaza, Yogi Chowk | 4.9 | 1,753 | 29 August 2026 |
+| Hirabaug, Varachha Main Road | 4.9 | 210 | 29 August 2026 |
+
+The site also shows a combined **1,963**, always labelled as the total across
+two separate Google listings, never as one profile.
+
+**Nothing needed from you.** Just tell us when the counts move enough to be
+worth refreshing, or if either Google listing is ever merged or renamed.
+
+---
+
+## 2. Photographs
+
+This is the biggest single thing you can send us. Phone photos in good daylight
+are genuinely fine; we can retouch. Please avoid stock images entirely.
+
+### Doctors — one portrait each
+
+- Dr. Mayur Kheni
+- Dr. Jinal Monapara
+- Dr. Ishita Dobariya
+- Dr. Parita Vastarpara
+
+Portrait orientation, same framing for all four, plain or clinic background,
+even light. Until these arrive each profile shows the doctor's initials.
+
+### Each clinic — both Yogi Chowk and Hirabaug separately
+
+1. Exterior with signage
+2. Reception
+3. Waiting area
+4. Treatment room
+5. Implant suite
+6. Sterilisation area
+7. Technology and equipment
+8. The team together
+
+Branch pages show these labelled per clinic, so we need both sets. A patient
+should see the clinic they are actually walking into.
+
+### Treatment photography — one per problem area
+
+The "Problems we treat" section on the homepage has a photo slot per treatment:
+
+Dental implants · Root canal · Smile design · Braces and aligners · Full mouth
+rehab · Crowns and bridges · Kids dentistry · Gum care · Wisdom tooth ·
+Check-ups and fillings
+
+Real appointments, real clinic, patient consent where a face is visible.
+
+---
+
+## 3. Numbers
 
 File: `src/content/clinic-proof.ts`
 
 | What we need | Format | Example |
 |---|---|---|
-| Patients treated | Approved lifetime figure, rounded | `25,000+` |
+| Patients treated | Approved lifetime figure | `25,000+` |
 | Implants placed | Approved lifetime count | `4,000+` |
 | Full mouth cases | Approved count | `250+` |
 | Smile makeovers | Approved count | `600+` |
@@ -26,55 +96,12 @@ File: `src/content/clinic-proof.ts`
 | Countries patients travel from | Count | `18+` |
 | NRI patients treated | Approved count | `400+` |
 
-Please give figures you are comfortable defending publicly. Rounded is fine and
-normal. If a figure is not tracked, say so and we will remove that tile rather
-than estimate it.
+Give us figures you are comfortable defending publicly. Rounded is normal and
+expected. **If a figure is not tracked, say so and we will remove that tile
+rather than estimate it.**
 
----
-
-## 2. Google reviews, per branch
-
-File: `src/content/site.ts`
-
-- **Yogi Chowk / Swastik Plaza** — currently showing 4.9 from 1,593 reviews,
-  captured 27 August 2026. Please confirm this is still correct before launch.
-- **Hirabaug** — we could not confirm a live Google rating or review count for
-  this profile. The card is built and shows a marked placeholder. We need:
-  - current star rating
-  - current review count
-  - confirmation the profile link is the right one
-
-Hirabaug will never display Yogi Chowk's rating. Until you confirm the figure,
-that card stays marked as pending.
-
----
-
-## 3. Photography
-
-File: replaced wherever `MediaFrame` currently renders.
-
-**Doctors** (one portrait each, same framing for all four)
-- Dr. Mayur Kheni
-- Dr. Jinal Monapara
-- Dr. Ishita Dobariya
-- Dr. Parita Vastarpara
-
-Portrait orientation, plain or clinic background, good even light. Until these
-arrive each profile shows the doctor's initials, which looks intentional but is
-clearly not a photograph.
-
-**Each clinic** (both Yogi Chowk and Hirabaug)
-- Exterior with signage
-- Reception
-- Waiting area
-- Treatment room
-- Implant suite
-- Sterilisation area
-- Technology / equipment
-- The team together
-
-Please avoid stock images. Phone photos in good daylight are better than
-nothing and we can retouch.
+Indian digit grouping is fine and preferred: `1,75,000` reads better to a Surat
+patient than `175,000`.
 
 ---
 
@@ -82,10 +109,11 @@ nothing and we can retouch.
 
 File: `src/content/cases.ts`
 
-Per case we need:
+Per case:
+
 - Before photograph
 - After photograph, same angle and similar lighting
-- Treatment category (implants, full mouth, smile design, crowns, braces)
+- Category: implants, full mouth, smile design, crowns, or braces
 - What the patient came in with, one line
 - What the result was, one line
 - Which doctor treated it
@@ -103,22 +131,23 @@ to start.
 
 File: `src/content/patient-stories.ts`
 
-**Written**, per testimonial:
-- Patient first name (and initial)
-- City
-- Treatment
-- Their words, one or two sentences
-- Written consent
+**Video** — the higher priority of the two:
 
-**Video**, per video:
 - The video file or a YouTube link
 - Patient first name
 - Treatment
 - Spoken language (Gujarati is the most useful for Surat)
-- Written consent
+- **Written consent**
 
-Gujarati videos are worth prioritising. Do not script these; unpolished is more
-convincing than rehearsed.
+Do not script these. Unpolished is more convincing than rehearsed.
+
+**Written**:
+
+- Patient first name and initial
+- City
+- Treatment
+- Their words, one or two sentences
+- **Written consent**
 
 ---
 
@@ -128,22 +157,23 @@ File: `src/content/pricing.ts`
 
 | Treatment | What we need |
 |---|---|
-| Dental implant | Starting price, and an upper figure if you want a range |
+| Dental implant | Starting price, plus an upper figure if you want a range |
 | Root canal treatment | Starting price |
 | Crown | Starting price |
 | Braces and aligners | Starting price |
 | Smile design | Starting price |
-| Consultation | Fee, or confirm if there is none |
+| Consultation | Fee, or confirm there is none |
 
 **Finance**
+
 - Do you offer EMI at all?
 - If yes, is it no-cost EMI?
 - Which finance partners?
 - Lowest realistic monthly figure
-- What the quoted price includes
+- What a quoted price includes
 
-Every price on the site currently shows as a masked placeholder. We will not
-publish a figure you have not approved.
+Every price on the site is a masked placeholder today. We will not publish a
+figure you have not approved.
 
 ---
 
@@ -151,16 +181,20 @@ publish a figure you have not approved.
 
 File: `src/content/capabilities.ts`
 
-**Equipment** — for each machine you want listed:
+**Equipment** — per machine you want listed:
+
 - Its name
-- What it lets the dentist assess, in one line
+- What it lets the dentist assess or plan, in one line
 - What the patient experiences
 - A photograph of the actual machine in your clinic
 
-**Implant systems** — which brands do you use, and at which branch?
+**Implant systems** — which brands do you use, and at which branch? The site has
+four logo plates waiting. This is the single most useful thing an implant
+patient can compare between clinics.
 
-**Surgical options** — please confirm each of these separately, because each
-one is a clinical claim we cannot publish without you:
+**Surgical options** — please confirm each separately, because each one is a
+clinical claim we cannot publish without you:
+
 - Digital or guided implant planning
 - Bone grafting or ridge augmentation
 - Immediate loading
@@ -172,15 +206,19 @@ one is a clinical claim we cannot publish without you:
 
 File: `src/content/site.ts`
 
-Confirmed already: name, B.D.S., specialty, years in practice.
+Already confirmed and live: name, B.D.S., specialty, years in practice.
 
-Still needed per doctor:
+Still needed, per doctor:
+
 - Postgraduate training or fellowships
 - Professional memberships
 - Certifications
 - Awards
 - Languages each doctor consults in
-- Which branch, and which days
+- **Which branch, and which days**
+
+The branch-and-days one matters more than it looks: patients ask it constantly
+and the site currently cannot answer it.
 
 ---
 
@@ -189,7 +227,8 @@ Still needed per doctor:
 File: `src/content/clinic-proof.ts`
 
 Any awards, accreditations or recognitions, with the issuing body and year.
-If there are none, tell us and we will remove the strip.
+If there are none, tell us and we will remove the strip rather than leave it
+looking unfinished.
 
 ---
 
@@ -199,27 +238,89 @@ File: `src/content/site.ts`
 
 - Confirm current opening hours for both clinics
 - Confirm both numbers are active on WhatsApp
-- Which doctors sit at which branch, and on which days
+- Which doctors sit at which branch, on which days
 - Which treatments are available at which branch
+- Out-of-hours contact, and what a patient should do when the clinic is closed
 
 ---
 
 ## 11. NRI and international
 
-File: `src/content/pricing.ts` and the international page
+File: `src/content/pricing.ts` and `/international-patients`
 
+- Which countries patients most often travel from (six chips are waiting)
+- How many NRI patients you have treated
 - Airport to clinic distance and travel time
-- Do you help with accommodation? If so, how?
-- Typical treatment time required for implants and full mouth cases
-- Countries patients most often travel from
+- Do you help arrange accommodation? If so, how?
+- Do you provide visa or travel documentation letters?
+- What support exists between appointments
+- Typical treatment time for implants and full mouth cases
+
+Everything in the "Practical support" block is currently marked unconfirmed,
+because promising travel help you do not actually provide would be the worst
+kind of thing to get wrong.
+
+---
+
+## 12. Treatment areas to confirm
+
+The homepage rail shows these four as "also asked for", pending your word:
+
+- Teeth Whitening
+- Cleaning & Scaling
+- Dentures
+- Tooth Extraction
+
+Tell us which of these you want published as their own treatment and we will
+promote them to full panels with their own page.
+
+---
+
+## 13. Patient resource instructions
+
+File: `src/content/patient-resources.ts`
+
+Four guides are written and live. The rest need **your own aftercare wording**,
+exactly as the team gives it in the chair. We have deliberately not written
+these from general dental knowledge, because aftercare on the website that
+contradicts what a patient was told in person is worse than no page at all.
+
+Needed:
+
+- If you are nervous about coming in
+- After a tooth is removed
+- After cleaning and scaling
+- After a crown or bridge
+- After a braces adjustment
+- Kids: after a treatment
+- Cleaning around an implant
+- Long-term implant maintenance
+- Brushing guide by age
+- Cleaning with braces on
+- Looking after aligners
+- Retainers
+
+Sending us the printed sheets you already hand out would cover most of this in
+one go.
+
+---
+
+## 14. Social and video
+
+Instagram: [@khenielite](https://www.instagram.com/khenielite)
+
+If you want a "from the clinic" section, we need a handful of links or files:
+doctor explaining a treatment, a patient testimonial, a before and after reel,
+a clinic tour, kids dentistry, implant education.
 
 ---
 
 ## What we will not publish without you
 
-For the record, none of the following appears anywhere on the site because
+For the record, none of the following appears anywhere on the site, because
 none of it is confirmed: implant brand names, CBCT or any named scanner,
 guided surgery, All-on-4 or All-on-X, immediate loading, same-day teeth,
-sedation, bone grafting as a service, success rates, implant or patient
-counts, warranties, EMI, free consultation, consultation duration, awards,
-fellowships and memberships.
+sedation, bone grafting as a service, success rates, implant counts, patient
+counts, case counts, warranties, EMI terms, free consultation, consultation
+duration, awards, fellowships, memberships, doctor schedules, travel support,
+or any country list.

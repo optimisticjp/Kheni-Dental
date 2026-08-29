@@ -24,8 +24,8 @@ export default function ContactPage() {
             <div>
               <div className="rounded-[2rem] bg-ink p-7 text-white">
                 <p className="text-xs font-semibold uppercase tracking-[.2em] text-gold">Reach us directly</p>
-                <a href={whatsappUrl()} target="_blank" rel="noreferrer" data-track="whatsapp_click" data-placement="contact_page" className="mt-5 flex items-center gap-3 font-serif text-2xl"><MessageCircle className="size-5 text-gold" />Message us on WhatsApp</a>
-                <a href={`tel:${site.primaryPhoneHref}`} data-track="phone_click" data-placement="contact_page" className="mt-5 flex items-center gap-3 font-serif text-2xl"><Phone className="size-5 text-gold" />{site.primaryPhoneDisplay}</a>
+                <a href={whatsappUrl()} target="_blank" rel="noreferrer" data-track="whatsapp_click" data-placement="contact_page" className="mt-4 inline-flex min-h-12 items-center gap-3 font-serif text-2xl"><MessageCircle className="size-5 text-gold" />Message us on WhatsApp</a>
+                <a href={`tel:${site.primaryPhoneHref}`} data-track="phone_click" data-placement="contact_page" className="mt-4 inline-flex min-h-12 items-center gap-3 font-serif text-2xl"><Phone className="size-5 text-gold" />{site.primaryPhoneDisplay}</a>
                 <p className="mt-2 text-xs text-white/45">That number reaches Swastik Plaza. Hirabaug has its own line, listed with the clinics below.</p>
                 <a href={`mailto:${site.email}`} className="mt-5 flex items-center gap-3 text-sm text-white/65"><Mail className="size-4 text-gold" />{site.email}</a>
               </div>

@@ -37,13 +37,13 @@ export function Navbar() {
           <div className="flex h-[74px] items-center justify-between gap-4">
             <BrandMark />
 
-            <nav aria-label="Primary" className="hidden items-center gap-1 xl:flex">
+            <nav aria-label="Primary" className="hidden items-center gap-0.5 xl:flex">
               {primaryNav.map((link) =>
                 link.hasMenu ? (
                   <div key={link.href} className="group relative">
                     <Link
                       href={link.href}
-                      className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-2 text-sm text-white/70 transition-colors hover:text-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+                      className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-2 text-sm text-white/70 transition-colors hover:text-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
                     >
                       {link.label}
                       <ChevronDown className="size-3.5 transition-transform group-hover:rotate-180" aria-hidden="true" />
@@ -78,7 +78,7 @@ export function Navbar() {
                     key={link.href}
                     href={link.href}
                     className={cn(
-                      "whitespace-nowrap rounded-full px-3 py-2 text-sm transition-colors hover:text-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold",
+                      "whitespace-nowrap rounded-full px-2.5 py-2 text-sm transition-colors hover:text-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold",
                       link.featured ? "text-gold" : "text-white/70",
                     )}
                   >
@@ -89,14 +89,18 @@ export function Navbar() {
             </nav>
 
             <div className="hidden items-center gap-2 xl:flex">
+              {/* Between xl and 2xl the full number pushed the header 17px
+                  past its column on every page. The affordance stays at every
+                  size; only the digits wait for the room to show them. */}
               <a
                 href={`tel:${site.primaryPhoneHref}`}
                 data-track="phone_click"
                 data-placement="header"
-                className="inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-white/15 px-3.5 py-2.5 text-sm text-white/85 hover:border-gold/40 hover:text-gold"
+                aria-label={`Call the clinic on ${site.primaryPhoneDisplay}`}
+                className="inline-flex size-11 items-center justify-center gap-2 whitespace-nowrap rounded-full border border-white/15 text-sm text-white/85 hover:border-gold/40 hover:text-gold 2xl:size-auto 2xl:px-3.5 2xl:py-2.5"
               >
                 <Phone className="size-4 text-gold" aria-hidden="true" />
-                {site.primaryPhoneDisplay}
+                <span className="hidden 2xl:inline">{site.primaryPhoneDisplay}</span>
               </a>
               <Link
                 href="/contact/#book"
@@ -108,12 +112,14 @@ export function Navbar() {
               </Link>
             </div>
 
+            {/* MobileMenu unmounts when closed, so advertising its id while it
+                does not exist points assistive technology at nothing. */}
             <button
               type="button"
               onClick={() => setOpen(true)}
               aria-label="Open menu"
               aria-expanded={open}
-              aria-controls="mobile-menu"
+              aria-controls={open ? "mobile-menu" : undefined}
               className="grid size-11 place-items-center rounded-full border border-white/15 text-white xl:hidden"
             >
               <Menu className="size-5" />

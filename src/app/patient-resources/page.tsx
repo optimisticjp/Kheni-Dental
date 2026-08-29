@@ -1,13 +1,187 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { AlertTriangle, ArrowRight, MessageCircle, Phone } from "lucide-react";
+
 import { PageHero } from "@/components/kheni/page-hero";
+import { PendingTag } from "@/components/kheni/pending";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
-import { resources } from "@/content/site";
-export const metadata:Metadata={title:"Dental Patient Guides",description:"Practical dental guides from Kheni Dental, Surat: what to bring to a first visit, how implant planning works, root canal aftercare and calmer visits for kids."};
-const guidance={
-  "first-visit":["Bring the names of any medicines you take, including anything for blood pressure, diabetes or blood thinning, and old X-rays or reports if you still have them.","Say when the problem started, what makes it worse and whether it disturbs your sleep. Those three details narrow down the cause faster than anything else.","Before you leave, ask what needs attention now, what can safely wait and what the alternatives are. Write the answers down while they are fresh."],
-  "implant-guide":["An implant has two halves: the part placed in the bone and the tooth fitted on top. Ask about both, and check that any two plans you compare cover the same stages.","Ask how much time is expected between stages and what you will be wearing while you wait. That is the part most people want to know and least often think to ask.","Ask what affects how long an implant lasts in your case. Bone, gum health, bite, smoking and grinding all play a part, and so does the cleaning routine you keep up at home."],
-  "root-canal-aftercare":["The tooth can stay tender to bite on for some days, especially if it was painful before treatment. Chew on the other side until it settles and follow the instructions you were given.","A treated tooth is not finished until it is properly rebuilt. Ask what your tooth needs next, whether that is a filling or a crown, and by when it should be done.","Call the clinic if the pain is getting worse instead of easing, if the gum or face swells, or if anything feels different from what was explained to you."],
-  "kids-visit":["Keep the build-up short and ordinary. Avoid words like injection, drill or pain, even in reassurance. Children latch on to the word and not the reassurance around it.","Ask for a time when your child is usually rested and fed rather than the end of a long school day. A tired child finds everything harder.","Tell the team beforehand if your child is frightened or had a rough time at another clinic. Knowing that in advance changes how the first few minutes are handled."],
-} as const;
-export default function ResourcesPage(){return <><PageHero eyebrow="Patient resources" title="Know what to ask before you sit down." copy="Four short guides written around the questions people actually ask at the clinic. They will not tell you which treatment you need, but they should help you walk in prepared and leave with fewer doubts."/><Section spacing="lg"><Container width="7xl"><div className="space-y-8">{resources.map(resource=>{const id=resource.href.split('#')[1] as keyof typeof guidance;return <article key={resource.title} id={id} className="scroll-mt-28 rounded-[2rem] border border-border bg-card p-7 sm:p-9"><p className="text-xs uppercase tracking-[.18em] text-gold">Patient guide</p><h2 className="mt-3 font-serif text-3xl">{resource.title}</h2><p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">{resource.description}</p><ul className="mt-6 grid gap-3 md:grid-cols-3">{guidance[id].map(item=><li key={item} className="rounded-2xl bg-[#f1eee7] p-5 text-sm leading-6 text-muted-foreground">{item}</li>)}</ul></article>})}</div><p className="mt-8 text-sm leading-6 text-muted-foreground">These guides are general information, written to help you prepare and ask better questions. They cannot tell you what is happening in your own mouth, because that needs an examination. If anything here does not match what you have been told at the clinic, ask the doctor treating you.</p></Container></Section></>}
+import { emergencyPending, resourceCategories, urgentSigns } from "@/content/patient-resources";
+import { site } from "@/content/site";
+import { whatsappUrl } from "@/lib/links";
+
+export const metadata: Metadata = {
+  title: "Patient Resources & Aftercare",
+  description:
+    "Practical guides from Kheni Dental, Surat: what to bring to a first visit, aftercare for root canals and implants, kids dental advice and when to call the clinic.",
+};
+
+export default function ResourcesPage() {
+  return (
+    <>
+      <PageHero
+        eyebrow="Patient resources"
+        title="The bit that happens after you leave the chair."
+        copy="Guides for the day before an appointment and the days after one. Written to help you prepare and to tell you when something is worth a phone call."
+      >
+        {/* Category jump list. Faster than scrolling a long library on a phone. */}
+        <nav aria-label="Resource categories" className="mt-8 flex flex-wrap gap-2">
+          {resourceCategories.map((category) => (
+            <a
+              key={category.id}
+              href={`#${category.id}`}
+              className="inline-flex min-h-11 items-center rounded-full border border-white/18 px-4 text-sm text-white/70 hover:border-gold/50 hover:text-white"
+            >
+              {category.label}
+            </a>
+          ))}
+          <a
+            href="#urgent"
+            className="inline-flex min-h-11 items-center gap-2 rounded-full border border-gold/45 bg-gold/[.08] px-4 text-sm font-semibold text-gold"
+          >
+            <AlertTriangle className="size-3.5" aria-hidden="true" />
+            Something is wrong now
+          </a>
+        </nav>
+      </PageHero>
+
+      {/* ── Urgent first. Anyone in pain should not have to scroll. ──────── */}
+      <Section id="urgent" className="scroll-mt-24 bg-[#f1eee7]" spacing="sm">
+        <Container width="7xl">
+          <div className="rounded-[1.4rem] border border-gold/40 bg-white p-6 sm:p-8">
+            <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
+              <div>
+                <span className="inline-flex items-center gap-2 text-[.66rem] font-semibold uppercase tracking-[.16em] text-gold">
+                  <AlertTriangle className="size-3.5" aria-hidden="true" />
+                  Call the clinic if you notice
+                </span>
+                <ul className="mt-5 grid gap-2.5 sm:grid-cols-2">
+                  {urgentSigns.map((sign) => (
+                    <li key={sign} className="flex items-start gap-3 text-sm leading-6">
+                      <span aria-hidden="true" className="mt-2 size-1.5 shrink-0 rounded-full bg-gold" />
+                      {sign}
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-5 flex items-center justify-between gap-3 rounded-xl border border-dashed border-border px-4 py-3 text-sm text-muted-foreground">
+                  {emergencyPending}
+                  <PendingTag label="To confirm" />
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-2.5 lg:w-56">
+                <a
+                  href={`tel:${site.primaryPhoneHref}`}
+                  data-track="phone_click"
+                  data-placement="resources_urgent"
+                  className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-ink px-5 text-sm font-semibold text-white"
+                >
+                  <Phone className="size-4 text-gold" aria-hidden="true" />
+                  Call the clinic
+                </a>
+                <a
+                  href={whatsappUrl()}
+                  target="_blank"
+                  rel="noreferrer"
+                  data-track="whatsapp_click"
+                  data-placement="resources_urgent"
+                  className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-border px-5 text-sm font-semibold"
+                >
+                  <MessageCircle className="size-4 text-gold" aria-hidden="true" />
+                  WhatsApp
+                </a>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      {/* ── The library ──────────────────────────────────────────────────── */}
+      {resourceCategories.map((category, index) => (
+        <Section
+          key={category.id}
+          id={category.id}
+          className={index % 2 === 1 ? "scroll-mt-24 bg-[#f1eee7]" : "scroll-mt-24"}
+          spacing="md"
+        >
+          <Container width="7xl">
+            <div className="grid gap-8 lg:grid-cols-[.75fr_1.25fr] lg:gap-14">
+              <div className="lg:sticky lg:top-24 lg:self-start">
+                <div className="flex items-center gap-3">
+                  <span aria-hidden="true" className="font-mono text-[.65rem] text-gold">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span aria-hidden="true" className="rule-gold h-px w-12" />
+                </div>
+                <h2 className="mt-4 font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">
+                  {category.label}
+                </h2>
+                <p className="mt-4 text-sm leading-6 text-muted-foreground">{category.intro}</p>
+              </div>
+
+              <div className="grid gap-4">
+                {category.guides.map((guide) => (
+                  <article
+                    key={guide.id}
+                    id={guide.id}
+                    className={
+                      guide.status === "published"
+                        ? "scroll-mt-24 rounded-2xl border border-border bg-card p-6 sm:p-7"
+                        : "scroll-mt-24 rounded-2xl border border-dashed border-border bg-card/50 p-6 sm:p-7"
+                    }
+                  >
+                    <div className="flex flex-wrap items-start justify-between gap-3">
+                      <h3 className="font-serif text-xl leading-snug">{guide.title}</h3>
+                      {guide.status === "pending" && <PendingTag label="Clinic instructions needed" />}
+                    </div>
+                    <p className="mt-2 text-sm leading-6 text-muted-foreground">{guide.summary}</p>
+
+                    {guide.status === "published" ? (
+                      <ul className="mt-5 grid gap-3">
+                        {guide.points.map((point) => (
+                          <li
+                            key={point}
+                            className="rounded-xl bg-[#f4f1ea] p-4 text-sm leading-6 text-muted-foreground"
+                          >
+                            {point}
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="mt-5 rounded-xl border border-dashed border-border p-4 text-xs leading-6 text-muted-foreground/80">
+                        <span className="font-semibold text-foreground">We need from the clinic: </span>
+                        {guide.needs}
+                      </p>
+                    )}
+                  </article>
+                ))}
+              </div>
+            </div>
+          </Container>
+        </Section>
+      ))}
+
+      <Section spacing="md">
+        <Container width="7xl">
+          <div className="rounded-2xl border border-border bg-card p-6 sm:p-8">
+            <p className="max-w-3xl text-sm leading-6 text-muted-foreground">
+              These guides are general information, written to help you prepare and ask better questions. They cannot
+              tell you what is happening in your own mouth, because that needs an examination. If anything here does
+              not match what you have been told at the clinic, go with what the doctor treating you said and ask them
+              about the difference.
+            </p>
+            <Link
+              href="/contact/#book"
+              data-track="appointment_start"
+              data-placement="resources_footer"
+              className="mt-6 inline-flex min-h-13 items-center gap-2 rounded-full bg-gold px-6 text-sm font-semibold text-ink"
+            >
+              Book Appointment
+              <ArrowRight className="size-4" aria-hidden="true" />
+            </Link>
+          </div>
+        </Container>
+      </Section>
+    </>
+  );
+}

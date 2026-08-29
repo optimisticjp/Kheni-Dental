@@ -24,6 +24,25 @@ export const viewport: Viewport = { width: "device-width", initialScale: 1, them
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
+      <head>
+        {/*
+          Two variable families, one request. Fraunces carries the editorial
+          display voice and has an optical-size axis, so large headings get the
+          high contrast a premium clinic needs while small serif text stays
+          sturdy. Inter does all body and interface work, which is what Indian
+          mobile traffic actually reads.
+        */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* The no-page-custom-font rule targets the Pages Router, where a font
+            link outside _document loads per page. This is the App Router root
+            layout, so the link is emitted once for every route. */}
+        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&family=Inter:wght@400..700&display=swap"
+        />
+      </head>
       <body className="flex min-h-dvh flex-col pb-[calc(4rem+1px+env(safe-area-inset-bottom))] md:pb-0">
         <AnalyticsScripts />
         <StructuredData />

@@ -96,7 +96,7 @@ export function ConsentBanner() {
           Please do not send sensitive medical details through website forms. Read
           our{" "}
           <Link
-            href="/privacy"
+            href="/privacy/"
             className="text-gold underline underline-offset-4"
           >
             privacy notice

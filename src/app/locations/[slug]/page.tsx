@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowRight, Clock, MapPin, MessageCircle, Phone } from "lucide-react";
+import { ArrowRight, Clock, MapPin, MessageCircle, Phone, Star } from "lucide-react";
 
 import { BranchGoogleCard } from "@/components/kheni/branch-google-card";
 import { BranchMap, DirectionsButton } from "@/components/kheni/branch-map";
-import { MediaFrame } from "@/components/kheni/pending";
+import { ClinicGallery } from "@/components/kheni/clinic-gallery";
+import { PendingTag } from "@/components/kheni/pending";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
-import { clinicGallerySlots } from "@/content/capabilities";
 import { doctors, locations } from "@/content/site";
 import { whatsappUrl } from "@/lib/links";
 
@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const location = locations.find((item) => item.slug === slug);
   if (!location) return {};
   return {
-    title: `Dental Clinic in ${location.areaLabel.split(",")[0]} | ${location.shortName}`,
+    title: `Dental Clinic in ${location.displayArea} | ${location.shortName}`,
     description: `Kheni Dental at ${location.shortName}, ${location.areaLabel}. Address, phone, WhatsApp, opening hours and directions.`,
   };
 }
@@ -37,8 +37,9 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
   return (
     <>
       {/* Hero: name, area, and the three actions, straight away. */}
-      <section className="bg-ink text-white">
-        <Container width="7xl" className="grid gap-10 py-12 lg:grid-cols-[1fr_.85fr] lg:items-center lg:py-16">
+      <section className="grain relative isolate overflow-hidden bg-ink text-white">
+        <div aria-hidden="true" className="bloom-gold pointer-events-none absolute inset-0 -z-10" />
+        <Container width="7xl" className="relative grid gap-10 py-12 lg:grid-cols-[1fr_.85fr] lg:items-center lg:py-16">
           <div>
             {location.implantCentre && (
               <p className="mb-3 inline-flex rounded-full bg-gold/15 px-2.5 py-1 text-[.6rem] font-semibold uppercase tracking-[.14em] text-gold">
@@ -49,6 +50,19 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
               {location.shortName}
             </h1>
             <p className="mt-3 text-sm uppercase tracking-[.14em] text-white/40">{location.areaLabel}</p>
+
+            {/* This branch's own Google figure, in the first screen. */}
+            {location.google.status === "verified" && (
+              <p className="mt-5 inline-flex items-center gap-2.5 rounded-full border border-gold/30 bg-gold/[.07] py-2 pl-3.5 pr-4 text-sm">
+                <span className="flex gap-0.5 text-gold" aria-hidden="true">
+                  {Array.from({ length: 5 }).map((_, index) => (
+                    <Star key={index} className="size-3.5 fill-current" />
+                  ))}
+                </span>
+                <strong className="font-serif text-lg leading-none text-gold">{location.google.rating}</strong>
+                <span className="text-white/55">{location.google.reviewCount} Google reviews for this clinic</span>
+              </p>
+            )}
             <p className="mt-5 max-w-xl text-base leading-7 text-white/60">{location.note}</p>
 
             <dl className="mt-7 space-y-3 text-sm">
@@ -124,6 +138,9 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
               <p className="mt-6 border-t border-border pt-5 text-xs uppercase tracking-[.14em] text-muted-foreground">
                 Doctors at this clinic
               </p>
+              <div className="mt-2 flex items-center gap-2">
+                <PendingTag label="Days per doctor to confirm" />
+              </div>
               <ul className="mt-3 flex flex-wrap gap-2">
                 {doctors.map((doctor) => (
                   <li key={doctor.slug}>
@@ -145,11 +162,10 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
       <Section className="bg-[#f1eee7]" spacing="md">
         <Container width="7xl">
           <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">Inside the clinic</h2>
-          <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {clinicGallerySlots.slice(0, 4).map((shot) => (
-              <MediaFrame key={shot} shot={shot} tone="light" ratio="4 / 3" />
-            ))}
-          </div>
+          <p className="mt-3 max-w-xl text-sm leading-6 text-muted-foreground">
+            Photography for this branch specifically, so patients see the clinic they are actually walking into.
+          </p>
+          <ClinicGallery tone="light" branchLabel={location.shortName} className="mt-8" />
         </Container>
       </Section>
 

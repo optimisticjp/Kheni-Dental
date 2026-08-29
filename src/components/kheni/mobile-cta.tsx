@@ -45,7 +45,7 @@ export function MobileCta() {
       </Link>
 
       <Link
-        href="/treatments"
+        href="/treatments/"
         aria-current={isTreatments ? "page" : undefined}
         data-track="navigation_click"
         data-placement="mobile_sticky"

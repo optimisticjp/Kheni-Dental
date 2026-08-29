@@ -15,10 +15,10 @@ export const site = {
   whatsappNumber: "919510112354",
   yearsInSurat: 15,
   googleRating: "4.9",
-  googleReviewCount: "1,593",
-  googleReviewDisplay: "1,500+",
-  googleReviewBranch: "Swastik Plaza",
-  googleProfileUrl: "https://maps.app.goo.gl/iKskGAZuZL92Tm7G7",
+  googleReviewCount: "1,753",
+  googleReviewDisplay: "1,750+",
+  googleReviewBranch: "Yogi Chowk",
+  googleProfileUrl: "https://maps.app.goo.gl/WN2nDHXVK8RajDvE6",
   googleWriteReviewUrl: "https://search.google.com/local/writereview?placeid=ChIJddZdiXpP4DsRvtrOvXjbQqA",
   consultationMessage:
     "Hello Kheni Dental, I would like to book a consultation. Please let me know which days and times are open. Thank you.",
@@ -38,17 +38,21 @@ export const primaryNav: NavItem[] = [
   { href: "/doctors", label: "Doctors" },
   { href: "/locations", label: "Our Clinics" },
   { href: "/reviews", label: "Reviews" },
-  { href: "/contact", label: "Contact" },
+  // Promoted out of the secondary list. Patients travelling to Surat for
+  // treatment are a real part of the practice, and a buried link said the
+  // opposite. Contact stays reachable from the header CTA, the mobile dock
+  // and the footer, so nothing was lost by the swap.
+  { href: "/international-patients", label: "NRI & International" },
 ];
 
 /** Lower-priority pages. Shown quietly, never as equal-weight rows. */
 export const secondaryNav: NavItem[] = [
+  { href: "/contact", label: "Contact & booking" },
   { href: "/about", label: "About the clinic" },
   { href: "/problems-we-treat", label: "Problems we treat" },
-  { href: "/international-patients", label: "International & NRI" },
   { href: "/clinic-technology", label: "Our technology" },
   { href: "/smile-gallery", label: "Before & after" },
-  { href: "/patient-resources", label: "Patient guides" },
+  { href: "/patient-resources", label: "Patient resources" },
 ];
 
 /** Full list, used by the footer sitemap. */
@@ -80,6 +84,13 @@ export type Location = {
   shortName: string;
   /** How patients recognise the area. Yogi Chowk, not the postal locality. */
   areaLabel: string;
+  /**
+   * The one or two words a Surat patient would actually use for this clinic.
+   * Used anywhere space is tight: rails, proof rows, chips. Splitting
+   * `areaLabel` on the comma is not a substitute, because it yields "Varachha
+   * Main Road" for the branch everyone calls Hirabaug.
+   */
+  displayArea: string;
   /** Full postal address. May still contain the official locality name. */
   address: string;
   phoneDisplay: string;
@@ -116,17 +127,18 @@ export const locations: Location[] = [
     name: "Kheni Dental, Swastik Plaza",
     shortName: "Swastik Plaza",
     areaLabel: "Yogi Chowk, Surat",
+    displayArea: "Yogi Chowk",
     address:
       "Shop No. 38-39, Swastik Plaza, Yogi Chowk Ground, Chikuwadi, Nana Varachha, Surat, Gujarat 395011, India",
     phoneDisplay: "+91 95101 12354",
     phoneHref: "+919510112354",
     whatsappNumber: "919510112354",
-    mapsUrl: "https://maps.app.goo.gl/iKskGAZuZL92Tm7G7",
+    mapsUrl: "https://maps.app.goo.gl/WN2nDHXVK8RajDvE6",
     mapEmbedQuery: "Kheni+Dental+Clinic,+Swastik+Plaza,+Yogi+Chowk,+Nana+Varachha,+Surat,+Gujarat+395011",
-    googleProfileUrl: "https://maps.app.goo.gl/iKskGAZuZL92Tm7G7",
+    googleProfileUrl: "https://maps.app.goo.gl/WN2nDHXVK8RajDvE6",
     googleWriteReviewUrl: "https://search.google.com/local/writereview?placeid=ChIJddZdiXpP4DsRvtrOvXjbQqA",
     googlePlaceId: "ChIJddZdiXpP4DsRvtrOvXjbQqA",
-    google: { status: "verified", rating: "4.9", reviewCount: "1,593", verifiedOn: "27 August 2026" },
+    google: { status: "verified", rating: "4.9", reviewCount: "1,753", verifiedOn: "29 August 2026" },
     hours: "Mon-Sat 9:30 AM-1:00 PM and 4:00 PM-8:00 PM",
     hoursNote: "Clinic-provided hours. Call before travelling if your visit is time-sensitive.",
     note: "Our original clinic at Yogi Chowk, next to Apple Square. Family dentistry, root canals, braces and kids treatment, with implant care too.",
@@ -136,20 +148,18 @@ export const locations: Location[] = [
     name: "Kheni Dental & Elite Implant Center, Hirabaug",
     shortName: "Hirabaug",
     areaLabel: "Varachha Main Road, Surat",
+    displayArea: "Hirabaug",
     address:
       "2, Varachha Main Road, above Shiv Plywood, near New Shakti Vijay Society, opposite Surat Super Store, Hirabaug, Surat, Gujarat 395006, India",
     phoneDisplay: "+91 97379 97543",
     phoneHref: "+919737997543",
     whatsappNumber: "919737997543",
-    mapsUrl: "https://maps.app.goo.gl/hkHmTr8ZxLYaH8Vc9",
+    mapsUrl: "https://maps.app.goo.gl/7TipkWprNZv2qEQk9",
     mapEmbedQuery: "Kheni+Dental+Elite+Implant+Center,+Varachha+Main+Road,+Hirabaug,+Surat,+Gujarat+395006",
-    googleProfileUrl: "https://maps.app.goo.gl/hkHmTr8ZxLYaH8Vc9",
+    googleProfileUrl: "https://maps.app.goo.gl/7TipkWprNZv2qEQk9",
     googleWriteReviewUrl: "https://search.google.com/local/writereview?placeid=ChIJ89yBAKVP4DsR3TYY_211oRg",
     googlePlaceId: "ChIJ89yBAKVP4DsR3TYY_211oRg",
-    // Google did not surface a confirmable live rating for this profile during
-    // the research pass. The card renders with a labelled placeholder rather
-    // than reusing the Yogi Chowk figure. See docs/CLINIC-CONTENT-NEEDED.md.
-    google: { status: "pending-verification" },
+    google: { status: "verified", rating: "4.9", reviewCount: "210", verifiedOn: "29 August 2026" },
     hours: "Mon-Sat 9:30 AM-1:00 PM and 4:00 PM-8:00 PM",
     hoursNote: "Clinic-provided hours. Call before travelling if your visit is time-sensitive.",
     note: "Our Elite Implant Center on Varachha Main Road, above Shiv Plywood. Implants, full mouth cases and smile design are led from here.",
@@ -1013,12 +1023,18 @@ export const homepageFaqs = [
   },
 ] as const;
 
+/**
+ * Text-only entries on the positioning rail. The rail generates the years,
+ * both branch ratings and both review counts from verified data, so nothing
+ * numeric belongs in this list. Add a treatment or a positioning line only.
+ */
 export const tickerItems = [
-  "15 years in Surat",
-  "Two clinics, one practice",
-  "Yogi Chowk and Varachha Main Road",
-  "A team of four dentists",
-  "Implant and full mouth care",
-  "Kids and family dentistry",
-  "Mon to Sat, morning and evening",
+  "Dental implants",
+  "Full mouth rehabilitation",
+  "Smile design",
+  "Root canal treatment",
+  "Kids dentistry",
+  "Two clinics in Surat",
+  "NRI and international patients",
+  "Gujarati, Hindi and English",
 ] as const;

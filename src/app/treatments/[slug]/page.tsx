@@ -10,6 +10,7 @@ import { BranchGoogleCard } from "@/components/kheni/branch-google-card";
 import { PriceTable, TickList } from "@/components/kheni/capability-grids";
 import { CaseResultsGrid } from "@/components/kheni/case-results";
 import { InitialsPortrait, MediaFrame } from "@/components/kheni/pending";
+import { googleReputation } from "@/content/google-reputation";
 import { doctors, locations, site, treatments } from "@/content/site";
 import { whatsappUrl } from "@/lib/links";
 
@@ -44,8 +45,9 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
   return (
     <>
       {/* Hero: what it is, then the three ways to reach us. */}
-      <section className="bg-ink text-white">
-        <Container width="7xl" className="grid gap-10 py-12 lg:grid-cols-[1.1fr_.9fr] lg:items-center lg:gap-14 lg:py-16">
+      <section className="grain relative isolate overflow-hidden bg-ink text-white">
+        <div aria-hidden="true" className="bloom-gold pointer-events-none absolute inset-0 -z-10" />
+        <Container width="7xl" className="relative grid gap-10 py-12 lg:grid-cols-[1.1fr_.9fr] lg:items-center lg:gap-14 lg:py-16">
           <div>
             <p className="text-[.7rem] font-semibold uppercase tracking-[.24em] text-gold">{t.eyebrow}</p>
             <h1 className="mt-5 font-serif text-[clamp(2.2rem,5.8vw,4.2rem)] leading-[1] tracking-[-.045em]">
@@ -54,23 +56,22 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
             <p className="mt-5 max-w-xl text-base leading-7 text-white/65">{t.short}</p>
 
             <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
-              <a
-                href={site.googleProfileUrl}
-                target="_blank"
-                rel="noreferrer"
+              <Link
+                href="/reviews/"
                 data-track="review_click"
                 data-placement={`treatment_${t.slug}_google`}
-                className="inline-flex min-h-11 items-center gap-2 rounded-full border border-gold/25 bg-gold/[.07] px-4 text-sm"
+                className="inline-flex min-h-11 items-center gap-2.5 rounded-full border border-gold/25 bg-gold/[.07] px-4 text-sm"
               >
                 <span className="flex gap-0.5 text-gold" aria-hidden="true">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <Star key={i} className="size-3.5 fill-current" />
                   ))}
                 </span>
-                <strong className="text-white">{site.googleRating}</strong>
-                <span className="text-white/50">Yogi Chowk</span>
-              </a>
-              <span className="text-sm text-white/45">Two clinics in Surat</span>
+                <strong className="text-white">{googleReputation.sharedRating}</strong>
+                <span className="text-white/50">
+                  {googleReputation.combinedReviews} reviews, two clinic profiles
+                </span>
+              </Link>
             </div>
 
             <div className="mt-7 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
@@ -209,7 +210,7 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
       </Section>
 
       {/* Reviews for both branches */}
-      <Section className="bg-ink text-white" spacing="md">
+      <Section className="grain relative isolate bg-ink text-white" spacing="md">
         <Container width="7xl">
           <h2 className="font-serif text-3xl leading-tight tracking-[-.03em] sm:text-4xl">What patients say</h2>
           <div className="mt-8 grid gap-4 md:grid-cols-2">

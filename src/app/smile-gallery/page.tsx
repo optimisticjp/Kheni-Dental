@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 import { CaseResultsGrid } from "@/components/kheni/case-results";
+import { PageHero } from "@/components/kheni/page-hero";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
 import { caseCategories } from "@/content/cases";
@@ -16,16 +17,12 @@ export const metadata: Metadata = {
 export default function SmileGalleryPage() {
   return (
     <>
-      <section className="bg-ink text-white">
-        <Container width="7xl" className="py-12 lg:py-16">
-          <p className="text-[.7rem] font-semibold uppercase tracking-[.24em] text-gold">Our work</p>
-          <h1 className="mt-4 max-w-3xl font-serif text-[clamp(2.1rem,5.4vw,3.8rem)] leading-[1] tracking-[-.045em]">
-            Before &amp; after
-          </h1>
-          <p className="mt-5 max-w-xl text-base leading-7 text-white/60">
-            Cases treated at our Surat clinics, published only where the patient has given permission.
-          </p>
-          <ul className="mt-8 flex flex-wrap gap-2">
+      <PageHero
+        eyebrow="Our work"
+        title="Before &amp; after."
+        copy="Cases treated at our Surat clinics, published only where the patient has given written permission."
+      >
+        <ul className="mt-8 flex flex-wrap gap-2">
             {caseCategories.map((category) => (
               <li
                 key={category}
@@ -35,8 +32,7 @@ export default function SmileGalleryPage() {
               </li>
             ))}
           </ul>
-        </Container>
-      </section>
+      </PageHero>
 
       <Section spacing="md">
         <Container width="7xl">
