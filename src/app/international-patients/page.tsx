@@ -252,17 +252,16 @@ export default function InternationalPage() {
 
               {/* Country chips stay unfilled until the clinic gives us the real
                   list. Inventing plausible countries would be inventing proof. */}
-              <div className="mt-7 flex flex-wrap gap-2">
-                {Array.from({ length: 6 }).map((_, index) => (
-                  <span
-                    key={index}
-                    className="inline-flex items-center gap-2 rounded-full border border-dashed border-border bg-white px-3.5 py-2 text-sm text-muted-foreground"
-                  >
-                    Country {String(index + 1).padStart(2, "0")}
-                    <PendingTag label="Confirm" />
-                  </span>
-                ))}
-              </div>
+              {/*
+                Six chips reading "Country 01 … Country 06 · CONFIRM" used to
+                sit here, on the one page written for someone deciding whether
+                to fly to Surat for treatment. Inventing a list would be worse,
+                so the honest version is a sentence about what we do know.
+              */}
+              <p className="mt-7 text-sm leading-6 text-muted-foreground">
+                Tell us which city you are flying from and how long you are in Surat. We will plan around your
+                dates rather than ask you to plan around ours.
+              </p>
             </div>
 
             <div>

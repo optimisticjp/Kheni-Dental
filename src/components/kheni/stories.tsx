@@ -107,7 +107,7 @@ export function VideoStoryGrid({ tone = "dark" }: { tone?: "dark" | "light" }) {
         <div key={index} className="relative">
           <MediaFrame
             shot={`Patient video in ${videoLanguagePlan[index % videoLanguagePlan.length]}`}
-            icon="video"
+            kind="video"
             tone={tone}
             ratio="16 / 9"
           />

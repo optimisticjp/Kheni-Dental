@@ -1,4 +1,4 @@
-import { PendingTag, ProofNumber } from "@/components/kheni/pending";
+import { ProofNumber } from "@/components/kheni/pending";
 import { Container } from "@/components/ui/container";
 import { credentials, type ProofStat } from "@/content/clinic-proof";
 import { cn } from "@/lib/utils";
@@ -17,22 +17,29 @@ export function ProofBand({
   className?: string;
   tone?: "dark" | "light";
 }) {
-  // Verified figures lead. Reading order is trust order, and a row that
-  // opens on two greyed-out placeholders spends its first impression on what
-  // the clinic has not sent yet.
-  const ordered = [...stats].sort((a, b) => {
-    const rank = (s: ProofStat) => (s.value.status === "verified" ? 0 : 1);
-    return rank(a) - rank(b);
-  });
+  // A figure the clinic has not sent yet is not shown at all.
+  //
+  // Ordering the placeholders last was not enough: "XX,XXX+" under "PATIENTS
+  // TREATED" still rendered on the homepage, in the brand serif, at the same
+  // size as "15 YEARS IN SURAT". A patient reading that does not see a
+  // considered blank, they see a website that is not finished, and it costs
+  // more trust than the missing number ever earned. The pending entries stay
+  // in `clinic-proof.ts` so the clinic checklist is unchanged and filling one
+  // in makes it appear here on its own.
+  const shown = stats.filter((stat) => stat.value.status === "verified");
+  if (shown.length === 0) return null;
 
   return (
     <div
       className={cn(
-        "grid grid-cols-2 gap-x-6 gap-y-9 sm:gap-x-8 lg:grid-cols-4",
+        "grid gap-x-6 gap-y-9 sm:gap-x-8",
+        // The row lays out to however many real figures there are rather than
+        // holding four slots open.
+        shown.length >= 4 ? "grid-cols-2 lg:grid-cols-4" : "grid-cols-2 lg:grid-cols-3",
         className,
       )}
     >
-      {ordered.map((stat) => (
+      {shown.map((stat) => (
         <ProofNumber
           key={stat.id}
           value={stat.value}
@@ -61,9 +68,15 @@ export function ProofStrip({ stats }: { stats: ProofStat[] }) {
  * section with a headline, because it is reassurance and not a selling point.
  */
 export function CredentialStrip({ tone = "light" }: { tone?: "dark" | "light" }) {
+  // Four dashed boxes reading "Professional membership - to confirm" tell a
+  // patient nothing except that nobody filled them in. Until at least one is
+  // real, the strip does not exist.
+  const shown = credentials.filter((item) => item.status === "verified");
+  if (shown.length === 0) return null;
+
   return (
     <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-      {credentials.map((item) => (
+      {shown.map((item) => (
         <div
           key={item.id}
           className={cn(
@@ -74,7 +87,6 @@ export function CredentialStrip({ tone = "light" }: { tone?: "dark" | "light" })
           <p className={cn("text-sm font-medium", tone === "dark" ? "text-white/70" : "text-foreground")}>
             {item.title}
           </p>
-          {item.status === "pending" && <PendingTag className="mt-2 self-start" label="To confirm" />}
         </div>
       ))}
     </div>

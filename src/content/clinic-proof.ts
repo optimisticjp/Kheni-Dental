@@ -16,6 +16,8 @@
  * docs/CLINIC-CONTENT-NEEDED.md.
  */
 
+import { googleReputation } from "@/content/google-reputation";
+
 export type ProofValue =
   | { status: "verified"; value: string }
   | { status: "pending"; placeholder: string };
@@ -42,6 +44,19 @@ export const proofStats: ProofStat[] = [
   { id: "years", value: verified("15"), label: "Years in Surat", detail: "Since 2011" },
   { id: "doctors", value: verified("4"), label: "Dentists on the team" },
   { id: "clinics", value: verified("2"), label: "Clinics in Surat" },
+  // The fourth slot used to hold a patient-count placeholder. The rating is a
+  // real figure, checked on a date we can name, and it is the one number in
+  // this row a patient can go and verify for themselves.
+  ...(googleReputation.sharedRating
+    ? [
+        {
+          id: "rating",
+          value: verified(googleReputation.sharedRating),
+          label: "Rating on Google",
+          detail: `${googleReputation.combinedReviews} reviews, two clinics`,
+        } satisfies ProofStat,
+      ]
+    : []),
   { id: "patients", value: pending("XX,XXX+"), label: "Patients treated" },
 ];
 

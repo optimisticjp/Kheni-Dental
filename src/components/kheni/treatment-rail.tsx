@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useCallback, useId, useRef, useState } from "react";
 
-import { MediaFrame, PendingTag } from "@/components/kheni/pending";
+import { MediaFrame } from "@/components/kheni/pending";
 import { pendingTreatmentAreas, railPanels } from "@/content/problems-rail";
 import { pushTrackingEvent } from "@/lib/tracking";
 import { cn } from "@/lib/utils";
@@ -212,7 +212,19 @@ export function TreatmentRail() {
           id={`${baseId}-touch-panel`}
           className="grain relative mt-4 overflow-hidden rounded-[1.4rem] border border-gold/35 bg-[#141311]"
         >
-          <MediaFrame shot={panel.shot} ratio="16 / 10" className="m-2.5 rounded-[1.05rem]" />
+          {/*
+            The plate gets wider, not taller, as the column grows. A fixed
+            16/10 across a 780px tablet column came out around 460px tall and
+            mostly empty — the tablet read as a stretched phone. Capping the
+            height instead was worse: aspect-ratio held the shape and shrank
+            the width too, leaving the plate floating in dead space. So the
+            ratio itself changes at the breakpoint, which is the only version
+            that fills the column at every width.
+          */}
+          <MediaFrame
+            shot={panel.shot}
+            className="m-2.5 aspect-[16/10] rounded-[1.05rem] sm:aspect-[2.4/1]"
+          />
           <div className="p-6 pt-2 sm:p-7 sm:pt-3">
             <div className="flex items-center gap-3">
               <span aria-hidden="true" className="font-mono text-[.65rem] text-gold">
@@ -241,8 +253,16 @@ export function TreatmentRail() {
         </div>
       </div>
 
-      {/* Treatment areas patients ask for that the clinic has not confirmed
-          as separate services yet. Shown honestly rather than guessed at. */}
+      {/*
+        The other things people walk in asking for. These are ordinary dental
+        treatments, so they are named plainly.
+
+        They used to carry a dashed "CONFIRM" tag, which was a note to the
+        clinic about whether each deserved its own page — a patient reading it
+        would reasonably wonder whether the dentist was sure they did cleanings.
+        The question of which of these gets a page is a content decision, not
+        something the website should ask the visitor.
+      */}
       <div className="mt-7 flex flex-wrap items-center gap-x-4 gap-y-2.5">
         <span className="w-full text-[.7rem] uppercase tracking-[.16em] text-white/35 sm:w-auto">
           Also asked for
@@ -250,10 +270,9 @@ export function TreatmentRail() {
         {pendingTreatmentAreas.map((area) => (
           <span
             key={area}
-            className="inline-flex items-center gap-2 rounded-full border border-dashed border-white/15 px-3 py-1.5 text-xs text-white/45"
+            className="inline-flex items-center rounded-full border border-white/12 px-3 py-1.5 text-xs text-white/55"
           >
             {area}
-            <PendingTag label="Confirm" />
           </span>
         ))}
       </div>

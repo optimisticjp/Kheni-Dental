@@ -4,9 +4,9 @@ import { ArrowRight, ArrowUpRight, MapPin, MessageCircle, Phone, Plane } from "l
 import { Accordion } from "@/components/ui/accordion";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
-import { BranchGoogleCard, GoogleProofPanel } from "@/components/kheni/branch-google-card";
+import { GoogleProofPanel } from "@/components/kheni/branch-google-card";
 import { CaseResultsGrid } from "@/components/kheni/case-results";
-import { DoctorRoster, PrincipalDoctor } from "@/components/kheni/doctor-authority";
+import { PrincipalDoctor } from "@/components/kheni/doctor-authority";
 import { ImplantDiagram } from "@/components/kheni/implant/implant-diagram";
 import { BranchLocator } from "@/components/kheni/branch-locator";
 import { MediaFrame } from "@/components/kheni/pending";
@@ -16,7 +16,7 @@ import { TreatmentRail } from "@/components/kheni/treatment-rail";
 import { implantCapabilities } from "@/content/capabilities";
 import { heroAssurances, proofStats } from "@/content/clinic-proof";
 import { googleReputation } from "@/content/google-reputation";
-import { homepageFaqs, locations, site } from "@/content/site";
+import { homepageFaqs, site } from "@/content/site";
 import { whatsappUrl } from "@/lib/links";
 
 /**
@@ -188,15 +188,25 @@ export default function Home() {
         <Container width="7xl">
           <PrincipalDoctor />
 
-          <div className="mt-10 flex flex-wrap items-end justify-between gap-4">
-            <h2 className="t-h2">The rest of the team</h2>
-            <Link href="/doctors/" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-gold">
-              All doctors <ArrowUpRight className="cta-arrow size-4" aria-hidden="true" />
-            </Link>
-          </div>
-          <div className="mt-7">
-            <DoctorRoster exclude="dr-mayur-kheni" />
-          </div>
+          {/*
+            The other three dentists had a full card grid here, and the doctors
+            block came to 2,548px on a phone — three screens, a fifth of the
+            homepage, for people a patient has not asked about yet. They have
+            their own page, which does the job properly. The homepage says
+            who leads the clinic and that there is a team behind him.
+          */}
+          <Link
+            href="/doctors/"
+            className="ease-kheni group mt-9 flex items-center justify-between gap-6 rounded-2xl border border-border px-5 py-4 transition-colors duration-300 hover:border-gold/45 sm:px-6"
+          >
+            <span className="t-small text-muted-foreground">
+              Three more dentists across both clinics, each with their own areas of work.
+            </span>
+            <span className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-gold">
+              Meet the team
+              <ArrowUpRight className="cta-arrow size-4" aria-hidden="true" />
+            </span>
+          </Link>
         </Container>
       </Section>
 
@@ -240,22 +250,16 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="mt-9 grid gap-4 md:grid-cols-2">
-            {locations.map((location) => (
-              <BranchGoogleCard
-                key={location.slug}
-                location={location}
-                dark
-                placement={`home_google_${location.slug}`}
-              />
-            ))}
-          </div>
-
-          <div className="mt-12">
-            <h3 className="t-h3">Patient stories</h3>
-            <div className="mt-6">
-              <VideoStoryGrid />
-            </div>
+          {/*
+            Both branch cards used to repeat here in full. The hero already
+            carries the same rating, the same two review counts and the same
+            verified date about 1,500px further up, so this section spent
+            2,308px on a phone re-stating what the visitor read first. What
+            belongs here is the part the hero cannot show: what patients
+            actually said.
+          */}
+          <div className="mt-10">
+            <VideoStoryGrid />
             <div className="mt-4">
               <PatientStoryGrid tone="dark" />
             </div>
