@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { showContentGaps } from "@/components/kheni/pending";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight, ChevronDown, MessageCircle, Phone, Star } from "lucide-react";
@@ -246,29 +247,40 @@ export default function DentalImplantsPage() {
         </Section>
       )}
 
-      {/* ── Technology and systems ───────────────────────────────────────── */}
-      <Section spacing="md">
-        <Container width="7xl">
-          <h2 className="t-h2">Technology and systems</h2>
-          <div className="mt-8">
-            <TechnologyGrid />
-          </div>
-          <div className="mt-10 grid gap-8 lg:grid-cols-2">
-            <div>
-              <h3 className="text-[.7rem] font-semibold uppercase tracking-[.2em] text-gold">Implant systems</h3>
-              <div className="mt-4">
-                <ImplantSystemRail tone="light" />
+      {/*
+        Technology and systems.
+
+        The equipment grid, the implant-system rail and the surgical-options
+        list are all still unconfirmed, so each renders nothing now. That left
+        a heading over an empty page, which is why the whole section is behind
+        the same switch: it comes back the moment the clinic names one machine
+        or one implant system, and until then the page goes straight from how
+        treatment works to who does it.
+      */}
+      {showContentGaps && (
+        <Section spacing="md">
+          <Container width="7xl">
+            <h2 className="t-h2">Technology and systems</h2>
+            <div className="mt-8">
+              <TechnologyGrid />
+            </div>
+            <div className="mt-10 grid gap-8 lg:grid-cols-2">
+              <div>
+                <h3 className="text-[.7rem] font-semibold uppercase tracking-[.2em] text-gold">Implant systems</h3>
+                <div className="mt-4">
+                  <ImplantSystemRail tone="light" />
+                </div>
+              </div>
+              <div>
+                <h3 className="text-[.7rem] font-semibold uppercase tracking-[.2em] text-gold">Surgical options</h3>
+                <div className="mt-4">
+                  <ImplantWorkflowPending tone="light" />
+                </div>
               </div>
             </div>
-            <div>
-              <h3 className="text-[.7rem] font-semibold uppercase tracking-[.2em] text-gold">Surgical options</h3>
-              <div className="mt-4">
-                <ImplantWorkflowPending tone="light" />
-              </div>
-            </div>
-          </div>
-        </Container>
-      </Section>
+          </Container>
+        </Section>
+      )}
 
       {/* ── Results ──────────────────────────────────────────────────────── */}
       <Section className="bg-[#f1eee7]" spacing="md">
@@ -285,7 +297,7 @@ export default function DentalImplantsPage() {
         <Container width="7xl">
           <div className="grid gap-8 lg:grid-cols-[.85fr_1.15fr] lg:gap-14">
             <div>
-              <h2 className="t-h2">Cost and EMI</h2>
+              <h2 className="t-h2">What it costs</h2>
               <p className="mt-4 text-sm leading-6 text-muted-foreground">
                 What an implant costs depends on how many teeth are involved, the condition of the bone and the
                 final tooth that goes on top. You get the full plan, stage by stage, before treatment starts.

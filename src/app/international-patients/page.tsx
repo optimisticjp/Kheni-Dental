@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { ArrowRight, Globe2, MessageCircle, Plane } from "lucide-react";
 
@@ -6,7 +7,7 @@ import { BranchGoogleCard, GoogleProofPanel } from "@/components/kheni/branch-go
 import { PriceTable } from "@/components/kheni/capability-grids";
 import { CaseResultsGrid } from "@/components/kheni/case-results";
 import { ConsultationForm } from "@/components/kheni/consultation-form";
-import { MediaFrame, PendingTag, ProofNumber } from "@/components/kheni/pending";
+import { MediaFrame, PendingTag, ProofNumber, gapBorder, showContentGaps } from "@/components/kheni/pending";
 import { PageHero } from "@/components/kheni/page-hero";
 import { VideoStoryGrid } from "@/components/kheni/stories";
 import { Accordion } from "@/components/ui/accordion";
@@ -265,22 +266,32 @@ export default function InternationalPage() {
             </div>
 
             <div>
-              <h2 className="t-h2">Practical support</h2>
+              <h2 className="t-h2">Getting here</h2>
+              {/*
+                This block used to list four travel services — none of which
+                the clinic has agreed to provide — under a sentence explaining
+                that it had not agreed to provide them. With the "to confirm"
+                tags hidden the same four rows read as a list of things we do,
+                which is the opposite of what the copy was trying to say. The
+                honest version is the part that is simply true about Surat.
+              */}
               <p className="mt-4 text-sm leading-6 text-muted-foreground">
-                We will not promise travel help the clinic has not agreed to provide. These four are with the doctors
-                for confirmation.
+                Both clinics are in Varachha, about twenty minutes apart. Tell us your arrival date and we will
+                tell you what we can realistically fit in before you fly back.
               </p>
-              <ul className="mt-7 grid gap-2.5">
-                {travelSupport.map((item) => (
-                  <li
-                    key={item}
-                    className="flex min-h-14 items-center justify-between gap-4 rounded-xl border border-dashed border-border bg-white px-5 text-sm"
-                  >
-                    {item}
-                    <PendingTag label="To confirm" />
-                  </li>
-                ))}
-              </ul>
+              {showContentGaps && (
+                <ul className="mt-7 grid gap-2.5">
+                  {travelSupport.map((item) => (
+                    <li
+                      key={item}
+                      className={cn("flex min-h-14 items-center justify-between gap-4 rounded-xl border border-border bg-white px-5 text-sm", gapBorder)}
+                    >
+                      {item}
+                      <PendingTag label="To confirm" />
+                    </li>
+                  ))}
+                </ul>
+              )}
               <div className="mt-4 flex items-start gap-3 rounded-xl border border-border bg-white px-5 py-4 text-sm">
                 <Plane className="mt-0.5 size-4 shrink-0 text-gold" aria-hidden="true" />
                 <span className="text-muted-foreground">

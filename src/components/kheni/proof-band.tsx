@@ -80,7 +80,7 @@ export function CredentialStrip({ tone = "light" }: { tone?: "dark" | "light" })
         <div
           key={item.id}
           className={cn(
-            "flex min-h-20 flex-col justify-center rounded-xl border border-dashed px-4 py-3",
+            "flex min-h-20 flex-col justify-center rounded-xl border px-4 py-3",
             tone === "dark" ? "border-white/12" : "border-border",
           )}
         >

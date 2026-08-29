@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { AlertTriangle, ArrowRight, MessageCircle, Phone } from "lucide-react";
 
 import { PageHero } from "@/components/kheni/page-hero";
-import { PendingTag } from "@/components/kheni/pending";
+import { PendingTag, gapBorder } from "@/components/kheni/pending";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
 import { emergencyPending, resourceCategories, urgentSigns } from "@/content/patient-resources";
@@ -63,7 +64,7 @@ export default function ResourcesPage() {
                     </li>
                   ))}
                 </ul>
-                <div className="mt-5 flex items-center justify-between gap-3 rounded-xl border border-dashed border-border px-4 py-3 text-sm text-muted-foreground">
+                <div className={cn("mt-5 flex items-center justify-between gap-3 rounded-xl border border-border px-4 py-3 text-sm text-muted-foreground", gapBorder)}>
                   {emergencyPending}
                   <PendingTag label="To confirm" />
                 </div>
@@ -127,7 +128,7 @@ export default function ResourcesPage() {
                     className={
                       guide.status === "published"
                         ? "scroll-mt-24 rounded-2xl border border-border bg-card p-6 sm:p-7"
-                        : "scroll-mt-24 rounded-2xl border border-dashed border-border bg-card/50 p-6 sm:p-7"
+                        : cn("scroll-mt-24 rounded-2xl border border-border bg-card/50 p-6 sm:p-7", gapBorder)
                     }
                   >
                     <div className="flex flex-wrap items-start justify-between gap-3">
@@ -148,7 +149,7 @@ export default function ResourcesPage() {
                         ))}
                       </ul>
                     ) : (
-                      <p className="mt-5 rounded-xl border border-dashed border-border p-4 text-xs leading-6 text-muted-foreground/80">
+                      <p className={cn("mt-5 rounded-xl border border-border p-4 text-xs leading-6 text-muted-foreground/80", gapBorder)}>
                         <span className="font-semibold text-foreground">We need from the clinic: </span>
                         {guide.needs}
                       </p>

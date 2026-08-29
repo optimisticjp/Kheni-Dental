@@ -21,7 +21,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const location = locations.find((item) => item.slug === slug);
   if (!location) return {};
   return {
-    title: `Dental Clinic in ${location.displayArea} | ${location.shortName}`,
+    // "Dental Clinic in Hirabaug | Hirabaug" was the Hirabaug title, because
+    // that branch's name and its area are the same word.
+    title:
+      location.shortName === location.displayArea
+        ? `Dental Clinic in ${location.displayArea}, Surat`
+        : `Dental Clinic in ${location.displayArea} | ${location.shortName}`,
     description: `Kheni Dental at ${location.shortName}, ${location.areaLabel}. Address, phone, WhatsApp, opening hours and directions.`,
   };
 }

@@ -40,6 +40,16 @@ import { cn } from "@/lib/utils";
 /** Whether to draw the clinic's to-do notes over the site. Off in production. */
 export const showContentGaps = process.env.NEXT_PUBLIC_SHOW_CONTENT_GAPS === "true";
 
+/**
+ * The border of a container that is still waiting on content.
+ *
+ * Dashed means draft. That was the right signal while the markers were on and
+ * the clinic was reading them, but with the notes hidden a dashed rectangle on
+ * its own says nothing to a patient except that something is broken. So the
+ * dashes come and go with the notes they belonged to.
+ */
+export const gapBorder = showContentGaps ? "border-dashed" : "";
+
 type PendingTone = "quiet" | "marked";
 
 /** Small tag marking an unfilled value. Neutral unless explicitly marked. */
@@ -254,7 +264,7 @@ export function InitialsPortrait({
   return (
     <div
       className={cn(
-        "relative flex items-center justify-center overflow-hidden rounded-2xl border border-dashed",
+        "relative flex items-center justify-center overflow-hidden rounded-2xl border", gapBorder,
         tone === "dark" ? "border-white/10 bg-white/[.02]" : "border-border/70 bg-[#f4f1ea]",
         className,
       )}

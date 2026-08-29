@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, MessageCircle } from "lucide-react";
 
-import { InitialsPortrait, PendingTag } from "@/components/kheni/pending";
+import { InitialsPortrait, PendingTag, gapBorder } from "@/components/kheni/pending";
 import { languages } from "@/content/clinic-proof";
 import { googleReputation } from "@/content/google-reputation";
 import { doctors, type Doctor } from "@/content/site";
@@ -144,7 +144,7 @@ export function DoctorCard({ doctor, tone = "light" }: { doctor: Doctor; tone?: 
       )}
     >
       <div className="relative">
-        <InitialsPortrait name={doctor.name} tone={tone} className="aspect-[16/9] w-full rounded-none border-0 border-b border-dashed" />
+        <InitialsPortrait name={doctor.name} tone={tone} className={cn("aspect-[16/9] w-full rounded-none border-0 border-b", gapBorder)} />
         <span
           className={cn(
             "absolute bottom-3 left-3 inline-flex items-center rounded-full px-2.5 py-1 text-[.6rem] font-semibold uppercase tracking-[.12em]",

@@ -39,7 +39,12 @@ function BranchLine({ location }: { location: (typeof locations)[number] }) {
         >
           {location.shortName}
         </Link>
-        <span className="t-small text-white/40">{location.displayArea}</span>
+        {/* Swastik Plaza sits in Yogi Chowk, so the area is worth saying. The
+            Hirabaug clinic is called Hirabaug, and printing it twice reads as
+            a bug rather than as detail. */}
+        {location.shortName !== location.displayArea && (
+          <span className="t-small text-white/40">{location.displayArea}</span>
+        )}
       </div>
       <div className="mt-1 flex flex-wrap items-center gap-x-4">
         <a

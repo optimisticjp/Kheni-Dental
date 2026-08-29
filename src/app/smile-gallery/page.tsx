@@ -6,7 +6,7 @@ import { CaseResultsGrid, FeaturedCase } from "@/components/kheni/case-results";
 import { PageHero } from "@/components/kheni/page-hero";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
-import { caseCategories, caseDisclaimer } from "@/content/cases";
+import { caseDisclaimer } from "@/content/cases";
 
 export const metadata: Metadata = {
   title: "Before & After Results",
@@ -43,7 +43,7 @@ export default function SmileGalleryPage() {
           <div className="flex flex-wrap items-end justify-between gap-4">
             <h2 className="t-h2">More cases</h2>
             <p className="t-small measure-narrow text-muted-foreground">
-              {caseCategories.length} treatment areas, added as consent is confirmed.
+Implants, full mouth rehabilitation, smile design, crowns and braces.
             </p>
           </div>
           <div className="mt-8">

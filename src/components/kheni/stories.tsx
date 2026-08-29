@@ -1,6 +1,6 @@
 import { Play, Quote } from "lucide-react";
 
-import { MediaFrame, PendingTag } from "@/components/kheni/pending";
+import { MediaFrame, PendingTag, gapBorder } from "@/components/kheni/pending";
 import {
   PENDING_STORY_TILES,
   PENDING_VIDEO_TILES,
@@ -48,7 +48,7 @@ export function PatientStoryGrid({ tone = "light" }: { tone?: "dark" | "light" }
         <div
           key={index}
           className={cn(
-            "flex min-h-52 flex-col rounded-2xl border border-dashed p-6",
+            "flex min-h-52 flex-col rounded-2xl border p-6", gapBorder,
             tone === "dark" ? "border-white/12" : "border-border",
           )}
         >

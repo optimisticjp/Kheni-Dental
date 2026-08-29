@@ -1,4 +1,5 @@
-import { MediaFrame, PendingTag } from "@/components/kheni/pending";
+import { MediaFrame, PendingTag, gapBorder, showContentGaps } from "@/components/kheni/pending";
+import { googleReputation } from "@/content/google-reputation";
 import { PENDING_CASE_TILES, caseCategories, caseDisclaimer, caseResults } from "@/content/cases";
 import { doctors, locations } from "@/content/site";
 import { cn } from "@/lib/utils";
@@ -222,25 +223,56 @@ export function CaseResultsGrid({ limit, tone = "light" }: { limit?: number; ton
     );
   }
 
-  // Pending: the archive shape, one card per category we expect to fill.
+  // Pending.
+  //
+  // This used to render six cards, each with an empty before and after plate
+  // under the words "The patient's starting concern". Twelve blank frames
+  // arranged as an archive is not a preview of results, it is a claim to have
+  // results and then not showing them, which is the one thing a before-and-
+  // after page must not do. So the archive shape is for the clinic's own
+  // review, and a patient gets one honest panel instead.
+  if (showContentGaps) {
+    return (
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {Array.from({ length: limit ?? PENDING_CASE_TILES }).map((_, index) => (
+          <article
+            key={index}
+            className={cn("rounded-2xl border p-3", gapBorder, dark ? "border-white/10" : "border-border/70")}
+          >
+            <BeforeAfter tone={tone} />
+            <div className="p-3 pt-4">
+              <p className={cn("t-eyebrow", dark ? "text-white/30" : "text-muted-foreground/60")}>
+                {caseCategories[index % caseCategories.length]}
+              </p>
+              <p className={cn("t-card mt-2", dark ? "text-white/20" : "text-foreground/20")}>
+                The patient&rsquo;s starting concern
+              </p>
+            </div>
+          </article>
+        ))}
+      </div>
+    );
+  }
+
   return (
-    <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-      {Array.from({ length: limit ?? PENDING_CASE_TILES }).map((_, index) => (
-        <article
-          key={index}
-          className={cn("rounded-2xl border border-dashed p-3", dark ? "border-white/10" : "border-border/70")}
-        >
-          <BeforeAfter tone={tone} />
-          <div className="p-3 pt-4">
-            <p className={cn("t-eyebrow", dark ? "text-white/30" : "text-muted-foreground/60")}>
-              {caseCategories[index % caseCategories.length]}
-            </p>
-            <p className={cn("t-card mt-2", dark ? "text-white/20" : "text-foreground/20")}>
-              The patient&rsquo;s starting concern
-            </p>
-          </div>
-        </article>
-      ))}
+    <div
+      className={cn(
+        "rounded-2xl border p-6 sm:p-8",
+        dark ? "border-white/10 bg-white/[.03] text-white" : "border-border bg-card",
+      )}
+    >
+      <p className="t-card measure-narrow">
+        We photograph results only when the patient has agreed to it in writing.
+      </p>
+      <p className={cn("t-small measure-body mt-3", dark ? "text-white/55" : "text-muted-foreground")}>
+        That consent is being collected case by case, across {caseCategories.length} treatment areas, so this page
+        fills up slowly rather than all at once. Until then the honest answer about what is possible in your case is
+        the one Dr. Mayur gives you after looking at it.
+      </p>
+      <p className={cn("t-small mt-4", dark ? "text-white/40" : "text-muted-foreground/80")}>
+        Our {googleReputation.combinedReviews} Google reviews, across both clinics, are written by those patients in
+        the meantime.
+      </p>
     </div>
   );
 }
