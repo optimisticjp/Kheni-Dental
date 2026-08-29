@@ -1,7 +1,7 @@
 export const site = {
   name: "Kheni Dental & Elite Implant Center",
   shortName: "Kheni Dental",
-  domain: "https://www.khenidentalcare.com",
+  domain: "https://khenidentalcare.com",
   email: "smile@khenidentalcare.com",
   city: "Surat",
   region: "Gujarat",

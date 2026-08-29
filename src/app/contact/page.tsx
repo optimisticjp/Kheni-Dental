@@ -6,7 +6,7 @@ import { ConsultationForm } from "@/components/kheni/consultation-form";
 import { PageHero } from "@/components/kheni/page-hero";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
-import { site } from "@/content/site";
+import { locations, site } from "@/content/site";
 import { whatsappUrl } from "@/lib/links";
 
 export const metadata: Metadata = {
@@ -40,7 +40,7 @@ export default function ContactPage() {
       {/* ── Reach us now ─────────────────────────────────────────────────── */}
       <Section spacing="sm">
         <Container width="7xl">
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             <a
               href={whatsappUrl()}
               target="_blank"
@@ -56,18 +56,31 @@ export default function ContactPage() {
               <MessageCircle className="size-5 shrink-0 text-gold" aria-hidden="true" />
             </a>
 
-            <a
-              href={`tel:${site.primaryPhoneHref}`}
-              data-track="phone_click"
-              data-placement="contact_primary"
-              className="flex min-h-16 items-center justify-between gap-4 rounded-2xl border border-border bg-card px-5"
-            >
-              <span className="min-w-0">
-                <span className="t-eyebrow block text-muted-foreground">Yogi Chowk line</span>
-                <span className="t-card mt-1 block">{site.primaryPhoneDisplay}</span>
-              </span>
-              <Phone className="size-5 shrink-0 text-gold" aria-hidden="true" />
-            </a>
+            {/*
+              Both lines, not just the Yogi Chowk one.
+
+              The clinics keep separate numbers, and the contact page led with
+              a single line labelled "Yogi Chowk line" — which is honest, but
+              leaves a patient who wants Hirabaug at a dead end on the page
+              built for reaching us. Each branch now offers its own number,
+              named, so nobody has to guess which clinic they are calling.
+            */}
+            {locations.map((location) => (
+              <a
+                key={location.slug}
+                href={`tel:${location.phoneHref}`}
+                data-track="phone_click"
+                data-placement="contact_primary"
+                data-branch={location.slug}
+                className="flex min-h-16 items-center justify-between gap-4 rounded-2xl border border-border bg-card px-5"
+              >
+                <span className="min-w-0">
+                  <span className="t-eyebrow block text-muted-foreground">{location.displayArea}</span>
+                  <span className="t-card mt-1 block">{location.phoneDisplay}</span>
+                </span>
+                <Phone className="size-5 shrink-0 text-gold" aria-hidden="true" />
+              </a>
+            ))}
 
             <a
               href={`mailto:${site.email}`}
