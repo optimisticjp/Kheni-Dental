@@ -26,6 +26,7 @@ import { treatmentStats } from "@/content/clinic-proof";
 import { decisionStages, implantFaqs, implantHero, planFactors } from "@/content/implant-center";
 import { doctors, locations, site, treatments } from "@/content/site";
 import { whatsappUrl } from "@/lib/links";
+import { placeUrl } from "@/lib/maps";
 
 const SLUG = "dental-implants-surat";
 const treatment = treatments.find((item) => item.slug === SLUG);
@@ -70,14 +71,14 @@ export default function DentalImplantsPage() {
             <h1 className="mt-5 t-h1">
               Dental Implants in Surat
             </h1>
-            <p className="mt-5 max-w-lg text-base leading-7 text-white/65">
+            <p className="mt-5 max-w-lg t-stand text-white/60">
               Replace a missing tooth with one that is fixed in the jawbone. Single, multiple and full mouth
               implants at our Elite Implant Center, led by Dr. Mayur Kheni.
             </p>
 
             <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
               <a
-                href={site.googleProfileUrl}
+                href={placeUrl(locations[0])}
                 target="_blank"
                 rel="noreferrer"
                 data-track="review_click"

@@ -11,6 +11,9 @@ export type TrackingEventName =
   | "review_click"
   | "problem_interaction"
   | "gallery_interaction"
+  // Which of the two clinics a patient switched to in the locator. A branch
+  // choice is a convenience preference, not health information.
+  | "location_switch"
   // Implant experience. Section-level engagement only. The navigator event
   // never carries which situation was chosen, because that could describe the
   // visitor's own mouth. See TRACKING_PLAN.md.

@@ -95,7 +95,7 @@ export function PrincipalDoctor({ doctor = doctors[0] }: { doctor?: Doctor }) {
           <p className="mt-3 text-sm text-white/50">{doctor.credentials}</p>
           <p className="mt-1 font-serif text-xl leading-snug text-gold">{doctor.specialty}</p>
 
-          <p className="mt-5 max-w-xl text-sm leading-7 text-white/60">{doctor.bio}</p>
+          <p className="mt-5 max-w-xl t-body text-white/60">{doctor.bio}</p>
 
           <div className="mt-7">
             <CredentialBlocks blocks={blocks} />

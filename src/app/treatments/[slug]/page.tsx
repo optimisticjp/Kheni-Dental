@@ -53,7 +53,7 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
             <h1 className="mt-5 t-h1">
               {t.title} in Surat
             </h1>
-            <p className="mt-5 max-w-xl text-base leading-7 text-white/65">{t.short}</p>
+            <p className="mt-5 max-w-xl t-stand text-white/60">{t.short}</p>
 
             <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
               <Link
@@ -117,7 +117,7 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
           <div className="grid gap-10 lg:grid-cols-[1.1fr_.9fr] lg:gap-16">
             <div>
               <h2 className="t-h2">{t.problem}</h2>
-              <p className="mt-5 max-w-2xl text-base leading-7 text-muted-foreground">{t.intro}</p>
+              <p className="mt-5 max-w-2xl t-stand text-muted-foreground">{t.intro}</p>
               <div className="mt-8">
                 <TickList items={t.benefits} />
               </div>

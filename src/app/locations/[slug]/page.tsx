@@ -63,7 +63,7 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
                 <span className="text-white/55">{location.google.reviewCount} Google reviews for this clinic</span>
               </p>
             )}
-            <p className="mt-5 max-w-xl text-base leading-7 text-white/60">{location.note}</p>
+            <p className="mt-5 max-w-xl t-stand text-white/60">{location.note}</p>
 
             <dl className="mt-7 space-y-3 text-sm">
               <div className="flex gap-3">
@@ -112,7 +112,7 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
             </div>
           </div>
 
-          <BranchMap location={location} ratio="4 / 3" className="border-white/10" />
+          <BranchMap location={location} />
         </Container>
       </section>
 

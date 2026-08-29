@@ -10,6 +10,7 @@ import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
 import { googleReputation, verifiedBranches } from "@/content/google-reputation";
 import { locations, reviewHighlights } from "@/content/site";
+import { writeReviewUrl } from "@/lib/maps";
 
 export const metadata: Metadata = {
   title: "Patient Reviews",
@@ -175,7 +176,7 @@ export default function ReviewsPage() {
               {verifiedBranches.map((branch) => (
                 <a
                   key={branch.location.slug}
-                  href={branch.location.googleWriteReviewUrl}
+                  href={writeReviewUrl(branch.location)}
                   target="_blank"
                   rel="noreferrer"
                   data-track="review_click"

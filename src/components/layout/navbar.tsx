@@ -34,7 +34,7 @@ export function Navbar() {
     <>
       <header className="sticky top-0 z-40 w-full border-b border-white/8 bg-ink/95 text-white backdrop-blur-xl">
         <Container width="7xl">
-          <div className="flex h-[74px] items-center justify-between gap-4">
+          <div className="flex h-16 items-center justify-between gap-4 sm:h-[74px]">
             <BrandMark />
 
             <nav aria-label="Primary" className="hidden items-center gap-0.5 xl:flex">

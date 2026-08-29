@@ -1,4 +1,5 @@
 import { doctors, locations, site } from "@/content/site";
+import { placeUrl, placeUrlFromId } from "@/lib/maps";
 
 export function StructuredData() {
   if (process.env.NEXT_PUBLIC_ENABLE_SCHEMA !== "true") return null;
@@ -11,7 +12,7 @@ export function StructuredData() {
       name: site.name,
       url: base,
       email: site.email,
-      sameAs: [site.instagram, site.googleProfileUrl],
+      sameAs: [site.instagram, locations[0].googleShortUrl],
     },
     ...locations.map((location) => {
       const data: Record<string, unknown> = {
@@ -21,8 +22,8 @@ export function StructuredData() {
         url: `${base}/locations/${location.slug}/`,
         telephone: location.phoneDisplay,
         email: site.email,
-        hasMap: location.googleProfileUrl,
-        sameAs: [location.googleProfileUrl],
+        hasMap: placeUrlFromId(location),
+        sameAs: [placeUrl(location)],
         address: {
           "@type": "PostalAddress",
           streetAddress: location.address,

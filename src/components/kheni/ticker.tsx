@@ -39,7 +39,7 @@ export function Ticker() {
   return (
     <div className="marquee dark-gold relative isolate overflow-hidden border-b border-gold/12 bg-[#0a0a09]">
       <div aria-hidden="true" className="bloom-gold-soft pointer-events-none absolute inset-0" />
-      <div className="edge-fade-dark relative py-2.5 sm:py-3">
+      <div className="edge-fade-dark relative py-1.5 sm:py-3">
         <div
           className="marquee-track flex w-max items-center"
           style={{ ["--marquee-duration" as string]: "58s" }}
@@ -47,7 +47,7 @@ export function Ticker() {
           {track.map((item, index) => (
             <span
               key={`${item.text}-${index}`}
-              className="flex items-baseline gap-1.5 whitespace-nowrap px-4 font-serif text-[.9rem] tracking-[-.01em] text-white/55 sm:px-5 sm:text-[1.05rem]"
+              className="flex items-baseline gap-1.5 whitespace-nowrap px-3.5 font-serif text-[.82rem] tracking-[-.01em] text-white/55 sm:px-5 sm:text-[1.05rem]"
               // The list is duplicated for the loop; announcing it twice would
               // be noise, so the rail is decorative to assistive technology and
               // every fact in it is stated properly elsewhere on the page.

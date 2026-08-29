@@ -41,7 +41,7 @@ export function PageHero({
       <Container
         width="7xl"
         className={cn(
-          "relative py-12 sm:py-14 lg:py-18",
+          "relative py-9 sm:py-12 lg:py-16",
           aside && "grid gap-10 lg:grid-cols-[1.1fr_.9fr] lg:items-center lg:gap-14",
         )}
       >

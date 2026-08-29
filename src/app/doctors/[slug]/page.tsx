@@ -70,7 +70,7 @@ export default async function DoctorPage({ params }: { params: Promise<{ slug: s
               ))}
             </ul>
 
-            <p className="mt-6 max-w-xl text-base leading-7 text-white/62">{doctor.bio}</p>
+            <p className="mt-6 max-w-xl t-stand text-white/60">{doctor.bio}</p>
 
             <div className="mt-8 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
               <Link

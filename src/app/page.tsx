@@ -8,7 +8,7 @@ import { BranchGoogleCard, GoogleProofPanel } from "@/components/kheni/branch-go
 import { CaseResultsGrid } from "@/components/kheni/case-results";
 import { DoctorRoster, PrincipalDoctor } from "@/components/kheni/doctor-authority";
 import { ImplantDiagram } from "@/components/kheni/implant/implant-diagram";
-import { LocationCard } from "@/components/kheni/location-card";
+import { BranchLocator } from "@/components/kheni/branch-locator";
 import { MediaFrame } from "@/components/kheni/pending";
 import { ProofBand } from "@/components/kheni/proof-band";
 import { PatientStoryGrid, VideoStoryGrid } from "@/components/kheni/stories";
@@ -49,7 +49,7 @@ export default function Home() {
         <div aria-hidden="true" className="bloom-gold pointer-events-none absolute inset-0 -z-10" />
         <Container
           width="7xl"
-          className="relative grid gap-9 py-12 lg:grid-cols-[1.15fr_.85fr] lg:items-center lg:gap-20 lg:py-20"
+          className="relative grid gap-8 py-9 sm:py-12 lg:grid-cols-[1.15fr_.85fr] lg:items-center lg:gap-20 lg:py-20"
         >
           <div>
             <div className="flex items-center gap-3">
@@ -324,10 +324,8 @@ export default function Home() {
               Both locations
             </Link>
           </div>
-          <div className="mt-8 grid gap-4 lg:grid-cols-2">
-            {locations.map((location) => (
-              <LocationCard key={location.slug} location={location} />
-            ))}
+          <div className="mt-7">
+            <BranchLocator placement="home" />
           </div>
         </Container>
       </Section>

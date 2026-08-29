@@ -113,9 +113,9 @@
 
 /* Reading roles. text-wrap: pretty stops the widow on the last line, which
    is the single most common thing that made body copy here look unset. */
-.t-stand   { font-size: clamp(1rem, 1.05vw, 1.1rem); line-height: 1.65; text-wrap: pretty; }
-.t-body    { font-size: .9375rem; line-height: 1.7; text-wrap: pretty; }
-.t-small   { font-size: .8125rem; line-height: 1.6; text-wrap: pretty; }
+.t-stand   { font-size: clamp(1rem, 1.05vw, 1.08rem); line-height: 1.55; text-wrap: pretty; }
+.t-body    { font-size: .9375rem; line-height: 1.6; text-wrap: pretty; }
+.t-small   { font-size: .8125rem; line-height: 1.5; text-wrap: pretty; }
 
 /* Interface roles. The eyebrow is the site's most repeated small element,
    so its tracking is set once here rather than re-guessed per section. */
@@ -249,9 +249,9 @@ button:focus-visible .cta-arrow { transform: translateX(4px); }
 .implant-diagram-labels { animation: implant-diagram-in .9s ease-out .45s both; }
 @keyframes implant-diagram-in { from { opacity: 0; } to { opacity: 1; } }
 
-.prose-kheni h2 { font-family: var(--font-serif); font-size: clamp(2rem,4vw,3.3rem); letter-spacing: -.035em; line-height: 1.05; margin-top: 3.5rem; }
-.prose-kheni h3 { font-family: var(--font-serif); font-size: 1.6rem; margin-top: 2rem; }
-.prose-kheni p, .prose-kheni li { color: var(--muted-foreground); line-height: 1.8; margin-top: 1rem; }
+.prose-kheni h2 { font-family: var(--font-serif); font-size: clamp(1.65rem,2.7vw,2.3rem); letter-spacing: -.032em; line-height: 1.1; margin-top: 2.5rem; }
+.prose-kheni h3 { font-family: var(--font-serif); font-size: 1.3rem; margin-top: 1.5rem; }
+.prose-kheni p, .prose-kheni li { color: var(--muted-foreground); line-height: 1.65; margin-top: .85rem; }
 .prose-kheni ul { padding-left: 1.2rem; list-style: disc; }
 .prose-kheni a { color: #9b7131; text-decoration: underline; text-underline-offset: 3px; }
 
@@ -277,4 +277,9 @@ button:focus-visible .cta-arrow { transform: translateX(4px); }
   /* Darker gold for small text on light surfaces; brighter gold inside dark sections. */
   .text-gold { color: #8b6428; }
   .bg-ink .text-gold, .dark-gold .text-gold, .dark-gold.text-gold { color: #d2b56f; }
+  /* Opt back out. An ivory panel placed inside a dark section was inheriting
+     the bright dark-section gold and rendering #d2b56f on white at roughly
+     1.9:1. Anything light-on-dark-ancestor carries this. Declared last so it
+     wins the tie on equal specificity. */
+  .light-surface .text-gold, .light-surface.text-gold { color: #8b6428; }
 }

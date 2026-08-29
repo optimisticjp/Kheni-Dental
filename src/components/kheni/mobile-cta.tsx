@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { locations, site } from "@/content/site";
 import { whatsappUrl } from "@/lib/links";
 import { cn } from "@/lib/utils";
+import { directionsUrl } from "@/lib/maps";
 
 /**
  * Fixed mobile dock. Five actions: two navigation, one anchor, two conversion.
@@ -59,7 +60,7 @@ export function MobileCta() {
 
       {activeLocation ? (
         <a
-          href={activeLocation.mapsUrl}
+          href={directionsUrl(activeLocation)}
           target="_blank"
           rel="noreferrer"
           data-track="directions_click"

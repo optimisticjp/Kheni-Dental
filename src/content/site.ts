@@ -18,8 +18,6 @@ export const site = {
   googleReviewCount: "1,753",
   googleReviewDisplay: "1,750+",
   googleReviewBranch: "Yogi Chowk",
-  googleProfileUrl: "https://maps.app.goo.gl/WN2nDHXVK8RajDvE6",
-  googleWriteReviewUrl: "https://search.google.com/local/writereview?placeid=ChIJddZdiXpP4DsRvtrOvXjbQqA",
   consultationMessage:
     "Hello Kheni Dental, I would like to book a consultation. Please let me know which days and times are open. Thank you.",
 } as const;
@@ -96,12 +94,17 @@ export type Location = {
   phoneDisplay: string;
   phoneHref: string;
   whatsappNumber: string;
-  mapsUrl: string;
-  /** Query used by the lazy Google Maps embed for this branch. */
-  mapEmbedQuery: string;
-  googleProfileUrl: string;
-  googleWriteReviewUrl: string;
+  /**
+   * The branch's identity on Google, and the only map input this codebase
+   * stores. Every Maps URL — profile, directions, embed, write-a-review — is
+   * derived from it in `src/lib/maps.ts`, so a branch cannot inherit another
+   * branch's map. Do not add a second, hand-built map string here: the
+   * previous free-text `mapEmbedQuery` is exactly how both branches ended up
+   * pointing at the same broad area.
+   */
   googlePlaceId: string;
+  /** The exact short link the clinic supplied, resolved against the Place ID. */
+  googleShortUrl: string;
   /**
    * Google reputation is tracked per branch. `status` decides whether the
    * review card shows a real figure or a labelled placeholder, so one branch
@@ -133,11 +136,8 @@ export const locations: Location[] = [
     phoneDisplay: "+91 95101 12354",
     phoneHref: "+919510112354",
     whatsappNumber: "919510112354",
-    mapsUrl: "https://maps.app.goo.gl/WN2nDHXVK8RajDvE6",
-    mapEmbedQuery: "Kheni+Dental+Clinic,+Swastik+Plaza,+Yogi+Chowk,+Nana+Varachha,+Surat,+Gujarat+395011",
-    googleProfileUrl: "https://maps.app.goo.gl/WN2nDHXVK8RajDvE6",
-    googleWriteReviewUrl: "https://search.google.com/local/writereview?placeid=ChIJddZdiXpP4DsRvtrOvXjbQqA",
     googlePlaceId: "ChIJddZdiXpP4DsRvtrOvXjbQqA",
+    googleShortUrl: "https://maps.app.goo.gl/WN2nDHXVK8RajDvE6",
     google: { status: "verified", rating: "4.9", reviewCount: "1,753", verifiedOn: "29 August 2026" },
     hours: "Mon-Sat 9:30 AM-1:00 PM and 4:00 PM-8:00 PM",
     hoursNote: "Clinic-provided hours. Call before travelling if your visit is time-sensitive.",
@@ -154,11 +154,8 @@ export const locations: Location[] = [
     phoneDisplay: "+91 97379 97543",
     phoneHref: "+919737997543",
     whatsappNumber: "919737997543",
-    mapsUrl: "https://maps.app.goo.gl/7TipkWprNZv2qEQk9",
-    mapEmbedQuery: "Kheni+Dental+Elite+Implant+Center,+Varachha+Main+Road,+Hirabaug,+Surat,+Gujarat+395006",
-    googleProfileUrl: "https://maps.app.goo.gl/7TipkWprNZv2qEQk9",
-    googleWriteReviewUrl: "https://search.google.com/local/writereview?placeid=ChIJ89yBAKVP4DsR3TYY_211oRg",
     googlePlaceId: "ChIJ89yBAKVP4DsR3TYY_211oRg",
+    googleShortUrl: "https://maps.app.goo.gl/7TipkWprNZv2qEQk9",
     google: { status: "verified", rating: "4.9", reviewCount: "210", verifiedOn: "29 August 2026" },
     hours: "Mon-Sat 9:30 AM-1:00 PM and 4:00 PM-8:00 PM",
     hoursNote: "Clinic-provided hours. Call before travelling if your visit is time-sensitive.",

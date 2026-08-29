@@ -1,30 +1,29 @@
 import Link from "next/link";
 import { ArrowUpRight, Clock3, MapPin, MessageCircle, Phone, Star } from "lucide-react";
 
-import { BranchMap } from "@/components/kheni/branch-map";
 import { PendingTag } from "@/components/kheni/pending";
 import type { Location } from "@/content/site";
 import { whatsappUrl } from "@/lib/links";
 import { cn } from "@/lib/utils";
+import { directionsUrl, placeUrl } from "@/lib/maps";
 
 /**
  * Branch card.
  *
- * Everything a patient needs to choose a clinic and get there, in one card:
- * which area it is in, what Google says about *this* branch, where it is on a
- * map, when it is open, and four actions sized for a thumb.
+ * The mapless branch summary, for pages that mention both clinics in passing.
+ * Anywhere a map belongs, `BranchLocator` owns it: one component, one map per
+ * branch, and on a phone only the selected branch's map exists at all.
  *
- * The map is orientation. "Get Directions" is the action, and it opens the
- * branch's own Google profile.
+ * Actions are ranked rather than equal. Directions is what almost everyone
+ * wants from a branch block, so it leads; Call and WhatsApp are peers beneath
+ * it; the clinic page is a plain link.
  */
-export function LocationCard({ location, showMap = true }: { location: Location; showMap?: boolean }) {
+export function LocationCard({ location }: { location: Location }) {
   const message = `Hello Kheni Dental, I would like to book an appointment at ${location.shortName}, ${location.areaLabel}.`;
   const verified = location.google.status === "verified";
 
   return (
     <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card">
-      {showMap && <BranchMap location={location} ratio="16 / 9" className="rounded-none border-0 border-b border-border" />}
-
       <div className="flex flex-1 flex-col p-5 sm:p-6">
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
@@ -38,7 +37,7 @@ export function LocationCard({ location, showMap = true }: { location: Location;
           </div>
 
           <a
-            href={location.googleProfileUrl}
+            href={placeUrl(location)}
             target="_blank"
             rel="noreferrer"
             data-track="review_click"
@@ -85,14 +84,29 @@ export function LocationCard({ location, showMap = true }: { location: Location;
           </div>
         </dl>
 
-        <div className="mt-auto grid grid-cols-2 gap-2 pt-6 sm:grid-cols-4">
+        <div className="mt-auto pt-5">
+          <a
+            href={directionsUrl(location)}
+            target="_blank"
+            rel="noreferrer"
+            data-track="directions_click"
+            data-placement={`location_${location.slug}`}
+            data-branch={location.slug}
+            className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-ink px-4 text-sm font-semibold text-white"
+          >
+            Get Directions
+            <ArrowUpRight className="size-4 text-gold" aria-hidden="true" />
+          </a>
+        </div>
+
+        <div className="mt-2 grid grid-cols-2 gap-2">
           <a
             href={`tel:${location.phoneHref}`}
             data-track="phone_click"
             data-placement={`location_${location.slug}`}
             data-branch={location.slug}
             className={cn(
-              "inline-flex min-h-11 items-center justify-center gap-1.5 rounded-full bg-ink px-3 text-xs font-semibold text-white",
+              "inline-flex min-h-11 items-center justify-center gap-1.5 rounded-full border border-border px-3 text-sm font-semibold",
             )}
           >
             <Phone className="size-3.5 text-gold" aria-hidden="true" />
@@ -105,30 +119,20 @@ export function LocationCard({ location, showMap = true }: { location: Location;
             data-track="whatsapp_click"
             data-placement={`location_${location.slug}`}
             data-branch={location.slug}
-            className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-full border border-border px-3 text-xs font-semibold"
+            className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-full border border-border px-3 text-sm font-semibold"
           >
             <MessageCircle className="size-3.5 text-gold" aria-hidden="true" />
             WhatsApp
           </a>
-          <a
-            href={location.mapsUrl}
-            target="_blank"
-            rel="noreferrer"
-            data-track="directions_click"
-            data-placement={`location_${location.slug}`}
-            data-branch={location.slug}
-            className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-full border border-border px-3 text-xs font-semibold"
-          >
-            Directions
-            <ArrowUpRight className="size-3.5" aria-hidden="true" />
-          </a>
-          <Link
-            href={`/locations/${location.slug}/`}
-            className="inline-flex min-h-11 items-center justify-center rounded-full border border-border px-3 text-xs font-semibold text-gold"
-          >
-            Clinic page
-          </Link>
         </div>
+
+        <Link
+          href={`/locations/${location.slug}/`}
+          className="mt-3 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-gold"
+        >
+          This clinic in detail
+          <ArrowUpRight className="cta-arrow size-3.5" aria-hidden="true" />
+        </Link>
       </div>
     </article>
   );

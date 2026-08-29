@@ -4,6 +4,7 @@ import { PendingTag } from "@/components/kheni/pending";
 import { googleReputation, verifiedBranches } from "@/content/google-reputation";
 import { locations, type Location } from "@/content/site";
 import { cn } from "@/lib/utils";
+import { placeUrl, writeReviewUrl } from "@/lib/maps";
 
 /**
  * Google reputation.
@@ -107,7 +108,7 @@ export function BranchGoogleCard({
 
       <div className="mt-auto flex flex-wrap items-center gap-x-5 pt-5">
         <a
-          href={location.googleProfileUrl}
+          href={placeUrl(location)}
           target="_blank"
           rel="noreferrer"
           data-track="review_click"
@@ -119,7 +120,7 @@ export function BranchGoogleCard({
           <ArrowUpRight className="cta-arrow size-4" aria-hidden="true" />
         </a>
         <a
-          href={location.googleWriteReviewUrl}
+          href={writeReviewUrl(location)}
           target="_blank"
           rel="noreferrer"
           data-track="review_click"
@@ -207,7 +208,7 @@ export function GoogleProofPanel({
                 {branch.reviewCount} reviews
               </span>
               <a
-                href={branch.location.googleProfileUrl}
+                href={placeUrl(branch.location)}
                 target="_blank"
                 rel="noreferrer"
                 data-track="review_click"

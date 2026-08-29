@@ -2,13 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, MessageCircle } from "lucide-react";
 
+import { BranchLocator } from "@/components/kheni/branch-locator";
 import { GoogleProofPanel } from "@/components/kheni/branch-google-card";
-import { BranchMap, DirectionsButton } from "@/components/kheni/branch-map";
-import { LocationCard } from "@/components/kheni/location-card";
 import { PageHero } from "@/components/kheni/page-hero";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
-import { locations } from "@/content/site";
 import { whatsappUrl } from "@/lib/links";
 
 export const metadata: Metadata = {
@@ -17,61 +15,33 @@ export const metadata: Metadata = {
     "Kheni Dental has two clinics in Surat: Swastik Plaza at Yogi Chowk, and the Elite Implant Center at Hirabaug on Varachha Main Road. Address, phone, hours and directions.",
 };
 
+/**
+ * Where to find us.
+ *
+ * The page used to show each branch's map inside its card and then repeat both
+ * maps under a separate "Getting here" heading — four Google iframes for two
+ * addresses. There is now one locator: a branch switcher on a phone, both
+ * branches side by side from lg.
+ */
 export default function LocationsPage() {
   return (
     <>
       <PageHero
         eyebrow="Our two Surat clinics"
         title="Find your Kheni."
-        copy="Both clinics belong to the same practice, so pick whichever is easier to reach on the day. Each one keeps its own phone number, its own Google listing and its own team on the floor."
+        copy="Both clinics belong to the same practice, so pick whichever is easier to reach on the day. Each keeps its own phone number, its own Google listing and its own team on the floor."
         aside={<GoogleProofPanel placement="locations_hero_google" className="w-full" />}
       />
 
       <Section spacing="md">
         <Container width="7xl">
-          <div className="grid gap-5 lg:grid-cols-2">
-            {locations.map((location) => (
-              <LocationCard key={location.slug} location={location} />
-            ))}
-          </div>
+          <BranchLocator placement="locations" />
         </Container>
       </Section>
 
-      {/* Maps, one per branch. Lazy iframes, so nothing loads until scrolled to. */}
-      <Section className="bg-[#f1eee7]" spacing="md">
-        <Container width="7xl">
-          <h2 className="t-h2">Getting here</h2>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">
-            The maps below load only when you scroll to them, so the page stays quick on mobile data. Tap Get
-            Directions and the live route opens in your own maps app.
-          </p>
-
-          <div className="mt-8 grid gap-6 lg:grid-cols-2">
-            {locations.map((location) => (
-              <div key={location.slug} className="rounded-2xl border border-border bg-white p-4 sm:p-5">
-                <BranchMap location={location} ratio="4 / 3" />
-                <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
-                  <div className="min-w-0">
-                    <p className="font-serif text-xl leading-tight">{location.shortName}</p>
-                    <p className="mt-1 text-xs text-muted-foreground">{location.areaLabel}</p>
-                  </div>
-                  <DirectionsButton
-                    location={location}
-                    placement={`locations_map_${location.slug}`}
-                    className="border border-border sm:whitespace-nowrap"
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        </Container>
-      </Section>
-
-      <section className="bg-gold py-14 text-ink sm:py-16">
+      <section className="bg-gold py-11 text-ink sm:py-14">
         <Container width="7xl" className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
-          <h2 className="max-w-xl t-h1">
-            Not sure which clinic suits you? Ask us.
-          </h2>
+          <h2 className="t-h2 measure-head">Not sure which clinic suits you? Ask us.</h2>
           <div className="flex flex-col gap-2.5 sm:flex-row">
             <Link
               href="/contact/#book"

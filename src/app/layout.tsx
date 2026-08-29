@@ -8,6 +8,9 @@ import { ConsentBanner } from "@/components/tracking/consent-banner";
 import { TrackLinks } from "@/components/tracking/track-links";
 import { StructuredData } from "@/components/tracking/structured-data";
 import { site } from "@/content/site";
+// Fails the build if a branch's Place ID drifts or two branches ever share
+// map, phone or listing data. See the file for what it guards against.
+import "@/content/__checks__/branch-data.check";
 import "./globals.css";
 
 export const metadata: Metadata = {

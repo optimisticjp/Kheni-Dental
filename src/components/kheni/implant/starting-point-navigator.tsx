@@ -121,7 +121,7 @@ export function StartingPointNavigator() {
         className="mt-6 rounded-[1.75rem] border border-white/10 bg-white/[.03] p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold sm:p-8 lg:mt-0"
       >
         <p className="font-serif text-2xl leading-tight text-white sm:text-3xl">{point.label}</p>
-        <p className="mt-4 max-w-2xl text-sm leading-7 text-white/60 sm:text-base">{point.summary}</p>
+        <p className="mt-4 max-w-2xl t-body text-white/60 sm:text-base">{point.summary}</p>
 
         <div className="mt-8 grid gap-8 sm:grid-cols-2">
           <div>
