@@ -111,8 +111,8 @@ export type Location = {
    * `@lat,lng,zoom` segment of the same URL, which is only where Google
    * happened to park the camera and is nearly 3km off for Hirabaug.
    *
-   * This is what the embedded OpenStreetMap map is centred and marked on, so
-   * an inaccurate value here is an inaccurate map. Verified per branch in
+   * This is what the aerial map is centred on and where its marker is drawn,
+   * so an inaccurate value here is an inaccurate map. Verified per branch in
    * `src/content/__checks__/branch-data.check.ts`; re-verify rather than
    * edit in place.
    */

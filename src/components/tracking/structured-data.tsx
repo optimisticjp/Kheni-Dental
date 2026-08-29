@@ -24,6 +24,13 @@ export function StructuredData() {
         email: site.email,
         hasMap: placeUrlFromId(location),
         sameAs: [placeUrl(location)],
+        // The same verified pin the aerial map is centred on, never a second
+        // hand-typed pair that could drift away from it.
+        geo: {
+          "@type": "GeoCoordinates",
+          latitude: location.coords.lat,
+          longitude: location.coords.lng,
+        },
         address: {
           "@type": "PostalAddress",
           streetAddress: location.address,

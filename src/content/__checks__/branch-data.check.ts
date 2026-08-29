@@ -1,5 +1,5 @@
 import { locations } from "@/content/site";
-import { directionsUrl, osmEmbedSrc, placeUrl, placeUrlFromId, writeReviewUrl } from "@/lib/maps";
+import { aerialEmbedSrc, directionsUrl, placeUrl, placeUrlFromId, writeReviewUrl } from "@/lib/maps";
 
 /**
  * Branch-data integrity, enforced at build time.
@@ -108,14 +108,19 @@ export function assertBranchDataIntegrity(): void {
       fail(`${location.slug} coordinates ${lat},${lng} are not in Surat — likely swapped or mistyped`);
     }
 
-    // The embed must carry this branch's own pin, centred on it.
-    const embed = osmEmbedSrc(location);
-    if (!embed.includes(`marker=${encodeURIComponent(`${lat},${lng}`)}`)) {
-      fail(`${location.slug} map embed is not marked on its own coordinates: ${embed}`);
+    // The aerial view must be centred on this branch's own pin. The marker is
+    // drawn in the DOM at the centre of the frame, so a wrong centre here is a
+    // marker pointing at the wrong building rather than a merely odd map.
+    const embed = aerialEmbedSrc(location, 356, 270);
+    if (!embed.includes(`cp=${lat}~${lng}`)) {
+      fail(`${location.slug} aerial view is not centred on its own coordinates: ${embed}`);
+    }
+    if (!embed.includes("sty=a")) {
+      fail(`${location.slug} aerial view is not in aerial style: ${embed}`);
     }
     for (const other of locations) {
       if (other.slug === location.slug) continue;
-      if (embed.includes(`${other.coords.lat}`)) fail(`${location.slug} map embed contains ${other.slug}'s latitude`);
+      if (embed.includes(`${other.coords.lat}`)) fail(`${location.slug} aerial view contains ${other.slug}'s latitude`);
       // Two clinics 3km apart must never resolve to overlapping map views.
       if (metresBetween(location.coords, other.coords) < 200) {
         fail(`${location.slug} and ${other.slug} are pinned within 200m of each other — one has inherited the other's map`);

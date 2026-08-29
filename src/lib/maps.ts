@@ -18,10 +18,10 @@ import type { Location } from "@/content/site";
  *
  * TWO PROVIDERS, ON PURPOSE
  *
- *   PICTURE   OpenStreetMap's embed, centred and marked on the branch's own
- *             verified `coords`. Keyless, no billing account, no API key to
- *             leak or expire, and the marker is placed by coordinate rather
- *             than by a search Google might re-rank.
+ *   PICTURE   Bing's consumer map embed in aerial view, centred on the
+ *             branch's own verified `coords`. Keyless, no billing account, no
+ *             API key to leak or expire, and the view is placed by coordinate
+ *             rather than by a search a provider might re-rank.
  *
  *   ACTIONS   Google Maps URLs API, built from `googlePlaceId`. Directions,
  *             the listing itself and the review composer all stay on Google,
@@ -75,45 +75,55 @@ export function writeReviewUrl(location: Location): string {
 }
 
 /**
- * How wide a view the map opens on, in metres.
+ * The zoom the aerial view opens at, on Bing's 1-20 scale.
  *
- * 460m is chosen, not default: OpenStreetMap's embed fits the box to the
- * frame and snaps to whole zoom levels, and this lands on zoom 16 in a phone
- * frame. That is the level where road names become legible, so the marker
- * arrives already surrounded by the junction a patient would navigate by
- * rather than floating on unlabelled grey.
+ * Judged from real Surat imagery rather than picked. 17 shows about 400m and
+ * the clinic block is too small to place; 19 is a rooftop with nothing around
+ * it to navigate by. 18 shows roughly 200m: the junction, the building and
+ * enough of the surrounding streets for a patient to recognise where they are
+ * being asked to go.
  */
-const MAP_SPAN_M = 460;
-
-/** Metres per degree of latitude. Near enough constant everywhere. */
-const M_PER_DEG_LAT = 110_574;
-/** Metres per degree of longitude at the equator, narrowing towards the poles. */
-const M_PER_DEG_LNG_EQUATOR = 111_320;
+export const AERIAL_ZOOM = 18;
 
 /**
- * The embedded map for this branch: OpenStreetMap, centred on the branch's
- * verified coordinates with a marker on the same point.
+ * The aerial photograph for this branch.
  *
- * The bounding box is built around those coordinates rather than passed as a
- * centre and a zoom, because that is the only input `export/embed.html`
- * takes. It is deliberately landscape (16:9) so a wide frame does not have to
- * zoom out to fit a square box. The marker sits at the exact centre of the
- * box either way, so however the frame's own aspect nudges the fit, the pin
- * is in the middle of the first paint.
+ * Bing's consumer embed, documented at
+ * https://learn.microsoft.com/en-us/bingmaps/articles/create-a-custom-map-url
+ * (`cp` centre point, `lvl` 1-20 zoom, `sty` map view: `a` aerial, `h` aerial
+ * with labels, `r` road). It needs no key, no account and no billing.
+ *
+ * WHY AERIAL AND NOT AERIAL-WITH-LABELS
+ * `sty=h` was rendered at both clinics before choosing. Bing's label layer
+ * puts other businesses' names across the imagery in its own type — at Yogi
+ * Chowk that meant Vaghani Hospital, Jasoliya Orthopedic Hospital and Krishna
+ * Jewellers set larger than anything of ours, and at Hirabaug, Sanskar
+ * Children Hospital. A dental clinic's own page should not hand its map over
+ * to a directory of nearby hospitals. Plain aerial keeps the photograph, and
+ * the orientation labels do a better job underneath it as the branch name,
+ * area and address the card already carries.
+ *
+ * WIDTH AND HEIGHT ARE NOT OPTIONAL
+ * Bing sizes the map from `w` and `h`, not from the iframe it is rendered in.
+ * Give it a size that does not match the frame and it draws the map at the
+ * size it was told and leaves the rest of the frame white. So the frame is
+ * measured and its real pixel size passed in; see `aerial-frame.tsx`.
  */
-export function osmEmbedSrc(location: Location): string {
+export function aerialEmbedSrc(location: Location, width: number, height: number): string {
   const { lat, lng } = location.coords;
-
-  const halfLat = MAP_SPAN_M * (9 / 16) * 0.5 / M_PER_DEG_LAT;
-  const halfLng = (MAP_SPAN_M * 0.5) / (M_PER_DEG_LNG_EQUATOR * Math.cos((lat * Math.PI) / 180));
-
-  const round = (n: number) => n.toFixed(6);
-  const bbox = [round(lng - halfLng), round(lat - halfLat), round(lng + halfLng), round(lat + halfLat)].join(",");
-
-  const params = new URLSearchParams({
-    bbox,
-    layer: "mapnik",
-    marker: `${lat},${lng}`,
-  });
-  return `https://www.openstreetmap.org/export/embed.html?${params}`;
+  // Built by hand rather than with URLSearchParams, which would percent-encode
+  // the tilde that separates Bing's latitude and longitude.
+  return (
+    "https://www.bing.com/maps/embed/?" +
+    [
+      `h=${Math.round(height)}`,
+      `w=${Math.round(width)}`,
+      `cp=${lat}~${lng}`,
+      `lvl=${AERIAL_ZOOM}`,
+      "typ=d",
+      "sty=a",
+      "src=SHELL",
+      "FORM=MBEDV8",
+    ].join("&")
+  );
 }
