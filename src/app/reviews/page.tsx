@@ -12,6 +12,10 @@ import { googleReputation, verifiedBranches } from "@/content/google-reputation"
 import { patientStories, videoStories } from "@/content/patient-stories";
 import { locations } from "@/content/site";
 import { writeReviewUrl } from "@/lib/maps";
+import { RatingSummary, TestimonialWall } from "@/components/kheni/demo/testimonial-wall";
+import { VideoWall } from "@/components/kheni/demo/video-wall";
+import { AwardsRow, PressQuotes } from "@/components/kheni/demo/press-strip";
+import { demoContentActive, demoRatingSummary } from "@/content/demo";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/reviews/" },
@@ -109,6 +113,38 @@ export default function ReviewsPage() {
           </div>
         </Container>
       </section>
+
+      {demoContentActive && (
+        <>
+          <section className="hue-sunshine py-10 sm:py-14 lg:py-20">
+            <Container width="7xl">
+              <div className="grid gap-8 lg:grid-cols-[.85fr_1.15fr] lg:items-start lg:gap-12">
+                <div className="lg:sticky lg:top-24">
+                  <SectionIntro eyebrow="Patient stories" title={`${demoRatingSummary.total.toLocaleString("en-IN")} reviews, and what they say.`} highlight="what they say" />
+                  <RatingSummary className="mt-6" />
+                </div>
+                <TestimonialWall />
+              </div>
+            </Container>
+          </section>
+
+          <section className="hue-violet relative isolate overflow-hidden bg-ink py-10 text-white sm:py-14 lg:py-20">
+            <div aria-hidden="true" className="absolute -right-24 top-0 size-80 rounded-full bg-violet opacity-30 blur-3xl" />
+            <Container width="7xl" className="relative">
+              <SectionIntro tone="dark" eyebrow="On camera" title="Patients, in their own words." highlight="own words" />
+              <VideoWall className="mt-6 sm:mt-8" />
+            </Container>
+          </section>
+
+          <section className="hue-gold py-10 sm:py-14 lg:py-20">
+            <Container width="7xl">
+              <SectionIntro eyebrow="Recognition" title="Awards, accreditation and press." highlight="press" />
+              <AwardsRow className="mt-6 sm:mt-8" />
+              <PressQuotes className="mt-8" />
+            </Container>
+          </section>
+        </>
+      )}
 
       <CtaBand title="Ready when you are." highlight="Ready" copy="Book a time at either clinic, or just message and tell us what is bothering you." placement="reviews_final" hue="sunshine" />
     </>

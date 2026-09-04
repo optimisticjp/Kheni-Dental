@@ -8,6 +8,10 @@ import { SmileNote } from "@/components/kheni/smile-note";
 import { TreatmentPoster, TreatmentRow } from "@/components/kheni/treatment-poster";
 import { Container } from "@/components/ui/container";
 import { smileNotes, treatments, type TreatmentCategory } from "@/content/site";
+import { SectionIntro } from "@/components/kheni/section-intro";
+import { PriceTable } from "@/components/kheni/demo/price-table";
+import { IconServiceGrid } from "@/components/kheni/demo/icon-grid";
+import { demoContentActive } from "@/content/demo";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/treatments/" },
@@ -68,6 +72,24 @@ export default function TreatmentsPage() {
       </section>
 
       <SmileNote note={smileNotes[4]} compact className="pb-10 sm:pb-14" />
+
+      {demoContentActive && (
+        <>
+          <section className="hue-navy py-10 sm:py-14 lg:py-20">
+            <Container width="7xl">
+              <SectionIntro eyebrow="At a glance" title="Every service, one tap away." highlight="one tap" />
+              <IconServiceGrid className="mt-6 sm:mt-8" />
+            </Container>
+          </section>
+
+          <section id="pricing" className="anchor hue-amber py-10 sm:py-14 lg:py-20">
+            <Container width="7xl">
+              <SectionIntro eyebrow="Treatment rates" title="What things cost, before you ask." highlight="before you ask" copy="Indicative ranges, what is included and the monthly EMI figure. Placeholder numbers." />
+              <PriceTable className="mt-6 sm:mt-8" />
+            </Container>
+          </section>
+        </>
+      )}
 
       <CtaBand title="Not sure which one you need? That is normal." highlight="normal" copy="Describe it in your own words. The examination sorts out the rest." placement="treatments_final" />
     </>

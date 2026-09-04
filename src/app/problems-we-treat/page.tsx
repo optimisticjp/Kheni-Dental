@@ -8,6 +8,8 @@ import { PageHero } from "@/components/kheni/page-hero";
 import { SectionIntro } from "@/components/kheni/section-intro";
 import { Container } from "@/components/ui/container";
 import { treatments } from "@/content/site";
+import { HorizontalAccordion } from "@/components/kheni/demo/horizontal-accordion";
+import { demoContentActive } from "@/content/demo";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/problems-we-treat/" },
@@ -63,6 +65,15 @@ export default function ProblemsPage() {
           </ul>
         </Container>
       </section>
+
+      {demoContentActive && (
+        <section className="hue-teal py-10 sm:py-14 lg:py-20">
+          <Container width="7xl">
+            <SectionIntro eyebrow="All fourteen" title="Open one, swipe for the rest." highlight="swipe" copy="The horizontal expanding accordion, on the phone as well as the desktop." />
+            <HorizontalAccordion className="mt-6 sm:mt-8" />
+          </Container>
+        </section>
+      )}
 
       <CtaBand title="Not on the list? Describe it in your own words." highlight="your own words" placement="problems_final" hue="teal" />
     </>

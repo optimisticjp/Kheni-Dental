@@ -9,6 +9,9 @@ import { ConsentBanner } from "@/components/tracking/consent-banner";
 import { TrackLinks } from "@/components/tracking/track-links";
 import { StructuredData } from "@/components/tracking/structured-data";
 import { site } from "@/content/site";
+import { DemoNotice } from "@/components/kheni/demo/demo-notice";
+import { QuoteTab } from "@/components/kheni/demo/quote-tab";
+import { demoContentActive } from "@/content/demo";
 // Fails the build if a branch's Place ID drifts or two branches ever share
 // map, phone or listing data.
 import "@/content/__checks__/branch-data.check";
@@ -81,8 +84,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <TrackLinks />
         <Navbar />
         <main className="flex-1">{children}</main>
+        {demoContentActive && <DemoNotice />}
         <Footer />
         <MobileDock />
+        {demoContentActive && <QuoteTab />}
         <BookSheet />
         <ConsentBanner />
       </body>

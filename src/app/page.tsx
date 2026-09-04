@@ -18,6 +18,18 @@ import { ResultsPreview } from "@/components/kheni/results-preview";
 import { SectionIntro } from "@/components/kheni/section-intro";
 import { SmileNote } from "@/components/kheni/smile-note";
 import { TreatmentPoster, TreatmentTile } from "@/components/kheni/treatment-poster";
+import { StockHero } from "@/components/kheni/demo/stock-hero";
+import { ClaimMarquee } from "@/components/kheni/demo/marquee";
+import { StatBand } from "@/components/kheni/demo/stat-band";
+import { IconServiceGrid } from "@/components/kheni/demo/icon-grid";
+import { HorizontalAccordion } from "@/components/kheni/demo/horizontal-accordion";
+import { PromiseStrip } from "@/components/kheni/demo/promise-strip";
+import { PriceTable } from "@/components/kheni/demo/price-table";
+import { RatingSummary, TestimonialWall } from "@/components/kheni/demo/testimonial-wall";
+import { VideoWall } from "@/components/kheni/demo/video-wall";
+import { AwardsRow, PressQuotes, PressStrip } from "@/components/kheni/demo/press-strip";
+import { CaseWall } from "@/components/kheni/demo/result-gallery";
+import { demoContentActive, demoRatingSummary } from "@/content/demo";
 import { implantCapabilities } from "@/content/capabilities";
 import { googleReputation, verifiedBranches } from "@/content/google-reputation";
 import { implantProcess } from "@/content/implant-center";
@@ -41,7 +53,16 @@ const nriMessage = "Hello Kheni Dental, I live abroad and would like to plan den
 export default function Home() {
   return (
     <>
+      {/*
+        Two heroes. The verified one leads with where we are and what the
+        Google listings actually say. The demo one leads with a rating badge,
+        a "#1", a painless promise and a counter strip, which is the pattern
+        the clinic asked to see. Only one renders.
+      */}
+      {demoContentActive && <StockHero />}
+
       {/* ── Hero ─────────────────────────────────────────────────────── */}
+      {!demoContentActive && (
       <section
         className="hue-cobalt field relative isolate overflow-hidden"
         style={{ ["--f1" as string]: "var(--cobalt-tint)", ["--f2" as string]: "var(--coral-tint)", ["--f3" as string]: "var(--sunshine-tint)" }}
@@ -116,6 +137,14 @@ export default function Home() {
           </div>
         </Container>
       </section>
+      )}
+
+      {demoContentActive && (
+        <>
+          <ClaimMarquee />
+          <PressStrip />
+        </>
+      )}
 
       {/* ── What brings you in today? ───────────────────────────────── */}
       <section className="hue-teal py-10 sm:py-14 lg:py-20">
@@ -126,6 +155,20 @@ export default function Home() {
           </div>
         </Container>
       </section>
+
+      {demoContentActive && (
+        <>
+          <PromiseStrip />
+
+          {/* ── Icon service grid ───────────────────────────────────── */}
+          <section className="hue-navy py-10 sm:py-14 lg:py-20">
+            <Container width="7xl">
+              <SectionIntro eyebrow="Everything we do" title="Twelve services, one clinic." highlight="one clinic" copy="The flat icon grid, four across on a phone. Tap any tile to read the full treatment page." />
+              <IconServiceGrid className="mt-6 sm:mt-8" />
+            </Container>
+          </section>
+        </>
+      )}
 
       <SmileNote index={0} />
 
@@ -152,6 +195,15 @@ export default function Home() {
           </div>
         </Container>
       </section>
+
+      {demoContentActive && (
+        <section className="hue-teal py-10 sm:py-14 lg:py-20">
+          <Container width="7xl">
+            <SectionIntro eyebrow="Problems we treat" title="Fourteen reasons people walk in." highlight="Fourteen" copy="The horizontal accordion, on the phone as well as the desktop. Tap a spine to open it, swipe to reach the rest." />
+            <HorizontalAccordion className="mt-6 sm:mt-8" />
+          </Container>
+        </section>
+      )}
 
       {/* ── Elite Implant Center ────────────────────────────────────── */}
       <section className="hue-cobalt relative isolate overflow-hidden bg-ink py-10 text-white sm:py-14 lg:py-20">
@@ -198,6 +250,8 @@ export default function Home() {
         </Container>
       </section>
 
+      {demoContentActive && <StatBand />}
+
       {/* ── Dr. Mayur ───────────────────────────────────────────────── */}
       <section className="py-10 sm:py-14 lg:py-20">
         <Container width="7xl">
@@ -206,7 +260,73 @@ export default function Home() {
         </Container>
       </section>
 
+      {demoContentActive && (
+        <>
+          {/* ── Prices ──────────────────────────────────────────────── */}
+          <section id="pricing" className="anchor hue-amber py-10 sm:py-14 lg:py-20">
+            <Container width="7xl">
+              <SectionIntro eyebrow="Treatment rates" title="What things cost, before you ask." highlight="before you ask" copy="Indicative ranges, with what is included and the monthly EMI figure. Placeholder numbers." />
+              {/* Six here, all eleven on the treatments index. Eleven price cards
+                  stacked on a phone is 5,000px of scrolling before the next section. */}
+              <PriceTable className="mt-6 sm:mt-8" slugs={["dental-implants-surat", "root-canal-treatment-surat", "braces-clear-aligners", "cosmetic-smile-dentistry", "full-mouth-rehabilitation", "crowns-and-bridges"]} />
+              <Link href="/treatments/#pricing" className="mt-5 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-h-text">
+                Rates for all {treatments.length} treatments
+                <ArrowUpRight className="cta-arrow size-4" aria-hidden="true" />
+              </Link>
+            </Container>
+          </section>
+
+          {/* ── Testimonial wall ────────────────────────────────────── */}
+          <section className="hue-sunshine py-10 sm:py-14 lg:py-20">
+            <Container width="7xl">
+              <div className="grid gap-8 lg:grid-cols-[.85fr_1.15fr] lg:items-start lg:gap-12">
+                <div className="lg:sticky lg:top-24">
+                  <SectionIntro eyebrow="Patient stories" title={`${demoRatingSummary.total.toLocaleString("en-IN")} patients have told us how it went.`} highlight="how it went" />
+                  <RatingSummary className="mt-6" />
+                  <Link href="/reviews/" data-track="review_click" data-placement="home_testimonials" className="mt-4 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-cobalt-deep">
+                    Read all {demoRatingSummary.total.toLocaleString("en-IN")} reviews
+                    <ArrowUpRight className="cta-arrow size-4" aria-hidden="true" />
+                  </Link>
+                </div>
+                <TestimonialWall limit={6} />
+              </div>
+            </Container>
+          </section>
+
+          {/* ── Video testimonials ──────────────────────────────────── */}
+          <section className="hue-violet relative isolate overflow-hidden bg-ink py-10 text-white sm:py-14 lg:py-20">
+            <div aria-hidden="true" className="absolute -right-24 top-0 size-80 rounded-full bg-violet opacity-30 blur-3xl" />
+            <Container width="7xl" className="relative">
+              <SectionIntro tone="dark" eyebrow="On camera" title="Patients, in their own words." highlight="own words" copy="Nothing loads until you tap. The player runs on YouTube's privacy domain." />
+              <VideoWall className="mt-6 sm:mt-8" limit={4} />
+            </Container>
+          </section>
+
+          {/* ── Recognition ─────────────────────────────────────────── */}
+          <section className="hue-gold py-10 sm:py-14 lg:py-20">
+            <Container width="7xl">
+              <SectionIntro eyebrow="Recognition" title="Awards, accreditation and press." highlight="press" />
+              <AwardsRow className="mt-6 sm:mt-8" />
+              <PressQuotes className="mt-8" />
+            </Container>
+          </section>
+        </>
+      )}
+
       <SmileNote index={1} />
+
+      {demoContentActive && (
+        <section className="hue-cobalt py-10 sm:py-14 lg:py-20">
+          <Container width="7xl">
+            <SectionIntro eyebrow="Smile gallery" title="Before and after, drag to compare." highlight="drag to compare" copy="Four labelled cases with the treatment and the timeline named, then the unlabelled wall the reference clinics publish." />
+            <CaseWall className="mt-6 sm:mt-8" />
+            <Link href="/smile-gallery/" className="mt-6 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-h-text">
+              The full smile gallery
+              <ArrowUpRight className="cta-arrow size-4" aria-hidden="true" />
+            </Link>
+          </Container>
+        </section>
+      )}
 
       {/* ── Results and reviews ─────────────────────────────────────── */}
       <section className="hue-sunshine py-10 sm:py-14 lg:py-20">

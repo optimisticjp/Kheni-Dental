@@ -11,6 +11,10 @@ import { SmileNote } from "@/components/kheni/smile-note";
 import { Container } from "@/components/ui/container";
 import { proofStats } from "@/content/clinic-proof";
 import { site, smileNotes } from "@/content/site";
+import { StatBand } from "@/components/kheni/demo/stat-band";
+import { AwardsRow, NotableStrip, PressQuotes, PressStrip } from "@/components/kheni/demo/press-strip";
+import { ClaimMarquee } from "@/components/kheni/demo/marquee";
+import { demoContentActive } from "@/content/demo";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/about/" },
@@ -101,6 +105,26 @@ export default function AboutPage() {
           </div>
         </Container>
       </section>
+
+      {demoContentActive && (
+        <>
+          <StatBand />
+          <ClaimMarquee tone="sunshine" />
+          <PressStrip />
+
+          <section className="hue-gold py-10 sm:py-14 lg:py-20">
+            <Container width="7xl">
+              <SectionIntro eyebrow="Recognition" title="Awards and accreditation." highlight="accreditation" />
+              <AwardsRow className="mt-6 sm:mt-8" />
+              <PressQuotes className="mt-8" />
+              <div className="mt-10">
+                <SectionIntro eyebrow="Notable patients" title="Faces you might know." highlight="might know" />
+                <NotableStrip className="mt-6" />
+              </div>
+            </Container>
+          </section>
+        </>
+      )}
 
       <CtaBand title="Tell us what is bothering you. We will take it from there." highlight="take it from there" placement="about_final" />
     </>

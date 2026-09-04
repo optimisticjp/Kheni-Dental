@@ -10,6 +10,9 @@ import { SmileNote } from "@/components/kheni/smile-note";
 import { TreatmentRow } from "@/components/kheni/treatment-poster";
 import { Container } from "@/components/ui/container";
 import { doctors, locations, treatments } from "@/content/site";
+import { DoctorCredentials } from "@/components/kheni/demo/credentials";
+import { TestimonialCard } from "@/components/kheni/demo/testimonial-wall";
+import { demoContentActive, demoTestimonials } from "@/content/demo";
 
 export function generateStaticParams() {
   return doctors.map((doctor) => ({ slug: doctor.slug }));
@@ -69,6 +72,30 @@ export default async function DoctorPage({ params }: { params: Promise<{ slug: s
           <TeamLink />
         </Container>
       </section>
+
+      {demoContentActive && (
+        <section className={`hue-${doctor.hue} bg-h-tint py-10 sm:py-14 lg:py-18`}>
+          <Container width="7xl">
+            <div className="grid gap-8 lg:grid-cols-[.85fr_1.15fr] lg:gap-12">
+              <div>
+                <SectionIntro eyebrow="Qualifications" title={`${doctor.shortName}'s training.`} highlight={doctor.shortName} />
+                <DoctorCredentials doctorSlug={doctor.slug} className="mt-6" />
+              </div>
+              <div>
+                <SectionIntro eyebrow="Patients" title={`Treated by ${doctor.shortName}.`} highlight={doctor.shortName} />
+                <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                  {demoTestimonials
+                    .filter((t) => doctor.relatedTreatmentSlugs.includes(t.treatmentSlug))
+                    .slice(0, 4)
+                    .map((story) => (
+                      <TestimonialCard key={story.id} story={story} />
+                    ))}
+                </div>
+              </div>
+            </div>
+          </Container>
+        </section>
+      )}
 
       <CtaBand title={`Book an appointment with ${doctor.name}.`} highlight={doctor.name} placement={`doctor_final_${doctor.slug}`} hue={doctor.hue} whatsappMessage={message} />
     </>

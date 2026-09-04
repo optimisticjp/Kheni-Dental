@@ -12,6 +12,7 @@ Read:
 4. `CONTENT_TO_VERIFY.md`
 5. `TRACKING_PLAN.md`
 6. `docs/CLINIC-CONTENT-NEEDED.md`
+7. `DEMO_CONTENT.md` (what on this build is invented, and how to switch it off)
 
 ## Non-negotiables
 
