@@ -2,18 +2,25 @@
 
 ## Goal
 
-Create a premium, fast and patient-friendly dental website that turns local search, Google Ads, social traffic and referrals into qualified calls, WhatsApp conversations, consultation requests and directions to one of the two Surat branches.
+Attract more local patients and maximise clinic visits. The site turns local
+search, Google Ads, social traffic and referrals into WhatsApp conversations,
+phone calls, appointment requests and directions to one of the two Surat
+clinics.
 
 ## Positioning
 
-Kheni Dental should feel clinically credible without sounding cold. The visual system is dark, editorial and premium. The language is warm, reassuring and easy to understand.
+Kheni Dental should feel clinically credible and human at the same time. The
+visual system is "vibrant clinical editorial": colourful, optimistic, warm and
+trustworthy, with an editorial serif voice and one clear colour per
+treatment. The language is warm, direct and easy to understand.
 
-The site should not behave like a hospital brochure. It should help people answer four questions:
+The site helps people answer five questions:
 
-1. Do these doctors understand what I am dealing with?
+1. Do these dentists understand what I am dealing with?
 2. Can I trust the team and the clinic?
 3. What might the next step look like?
-4. How do I contact the right branch easily?
+4. Which clinic is nearer, and how do I get there?
+5. How do I book, right now, with one thumb?
 
 ## Core audiences
 
@@ -26,24 +33,23 @@ The site should not behave like a hospital brochure. It should help people answe
 
 ## Primary conversions
 
-1. WhatsApp enquiry
-2. Phone call
-3. Consultation request
-4. Directions to a branch
+1. Book Appointment (opens the clinic-choice sheet, then WhatsApp or call)
+2. WhatsApp
+3. Phone call
+4. Directions to a clinic
 
-## Visual direction
+## Visual direction (V4)
 
-- Near-black foundation
-- Warm off-white content sections
-- Muted premium gold accents
-- Large editorial serif headings
-- Real clinic and doctor photography
-- Minimal animation
-- Interactive Problems We Treat section
-- Persistent mobile Call, WhatsApp and Book actions
+- Porcelain warm-white foundation, deep navy ink
+- Cobalt as the one action colour; aqua, coral and sunshine as accents;
+  muted gold reserved for the Elite Implant Center and star ratings
+- One hue per treatment, used on its poster, icon, chips and page tint
+- Fraunces for headings (one highlighted word per heading), Inter for body
+- Original SVG illustrations and diagrams until real photography arrives
+- Sticky frosted header; three-action mobile dock (Book, Call, WhatsApp)
+- Subtle motion only, native scrolling, reduced-motion respected
 
 ## Copy direction
 
-Patient concern first, clinical explanation second.
-
-The tone should be calm, specific and human. It should not sound like an ad agency, an AI assistant or a medical textbook.
+Patient concern first, clinical explanation second. Indian English, short
+sentences, no jargon, no superlatives, no prices, no promises.

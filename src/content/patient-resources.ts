@@ -2,23 +2,24 @@
  * Patient resources.
  *
  * Built as a clinic service rather than an SEO blog: the things a patient
- * actually needs the day before an appointment, the evening after one, or at
- * eleven at night when something does not feel right.
+ * needs the day before an appointment, the evening after one, or at eleven
+ * at night when something does not feel right.
  *
  * TWO KINDS OF ENTRY
  *   published  written and already reviewed in this repository. Safe to show.
- *   pending    the structure exists and the title is right, but the content is
- *              the clinic's own aftercare instruction and must come from the
- *              doctors. Nothing clinical is written on their behalf.
+ *   pending    the title is right, but the content is the clinic's own
+ *              aftercare instruction and must come from the doctors. Hidden
+ *              from visitors; listed for the clinic in docs/CLINIC-CONTENT-NEEDED.md.
  *
- * Do not fill a pending guide in from general dental knowledge. Aftercare that
- * contradicts what a patient was told in the chair is worse than no page.
+ * Do not fill a pending guide in from general dental knowledge.
  */
+
+import type { Hue } from "@/content/site";
 
 export type Guide = {
   id: string;
   title: string;
-  /** One line describing what the guide answers. Safe to write for any guide. */
+  /** One line describing what the guide answers. */
   summary: string;
 } & (
   | { status: "published"; points: string[] }
@@ -28,19 +29,20 @@ export type Guide = {
 export type ResourceCategory = {
   id: string;
   label: string;
-  /** What this whole group is for, in the patient's terms. */
   intro: string;
+  hue: Hue;
   guides: Guide[];
 };
 
 export const resourceCategories: ResourceCategory[] = [
   {
     id: "first-visit",
-    label: "Your first visit",
+    label: "Before your visit",
     intro: "What to bring, what will happen, and how to make it easier if you are dreading it.",
+    hue: "sky",
     guides: [
       {
-        id: "first-visit",
+        id: "first-visit-guide",
         title: "Before your first appointment",
         summary: "What to bring and the three details that speed up a diagnosis.",
         status: "published",
@@ -55,14 +57,15 @@ export const resourceCategories: ResourceCategory[] = [
         title: "If you are nervous about coming in",
         summary: "For patients who have been putting this off, sometimes for years.",
         status: "pending",
-        needs: "How the team actually handles a nervous adult: what you offer, what a patient can ask for, and what a first appointment looks like when someone is frightened.",
+        needs: "How the team handles a nervous adult: what you offer, what a patient can ask for, and what a first appointment looks like when someone is frightened.",
       },
     ],
   },
   {
     id: "aftercare",
-    label: "After your treatment",
+    label: "After treatment",
     intro: "What to expect over the next few days, what helps, and when to pick up the phone.",
+    hue: "teal",
     guides: [
       {
         id: "root-canal-aftercare",
@@ -75,47 +78,16 @@ export const resourceCategories: ResourceCategory[] = [
           "Call the clinic if the pain is getting worse instead of easing, if the gum or face swells, or if anything feels different from what was explained to you.",
         ],
       },
-      {
-        id: "after-extraction",
-        title: "After a tooth is removed",
-        summary: "The first twenty-four hours, and what to avoid.",
-        status: "pending",
-        needs: "Your own post-extraction instruction sheet, exactly as the team gives it in the chair.",
-      },
-      {
-        id: "after-scaling",
-        title: "After cleaning and scaling",
-        summary: "Why teeth can feel sensitive afterwards and how long it lasts.",
-        status: "pending",
-        needs: "Your standard post-scaling advice, including anything you recommend for sensitivity.",
-      },
-      {
-        id: "after-crown",
-        title: "After a crown or bridge",
-        summary: "Living with a temporary, and what to do if something feels high.",
-        status: "pending",
-        needs: "What you tell patients about temporary crowns, biting, and when to come back for an adjustment.",
-      },
-      {
-        id: "after-braces",
-        title: "After a braces adjustment",
-        summary: "The days when everything feels tight.",
-        status: "pending",
-        needs: "Your post-adjustment advice, plus what to do about a loose bracket or a poking wire.",
-      },
-      {
-        id: "kids-aftercare",
-        title: "Kids: after a treatment",
-        summary: "What a parent should watch for, and what is normal.",
-        status: "pending",
-        needs: "Dr. Ishita's aftercare advice for parents, including numbness and biting the lip or cheek.",
-      },
+      { id: "after-extraction", title: "After a tooth is removed", summary: "The first twenty-four hours, and what to avoid.", status: "pending", needs: "Your own post-extraction instruction sheet, exactly as the team gives it in the chair." },
+      { id: "after-scaling", title: "After cleaning and scaling", summary: "Why teeth can feel sensitive afterwards and how long it lasts.", status: "pending", needs: "Your standard post-scaling advice, including anything you recommend for sensitivity." },
+      { id: "after-crown", title: "After a crown or bridge", summary: "Living with a temporary, and what to do if something feels high.", status: "pending", needs: "What you tell patients about temporary crowns, biting, and when to come back for an adjustment." },
     ],
   },
   {
     id: "implant-care",
-    label: "Living with implants",
+    label: "Implant care",
     intro: "Implants do not decay, but the gum and bone holding them still need looking after.",
+    hue: "cobalt",
     guides: [
       {
         id: "implant-guide",
@@ -128,26 +100,15 @@ export const resourceCategories: ResourceCategory[] = [
           "Ask what affects how long an implant lasts in your case. Bone, gum health, bite, smoking and grinding all play a part, and so does the cleaning routine you keep up at home.",
         ],
       },
-      {
-        id: "implant-cleaning",
-        title: "Cleaning around an implant",
-        summary: "The daily routine, and the tools that make it easier.",
-        status: "pending",
-        needs: "The cleaning routine and any interdental aids your implant patients are sent home with.",
-      },
-      {
-        id: "implant-maintenance",
-        title: "Long-term implant maintenance",
-        summary: "How often to come back, and what gets checked.",
-        status: "pending",
-        needs: "Your recall interval for implant patients and what a maintenance visit covers.",
-      },
+      { id: "implant-cleaning", title: "Cleaning around an implant", summary: "The daily routine, and the tools that make it easier.", status: "pending", needs: "The cleaning routine and any interdental aids your implant patients are sent home with." },
+      { id: "implant-maintenance", title: "Long-term implant maintenance", summary: "How often to come back, and what gets checked.", status: "pending", needs: "Your recall interval for implant patients and what a maintenance visit covers." },
     ],
   },
   {
     id: "kids",
-    label: "For parents",
+    label: "Kids",
     intro: "First visits, brushing battles, and getting a child to sit down without a fight.",
+    hue: "mint",
     guides: [
       {
         id: "kids-visit",
@@ -160,56 +121,46 @@ export const resourceCategories: ResourceCategory[] = [
           "Tell the team beforehand if your child is frightened or had a rough time at another clinic. Knowing that in advance changes how the first few minutes are handled.",
         ],
       },
-      {
-        id: "kids-brushing",
-        title: "Brushing guide by age",
-        summary: "How much help a child needs, and until when.",
-        status: "pending",
-        needs: "Dr. Ishita's age-by-age brushing guidance, including toothpaste amount and supervision.",
-      },
+      { id: "kids-brushing", title: "Brushing guide by age", summary: "How much help a child needs, and until when.", status: "pending", needs: "Dr. Ishita's age-by-age brushing guidance, including toothpaste amount and supervision." },
     ],
   },
   {
     id: "orthodontics",
-    label: "Braces and aligners",
+    label: "Braces & aligners",
     intro: "Keeping teeth clean while they are moving, and keeping them where they end up.",
+    hue: "violet",
+    guides: [
+      { id: "braces-cleaning", title: "Cleaning with braces on", summary: "The bits people miss, and what to keep in your bag.", status: "pending", needs: "Your cleaning instructions for fixed braces and what you recommend patients carry." },
+      { id: "aligner-care", title: "Looking after aligners", summary: "Wear time, cleaning, and what to do if you lose one.", status: "pending", needs: "Your aligner wear-time instruction and what a patient should do about a lost or cracked tray." },
+      { id: "retainer-care", title: "Retainers", summary: "The part that decides whether the result holds.", status: "pending", needs: "Your retainer protocol: how long, how often, and what happens if someone stops wearing one." },
+    ],
+  },
+  {
+    id: "emergencies",
+    label: "Dental emergencies",
+    intro: "What counts as urgent, and what to do first.",
+    hue: "coral",
     guides: [
       {
-        id: "braces-cleaning",
-        title: "Cleaning with braces on",
-        summary: "The bits people miss, and what to keep in your bag.",
-        status: "pending",
-        needs: "Your cleaning instructions for fixed braces and what you recommend patients carry.",
+        id: "urgent-signs",
+        title: "When to call the clinic straight away",
+        summary: "Signs that should not wait for the next routine visit.",
+        status: "published",
+        points: [
+          "Pain that is getting worse instead of easing, especially if it wakes you at night.",
+          "Swelling of the gum, cheek or face, or swelling that is spreading towards the eye or neck.",
+          "Bleeding that does not settle, a tooth that has been knocked out or loosened, or anything that feels different from what was explained to you.",
+        ],
       },
-      {
-        id: "aligner-care",
-        title: "Looking after aligners",
-        summary: "Wear time, cleaning, and what to do if you lose one.",
-        status: "pending",
-        needs: "Your aligner wear-time instruction and what a patient should do about a lost or cracked tray.",
-      },
-      {
-        id: "retainer-care",
-        title: "Retainers",
-        summary: "The part that decides whether the result holds.",
-        status: "pending",
-        needs: "Your retainer protocol: how long, how often, and what happens if someone stops wearing one.",
-      },
+      { id: "out-of-hours", title: "When the clinic is closed", summary: "Out-of-hours contact and what to do meanwhile.", status: "pending", needs: "Out-of-hours contact arrangements and what a patient should do when the clinic is closed." },
     ],
   },
 ];
 
-/**
- * Emergency triage. These lines are reused verbatim from aftercare guidance
- * already reviewed in this repository, so nothing new is being asserted.
- * The clinic still needs to confirm out-of-hours arrangements.
- */
+/** Emergency triage lines, reused verbatim from the reviewed guide above. */
 export const urgentSigns = [
   "Pain that is getting worse instead of easing",
   "Swelling of the gum, cheek or face",
-  "Anything that feels different from what was explained to you",
   "Bleeding that does not settle",
+  "A tooth knocked out or loosened",
 ] as const;
-
-export const emergencyPending =
-  "Out-of-hours contact and what to do when the clinic is closed";

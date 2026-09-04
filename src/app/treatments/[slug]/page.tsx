@@ -1,278 +1,200 @@
 import type { Metadata } from "next";
-import { GoogleTrustBar } from "@/components/kheni/google-trust";
 import Link from "next/link";
-import { notFound } from "next/navigation";
-import { ArrowRight, ArrowUpRight, MessageCircle, Phone, Star } from "lucide-react";
+import { notFound, redirect } from "next/navigation";
+import { ArrowUpRight, Check } from "lucide-react";
 
+import { ToothAnatomyDiagram } from "@/components/kheni/art/diagrams";
+import { TreatmentArt } from "@/components/kheni/art/treatment-art";
+import { CtaBand } from "@/components/kheni/cta-band";
+import { DoctorCard, TeamLink } from "@/components/kheni/doctor-spotlight";
+import { MediaFrame } from "@/components/kheni/media-frame";
+import { PageHero } from "@/components/kheni/page-hero";
+import { ProcessSteps } from "@/components/kheni/process-steps";
+import { ProofCluster } from "@/components/kheni/proof";
+import { ResultsPreview } from "@/components/kheni/results-preview";
+import { SectionIntro } from "@/components/kheni/section-intro";
+import { SmileNote } from "@/components/kheni/smile-note";
+import { TreatmentRow } from "@/components/kheni/treatment-poster";
+import { ViewTracker } from "@/components/kheni/implant/view-tracker";
 import { Accordion } from "@/components/ui/accordion";
 import { Container } from "@/components/ui/container";
-import { Section } from "@/components/ui/section";
-import { BranchGoogleCard } from "@/components/kheni/branch-google-card";
-import { PriceTable, TickList } from "@/components/kheni/capability-grids";
-import { CaseResultsGrid } from "@/components/kheni/case-results";
-import { InitialsPortrait, MediaFrame } from "@/components/kheni/pending";
-import { googleReputation } from "@/content/google-reputation";
-import { doctors, locations, site, treatments } from "@/content/site";
-import { whatsappUrl } from "@/lib/links";
-
-/**
- * Dental implants has its own flagship route at
- * `src/app/treatments/dental-implants-surat/page.tsx`. It is excluded here so
- * the slug is never prerendered twice and there is no duplicate content.
- */
-const SPECIALIZED_SLUGS = new Set(["dental-implants-surat"]);
+import { BookButton, WhatsAppButton } from "@/components/ui/cta";
+import { caseCategories } from "@/content/cases";
+import { doctors, locations, smileNotes, treatments } from "@/content/site";
 
 export function generateStaticParams() {
-  return treatments.filter((t) => !SPECIALIZED_SLUGS.has(t.slug)).map((t) => ({ slug: t.slug }));
+  return treatments.filter((t) => t.slug !== "dental-implants-surat").map((t) => ({ slug: t.slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  if (SPECIALIZED_SLUGS.has(slug)) return {};
-  const t = treatments.find((x) => x.slug === slug);
-  if (!t) return {};
-  return {
-    title: t.seoTitle,
-    description: t.metaDescription,
-    alternates: { canonical: `/treatments/${slug}/` },
-  };
+  const treatment = treatments.find((t) => t.slug === slug);
+  if (!treatment) return {};
+  return { title: treatment.seoTitle, description: treatment.metaDescription, alternates: { canonical: `/treatments/${slug}/` } };
 }
+
+/** Treatments whose results can be photographed, so the results block is shown. */
+const resultCategories = new Set(caseCategories.map((c) => c.toLowerCase()));
+
+/** A diagram belongs where the question is "what part of my tooth is treated?" */
+const anatomySlugs = new Set(["root-canal-treatment-surat", "tooth-fillings-surat", "gum-care-surat"]);
 
 export default async function TreatmentPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  if (SPECIALIZED_SLUGS.has(slug)) notFound();
-  const t = treatments.find((x) => x.slug === slug);
-  if (!t) notFound();
+  if (slug === "dental-implants-surat") redirect("/treatments/dental-implants-surat/");
+  const treatment = treatments.find((t) => t.slug === slug);
+  if (!treatment) notFound();
 
-  const relatedDoctors = doctors.filter((doctor) => doctor.relatedTreatmentSlugs.includes(t.slug));
-  const message = `Hello Kheni Dental, I would like to book an appointment for ${t.title}.`;
+  const team = doctors.filter((d) => treatment.doctorSlugs.includes(d.slug));
+  const related = treatments.filter((t) => t.slug !== slug && t.category === treatment.category).slice(0, 3);
+  const more = related.length < 3 ? treatments.filter((t) => t.slug !== slug && !related.includes(t)).slice(0, 3 - related.length) : [];
+  const showResults = resultCategories.has(treatment.title.toLowerCase()) || treatment.slug === "cosmetic-smile-dentistry";
+  const kids = treatment.slug === "kids-dentistry-surat";
+  const note = smileNotes.find((n) => n.hue === treatment.hue) ?? smileNotes[1];
 
   return (
     <>
-      {/* Hero: what it is, then the three ways to reach us. */}
-      <section className="grain relative isolate overflow-hidden bg-ink text-white">
-        <div aria-hidden="true" className="bloom-gold pointer-events-none absolute inset-0 -z-10" />
-        <Container width="7xl" className="relative grid gap-10 py-12 lg:grid-cols-[1.1fr_.9fr] lg:items-center lg:gap-14 lg:py-16">
-          <div>
-            <p className="t-eyebrow text-gold">{t.eyebrow}</p>
-            <h1 className="mt-5 t-h1">
-              {t.title} in Surat
-            </h1>
-            <p className="mt-5 max-w-xl t-stand text-white/60">{t.short}</p>
-
-            <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
-              <Link
-                href="/reviews/"
-                data-track="review_click"
-                data-placement={`treatment_${t.slug}_google`}
-                className="inline-flex min-h-11 items-center gap-2.5 rounded-full border border-gold/25 bg-gold/[.07] px-4 text-sm"
-              >
-                <span className="flex gap-0.5 text-gold" aria-hidden="true">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} className="size-3.5 fill-current" />
-                  ))}
-                </span>
-                <strong className="text-white">{googleReputation.sharedRating}</strong>
-                <span className="text-white/50">
-                  {googleReputation.combinedReviews} reviews, two clinic profiles
-                </span>
-              </Link>
+      <ViewTracker event="treatment_view" placement={`treatment_${treatment.slug}`} />
+      <PageHero
+        eyebrow={treatment.concern}
+        title={treatment.headline}
+        copy={treatment.short}
+        hue={treatment.hue}
+        aside={
+          <MediaFrame ratio="4 / 3" mobileRatio="16 / 9" from="lg" className="rounded-[1.75rem] bg-white ring-1 ring-line">
+            <div className={`hue-${treatment.hue} absolute inset-0 bg-h-tint`}>
+              <TreatmentArt slug={treatment.slug} className="absolute inset-0 size-full" title={`${treatment.title} illustration`} />
             </div>
+          </MediaFrame>
+        }
+      >
+        <div className="mt-5 flex flex-col gap-2.5 sm:flex-row">
+          <BookButton placement={`treatment_hero_${treatment.slug}`} />
+          <WhatsAppButton placement={`treatment_hero_${treatment.slug}`} message={treatment.whatsappMessage} label="Ask on WhatsApp" variant="secondary" />
+        </div>
+      </PageHero>
 
-            <div className="mt-7 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
-              <Link
-                href="/contact/#book"
-                data-track="appointment_start"
-                data-placement="treatment_hero"
-                className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-gold px-6 text-sm font-semibold text-ink sm:whitespace-nowrap"
-              >
-                Book Appointment
-                <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
-              </Link>
-              <a
-                href={`tel:${site.primaryPhoneHref}`}
-                data-track="phone_click"
-                data-placement="treatment_hero"
-                className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-white/15 px-6 text-sm font-semibold sm:whitespace-nowrap"
-              >
-                <Phone className="size-4 text-gold" aria-hidden="true" />
-                Call Clinic
-              </a>
-              <a
-                href={whatsappUrl(message)}
-                target="_blank"
-                rel="noreferrer"
-                data-track="whatsapp_click"
-                data-placement="treatment_hero"
-                className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-white/15 px-6 text-sm font-semibold sm:whitespace-nowrap"
-              >
-                <MessageCircle className="size-4 text-gold" aria-hidden="true" />
-                WhatsApp
-              </a>
+      {/* ── What it is, and when ─────────────────────────────────────── */}
+      <section className={`hue-${treatment.hue} py-10 sm:py-14 lg:py-18`}>
+        <Container width="7xl">
+          <div className="grid gap-8 lg:grid-cols-[1.15fr_.85fr] lg:gap-14">
+            <div>
+              <SectionIntro eyebrow={treatment.title} title={`What ${treatment.title.toLowerCase()} ${treatment.title.endsWith("s") ? "are" : "is"}, in plain words.`} highlight="plain words" />
+              <p className="t-stand measure-body mt-5 text-ink-soft">{treatment.intro}</p>
+              {anatomySlugs.has(treatment.slug) && (
+                <div className="mt-6 rounded-[1.5rem] bg-white p-4 ring-1 ring-line sm:p-6">
+                  <ToothAnatomyDiagram className="mx-auto w-full max-w-md" />
+                </div>
+              )}
+            </div>
+            <div className="rounded-[1.5rem] bg-h-tint p-5 sm:p-6">
+              <p className="t-eyebrow text-h-text">{kids ? "Bring your child in for" : "You might need this if"}</p>
+              <ul className="mt-4 space-y-2.5">
+                {treatment.signs.map((sign) => (
+                  <li key={sign} className="flex items-start gap-3 rounded-xl bg-white px-4 py-3 text-[.9375rem] font-medium leading-snug">
+                    <span className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-h-fill text-h-on-fill">
+                      <Check className="size-3" aria-hidden="true" />
+                    </span>
+                    {sign}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
-
-          <MediaFrame shot={`${t.title} at Kheni Dental`} ratio="4 / 3" className="w-full" />
-
-          {/* Independent proof, on the page where the patient is deciding
-              whether this clinic is the one. */}
-          <GoogleTrustBar placement={`treatment_${slug}`} className="mt-4" />
         </Container>
       </section>
 
-      {/* What it helps with */}
-      <Section spacing="md">
+      {/* ── At a visit ───────────────────────────────────────────────── */}
+      <section className={`hue-${treatment.hue} bg-h-tint py-10 sm:py-14 lg:py-18`}>
         <Container width="7xl">
-          <div className="grid gap-10 lg:grid-cols-[1.1fr_.9fr] lg:gap-16">
-            <div>
-              <h2 className="t-h2">{t.problem}</h2>
-              <p className="mt-5 max-w-2xl t-stand text-muted-foreground">{t.intro}</p>
-              <div className="mt-8">
-                <TickList items={t.benefits} />
-              </div>
+          <SectionIntro eyebrow="At your visit" title="What happens, step by step." highlight="step by step" />
+          <ProcessSteps steps={treatment.visit} columns={treatment.visit.length === 5 ? 5 : 4} className="mt-6 sm:mt-8" />
+          <div className="mt-6 grid gap-4 lg:grid-cols-[1fr_1fr]">
+            <div className="rounded-[1.5rem] bg-white p-5 ring-1 ring-line sm:p-6">
+              <p className="t-eyebrow text-h-text">What to expect after</p>
+              <ul className="mt-3 space-y-2">
+                {treatment.expect.map((item) => (
+                  <li key={item} className="flex gap-2.5 text-[.9375rem] leading-6 text-ink">
+                    <span aria-hidden="true" className="mt-2.5 size-1.5 shrink-0 rounded-full bg-h-fill" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
-            <aside className="self-start rounded-2xl bg-[#f1eee7] p-6 sm:p-7">
-              <p className="text-[.66rem] font-semibold uppercase tracking-[.18em] text-gold">Worth knowing</p>
-              <p className="mt-3 font-serif text-xl leading-tight">{t.aside.title}</p>
-              <p className="mt-3 text-sm leading-6 text-muted-foreground">{t.aside.copy}</p>
-            </aside>
+            <div className="rounded-[1.5rem] bg-ink p-5 text-white sm:p-6">
+              <p className="t-eyebrow text-sunshine">Worth knowing</p>
+              <p className="t-card mt-3">{treatment.worthKnowing.title}</p>
+              <p className="t-body mt-2 text-white/75">{treatment.worthKnowing.copy}</p>
+            </div>
           </div>
         </Container>
-      </Section>
+      </section>
 
-      {/* Steps */}
-      <Section className="bg-[#f1eee7]" spacing="md">
+      {/* ── Who handles it ───────────────────────────────────────────── */}
+      <section className="py-10 sm:py-14 lg:py-18">
         <Container width="7xl">
-          <h2 className="t-h2">{t.processHeading}</h2>
-          <ol className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {t.process.map((step, i) => (
-              <li key={step.title} className="rounded-2xl border border-border bg-white p-5">
-                <span aria-hidden="true" className="font-serif text-2xl text-gold/50">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <h3 className="mt-3 font-serif text-lg leading-tight">{step.title}</h3>
-                <p className="mt-2 text-sm leading-6 text-muted-foreground">{step.copy}</p>
-              </li>
-            ))}
-          </ol>
+          <SectionIntro eyebrow="Who you will see" title={team.length ? `Who handles ${treatment.title.toLowerCase()} at Kheni.` : "Any of our four dentists."} highlight={team.length ? "Who handles" : "four dentists"} copy={team.length ? undefined : "Book at either clinic and tell us what is troubling you. The dentist you see will examine you and explain the plan."} />
+          {team.length > 0 ? (
+            <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {team.map((doctor) => (
+                <DoctorCard key={doctor.slug} doctor={doctor} />
+              ))}
+            </div>
+          ) : null}
+          <TeamLink />
         </Container>
-      </Section>
+      </section>
 
-      {/* Cost */}
-      <Section spacing="md">
+      {showResults && (
+        <section className="hue-sunshine bg-sunshine-tint py-10 sm:py-14 lg:py-18">
+          <Container width="7xl">
+            <SectionIntro eyebrow="Results" title="Before and after, shown honestly." highlight="honestly" />
+            <ResultsPreview limit={2} placement={`treatment_results_${treatment.slug}`} className="mt-6" />
+          </Container>
+        </section>
+      )}
+
+      <SmileNote note={note} compact className={showResults ? "py-10 sm:py-14" : "pb-4"} />
+
+      {/* ── Proof and questions ──────────────────────────────────────── */}
+      <section className={`hue-${treatment.hue} py-10 sm:py-14 lg:py-18`}>
         <Container width="7xl">
           <div className="grid gap-8 lg:grid-cols-[.85fr_1.15fr] lg:gap-14">
             <div>
-              <h2 className="t-h2">Cost and EMI</h2>
-              <p className="mt-4 text-sm leading-6 text-muted-foreground">
-                You get the full plan with the cost of each stage before treatment starts.
-              </p>
+              <SectionIntro eyebrow="Questions" title={`${treatment.title} questions people ask.`} highlight="people ask" />
+              <ProofCluster placement={`treatment_proof_${treatment.slug}`} className="mt-6" />
             </div>
-            <PriceTable limit={4} />
-          </div>
-        </Container>
-      </Section>
-
-      {/* Doctors */}
-      {relatedDoctors.length > 0 && (
-        <Section className="bg-[#f1eee7]" spacing="md">
-          <Container width="7xl">
-            <h2 className="t-h2">Your doctors</h2>
-            <ul className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {relatedDoctors.map((doctor) => (
-                <li key={doctor.slug}>
-                  <Link
-                    href={`/doctors/${doctor.slug}/`}
-                    data-track="doctor_profile_view"
-                    data-placement="treatment_doctors"
-                    className="flex h-full gap-4 rounded-2xl border border-border bg-white p-4 hover:border-gold/50"
-                  >
-                    <InitialsPortrait name={doctor.name} tone="light" className="size-20 shrink-0 rounded-xl" />
-                    <span className="min-w-0">
-                      <span className="block font-serif text-lg leading-tight">{doctor.name}</span>
-                      <span className="mt-1 block text-xs text-muted-foreground">{doctor.credentials}</span>
-                      <span className="mt-2 block text-xs font-semibold uppercase tracking-[.1em] text-gold">
-                        {doctor.yearsExperience} years
-                      </span>
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </Container>
-        </Section>
-      )}
-
-      {/* Results */}
-      <Section spacing="md">
-        <Container width="7xl">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <h2 className="t-h2">Results</h2>
-            <Link href="/smile-gallery/" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-gold">
-              All results <ArrowUpRight className="cta-arrow size-4" aria-hidden="true" />
-            </Link>
-          </div>
-          <div className="mt-8">
-            <CaseResultsGrid limit={3} />
-          </div>
-        </Container>
-      </Section>
-
-      {/* Reviews for both branches */}
-      <Section className="grain relative isolate bg-ink text-white" spacing="md">
-        <Container width="7xl">
-          <h2 className="t-h2">What patients say</h2>
-          <div className="mt-8 grid gap-4 md:grid-cols-2">
-            {locations.map((location) => (
-              <BranchGoogleCard
-                key={location.slug}
-                location={location}
-                dark
-                placement={`treatment_${t.slug}_google_${location.slug}`}
-              />
-            ))}
-          </div>
-        </Container>
-      </Section>
-
-      {/* FAQ */}
-      <Section className="bg-[#f1eee7]" spacing="md">
-        <Container width="7xl">
-          <div className="grid gap-8 lg:grid-cols-[.7fr_1.3fr] lg:gap-14">
-            <h2 className="t-h2">Common questions</h2>
-            <Accordion items={t.faqs} className="bg-white" />
-          </div>
-        </Container>
-      </Section>
-
-      <section className="bg-gold py-14 text-ink sm:py-16">
-        <Container width="7xl" className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
-          <h2 className="max-w-xl t-h1">
-            {t.ctaTitle}
-          </h2>
-          <div className="flex flex-col gap-2.5 sm:flex-row">
-            <Link
-              href="/contact/#book"
-              data-track="appointment_start"
-              data-placement="treatment_final_cta"
-              className="inline-flex min-h-13 items-center justify-center rounded-full bg-ink px-6 text-sm font-semibold text-white sm:whitespace-nowrap"
-            >
-              Book Appointment
-            </Link>
-            <a
-              href={whatsappUrl(message)}
-              target="_blank"
-              rel="noreferrer"
-              data-track="whatsapp_click"
-              data-placement="treatment_final_cta"
-              className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-ink/25 px-6 text-sm font-semibold sm:whitespace-nowrap"
-            >
-              <MessageCircle className="size-4" aria-hidden="true" />
-              WhatsApp
-            </a>
+            <Accordion items={treatment.faqs} name={`faq-${treatment.slug}`} />
           </div>
         </Container>
       </section>
+
+      {/* ── Related ──────────────────────────────────────────────────── */}
+      <section className="pb-10 sm:pb-14">
+        <Container width="7xl">
+          <div className="flex flex-wrap items-end justify-between gap-3">
+            <h2 className="t-h3">Related treatments</h2>
+            <Link href="/treatments/" className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-cobalt-deep">
+              All treatments
+              <ArrowUpRight className="cta-arrow size-4" aria-hidden="true" />
+            </Link>
+          </div>
+          <div className="mt-4 grid gap-3 lg:grid-cols-3">
+            {[...related, ...more].map((t) => (
+              <TreatmentRow key={t.slug} treatment={t} placement={`treatment_related_${treatment.slug}`} />
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <CtaBand
+        title={treatment.ctaTitle}
+        placement={`treatment_final_${treatment.slug}`}
+        hue={treatment.hue}
+        copy="Two clinics in Surat, at Yogi Chowk and Hirabaug. Book a time or send a message and we will suggest which is easier for you."
+        whatsappMessage={treatment.whatsappMessage}
+        location={treatment.slug === "full-mouth-rehabilitation" ? locations[1] : undefined}
+      />
     </>
   );
 }

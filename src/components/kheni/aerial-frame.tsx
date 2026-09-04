@@ -131,7 +131,7 @@ export function AerialFrame({
           />
           <span
             aria-hidden="true"
-            className="pointer-events-none absolute left-1/2 top-1/2 z-20 grid size-9 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border-2 border-gold bg-ink font-serif text-base text-gold shadow-[0_3px_12px_rgba(0,0,0,.6)] ring-1 ring-white/45"
+            className="pointer-events-none absolute left-1/2 top-1/2 z-20 grid size-9 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border-2 border-white bg-cobalt font-serif text-base font-semibold text-white shadow-[0_3px_12px_rgba(0,0,0,.5)]"
           >
             K
           </span>
@@ -140,7 +140,7 @@ export function AerialFrame({
             className="ease-kheni pointer-events-none absolute left-2 top-2 z-20 inline-flex items-center gap-1 rounded-full bg-ink/70 px-2.5 py-1 text-[.68rem] font-semibold text-white transition-colors duration-300 group-hover/map:bg-ink/90"
           >
             Open in Google Maps
-            <ArrowUpRight className="size-3 text-gold" />
+            <ArrowUpRight className="size-3 text-sunshine" />
           </span>
         </>
       )}
@@ -153,7 +153,7 @@ export function AerialFrame({
         data-track="review_click"
         data-placement={`aerial_map_${location.slug}`}
         data-branch={location.slug}
-        className="absolute inset-0 z-30 rounded-[inherit] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+        className="absolute inset-0 z-30 rounded-[inherit] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cobalt"
       >
         <span className="sr-only">
           {`Open ${location.shortName}, ${location.areaLabel} on Google Maps`}

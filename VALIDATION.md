@@ -1,59 +1,46 @@
-# Validation Status
+# Validation
 
-Validation completed for this packaged build:
-
-- TypeScript/TSX syntax transpile check: PASS across 51 source files
-- Project `@/` local import resolution check: PASS
-- Static internal route link scan: PASS
-- Mobile menu architecture reviewed and rebuilt
-- Search for stale `/locations/yogi-chowk` routes: PASS, none remain
-- Public-facing location naming uses Swastik Plaza and Hirabaug
-- Generated `node_modules`, `.next`, `dist` and vinext output are excluded from the archive
-
-## Dependency build note
-
-The packaging container could not complete `npm ci` because registry installation stalled. No dependency or build output is bundled in the ZIP.
-
-Run this in GitHub Codespaces after extracting or committing the project:
+## Before deployment
 
 ```bash
-npm install
 npm run typecheck
-npm run lint
+npx eslint src
 npm run build
 npm run build:vinext
+npx vinext check
 ```
 
-Then test these routes at minimum:
+The Next build also runs two build-time guards imported by `src/app/layout.tsx`:
 
-- `/`
-- `/reviews/`
-- `/locations/`
-- `/locations/swastik-plaza/`
-- `/locations/hirabaug/`
-- `/contact/`
-- one treatment route
-- one doctor route
+- `src/content/__checks__/branch-data.check.ts`: Place IDs, coordinates, phone
+  numbers and derived map URLs are per branch and never shared.
+- `src/content/__checks__/content-integrity.check.ts`: no prices, EMI or
+  "free consultation"; no "painless", "guaranteed", "best", "world-class" or
+  similar; no unconfirmed techniques, equipment, credentials or travel
+  services; no em dashes; proof (cases, stories, videos) only with consent;
+  canonical origin is `https://www.khenidentalcare.com`; four-doctor roster.
 
-## Mobile QA
+## Browser checks (V4)
 
-Test the mobile menu at:
+Run against a local production build (`npm run build && npx next start -p 3100`)
+with the Playwright scripts kept alongside the session (`interactions.mjs`,
+`shoot.mjs`). They cover:
 
-- 320px
-- 360px
-- 390px
-- 430px
-- tablet portrait
-- tablet landscape
+- Mobile menu: opens, traps focus, locks body scroll, closes on Escape,
+  returns focus to the trigger
+- Mobile dock: three actions, at the bottom, 48px+ targets, swaps to
+  Directions and the branch phone on clinic pages
+- Booking sheet: opens from any Book button without navigating, offers both
+  clinics plus "not sure", WhatsApp and Call, has focus, closes on Escape
+- Concern finder links, before/after slider (keyboard and label)
+- Videos: no iframe until tap, then the privacy-enhanced YouTube domain
+- No horizontal overflow at 320, 360, 375, 390, 430, 768, 820, 834, 1024,
+  1280, 1366, 1440, 1536, 1920
+- Canonical, robots (disallow while unlaunched), sitemap on the www origin
+- Rendered pages free of forbidden claims and placeholder markers
 
-Confirm:
+## Screenshot passes
 
-- menu opens and closes
-- Escape closes on a hardware keyboard
-- body does not scroll behind the menu
-- all navigation links close the menu
-- focus returns to the menu trigger
-- sticky Call / WhatsApp / Book bar works
-- location detail pages replace Book with Directions
-
-Search indexing remains disabled by default until production launch approval.
+Capture at 390 / 834 / 1440 first, then 320 / 360 / 375 / 430 / 768 / 1024 /
+1366 / 1920, then the conversion pages again at 390 / 1440. Compare page
+heights against the previous build and look at every fold.

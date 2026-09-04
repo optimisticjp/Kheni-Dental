@@ -1,140 +1,65 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowRight, MessageCircle } from "lucide-react";
 
-import { BranchGoogleCard } from "@/components/kheni/branch-google-card";
-import { DoctorRoster, PrincipalDoctor } from "@/components/kheni/doctor-authority";
+import { CtaBand } from "@/components/kheni/cta-band";
+import { DoctorRoster, DoctorSpotlight } from "@/components/kheni/doctor-spotlight";
 import { PageHero } from "@/components/kheni/page-hero";
-import { PendingTag } from "@/components/kheni/pending";
+import { ProofCluster } from "@/components/kheni/proof";
+import { SectionIntro } from "@/components/kheni/section-intro";
+import { SmileNote } from "@/components/kheni/smile-note";
 import { Container } from "@/components/ui/container";
-import { Section } from "@/components/ui/section";
 import { languages } from "@/content/clinic-proof";
-import { doctors, locations } from "@/content/site";
-import { whatsappUrl } from "@/lib/links";
+import { locations, smileNotes } from "@/content/site";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/doctors/" },
-  title: "Meet Our Dentists in Surat",
+  title: "Our Dentists in Surat",
   description:
     "Dr. Mayur Kheni, Dr. Jinal Monapara, Dr. Ishita Dobariya and Dr. Parita Vastarpara. Degrees, years of experience and areas of work at both Kheni Dental clinics in Surat.",
 };
-
-/** Detail the doctors still owe us, shown as structure rather than guessed at. */
-const pendingCredentialRows = [
-  "Postgraduate training and fellowships",
-  "Professional memberships",
-  "Certifications",
-  "Which branch, on which days",
-];
 
 export default function DoctorsPage() {
   return (
     <>
       <PageHero
-        eyebrow="Our doctors"
+        eyebrow="Our dentists"
         title="Know who is treating you before you sit down."
+        highlight="who"
         copy={`Four dentists across two clinics in Surat, led by Dr. Mayur Kheni. Consultations in ${languages.join(", ")}.`}
+        hue="cobalt"
+        compact
       />
 
-      <Section spacing="md">
+      <section className="py-8 sm:py-12 lg:py-16">
         <Container width="7xl">
-          <PrincipalDoctor />
+          <DoctorSpotlight />
         </Container>
-      </Section>
+      </section>
 
-      <Section className="bg-[#f1eee7]" spacing="md">
+      <section className="bg-porcelain pb-10 sm:pb-14 lg:pb-18">
         <Container width="7xl">
-          <h2 className="t-h2">
-            The rest of the team
-          </h2>
-          <p className="mt-3 max-w-xl text-sm leading-6 text-muted-foreground">
-            Degrees and years in practice are listed exactly as each doctor gave them.
-          </p>
-          <div className="mt-8">
+          <SectionIntro eyebrow="The team" title="Three more dentists, each with their own area of work." highlight="area of work" copy="Degrees and years in practice are listed exactly as each doctor gave them." />
+          <div className="mt-6">
             <DoctorRoster exclude="dr-mayur-kheni" />
           </div>
-        </Container>
-      </Section>
-
-      {/* Credential structure. Built now so a confirmed list drops straight in. */}
-      <Section spacing="md">
-        <Container width="7xl">
-          <div className="grid gap-8 lg:grid-cols-[.8fr_1.2fr] lg:gap-14">
-            <div>
-              <h2 className="t-h2">
-                Training and memberships
-              </h2>
-              <p className="mt-4 text-sm leading-6 text-muted-foreground">
-                Everything below is a claim about a person, so none of it appears on the site until the doctor
-                concerned confirms it in writing.
+          <div className="mt-6 grid gap-3 rounded-[1.5rem] bg-cobalt-tint p-5 sm:grid-cols-2 sm:p-6">
+            {locations.map((l) => (
+              <p key={l.slug} className="t-small text-ink-soft">
+                <strong className="text-ink">{l.displayArea}:</strong> {l.note}
               </p>
-            </div>
-            <ul className="grid gap-3 sm:grid-cols-2">
-              {doctors.map((doctor) => (
-                <li key={doctor.slug} className="rounded-2xl border border-border bg-card p-5">
-                  <p className="font-serif text-lg leading-tight">{doctor.name}</p>
-                  <p className="mt-1 text-xs text-muted-foreground">
-                    {doctor.credentials} · {doctor.yearsExperience} years
-                  </p>
-                  <ul className="mt-4 space-y-2.5">
-                    {pendingCredentialRows.map((row) => (
-                      <li key={row} className="flex items-center justify-between gap-3 text-xs">
-                        <span className="text-muted-foreground">{row}</span>
-                        <PendingTag label="To confirm" />
-                      </li>
-                    ))}
-                  </ul>
-                </li>
-              ))}
-            </ul>
+            ))}
           </div>
         </Container>
-      </Section>
+      </section>
 
-      <Section className="grain relative isolate bg-ink text-white" spacing="md">
+      <SmileNote note={smileNotes[1]} compact className="pb-10 sm:pb-14" />
+
+      <section className="pb-10 sm:pb-14 lg:pb-18">
         <Container width="7xl">
-          <div className="grid gap-8 lg:grid-cols-[.85fr_1.15fr] lg:items-center lg:gap-14">
-            <div>
-              <p className="t-eyebrow text-gold">From Google</p>
-              <h2 className="mt-4 t-h1">
-                What patients say about our clinics.
-              </h2>
-              <div className="mt-7 flex flex-col gap-2.5 sm:flex-row">
-                <Link
-                  href="/contact/#book"
-                  data-track="appointment_start"
-                  data-placement="doctors_cta"
-                  className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-gold px-6 text-sm font-semibold text-ink sm:whitespace-nowrap"
-                >
-                  Book Appointment
-                  <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
-                </Link>
-                <a
-                  href={whatsappUrl()}
-                  target="_blank"
-                  rel="noreferrer"
-                  data-track="whatsapp_click"
-                  data-placement="doctors_cta"
-                  className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-white/18 px-6 text-sm font-semibold sm:whitespace-nowrap"
-                >
-                  <MessageCircle className="size-4 text-gold" aria-hidden="true" />
-                  WhatsApp
-                </a>
-              </div>
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2">
-              {locations.map((location) => (
-                <BranchGoogleCard
-                  key={location.slug}
-                  location={location}
-                  dark
-                  placement={`doctors_google_${location.slug}`}
-                />
-              ))}
-            </div>
-          </div>
+          <ProofCluster placement="doctors_proof" />
         </Container>
-      </Section>
+      </section>
+
+      <CtaBand title="Book with the dentist who fits your problem." highlight="fits" copy="Or tell us what is troubling you and we will suggest who to see and where." placement="doctors_final" />
     </>
   );
 }

@@ -1,17 +1,13 @@
 /**
- * Patient testimonials and video stories.
+ * Patient stories and video testimonials supplied by the clinic.
  *
- * IMPORTANT: these are clinic testimonials, which are a different thing from
- * Google reviews. Google reviews are independent and live on Google; they are
- * handled per branch in `site.ts`. Nothing here may be invented: no made-up
- * patient names, no written-for-us quotes, no stock faces.
+ * These are different from Google reviews (independent, live on Google, per
+ * branch in `site.ts`) and from the clinic's own YouTube Shorts (`videos.ts`).
  *
- * Until the clinic supplies consented material, both arrays stay empty and the
- * UI renders finished placeholder tiles that say exactly what is needed.
- * See docs/CLINIC-CONTENT-NEEDED.md.
+ * Nothing here may be invented: no made-up names, no written-for-us quotes,
+ * no stock faces. Both lists stay empty until the clinic supplies consented
+ * material, and the components that read them render nothing meanwhile.
  */
-
-import { demoContentActive, demoPatientStories, demoVideoStories } from "@/content/demo";
 
 export type PatientStory = {
   id: string;
@@ -20,15 +16,11 @@ export type PatientStory = {
   city?: string;
   country?: string;
   treatment: string;
-  /** One or two lines for the card. */
+  /** In the patient's own words. */
   quote: string;
-  /** Optional longer version for an expanded view. */
-  fullQuote?: string;
-  /** Path to a consented photo. Omit rather than substituting a stock image. */
-  image?: string;
   doctorSlug?: string;
   branchSlug?: string;
-  /** Written patient consent must be on file before anything renders. */
+  /** Written patient consent on file. */
   consentConfirmed: true;
 };
 
@@ -37,33 +29,13 @@ export type VideoStory = {
   patientName: string;
   treatment: string;
   language: "Gujarati" | "Hindi" | "English";
-  /** Duration as displayed, e.g. "1:24". */
-  duration?: string;
-  thumbnail: string;
-  /** YouTube or hosted URL. Opened on click; never autoplayed. */
-  videoUrl: string;
-  captionsAvailable: boolean;
+  /** YouTube video id. Loaded only after a tap. */
+  youtubeId: string;
   consentConfirmed: true;
 };
 
-/**
- * TODO(clinic): add consented written testimonials.
- * Needed per story: patient first name, city, treatment, the quote in their
- * own words, and written consent.
- */
-export const patientStories: PatientStory[] = demoContentActive ? demoPatientStories : [];
+/** TODO(clinic): consented written testimonials. Empty by design. */
+export const patientStories: PatientStory[] = [];
 
-/**
- * TODO(clinic): add consented video testimonials.
- * Needed per video: the file or YouTube link, patient first name, treatment,
- * spoken language, and written consent. Gujarati videos are the most useful
- * for Surat patients.
- */
-export const videoStories: VideoStory[] = demoContentActive ? demoVideoStories : [];
-
-/** How many placeholder tiles to show while the real material is pending. */
-export const PENDING_STORY_TILES = 3;
-export const PENDING_VIDEO_TILES = 3;
-
-/** Languages we want represented once videos exist. */
-export const videoLanguagePlan = ["Gujarati", "Hindi", "English"] as const;
+/** TODO(clinic): consented video testimonials. Empty by design. */
+export const videoStories: VideoStory[] = [];

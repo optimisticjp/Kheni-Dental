@@ -1,198 +1,116 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowRight, ArrowUpRight, Quote, Star } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
-import { BranchGoogleCard } from "@/components/kheni/branch-google-card";
-import { CaseResultsGrid } from "@/components/kheni/case-results";
+import { ClinicShorts } from "@/components/kheni/clinic-shorts";
+import { CtaBand } from "@/components/kheni/cta-band";
 import { PageHero } from "@/components/kheni/page-hero";
-import { PatientStoryGrid, VideoStoryGrid } from "@/components/kheni/stories";
+import { BranchProof, GoogleQuotes, ProofCluster } from "@/components/kheni/proof";
+import { ResultsPreview } from "@/components/kheni/results-preview";
+import { SectionIntro } from "@/components/kheni/section-intro";
 import { Container } from "@/components/ui/container";
-import { Section } from "@/components/ui/section";
 import { googleReputation, verifiedBranches } from "@/content/google-reputation";
-import { locations, reviewHighlights } from "@/content/site";
+import { patientStories, videoStories } from "@/content/patient-stories";
+import { locations } from "@/content/site";
 import { writeReviewUrl } from "@/lib/maps";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/reviews/" },
   title: "Patient Reviews",
   description:
-    "Google reviews for both Kheni Dental clinics in Surat, at Yogi Chowk and Hirabaug, plus patient videos, written testimonials and treatment results.",
+    "Google reviews for both Kheni Dental clinics in Surat, at Yogi Chowk and Hirabaug, quoted exactly as written, plus short videos from the clinic and treatment results.",
 };
 
 /**
- * The reputation hub.
- *
- * Three deliberately separate layers, in descending order of independence:
- *
- *   1. Google      other people's verdict, on Google's platform, per branch
- *   2. Videos      the patient's own face and voice, with consent
- *   3. Written     testimonials given to the clinic
- *
- * They are never blended into one carousel, because a clinic-collected quote
- * and an independent Google rating are not the same kind of evidence and a
- * patient can tell.
+ * The reputation hub. Three kinds of evidence, kept visibly separate:
+ * Google reviews (independent, per branch), the clinic's own videos, and
+ * clinic-supplied stories with consent. They are never blended.
  */
 export default function ReviewsPage() {
-  const { sharedRating, combinedReviews, combinedLabel } = googleReputation;
-
+  const { sharedRating, combinedReviews } = googleReputation;
   return (
     <>
       <PageHero
         eyebrow="Patient reviews"
-        title={
-          sharedRating
-            ? `${sharedRating} on Google, across both our clinics.`
-            : "What patients say about both our clinics."
-        }
-        copy={`${combinedReviews} ${combinedLabel}. Each clinic keeps its own listing, so you can read reviews for the one you are actually planning to visit.`}
+        title={sharedRating ? `${sharedRating} on Google, across both our clinics.` : "What patients say about both our clinics."}
+        highlight={sharedRating ?? undefined}
+        copy={`${combinedReviews} reviews, counted across two separate clinic listings. Each clinic keeps its own, so you can read the one you plan to visit.`}
+        hue="sunshine"
+        proof={false}
+        aside={<ProofCluster placement="reviews_hero" />}
       />
 
-      {/* ── Per branch ───────────────────────────────────────────────────── */}
-      <Section spacing="md">
+      <section className="py-10 sm:py-14 lg:py-18">
         <Container width="7xl">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <h2 className="t-h2">
-              Reviews by clinic
-            </h2>
-
-          </div>
-          <div className="mt-8 grid gap-4 md:grid-cols-2">
-            {locations.map((location) => (
-              <BranchGoogleCard
-                key={location.slug}
-                location={location}
-                placement={`reviews_google_${location.slug}`}
-              />
+          <SectionIntro eyebrow="Google review" title="Reviews by clinic." highlight="by clinic" />
+          <div className="mt-6 grid gap-4 md:grid-cols-2">
+            {locations.map((l) => (
+              <BranchProof key={l.slug} location={l} placement={`reviews_google_${l.slug}`} />
             ))}
           </div>
+          <SectionIntro eyebrow="In their words" title="Straight from the Google listings." highlight="Straight" copy="Quoted exactly as written, spelling and emoji included. Nothing here has been tidied up." className="mt-10" />
+          <GoogleQuotes placement="reviews_quotes" className="mt-6" />
         </Container>
-      </Section>
+      </section>
 
-      {/* ── Real Google excerpts ─────────────────────────────────────────── */}
-      <Section className="grain relative isolate bg-ink text-white" spacing="md">
+      <section className="hue-violet bg-violet-tint py-10 sm:py-14 lg:py-18">
         <Container width="7xl">
-          <div className="flex flex-wrap items-end justify-between gap-6">
-            <div>
-              <p className="t-eyebrow text-gold">In their words</p>
-              <h2 className="mt-4 max-w-xl t-h1">
-                Straight from the Google listings.
-              </h2>
+          <SectionIntro eyebrow="Video from the clinic" title="Patients on the day their treatment finished." highlight="finished" copy="Short videos the clinic published on its own YouTube channel. Nothing plays until you tap it." />
+          <ClinicShorts limit={6} kind="patient" className="mt-6" />
+        </Container>
+      </section>
+
+      {(patientStories.length > 0 || videoStories.length > 0) && (
+        <section className="py-10 sm:py-14 lg:py-18">
+          <Container width="7xl">
+            <SectionIntro eyebrow="Patient story" title="Stories given to the clinic." highlight="Stories" copy="Separate from Google, and published only where the patient has given written consent." />
+            <div className="mt-6 grid gap-4 md:grid-cols-3">
+              {patientStories.map((story) => (
+                <figure key={story.id} className="flex h-full flex-col rounded-2xl border border-line bg-white p-5">
+                  <blockquote className="t-body flex-1">{story.quote}</blockquote>
+                  <figcaption className="t-small mt-4 border-t border-line pt-3 text-ink-soft">
+                    <span className="font-semibold text-ink">{story.name}</span>
+                    {story.city ? ` · ${story.city}` : ""} · {story.treatment}
+                  </figcaption>
+                </figure>
+              ))}
             </div>
-            <p className="max-w-xs text-sm leading-6 text-white/45">
-              Quoted exactly as written, including the spelling. Nothing here has been tidied up.
-            </p>
-          </div>
+          </Container>
+        </section>
+      )}
 
-          <div className="mt-9 grid gap-4 md:grid-cols-3">
-            {reviewHighlights.map((review) => (
-              <figure
-                key={review.quote}
-                className="flex h-full flex-col rounded-2xl border border-white/12 bg-white/[.04] p-6"
-              >
-                <div className="flex items-center justify-between">
-                  <Quote className="size-5 text-gold" aria-hidden="true" />
-                  <span className="flex gap-0.5 text-gold" aria-hidden="true">
-                    {Array.from({ length: 5 }).map((_, index) => (
-                      <Star key={index} className="size-3 fill-current" />
-                    ))}
-                  </span>
-                </div>
-                <blockquote className="mt-5 flex-1 font-serif text-lg leading-snug">{review.quote}</blockquote>
-                <figcaption className="mt-6 border-t border-white/10 pt-4 text-xs text-white/45">
-                  {review.theme} · {review.source}
-                </figcaption>
-              </figure>
-            ))}
-          </div>
-        </Container>
-      </Section>
-
-      {/* ── Video stories ────────────────────────────────────────────────── */}
-      <Section spacing="md">
+      <section className="hue-sunshine py-10 sm:py-14 lg:py-18">
         <Container width="7xl">
-          <div className="flex flex-wrap items-end justify-between gap-6">
-            <div>
-              <p className="t-eyebrow text-gold">Patient videos</p>
-              <h2 className="t-h2 mt-4">
-                Patients, in their own language.
-              </h2>
-            </div>
-            <p className="max-w-sm text-sm leading-6 text-muted-foreground">
-              Nothing plays on its own. Gujarati first, because that is what most Surat patients would rather listen
-              to.
-            </p>
-          </div>
-          <div className="mt-8">
-            <VideoStoryGrid tone="light" />
-          </div>
+          <SectionIntro eyebrow="Before and after" title="Results, shown honestly." highlight="honestly" />
+          <ResultsPreview limit={2} placement="reviews_results" className="mt-6" />
         </Container>
-      </Section>
+      </section>
 
-      {/* ── Written testimonials ─────────────────────────────────────────── */}
-      <Section className="bg-[#f1eee7]" spacing="md">
+      <section className="hue-teal bg-teal-tint py-10 sm:py-14 lg:py-18">
         <Container width="7xl">
-          <h2 className="t-h2">
-            Testimonials given to the clinic
-          </h2>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">
-            Separate from Google, and published only where the patient has given written consent.
-          </p>
-          <div className="mt-8">
-            <PatientStoryGrid />
-          </div>
-        </Container>
-      </Section>
-
-      {/* ── Results ──────────────────────────────────────────────────────── */}
-      <Section spacing="md">
-        <Container width="7xl">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <h2 className="t-h2">Before &amp; after</h2>
-            <Link
-              href="/smile-gallery/"
-              className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-gold"
-            >
-              All results <ArrowUpRight className="cta-arrow size-4" aria-hidden="true" />
-            </Link>
-          </div>
-          <div className="mt-8">
-            <CaseResultsGrid limit={3} />
-          </div>
-        </Container>
-      </Section>
-
-      {/* ── Leave a review ───────────────────────────────────────────────── */}
-      <section className="bg-gold py-14 text-ink sm:py-16">
-        <Container width="7xl">
-          <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
-            <div>
-              <h2 className="max-w-xl t-h1">
-                Been treated with us? Say so where it helps someone else.
-              </h2>
-              <p className="mt-4 max-w-lg text-sm leading-6 text-ink/70">
-                Pick the clinic you were seen at, so your review lands on the right listing.
-              </p>
-            </div>
+          <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
+            <SectionIntro eyebrow="Been treated with us?" title="Say so where it helps someone else." highlight="helps someone else" copy="Pick the clinic you were seen at, so your review lands on the right listing." />
             <div className="flex flex-col gap-2.5">
-              {verifiedBranches.map((branch) => (
+              {verifiedBranches.map((b) => (
                 <a
-                  key={branch.location.slug}
-                  href={writeReviewUrl(branch.location)}
+                  key={b.location.slug}
+                  href={writeReviewUrl(b.location)}
                   target="_blank"
                   rel="noreferrer"
                   data-track="review_click"
-                  data-placement={`reviews_write_${branch.location.slug}`}
-                  data-branch={branch.location.slug}
-                  className="inline-flex min-h-13 items-center justify-between gap-4 rounded-full bg-ink px-6 text-sm font-semibold text-white"
+                  data-placement={`reviews_write_${b.location.slug}`}
+                  data-branch={b.location.slug}
+                  className="inline-flex min-h-13 items-center justify-between gap-4 rounded-full bg-ink px-6 text-[.9375rem] font-semibold text-white"
                 >
-                  Review {branch.location.displayArea}
-                  <ArrowRight className="cta-arrow size-4 text-gold" aria-hidden="true" />
+                  Review {b.location.displayArea}
+                  <ArrowRight className="cta-arrow size-4 text-sunshine" aria-hidden="true" />
                 </a>
               ))}
             </div>
           </div>
         </Container>
       </section>
+
+      <CtaBand title="Ready when you are." highlight="Ready" copy="Book a time at either clinic, or just message and tell us what is bothering you." placement="reviews_final" hue="sunshine" />
     </>
   );
 }

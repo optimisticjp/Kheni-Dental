@@ -53,6 +53,10 @@ Read:
 
 Real doctor and clinic photography is still required. Do not open search indexing until content, legal pages, tracking consent and location details have been reviewed.
 
+## September 2026: V4 redesign
+
+The site moved from a dark black/gold system to "vibrant clinical editorial": porcelain and navy with cobalt, aqua, coral and sunshine, one hue per treatment, original SVG illustrations, a three-action mobile dock and a clinic-choice booking sheet. Demo patient content was removed; the build now refuses prices, superlatives and unconsented proof. See `PROJECT_BRIEF.md` and `docs/CLINIC-CONTENT-NEEDED.md`.
+
 ## August 2026 reputation + Maps pass
 
 The latest build makes Google reputation and two-clinic navigation part of the primary patient journey. See `GOOGLE_REPUTATION_AND_MAPS.md` and `MOBILE_MENU_FIX.md`.

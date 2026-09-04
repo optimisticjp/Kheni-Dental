@@ -1,200 +1,112 @@
 import type { Metadata } from "next";
-import { GoogleTrustBar } from "@/components/kheni/google-trust";
-import { cn } from "@/lib/utils";
-import Link from "next/link";
-import { AlertTriangle, ArrowRight, MessageCircle, Phone } from "lucide-react";
+import { AlertTriangle } from "lucide-react";
 
+import { CtaBand } from "@/components/kheni/cta-band";
 import { PageHero } from "@/components/kheni/page-hero";
-import { PendingTag, gapBorder } from "@/components/kheni/pending";
+import { SectionIntro } from "@/components/kheni/section-intro";
 import { Container } from "@/components/ui/container";
-import { Section } from "@/components/ui/section";
-import { emergencyPending, resourceCategories, urgentSigns } from "@/content/patient-resources";
-import { site } from "@/content/site";
-import { whatsappUrl } from "@/lib/links";
+import { CallButton, WhatsAppButton } from "@/components/ui/cta";
+import { resourceCategories, urgentSigns } from "@/content/patient-resources";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/patient-resources/" },
   title: "Patient Resources & Aftercare",
   description:
-    "Practical guides from Kheni Dental, Surat: what to bring to a first visit, aftercare for root canals and implants, kids dental advice and when to call the clinic.",
+    "Practical guides from Kheni Dental, Surat: what to bring to a first visit, aftercare after a root canal, thinking about implants, bringing a child in, and when to call the clinic.",
 };
 
+/**
+ * Patient help, not an article library. Only guides reviewed in this
+ * repository are shown; the clinic's own aftercare sheets are listed in
+ * docs/CLINIC-CONTENT-NEEDED.md and appear here when they arrive.
+ */
 export default function ResourcesPage() {
+  const categories = resourceCategories
+    .map((c) => ({ ...c, guides: c.guides.filter((g) => g.status === "published") }))
+    .filter((c) => c.guides.length > 0);
+
   return (
     <>
       <PageHero
         eyebrow="Patient resources"
-        title="The bit that happens after you leave the chair."
-        copy="Guides for the day before an appointment and the days after one. Written to help you prepare and to tell you when something is worth a phone call."
+        title="The part that happens after you leave the chair."
+        highlight="after"
+        copy="Short guides for the day before an appointment and the days after one. Written to help you prepare and to tell you when something is worth a phone call."
+        hue="sky"
+        compact
       >
-        {/* Category jump list. Faster than scrolling a long library on a phone. */}
-        <nav aria-label="Resource categories" className="mt-8 flex flex-wrap gap-2">
-          {resourceCategories.map((category) => (
-            <a
-              key={category.id}
-              href={`#${category.id}`}
-              className="inline-flex min-h-11 items-center rounded-full border border-white/18 px-4 text-sm text-white/70 hover:border-gold/50 hover:text-white"
-            >
-              {category.label}
+        <nav aria-label="Resource categories" className="mt-5 flex flex-wrap gap-2">
+          {categories.map((c) => (
+            <a key={c.id} href={`#${c.id}`} className={`hue-${c.hue} inline-flex min-h-11 items-center gap-2 rounded-full bg-white px-4 text-sm font-medium ring-1 ring-line`}>
+              <span aria-hidden="true" className="size-2 rounded-full bg-h-fill" />
+              {c.label}
             </a>
           ))}
-          <a
-            href="#urgent"
-            className="inline-flex min-h-11 items-center gap-2 rounded-full border border-gold/45 bg-gold/[.08] px-4 text-sm font-semibold text-gold"
-          >
-            <AlertTriangle className="size-3.5" aria-hidden="true" />
-
-            Something is wrong now
-          </a>
         </nav>
       </PageHero>
 
-      {/* ── Urgent first. Anyone in pain should not have to scroll. ──────── */}
-      <Section id="urgent" className="scroll-mt-24 bg-[#f1eee7]" spacing="sm">
+      <section className="hue-coral py-8 sm:py-10">
         <Container width="7xl">
-          <div className="rounded-[1.4rem] border border-gold/40 bg-white p-6 sm:p-8">
-            <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
-              <div>
-                <span className="inline-flex items-center gap-2 text-[.66rem] font-semibold uppercase tracking-[.16em] text-gold">
-                  <AlertTriangle className="size-3.5" aria-hidden="true" />
-                  Call the clinic if you notice
-                </span>
-                <ul className="mt-5 grid gap-2.5 sm:grid-cols-2">
-                  {urgentSigns.map((sign) => (
-                    <li key={sign} className="flex items-start gap-3 text-sm leading-6">
-                      <span aria-hidden="true" className="mt-2 size-1.5 shrink-0 rounded-full bg-gold" />
-                      {sign}
-                    </li>
-                  ))}
-                </ul>
-                <div className={cn("mt-5 flex items-center justify-between gap-3 rounded-xl border border-border px-4 py-3 text-sm text-muted-foreground", gapBorder)}>
-                  {emergencyPending}
-                  <PendingTag label="To confirm" />
-                </div>
-              </div>
-
-              <div className="flex flex-col gap-2.5 lg:w-56">
-                <a
-                  href={`tel:${site.primaryPhoneHref}`}
-                  data-track="phone_click"
-                  data-placement="resources_urgent"
-                  className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-ink px-5 text-sm font-semibold text-white"
-                >
-                  <Phone className="size-4 text-gold" aria-hidden="true" />
-                  Call the clinic
-                </a>
-                <a
-                  href={whatsappUrl()}
-                  target="_blank"
-                  rel="noreferrer"
-                  data-track="whatsapp_click"
-                  data-placement="resources_urgent"
-                  className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-border px-5 text-sm font-semibold"
-                >
-                  <MessageCircle className="size-4 text-gold" aria-hidden="true" />
-                  WhatsApp
-                </a>
-              </div>
+          <div className="grid gap-5 rounded-[1.5rem] border border-coral/40 bg-coral-tint p-5 sm:p-7 lg:grid-cols-[1fr_auto] lg:items-center">
+            <div>
+              <p className="t-eyebrow inline-flex items-center gap-2 text-coral-text">
+                <AlertTriangle className="size-4" aria-hidden="true" />
+                Call the clinic if you notice
+              </p>
+              <ul className="mt-3 grid gap-2 sm:grid-cols-2">
+                {urgentSigns.map((sign) => (
+                  <li key={sign} className="flex items-start gap-2.5 text-[.9375rem] font-medium leading-snug">
+                    <span aria-hidden="true" className="mt-2 size-1.5 shrink-0 rounded-full bg-coral" />
+                    {sign}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="flex flex-col gap-2.5 sm:flex-row lg:flex-col">
+              <CallButton placement="resources_urgent" variant="primary" label="Call the clinic" />
+              <WhatsAppButton placement="resources_urgent" variant="secondary" />
             </div>
           </div>
         </Container>
-      </Section>
+      </section>
 
-      {/* Independent proof. The only thing on this site a patient can
-          go and check for themselves, so it is restated wherever they
-          might be deciding. */}
-      <Section spacing="sm">
-        <Container width="7xl">
-          <GoogleTrustBar placement="patient-resources_trust" />
-        </Container>
-      </Section>
-
-      {/* ── The library ──────────────────────────────────────────────────── */}
-      {resourceCategories.map((category, index) => (
-        <Section
-          key={category.id}
-          id={category.id}
-          className={index % 2 === 1 ? "scroll-mt-24 bg-[#f1eee7]" : "scroll-mt-24"}
-          spacing="md"
-        >
+      {categories.map((category, index) => (
+        <section key={category.id} id={category.id} className={`hue-${category.hue} anchor py-10 sm:py-14 ${index % 2 === 1 ? "bg-h-tint" : ""}`}>
           <Container width="7xl">
-            <div className="grid gap-8 lg:grid-cols-[.75fr_1.25fr] lg:gap-14">
-              <div className="lg:sticky lg:top-24 lg:self-start">
-                <div className="flex items-center gap-3">
-                  <span aria-hidden="true" className="font-mono text-[.65rem] text-gold">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <span aria-hidden="true" className="rule-gold h-px w-12" />
-                </div>
-                <h2 className="t-h2 mt-4">
-                  {category.label}
-                </h2>
-                <p className="mt-4 text-sm leading-6 text-muted-foreground">{category.intro}</p>
-              </div>
-
+            <div className="grid gap-6 lg:grid-cols-[.7fr_1.3fr] lg:gap-14">
+              <SectionIntro eyebrow={`0${index + 1}`} title={category.label} copy={category.intro} className="lg:sticky lg:top-24 lg:self-start" />
               <div className="grid gap-4">
                 {category.guides.map((guide) => (
-                  <article
-                    key={guide.id}
-                    id={guide.id}
-                    className={
-                      guide.status === "published"
-                        ? "scroll-mt-24 rounded-2xl border border-border bg-card p-6 sm:p-7"
-                        : cn("scroll-mt-24 rounded-2xl border border-border bg-card/50 p-6 sm:p-7", gapBorder)
-                    }
-                  >
-                    <div className="flex flex-wrap items-start justify-between gap-3">
-                      <h3 className="font-serif text-xl leading-snug">{guide.title}</h3>
-                      {guide.status === "pending" && <PendingTag label="Clinic instructions needed" />}
-                    </div>
-                    <p className="mt-2 text-sm leading-6 text-muted-foreground">{guide.summary}</p>
-
-                    {guide.status === "published" ? (
-                      <ul className="mt-5 grid gap-3">
-                        {guide.points.map((point) => (
-                          <li
-                            key={point}
-                            className="rounded-xl bg-[#f4f1ea] p-4 text-sm leading-6 text-muted-foreground"
-                          >
-                            {point}
+                  <article key={guide.id} id={guide.id} className="anchor rounded-[1.5rem] bg-white p-5 ring-1 ring-line sm:p-6">
+                    <h3 className="t-h3">{guide.title}</h3>
+                    <p className="t-small mt-1.5 text-ink-soft">{guide.summary}</p>
+                    {guide.status === "published" && (
+                      <ol className="mt-4 grid gap-2.5">
+                        {guide.points.map((point, i) => (
+                          <li key={point} className="flex gap-3 rounded-xl bg-h-tint p-4 text-[.9375rem] leading-6">
+                            <span className="mt-0.5 grid size-6 shrink-0 place-items-center rounded-full bg-h-fill text-xs font-bold text-h-on-fill">{i + 1}</span>
+                            <span>{point}</span>
                           </li>
                         ))}
-                      </ul>
-                    ) : (
-                      <p className={cn("mt-5 rounded-xl border border-border p-4 text-xs leading-6 text-muted-foreground/80", gapBorder)}>
-                        <span className="font-semibold text-foreground">We need from the clinic: </span>
-                        {guide.needs}
-                      </p>
+                      </ol>
                     )}
                   </article>
                 ))}
               </div>
             </div>
           </Container>
-        </Section>
+        </section>
       ))}
 
-      <Section spacing="md">
+      <section className="py-8 sm:py-10">
         <Container width="7xl">
-          <div className="rounded-2xl border border-border bg-card p-6 sm:p-8">
-            <p className="max-w-3xl text-sm leading-6 text-muted-foreground">
-              These guides are general information, written to help you prepare and ask better questions. They cannot
-              tell you what is happening in your own mouth, because that needs an examination. If anything here does
-              not match what you have been told at the clinic, go with what the doctor treating you said and ask them
-              about the difference.
-            </p>
-            <Link
-              href="/contact/#book"
-              data-track="appointment_start"
-              data-placement="resources_footer"
-              className="mt-6 inline-flex min-h-13 items-center gap-2 rounded-full bg-gold px-6 text-sm font-semibold text-ink"
-            >
-              Book Appointment
-              <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
-            </Link>
-          </div>
+          <p className="t-small max-w-3xl text-ink-soft">
+            These guides are general information, written to help you prepare and ask better questions. They cannot tell you what is happening in your own mouth. If anything here does not match what you were told at the clinic, go with what the doctor treating you said and ask them about the difference.
+          </p>
         </Container>
-      </Section>
+      </section>
+
+      <CtaBand title="Something not covered here? Just ask." highlight="ask" placement="resources_final" hue="sky" />
     </>
   );
 }

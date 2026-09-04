@@ -1,86 +1,54 @@
 import type { Metadata } from "next";
-import { GoogleTrustBar } from "@/components/kheni/google-trust";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 
-import { CaseResultsGrid, FeaturedCase } from "@/components/kheni/case-results";
+import { CtaBand } from "@/components/kheni/cta-band";
 import { PageHero } from "@/components/kheni/page-hero";
+import { GoogleQuotes } from "@/components/kheni/proof";
+import { ResultsPreview } from "@/components/kheni/results-preview";
+import { SectionIntro } from "@/components/kheni/section-intro";
 import { Container } from "@/components/ui/container";
-import { Section } from "@/components/ui/section";
-import { caseDisclaimer } from "@/content/cases";
+import { caseCategories, caseDisclaimer, caseResults } from "@/content/cases";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/smile-gallery/" },
   title: "Before & After Results",
   description:
-    "Before and after dental results from Kheni Dental in Surat. Implants, full mouth rehabilitation, smile design, crowns and braces, shown with patient permission.",
+    "Before and after dental results from Kheni Dental in Surat: implants, full mouth rehabilitation, smile design, crowns and braces, published only with the patient's written permission.",
 };
 
-/**
- * Before and after.
- *
- * One case leads, told properly; the rest sit behind it as an archive. The
- * category filter chips that used to open this page are gone: they were
- * controls for filtering nothing, and a row of buttons that cannot act is the
- * fastest way to make a page feel unfinished. The categories now appear where
- * they are simply information, in the standfirst.
- */
 export default function SmileGalleryPage() {
   return (
     <>
       <PageHero
-        eyebrow="Our work"
-        title="Before &amp; after"
-        copy={`Implants, full mouth rehabilitation, smile design, crowns and braces. Every case here was treated at one of our two Surat clinics and is published only with the patient's written permission.`}
-      />
+        eyebrow="Before and after"
+        title="Results, shown honestly."
+        highlight="honestly"
+        copy="Every case here is treated at one of our two Surat clinics and published only with the patient's written permission. Drag the handle on each pair to compare."
+        hue="sunshine"
+      >
+        <ul className="mt-5 flex flex-wrap gap-2">
+          {caseCategories.map((c) => (
+            <li key={c} className="rounded-full bg-white px-3 py-1.5 text-sm font-medium ring-1 ring-line">
+              {c}
+            </li>
+          ))}
+        </ul>
+      </PageHero>
 
-
-      <Section spacing="md">
+      <section className="py-10 sm:py-14 lg:py-18">
         <Container width="7xl">
-          <FeaturedCase />
+          <ResultsPreview limit={caseResults.length || 1} placement="gallery" />
+          <p className="t-small mt-6 max-w-2xl text-ink-soft">{caseDisclaimer}</p>
         </Container>
-      </Section>
+      </section>
 
-      {/* Independent proof. The only thing on this site a patient can
-          go and check for themselves, so it is restated wherever they
-          might be deciding. */}
-      <Section spacing="sm">
+      <section className="hue-sky bg-sky-tint py-10 sm:py-14 lg:py-18">
         <Container width="7xl">
-          <GoogleTrustBar placement="smile-gallery_trust" />
+          <SectionIntro eyebrow="Meanwhile" title="What patients already say on Google." highlight="already say" />
+          <GoogleQuotes placement="gallery_quotes" className="mt-6" />
         </Container>
-      </Section>
+      </section>
 
-      <Section className="bg-[#f1eee7]" spacing="md">
-        <Container width="7xl">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <h2 className="t-h2">More cases</h2>
-            <p className="t-small measure-narrow text-muted-foreground">
-Implants, full mouth rehabilitation, smile design, crowns and braces.
-            </p>
-          </div>
-          <div className="mt-8">
-            <CaseResultsGrid limit={6} />
-          </div>
-          <p className="t-small mt-6 max-w-2xl text-muted-foreground">{caseDisclaimer}</p>
-        </Container>
-      </Section>
-
-      <Section spacing="md">
-        <Container width="7xl">
-          <div className="flex flex-wrap items-center justify-between gap-5 rounded-2xl border border-border bg-card p-6 sm:p-8">
-            <p className="t-h3 measure-narrow">Want to know what is possible in your case?</p>
-            <Link
-              href="/contact/#book"
-              data-track="appointment_start"
-              data-placement="gallery_cta"
-              className="group inline-flex min-h-13 items-center gap-2 rounded-full bg-ink px-6 text-sm font-semibold text-white"
-            >
-              Book Appointment
-              <ArrowRight className="cta-arrow size-4 text-gold" aria-hidden="true" />
-            </Link>
-          </div>
-        </Container>
-      </Section>
+      <CtaBand title="Want to know what is possible in your case?" highlight="your case" copy="The honest answer comes after looking. Book a consultation at either clinic." placement="gallery_final" hue="sunshine" />
     </>
   );
 }

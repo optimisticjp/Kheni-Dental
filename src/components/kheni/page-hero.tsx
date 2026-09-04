@@ -1,70 +1,45 @@
+import { ProofChip } from "@/components/kheni/proof";
+import { Highlighted } from "@/components/kheni/section-intro";
 import { Container } from "@/components/ui/container";
+import type { Hue } from "@/content/site";
 import { cn } from "@/lib/utils";
 
 /**
- * Shared page opening.
- *
- * Carries the same devices as the homepage hero (grain, a low gold bloom, a
- * drawn hairline beside the eyebrow) so every route reads as one site.
- *
- * TWO SHAPES, PICKED AUTOMATICALLY
- *
- *   with `aside`   heading left, proof panel right. Used where a page has
- *                  something real to put at the very top.
- *
- *   without        an editorial masthead: title left, standfirst right,
- *                  sharing a baseline. A single left-aligned column left the
- *                  right 55% of a 1440 canvas empty on half the site, which
- *                  read as unfinished rather than spacious.
- *
- * `children` always sits below both columns, full width, so chip rows and
- * button clusters keep their own line.
+ * Shared page opening on a light colour field in the page's hue. Title left,
+ * standfirst and actions beneath, optional aside on the right from lg.
+ * Compact on phones: the first content starts within one screen.
  */
 export function PageHero({
   eyebrow,
   title,
+  highlight,
   copy,
+  hue = "cobalt",
   aside,
   children,
+  proof = true,
+  compact = false,
 }: {
   eyebrow: string;
   title: string;
+  highlight?: string;
   copy?: string;
+  hue?: Hue;
   aside?: React.ReactNode;
   children?: React.ReactNode;
+  proof?: boolean;
+  compact?: boolean;
 }) {
-  const split = !aside && Boolean(copy);
-
   return (
-    <section className="grain relative isolate overflow-hidden bg-ink text-white">
-      <div aria-hidden="true" className="bloom-gold pointer-events-none absolute inset-0 -z-10" />
-      <Container
-        width="7xl"
-        className={cn(
-          "relative py-9 sm:py-12 lg:py-16",
-          aside && "grid gap-10 lg:grid-cols-[1.1fr_.9fr] lg:items-center lg:gap-14",
-        )}
-      >
+    <section className={cn(`hue-${hue} field relative isolate overflow-hidden`)} style={{ ["--f1" as string]: "var(--h-tint)", ["--f2" as string]: "var(--sunshine-tint)", ["--f3" as string]: "var(--h-soft)" }}>
+      <Container width="7xl" className={cn("relative", compact ? "py-8 sm:py-10 lg:py-14" : "py-9 sm:py-12 lg:py-16", aside && "grid gap-8 lg:grid-cols-[1.1fr_.9fr] lg:items-center lg:gap-14")}>
         <div>
-          <div className="flex items-center gap-3">
-            <span className="t-eyebrow text-gold">{eyebrow}</span>
-            <span aria-hidden="true" className="rule-gold h-px w-16" />
-          </div>
-
-          <div
-            className={cn(
-              "mt-5",
-              split && "grid gap-6 lg:grid-cols-[1.15fr_.85fr] lg:items-end lg:gap-16",
-            )}
-          >
-            <h1 className={cn("t-h1", !split && "measure-head")}>{title}</h1>
-            {copy && (
-              <p className={cn("t-stand text-white/60", split ? "measure-stand lg:pb-1.5" : "measure-stand mt-5")}>
-                {copy}
-              </p>
-            )}
-          </div>
-
+          <p className="t-eyebrow text-h-text">{eyebrow}</p>
+          <h1 className="t-h1 measure-head mt-3">
+            <Highlighted title={title} highlight={highlight} />
+          </h1>
+          {copy && <p className="t-stand measure-stand mt-4 text-ink-soft">{copy}</p>}
+          {proof && <ProofChip placement="page_hero" className="mt-5" />}
           {children}
         </div>
         {aside}

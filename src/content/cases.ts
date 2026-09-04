@@ -1,66 +1,61 @@
 /**
- * Before and after case results.
+ * Before and after cases.
  *
  * Nothing renders here unless it is a real Kheni Dental case with written
  * patient consent and treating-doctor approval. No stock teeth, no generated
- * images, no borrowed cases. While the list is empty the page shows finished
- * placeholder frames so the clinic can see exactly what to photograph.
+ * images, no borrowed cases, no invented case facts.
  *
- * See docs/CLINIC-CONTENT-NEEDED.md for the shot list.
+ * The list is empty until the clinic supplies cases. The BeforeAfterSlider
+ * component demonstrates its behaviour with a clearly non-clinical
+ * illustration until then, and the archive is hidden from visitors.
+ *
+ * See docs/CLINIC-CONTENT-NEEDED.md for what each case needs.
  */
 
-import { demoCases, demoContentActive } from "@/content/demo";
+import type { Hue } from "@/content/site";
 
 export type CaseCategory =
   | "Dental Implants"
   | "Full Mouth Rehabilitation"
   | "Smile Design"
-  | "Crowns & Veneers"
+  | "Crowns & Bridges"
   | "Braces & Aligners";
 
 export type CaseResult = {
   id: string;
   category: CaseCategory;
+  treatmentSlug: string;
   /** What the patient came in with, in their words where possible. */
-  startingConcern: string;
+  concern: string;
   /** One line on the outcome. No superlatives, no guarantees. */
-  resultSummary: string;
-  /** What was actually carried out, in plain words. Featured cases only. */
-  whatWasDone?: string;
-  /** Why this approach rather than another. Featured cases only. */
-  whyThisApproach?: string;
-  /** Ordered treatment stages, for a case worth telling as a story. */
-  stages?: string[];
-  /** Optional consented patient line. Never write this on their behalf. */
-  patientComment?: string;
-  /** Marks the one case that leads the gallery. At most one. */
-  featured?: boolean;
+  result: string;
   doctorSlug: string;
   branchSlug: string;
   beforeImage: string;
   afterImage: string;
+  /** Alt text describing each photograph. */
+  beforeAlt: string;
+  afterAlt: string;
   /** When the "after" photograph was taken, e.g. "4 months after fitting". */
   afterTakenAt: string;
   /** Optional, only if the clinic tracks it: "3 visits over 5 months". */
   timeline?: string;
-  videoUrl?: string;
+  hue: Hue;
+  /** Written consent on file. The type only accepts true. */
   consentConfirmed: true;
 };
 
-/** TODO(clinic): add consented cases. */
-export const caseResults: CaseResult[] = demoContentActive ? demoCases : [];
-
-/** Filter chips shown above the gallery. Order is deliberate. */
-export const caseCategories: CaseCategory[] = [
-  "Dental Implants",
-  "Full Mouth Rehabilitation",
-  "Smile Design",
-  "Crowns & Veneers",
-  "Braces & Aligners",
-];
+/** TODO(clinic): add consented cases. Empty by design. */
+export const caseResults: CaseResult[] = [];
 
 export const caseDisclaimer =
   "Every mouth is different. These are individual results and are not a prediction of what treatment will achieve for you.";
 
-/** Placeholder frames shown per category while cases are pending. */
-export const PENDING_CASE_TILES = 3;
+/** The five areas the clinic can photograph results for. */
+export const caseCategories: CaseCategory[] = [
+  "Dental Implants",
+  "Full Mouth Rehabilitation",
+  "Smile Design",
+  "Crowns & Bridges",
+  "Braces & Aligners",
+];

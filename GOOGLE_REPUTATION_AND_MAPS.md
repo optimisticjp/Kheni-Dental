@@ -3,21 +3,18 @@
 This build treats Google reputation and clinic location as core trust and conversion systems, not footer widgets.
 
 ## Current public proof used
-- Established Swastik Plaza Google profile: 4.9 rating, 1,593 reviews at the time of the August 2026 research pass.
-- Hirabaug has its own Google profile. A rating is intentionally not mirrored from Swastik Plaza.
+- Swastik Plaza (Yogi Chowk): 4.9, 1,753 reviews. Hirabaug: 4.9, 210 reviews. Both clinic-verified 29 August 2026.
+- Each branch shows only its own figure. The combined 1,963 is always labelled as a sum across two listings.
 - Review counts are time-sensitive. Refresh before production launch.
 
-## Where Google proof appears
-- Hero trust pill
-- Moving trust ticker
-- Large homepage reputation section
-- Treatment pages
-- Doctors page
-- About page
-- Contact page
-- Location detail pages
-- Dedicated reviews page
-- Footer links
+## Where Google proof appears (V4)
+Used at decision points rather than on every route:
+- Homepage hero (rating, count, per-branch chips) and the reviews block
+- Implant page hero chip and Hirabaug branch card
+- Treatment page FAQ column (proof cluster)
+- Doctors, about and contact (proof cluster)
+- Location pages (this branch's own figure only)
+- Dedicated reviews page (per branch, verbatim excerpts, write-a-review)
 
 ## Google actions supported
 - Read reviews

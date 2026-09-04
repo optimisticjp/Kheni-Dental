@@ -11,17 +11,26 @@ Read:
 3. `SOURCE_FACTS.md`
 4. `CONTENT_TO_VERIFY.md`
 5. `TRACKING_PLAN.md`
+6. `docs/CLINIC-CONTENT-NEEDED.md`
 
 ## Non-negotiables
 
-- Preserve the black, warm-white and muted-gold premium visual system.
-- Keep the site mobile-first.
-- Keep sticky mobile Call, WhatsApp and Book actions.
-- Do not add heavy animation libraries without a clear need.
-- Use authentic clinic photography when supplied.
+- Preserve the V4 "vibrant clinical editorial" system: porcelain foundation,
+  navy ink, cobalt action colour, one hue per treatment (tokens in
+  `src/app/globals.css`).
+- Keep the site mobile-first. Three-action dock (Book, Call, WhatsApp;
+  Directions on clinic pages). Never a five-item dock.
+- Keep the appointment sheet: Book opens a clinic choice, then WhatsApp or
+  call. No backend, no medical questions.
+- No prices, "starting from", EMI or "free consultation". No "painless",
+  "best", "No. 1", "world-class", "guaranteed". The build fails on these
+  (`src/content/__checks__/content-integrity.check.ts`).
+- Real proof only. No invented testimonials, cases, counts, credentials,
+  technology or videos. Empty content arrays render nothing.
+- Current doctor roster only (four dentists). Old flyers are not a source.
+- Canonical origin is `https://www.khenidentalcare.com`. Keep it.
 - Do not invent medical, business or credential claims.
 - Do not use em dashes in visitor-facing copy.
-- Keep copy patient-first and natural.
 - Do not send healthcare data into marketing tracking.
 - Keep search indexing off until final launch approval.
 - Run typecheck, lint, Next build and vinext build after material changes.

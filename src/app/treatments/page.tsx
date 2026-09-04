@@ -1,17 +1,75 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+
+import { CtaBand } from "@/components/kheni/cta-band";
 import { PageHero } from "@/components/kheni/page-hero";
+import { SmileNote } from "@/components/kheni/smile-note";
+import { TreatmentPoster, TreatmentRow } from "@/components/kheni/treatment-poster";
 import { Container } from "@/components/ui/container";
-import { Section } from "@/components/ui/section";
-import { treatments } from "@/content/site";
+import { smileNotes, treatments, type TreatmentCategory } from "@/content/site";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/treatments/" },
   title: "Dental Treatments in Surat",
-  description: "Dental implants, root canals, crowns, braces, gum care, kids dentistry and smile design in Surat. See what each treatment involves before you decide anything.",
+  description:
+    "Dental implants, root canal treatment, braces and aligners, smile design, full mouth rehabilitation, crowns, kids dentistry, gum care, wisdom tooth, check-ups and fillings in Surat.",
 };
 
+const groups: { id: TreatmentCategory; label: string }[] = [
+  { id: "restorative", label: "Replace and repair" },
+  { id: "everyday", label: "Everyday dentistry" },
+  { id: "cosmetic", label: "Straighten and brighten" },
+  { id: "kids", label: "Children" },
+  { id: "surgical", label: "Wisdom teeth" },
+];
+
 export default function TreatmentsPage() {
-  return <><PageHero eyebrow="Treatments in Surat" title="You do not need the name of the treatment." copy="Have a look through these pages if it helps you put words to the problem. If it does not, describe what you are feeling when you call and let the examination decide where care starts."/><Section spacing="lg"><Container width="7xl"><div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">{treatments.map((treatment,index)=><Link key={treatment.slug} href={`/treatments/${treatment.slug}/`} className="group flex min-h-80 flex-col rounded-[2rem] border border-border bg-card p-7 transition hover:-translate-y-1 hover:border-gold/40 hover:shadow-xl"><div className="flex items-start justify-between"><span className="font-mono text-xs text-gold">{String(index+1).padStart(2,"0")}</span><ArrowRight className="size-4 -rotate-45 text-muted-foreground transition-transform group-hover:rotate-0 group-hover:text-gold"/></div><div className="mt-auto"><p className="text-xs uppercase tracking-[.18em] text-muted-foreground">{treatment.eyebrow}</p><h2 className="mt-3 font-serif text-3xl">{treatment.title}</h2><p className="mt-4 font-serif text-xl leading-tight text-gold">{treatment.emotionalHeadline}</p><p className="mt-4 text-sm leading-6 text-muted-foreground">{treatment.short}</p></div></Link>)}</div></Container></Section></>;
+  return (
+    <>
+      <PageHero
+        eyebrow={`${treatments.length} treatments · two clinics`}
+        title="You do not need the name of the treatment."
+        highlight="name"
+        copy="Have a look through if it helps you put words to the problem. If it does not, tell us what you are feeling and the examination decides where care starts."
+        hue="cobalt"
+      >
+        <Link href="/problems-we-treat/" className="mt-5 inline-flex min-h-12 items-center gap-2 rounded-full bg-white px-5 text-[.9375rem] font-semibold ring-1 ring-line">
+          Start from what is bothering you
+          <ArrowRight className="cta-arrow size-4 text-cobalt-deep" aria-hidden="true" />
+        </Link>
+      </PageHero>
+
+      {/* Phone: compact rows grouped by need. Tablet and up: posters. */}
+      <section className="py-8 sm:py-12 lg:py-16">
+        <Container width="7xl">
+          <div className="space-y-8 sm:hidden">
+            {groups.map((group) => {
+              const items = treatments.filter((t) => t.category === group.id);
+              if (!items.length) return null;
+              return (
+                <div key={group.id}>
+                  <h2 className="t-eyebrow text-ink-soft">{group.label}</h2>
+                  <div className="mt-3 grid gap-2.5">
+                    {items.map((t) => (
+                      <TreatmentRow key={t.slug} treatment={t} placement="treatments_index" />
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <div className="hidden gap-4 sm:grid sm:grid-cols-2 lg:grid-cols-3">
+            {treatments.map((t, index) => (
+              <TreatmentPoster key={t.slug} treatment={t} featured={index === 0} placement="treatments_index" />
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <SmileNote note={smileNotes[4]} compact className="pb-10 sm:pb-14" />
+
+      <CtaBand title="Not sure which one you need? That is normal." highlight="normal" copy="Describe it in your own words. The examination sorts out the rest." placement="treatments_final" />
+    </>
+  );
 }

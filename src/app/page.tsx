@@ -1,383 +1,292 @@
 import Link from "next/link";
-import { GoogleReviewQuotes } from "@/components/kheni/google-trust";
-import { ArrowRight, ArrowUpRight, MapPin, MessageCircle, Phone, Plane } from "lucide-react";
+import { ArrowRight, ArrowUpRight, MapPin } from "lucide-react";
 
 import { Accordion } from "@/components/ui/accordion";
 import { Container } from "@/components/ui/container";
-import { Section } from "@/components/ui/section";
-import { GoogleProofPanel } from "@/components/kheni/branch-google-card";
-import { CaseResultsGrid } from "@/components/kheni/case-results";
-import { PrincipalDoctor } from "@/components/kheni/doctor-authority";
-import { ImplantDiagram } from "@/components/kheni/implant/implant-diagram";
+import { BookButton, WhatsAppButton } from "@/components/ui/cta";
+import { ImplantDiagram } from "@/components/kheni/art/diagrams";
+import { TreatmentArt } from "@/components/kheni/art/treatment-art";
 import { BranchLocator } from "@/components/kheni/branch-locator";
-import { MediaFrame } from "@/components/kheni/pending";
-import { ProofBand } from "@/components/kheni/proof-band";
-import { PatientStoryGrid, VideoStoryGrid } from "@/components/kheni/stories";
-import { TreatmentRail } from "@/components/kheni/treatment-rail";
+import { ClinicShorts } from "@/components/kheni/clinic-shorts";
+import { ConcernFinder } from "@/components/kheni/concern-finder";
+import { CtaBand } from "@/components/kheni/cta-band";
+import { DoctorSpotlight, TeamLink } from "@/components/kheni/doctor-spotlight";
+import { MediaFrame } from "@/components/kheni/media-frame";
+import { ProcessSteps } from "@/components/kheni/process-steps";
+import { GoogleQuotes, ProofCluster, Stars } from "@/components/kheni/proof";
+import { ResultsPreview } from "@/components/kheni/results-preview";
+import { SectionIntro } from "@/components/kheni/section-intro";
+import { SmileNote } from "@/components/kheni/smile-note";
+import { TreatmentPoster, TreatmentTile } from "@/components/kheni/treatment-poster";
 import { implantCapabilities } from "@/content/capabilities";
-import { heroAssurances, proofStats } from "@/content/clinic-proof";
-import { googleReputation } from "@/content/google-reputation";
-import { homepageFaqs, site } from "@/content/site";
-import { whatsappUrl } from "@/lib/links";
+import { googleReputation, verifiedBranches } from "@/content/google-reputation";
+import { implantProcess } from "@/content/implant-center";
+import { homepageFaqs, locations, site, treatments } from "@/content/site";
+import { GlobeSurat } from "@/components/kheni/art/diagrams";
+import { placeUrl } from "@/lib/maps";
 
 /**
  * Homepage.
  *
- * Rhythm rather than a run of card grids: dark editorial hero, a proof strip,
- * the interactive treatment rail as the centre of gravity, then alternating
- * ivory and ink bands for the implant centre, the doctors, results, patient
- * voices, international care and the two clinics.
- *
- * Discovery happens once. The rail is the only place treatments are browsed on
- * this page; the full directory lives on /treatments and the problems index on
- * /problems-we-treat, so the three do not repeat one another.
+ * Built for a phone first. In one screen: who we are, where, the Google
+ * proof and a way to book. Then "What brings you in today?", six treatments,
+ * the implant centre, the principal dentist, results, reviews, NRI, the two
+ * clinics, videos, questions, and one closing action. Colour does the work
+ * of section count: tinted fields, illustration and a few Smile Notes
+ * between them rather than fifteen stacked cards.
  */
-
-const nriMessage =
-  "Hello Kheni Dental, I live abroad and would like to plan dental treatment during a visit to Surat. Here are my dates:";
+const featured = treatments.filter((t) => t.featured).slice(0, 7);
+const nriMessage = "Hello Kheni Dental, I live abroad and would like to plan dental treatment during a visit to Surat. Here are my dates:";
 
 export default function Home() {
   return (
     <>
-      {/* ── Hero ─────────────────────────────────────────────────────────
-          No photography slot here on purpose. While the clinic's own images
-          are still coming, an empty frame was the largest object on the page
-          and the first screen advertised what we lack. The right column is
-          now the Google proof, which is real, external and the strongest
-          thing Kheni has. Photography slots remain everywhere they can carry
-          their own weight: the rail, the clinics, the gallery. */}
-      <section className="grain relative isolate overflow-hidden bg-ink text-white">
-        <div aria-hidden="true" className="bloom-gold pointer-events-none absolute inset-0 -z-10" />
-        <Container
-          width="7xl"
-          className="relative grid gap-8 py-9 sm:py-12 lg:grid-cols-[1.15fr_.85fr] lg:items-center lg:gap-20 lg:py-20"
-        >
+      {/* ── Hero ─────────────────────────────────────────────────────── */}
+      <section
+        className="hue-cobalt field relative isolate overflow-hidden"
+        style={{ ["--f1" as string]: "var(--cobalt-tint)", ["--f2" as string]: "var(--coral-tint)", ["--f3" as string]: "var(--sunshine-tint)" }}
+      >
+        <Container width="7xl" className="relative grid gap-7 py-7 sm:py-10 lg:grid-cols-[1.05fr_.95fr] lg:items-center lg:gap-14 lg:py-16">
           <div>
-            <div className="flex items-center gap-3">
-              <span className="t-eyebrow text-gold">Kheni Dental &amp; Elite Implant Center</span>
-              <span aria-hidden="true" className="rule-gold h-px w-14" />
-            </div>
-
-            <h1 className="t-display measure-display mt-6">The dentist in Surat you keep going back to.</h1>
-
-            <p className="t-stand measure-stand mt-5 text-white/60">
-              Fifteen years, four dentists and two clinics at Yogi Chowk and Hirabaug. Dental implants, root canals,
-              braces, kids dentistry and smile design, led by Dr. Mayur Kheni.
+            <p className="inline-flex items-center gap-2 rounded-full bg-white/80 px-3 py-1.5 text-[.8rem] font-semibold text-ink ring-1 ring-line">
+              <MapPin className="size-3.5 text-coral" aria-hidden="true" />
+              Two clinics in Surat · Yogi Chowk and Hirabaug
+            </p>
+            <h1 className="t-display measure-display mt-4">
+              Dental care in Surat that <span className="hl">explains</span> before it treats.
+            </h1>
+            <p className="t-stand measure-stand mt-4 text-ink-soft">
+              {site.yearsInSurat} years, four dentists, one familiar standard. Implants, root canals, braces, kids dentistry and smile design, led by Dr. Mayur Kheni.
             </p>
 
-            <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2">
-              {heroAssurances.map((item) => (
-                <li key={item} className="t-small flex items-center gap-2 text-white/40">
-                  <span aria-hidden="true" className="size-1 rounded-full bg-gold/70" />
-                  {item}
+            <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2">
+              <Link href="/reviews/" data-track="review_click" data-placement="home_hero" className="inline-flex min-h-11 items-center gap-2 rounded-full bg-white px-3 ring-1 ring-line">
+                <span className="font-serif text-xl font-semibold leading-none">{googleReputation.sharedRating}</span>
+                <Stars />
+                <span className="t-small text-ink-soft">{googleReputation.combinedReviews} Google reviews</span>
+              </Link>
+              <span className="t-small text-ink-soft">across two clinic listings</span>
+            </div>
+
+            <div className="mt-6 grid gap-2.5 min-[360px]:grid-cols-2 sm:flex sm:flex-wrap">
+              <BookButton placement="home_hero" size="lg" className="px-4 sm:px-7" />
+              <WhatsAppButton placement="home_hero" size="lg" className="px-4 sm:px-7" />
+            </div>
+          </div>
+
+          {/* Right: a colourful clinic visual with a photo slot, and the two clinics as proof chips. */}
+          <div className="relative">
+            <MediaFrame ratio="5 / 4" mobileRatio="16 / 9" from="lg" className="rounded-[1.75rem] bg-white ring-1 ring-line" priority>
+              <div className="absolute inset-0 grid grid-cols-2 gap-2 p-2">
+                {["dental-implants-surat", "cosmetic-smile-dentistry", "kids-dentistry-surat", "root-canal-treatment-surat"].map((slug) => {
+                  const t = treatments.find((x) => x.slug === slug)!;
+                  return (
+                    <Link key={slug} href={`/treatments/${slug}/`} data-track="treatment_view" data-placement="home_hero_tiles" className={`hue-${t.hue} lift relative overflow-hidden rounded-[1.1rem] bg-h-tint`}>
+                      <TreatmentArt slug={slug} className="absolute inset-0 size-full" />
+                      <span className="absolute bottom-2 left-2 rounded-full bg-white/90 px-2.5 py-1 text-[.72rem] font-semibold text-ink">{t.title}</span>
+                    </Link>
+                  );
+                })}
+              </div>
+            </MediaFrame>
+            <ul className="mt-3 grid grid-cols-2 gap-2">
+              {verifiedBranches.map((b) => (
+                <li key={b.location.slug} className={`hue-${b.location.hue}`}>
+                  <a
+                    href={placeUrl(b.location)}
+                    target="_blank"
+                    rel="noreferrer"
+                    data-track="google_reviews_click"
+                    data-placement="home_hero_branch"
+                    data-branch={b.location.slug}
+                    className="glass flex min-h-12 items-center justify-between gap-2 rounded-2xl px-3.5 ring-1 ring-line"
+                  >
+                    <span className="flex items-center gap-1.5 whitespace-nowrap text-[.85rem] font-semibold sm:text-sm">
+                      <span aria-hidden="true" className="size-2 rounded-full bg-h-fill" />
+                      {b.location.displayArea}
+                    </span>
+                    <span className="flex items-center gap-1.5 whitespace-nowrap text-[.85rem] sm:text-sm">
+                      <span className="font-serif font-semibold">{b.rating}</span>
+                      <span className="text-ink-soft">{b.reviewCount}</span>
+                    </span>
+                  </a>
                 </li>
               ))}
             </ul>
-
-            {/* Call and WhatsApp are permanently docked at the bottom of every
-                phone screen at 64px each, so repeating them here as two more
-                full-width buttons was pure duplication. They return from sm up,
-                where there is no dock. */}
-            <div className="mt-8 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
-              <Link
-                href="/contact/#book"
-                data-track="appointment_start"
-                data-placement="home_hero"
-                className="group inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-gold px-6 text-sm font-semibold text-ink sm:whitespace-nowrap"
-              >
-                Book Appointment
-                <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
-              </Link>
-              <a
-                href={`tel:${site.primaryPhoneHref}`}
-                data-track="phone_click"
-                data-placement="home_hero"
-                className="hidden min-h-13 items-center justify-center gap-2 rounded-full border border-white/18 px-6 text-sm font-semibold sm:inline-flex sm:whitespace-nowrap"
-              >
-                <Phone className="size-4 text-gold" aria-hidden="true" />
-                {site.primaryPhoneDisplay}
-              </a>
-              <a
-                href={whatsappUrl()}
-                target="_blank"
-                rel="noreferrer"
-                data-track="whatsapp_click"
-                data-placement="home_hero"
-                className="hidden min-h-13 items-center justify-center gap-2 rounded-full border border-white/18 px-6 text-sm font-semibold sm:inline-flex sm:whitespace-nowrap"
-              >
-                <MessageCircle className="size-4 text-gold" aria-hidden="true" />
-                WhatsApp
-              </a>
-            </div>
           </div>
-
-          <GoogleProofPanel placement="home_hero_google" className="w-full" />
         </Container>
       </section>
 
-      {/* ── Proof numbers ────────────────────────────────────────────────── */}
-      <section className="border-y border-white/10 bg-[#0a0a09] py-10 text-white sm:py-12">
+      {/* ── What brings you in today? ───────────────────────────────── */}
+      <section className="hue-teal py-10 sm:py-14 lg:py-20">
         <Container width="7xl">
-          <ProofBand stats={proofStats} />
+          <SectionIntro eyebrow="Start here" title="What brings you in today?" highlight="today" copy="Pick the one that sounds like you. You do not need to know the name of the treatment." />
+          <div className="mt-6 sm:mt-8">
+            <ConcernFinder />
+          </div>
         </Container>
       </section>
 
-      {/* ── Problems we treat: the signature rail ────────────────────────── */}
-      <Section className="bg-ink text-white" spacing="md">
-        <Container width="7xl">
-          <div className="flex flex-wrap items-end justify-between gap-6">
-            <div>
-              <p className="t-eyebrow text-gold">Problems we treat</p>
-              <h2 className="t-h1 measure-head mt-4">
-                Start with what is bothering you.
-              </h2>
-            </div>
-            <p className="t-body measure-narrow text-white/45">
-              Pick the one that sounds like you. You do not need to know the name of the treatment.
-            </p>
-          </div>
+      <SmileNote index={0} />
 
-          <div className="mt-10">
-            <TreatmentRail />
+      {/* ── Treatments ──────────────────────────────────────────────── */}
+      <section className="hue-cobalt py-10 sm:py-14 lg:py-20">
+        <Container width="7xl">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <SectionIntro eyebrow="Treatments" title="Everyday dentistry to full mouth rehabilitation." highlight="full mouth" />
+            <Link href="/treatments/" className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-cobalt-deep">
+              All {treatments.length} treatments
+              <ArrowUpRight className="cta-arrow size-4" aria-hidden="true" />
+            </Link>
+          </div>
+          {/* Phone: seven compact tiles in two screens. Tablet and up: posters, the first across the row. */}
+          <div className="mt-6 grid grid-cols-2 gap-2.5 sm:hidden">
+            {featured.map((t, index) => (
+              <TreatmentTile key={t.slug} treatment={t} wide={index === 0} placement="home_treatments" />
+            ))}
+          </div>
+          <div className="mt-8 hidden gap-4 sm:grid sm:grid-cols-2 lg:grid-cols-3">
+            {featured.map((t, index) => (
+              <TreatmentPoster key={t.slug} treatment={t} featured={index === 0} placement="home_treatments" />
+            ))}
           </div>
         </Container>
-      </Section>
+      </section>
 
-      {/* ── Elite Implant Center ─────────────────────────────────────────── */}
-      <Section className="bg-[#f1eee7]" spacing="md">
-        <Container width="7xl">
-          <div className="grid gap-10 lg:grid-cols-[1.05fr_.95fr] lg:items-center lg:gap-16">
+      {/* ── Elite Implant Center ────────────────────────────────────── */}
+      <section className="hue-cobalt relative isolate overflow-hidden bg-ink py-10 text-white sm:py-14 lg:py-20">
+        <div aria-hidden="true" className="absolute -left-24 top-0 size-80 rounded-full bg-cobalt opacity-40 blur-3xl" />
+        <div aria-hidden="true" className="absolute -right-24 bottom-0 size-80 rounded-full bg-teal opacity-25 blur-3xl" />
+        <Container width="7xl" className="relative">
+          <div className="grid gap-8 lg:grid-cols-[1fr_1.1fr] lg:items-center lg:gap-14">
             <div>
-              <p className="t-eyebrow text-gold">Elite Implant Center</p>
-              <h2 className="t-h1 mt-4">
-                Tooth replacement, planned properly.
+              <p className="t-eyebrow text-gold-soft">Elite Implant Center · Hirabaug</p>
+              <h2 className="t-h1 mt-3 [--h-text:var(--sunshine)] [--h-soft:transparent]">
+                A fixed tooth for the gap you have been <span className="hl">working around.</span>
               </h2>
-              <p className="t-stand measure-body mt-5 text-muted-foreground">
-                Our implant work is led from the Hirabaug clinic by Dr. Mayur Kheni. Every case starts with an
-                examination and the imaging needed to assess the bone, before anything is recommended.
+              <p className="t-stand mt-4 max-w-xl text-white/75">
+                Implant work is led from Hirabaug by Dr. Mayur Kheni. Every case starts with an examination and the imaging needed to see the bone, before anything is recommended.
               </p>
-
-              <ul className="mt-8 grid gap-3 sm:grid-cols-2">
+              <ul className="mt-6 grid grid-cols-2 gap-2">
                 {implantCapabilities.map((item) => (
-                  <li key={item.id} className="rounded-xl border border-border bg-white p-4">
+                  <li key={item.id} className="rounded-xl bg-white/[.07] px-3.5 py-3 ring-1 ring-white/10">
                     <p className="text-sm font-semibold">{item.title}</p>
-                    <p className="mt-1.5 text-xs leading-5 text-muted-foreground">{item.copy}</p>
+                    <p className="t-small mt-1 hidden text-white/65 sm:block">{item.copy}</p>
                   </li>
                 ))}
               </ul>
-
-              <Link
-                href="/treatments/dental-implants-surat/"
-                data-track="treatment_view"
-                data-placement="home_implant_centre"
-                className="mt-8 inline-flex min-h-13 items-center gap-2 rounded-full bg-ink px-6 text-sm font-semibold text-white"
-              >
-                Inside the Elite Implant Center
-                <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
-              </Link>
+              <div className="mt-6 flex flex-col gap-2.5 sm:flex-row">
+                <Link href="/treatments/dental-implants-surat/" data-track="treatment_view" data-placement="home_implant" className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-sunshine px-6 text-[.9375rem] font-semibold text-ink">
+                  Inside the Elite Implant Center
+                  <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
+                </Link>
+                <WhatsAppButton placement="home_implant" location={locations[1]} context="implants" variant="onDark" />
+              </div>
             </div>
-
-            <div className="rounded-[1.4rem] border border-border bg-white p-6 sm:p-8">
+            <div className="rounded-[1.5rem] bg-porcelain p-4 text-ink sm:p-6">
               <ImplantDiagram />
             </div>
           </div>
-        </Container>
-      </Section>
 
-      {/* ── Doctors ──────────────────────────────────────────────────────── */}
-      <Section spacing="md">
-        <Container width="7xl">
-          <PrincipalDoctor />
-
-          {/*
-            The other three dentists had a full card grid here, and the doctors
-            block came to 2,548px on a phone — three screens, a fifth of the
-            homepage, for people a patient has not asked about yet. They have
-            their own page, which does the job properly. The homepage says
-            who leads the clinic and that there is a team behind him.
-          */}
-          <Link
-            href="/doctors/"
-            className="ease-kheni group mt-9 flex items-center justify-between gap-6 rounded-2xl border border-border px-5 py-4 transition-colors duration-300 hover:border-gold/45 sm:px-6"
-          >
-            <span className="t-small text-muted-foreground">
-              Three more dentists across both clinics, each with their own areas of work.
-            </span>
-            <span className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-gold">
-              Meet the team
-              <ArrowUpRight className="cta-arrow size-4" aria-hidden="true" />
-            </span>
-          </Link>
-        </Container>
-      </Section>
-
-      {/* ── Before and after ─────────────────────────────────────────────── */}
-      <Section className="bg-[#f1eee7]" spacing="md">
-        <Container width="7xl">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <div>
-              <p className="t-eyebrow text-gold">Our work</p>
-              <h2 className="t-h2 mt-4">Before &amp; after</h2>
+          <div className="mt-10 border-t border-white/10 pt-8 lg:mt-12">
+            <p className="t-eyebrow text-gold-soft">{implantProcess.eyebrow}</p>
+            <h3 className="t-h2 mt-2 text-white">{implantProcess.title}</h3>
+            <div className="mt-6 [--h-fill:var(--sunshine)] [--h-on-fill:var(--ink)] [--h-soft:rgba(255,255,255,.2)] [&_li]:bg-white/[.06] [&_li]:ring-white/10 [&_li]:text-white [&_p]:text-white/65">
+              <ProcessSteps steps={implantProcess.steps} columns={5} dense />
             </div>
-            <Link
-              href="/smile-gallery/"
-              className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-gold"
-            >
-              All results <ArrowUpRight className="cta-arrow size-4" aria-hidden="true" />
-            </Link>
-          </div>
-          <div className="mt-8">
-            <CaseResultsGrid limit={3} />
-          </div>
-        </Container>
-      </Section>
-
-      {/* ── Reputation and patient voices ────────────────────────────────── */}
-      <Section className="grain relative isolate bg-ink text-white" spacing="md">
-        <Container width="7xl">
-          <div className="flex flex-wrap items-end justify-between gap-6">
-            <div>
-              <p className="t-eyebrow text-gold">Patient reviews</p>
-              <h2 className="t-h1 measure-head mt-4">
-                {googleReputation.combinedReviews} reviews, on Google.
-              </h2>
-              <p className="t-body measure-narrow mt-3 text-white/45">
-                Counted {googleReputation.combinedLabel.replace(/^Google reviews /, "")}. Each clinic keeps its own
-                listing, so you can read the one you plan to visit.
-              </p>
-            </div>
-            <Link href="/reviews/" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-gold">
-              Reputation in full <ArrowUpRight className="cta-arrow size-4" aria-hidden="true" />
-            </Link>
-          </div>
-
-          {/*
-            Both branch cards used to repeat here in full. The hero already
-            carries the same rating, the same two review counts and the same
-            verified date about 1,500px further up, so this section spent
-            2,308px on a phone re-stating what the visitor read first. What
-            belongs here is the part the hero cannot show: what patients
-            actually said.
-          */}
-          {/* Three things patients actually wrote on Google, verbatim. These
-              are independent of us in a way nothing else on the page is. */}
-          <GoogleReviewQuotes tone="dark" placement="home_google_quotes" className="mt-9" />
-
-          <div className="mt-10">
-            <VideoStoryGrid />
-            <div className="mt-4">
-              <PatientStoryGrid tone="dark" />
-            </div>
-          </div>
-        </Container>
-      </Section>
-
-      {/* ── International and NRI ────────────────────────────────────────── */}
-      <Section spacing="md">
-        <Container width="7xl">
-          <div className="relative overflow-hidden rounded-[1.6rem] border border-border bg-white">
-            <div aria-hidden="true" className="map-grid pointer-events-none absolute inset-0" />
-            <div className="relative grid gap-8 p-7 sm:p-10 lg:grid-cols-[1.15fr_.85fr] lg:items-center lg:gap-14">
-              <div>
-                <span className="inline-flex items-center gap-2 rounded-full border border-gold/35 bg-gold/[.08] px-3 py-1.5 text-[.66rem] font-semibold uppercase tracking-[.16em] text-gold">
-                  <Plane className="size-3.5" aria-hidden="true" />
-                  International &amp; NRI
-                </span>
-                <h2 className="t-h1 measure-head mt-5">
-                  Planning dental treatment during your visit to India?
-                </h2>
-                <p className="t-stand measure-body mt-5 text-muted-foreground">
-                  Send your travel dates before you book flights. We will tell you what realistically fits into your
-                  trip, what would need a second visit, and what to expect once you are back home.
-                </p>
-                <div className="mt-8 flex flex-col gap-2.5 sm:flex-row">
-                  <Link
-                    href="/international-patients/"
-                    data-track="international_patient_contact"
-                    data-placement="home_nri"
-                    className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-ink px-6 text-sm font-semibold text-white sm:whitespace-nowrap"
-                  >
-                    Plan your treatment
-                    <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
-                  </Link>
-                  <a
-                    href={whatsappUrl(nriMessage)}
-                    target="_blank"
-                    rel="noreferrer"
-                    data-track="whatsapp_click"
-                    data-placement="home_nri"
-                    className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-border px-6 text-sm font-semibold sm:whitespace-nowrap"
-                  >
-                    <MessageCircle className="size-4 text-gold" aria-hidden="true" />
-                    Send your dates
-                  </a>
-                </div>
-              </div>
-
-              <MediaFrame shot="NRI patient consultation" tone="light" ratio="4 / 3" />
-            </div>
-          </div>
-        </Container>
-      </Section>
-
-      {/* ── Clinics ──────────────────────────────────────────────────────── */}
-      <Section className="bg-[#f1eee7]" spacing="md">
-        <Container width="7xl">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <div>
-              <p className="t-eyebrow text-gold">Visit us</p>
-              <h2 className="t-h2 mt-4">Our clinics</h2>
-            </div>
-            <Link href="/locations/" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-gold">
-              <MapPin className="size-4" aria-hidden="true" />
-              Both locations
-            </Link>
-          </div>
-          <div className="mt-7">
-            <BranchLocator placement="home" />
-          </div>
-        </Container>
-      </Section>
-
-      {/* ── Questions ────────────────────────────────────────────────────── */}
-      <Section spacing="md">
-        <Container width="7xl">
-          <div className="grid gap-8 lg:grid-cols-[.7fr_1.3fr] lg:gap-14">
-            <h2 className="t-h2">Common questions</h2>
-            <Accordion items={homepageFaqs} />
-          </div>
-        </Container>
-      </Section>
-
-      {/* ── Final action ─────────────────────────────────────────────────── */}
-      <section className="bg-gold py-14 text-ink sm:py-16">
-        <Container width="7xl" className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
-          <h2 className="t-h1 measure-head">
-            Tell us what is bothering you. We will take it from there.
-          </h2>
-          <div className="flex flex-col gap-2.5 sm:flex-row">
-            <Link
-              href="/contact/#book"
-              data-track="appointment_start"
-              data-placement="home_final_cta"
-              className="inline-flex min-h-13 items-center justify-center rounded-full bg-ink px-6 text-sm font-semibold text-white sm:whitespace-nowrap"
-            >
-              Book Appointment
-            </Link>
-            <a
-              href={whatsappUrl()}
-              target="_blank"
-              rel="noreferrer"
-              data-track="whatsapp_click"
-              data-placement="home_final_cta"
-              className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-ink/25 px-6 text-sm font-semibold sm:whitespace-nowrap"
-            >
-              <MessageCircle className="size-4" aria-hidden="true" />
-              WhatsApp
-            </a>
           </div>
         </Container>
       </section>
+
+      {/* ── Dr. Mayur ───────────────────────────────────────────────── */}
+      <section className="py-10 sm:py-14 lg:py-20">
+        <Container width="7xl">
+          <DoctorSpotlight />
+          <TeamLink />
+        </Container>
+      </section>
+
+      <SmileNote index={1} />
+
+      {/* ── Results and reviews ─────────────────────────────────────── */}
+      <section className="hue-sunshine py-10 sm:py-14 lg:py-20">
+        <Container width="7xl">
+          <div className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:gap-14">
+            <div>
+              <SectionIntro eyebrow="Before and after" title="Results, shown honestly." highlight="honestly" />
+              <div className="mt-6">
+                <ResultsPreview limit={2} placement="home_results" />
+              </div>
+            </div>
+            <div>
+              <SectionIntro eyebrow="Patient reviews" title={`${googleReputation.combinedReviews} reviews on Google.`} highlight={googleReputation.combinedReviews} copy="Counted across two separate clinic listings. Read the one you plan to visit." />
+              <ProofCluster placement="home_reviews" className="mt-6" />
+            </div>
+          </div>
+          <GoogleQuotes placement="home_quotes" className="mt-6" />
+        </Container>
+      </section>
+
+      {/* ── NRI and international ───────────────────────────────────── */}
+      <section className="hue-coral py-10 sm:py-14 lg:py-20">
+        <Container width="7xl">
+          <div className="grid gap-6 overflow-hidden rounded-[1.75rem] bg-coral-tint p-5 sm:p-8 lg:grid-cols-[1.15fr_.85fr] lg:items-center lg:gap-12 lg:p-12">
+            <div>
+              <p className="t-eyebrow text-coral-text">NRI and international patients</p>
+              <h2 className="t-h1 mt-3">
+                Visiting Surat? Plan your dental care <span className="hl">before you fly.</span>
+              </h2>
+              <p className="t-stand mt-4 max-w-xl text-ink-soft">
+                Send your travel dates and what you would like looked at. We will tell you what realistically fits into your trip, what would need a second visit, and what to expect once you are home.
+              </p>
+              <div className="mt-6 flex flex-col gap-2.5 sm:flex-row">
+                <WhatsAppButton placement="home_nri" message={nriMessage} label="Plan your visit on WhatsApp" track="international_patient_contact" />
+                <Link href="/international-patients/" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-line-strong bg-white px-5 text-[.9375rem] font-semibold">
+                  How a visit works
+                  <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
+                </Link>
+              </div>
+            </div>
+            <GlobeSurat className="mx-auto w-full max-w-[18rem] lg:max-w-none" />
+          </div>
+        </Container>
+      </section>
+
+      {/* ── Clinics ─────────────────────────────────────────────────── */}
+      <section className="hue-green py-10 sm:py-14 lg:py-20">
+        <Container width="7xl">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <SectionIntro eyebrow="Two clinics in Surat" title="Come to whichever is nearer." highlight="nearer" />
+            <Link href="/locations/" className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-green-text">
+              Both clinics in detail
+              <ArrowUpRight className="cta-arrow size-4" aria-hidden="true" />
+            </Link>
+          </div>
+          <div className="mt-6 sm:mt-8">
+            <BranchLocator placement="home" />
+          </div>
+        </Container>
+      </section>
+
+      {/* ── From the clinic ─────────────────────────────────────────── */}
+      <section className="hue-violet py-10 sm:py-14 lg:py-20">
+        <Container width="7xl">
+          <SectionIntro eyebrow="From the clinic" title="Short videos from our dentists." highlight="Short videos" copy="Brushing tips, kids' teeth, and patients on the day their treatment finished, in Gujarati and English." />
+          <ClinicShorts limit={6} className="mt-6 sm:mt-8" />
+        </Container>
+      </section>
+
+      {/* ── Questions ───────────────────────────────────────────────── */}
+      <section className="hue-sky py-10 sm:py-14 lg:py-20">
+        <Container width="7xl">
+          <div className="grid gap-6 lg:grid-cols-[.7fr_1.3fr] lg:gap-14">
+            <SectionIntro eyebrow="Questions" title="Things people ask before their first visit." highlight="first visit" />
+            <Accordion items={homepageFaqs} exclusive name="home-faq" />
+          </div>
+        </Container>
+      </section>
+
+      <CtaBand title="Tell us what is bothering you. We will take it from there." highlight="take it from there" placement="home_final" />
     </>
   );
 }

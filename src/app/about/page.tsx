@@ -1,52 +1,108 @@
 import type { Metadata } from "next";
-import { GoogleTrustBar } from "@/components/kheni/google-trust";
-import Link from "next/link";
-import { ArrowRight, MapPin } from "lucide-react";
-import { DoctorRoster, PrincipalDoctor } from "@/components/kheni/doctor-authority";
-import { BranchGoogleCard } from "@/components/kheni/branch-google-card";
-import { LocationCard } from "@/components/kheni/location-card";
-import { MediaFrame } from "@/components/kheni/pending";
+
+import { BranchLocator } from "@/components/kheni/branch-locator";
+import { CtaBand } from "@/components/kheni/cta-band";
+import { DoctorRoster, DoctorSpotlight } from "@/components/kheni/doctor-spotlight";
+import { MediaFrame } from "@/components/kheni/media-frame";
 import { PageHero } from "@/components/kheni/page-hero";
-import { SectionHeading } from "@/components/kheni/section-heading";
+import { ProofCluster, GoogleQuotes } from "@/components/kheni/proof";
+import { SectionIntro } from "@/components/kheni/section-intro";
+import { SmileNote } from "@/components/kheni/smile-note";
 import { Container } from "@/components/ui/container";
-import { Section } from "@/components/ui/section";
-import { locations, site } from "@/content/site";
+import { proofStats } from "@/content/clinic-proof";
+import { site, smileNotes } from "@/content/site";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/about/" },
-  title: "About Our Dental Practice in Surat",
-  description: "Kheni Dental has treated patients in Surat for around 15 years. Meet the four doctors led by Dr. Mayur Kheni and see how care is explained at both clinics.",
+  title: "About Kheni Dental, Surat",
+  description:
+    "Kheni Dental & Elite Implant Center: 15 years in Surat, four dentists led by Dr. Mayur Kheni, two clinics at Yogi Chowk and Hirabaug, and 4.9 on Google across both.",
 };
+
+const expect = [
+  { title: "You talk first", copy: "The appointment opens with your description of the problem, when it started and what it stops you doing." },
+  { title: "Plain words", copy: "Findings are explained in words you could repeat to your family at home." },
+  { title: "Some things can wait", copy: "Where watching is the sensible option, the dentist says so and tells you what to look out for." },
+  { title: "One stage at a time", copy: "For bigger plans you agree to one stage, see how it goes, and decide the next." },
+];
 
 export default function AboutPage() {
   return (
     <>
-      <PageHero eyebrow="About the practice" title="Fifteen years in Surat, still explaining every step." copy="Dr. Mayur Kheni leads the practice, and three more doctors now see patients alongside him across two clinics in Surat. A visit still begins the same way, by asking what brought you in and listening to the answer." />
+      <PageHero
+        eyebrow="About Kheni Dental"
+        title={`${site.yearsInSurat} years in Surat, still explaining every step.`}
+        highlight="explaining"
+        copy="Dr. Mayur Kheni founded the practice, and three more dentists now see patients alongside him across two clinics. A visit still begins the same way: by asking what brought you in and listening to the answer."
+        hue="cobalt"
+        aside={<MediaFrame ratio="4 / 3" mobileRatio="16 / 9" from="lg" className="hue-cobalt rounded-[1.75rem] ring-1 ring-line" />}
+      />
 
-      <Section spacing="lg">
+      <section className="py-8 sm:py-12">
         <Container width="7xl">
-          <div className="grid gap-12 lg:grid-cols-[.9fr_1.1fr] lg:items-center">
-            <div>
-              <SectionHeading eyebrow="Our story" title="More doctors now, the same length of appointment." copy="Kheni Dental has been treating patients in Surat for around fifteen years. There are four doctors now and two clinics, so you can pick the branch that suits your day and see a dentist whose focus fits your problem. What has not changed is the pace of an appointment. Questions are expected, and no treatment is suggested until an examination explains the reason for it." />
-              <div className="mt-8 grid grid-cols-2 gap-4"><div className="rounded-2xl bg-[#f1eee7] p-5"><p className="font-serif text-4xl text-gold">{site.yearsInSurat}</p><p className="mt-2 text-sm text-muted-foreground">years treating patients in Surat</p></div><div className="rounded-2xl bg-[#f1eee7] p-5"><p className="font-serif text-4xl text-gold">2</p><p className="mt-2 text-sm text-muted-foreground">clinics across the city</p></div></div>
-              <div className="mt-5 grid gap-4">{locations.map((location) => <BranchGoogleCard key={location.slug} location={location} placement={`about_google_${location.slug}`} />)}</div>
-            </div>
-            <MediaFrame shot="The team at Kheni Dental" ratio="4 / 5" className="w-full" />
+          <dl className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+            {proofStats.map((stat, i) => (
+              <div key={stat.id} className={`${["hue-cobalt", "hue-teal", "hue-coral", "hue-sunshine"][i % 4]} rounded-2xl bg-h-tint p-4 sm:p-5`}>
+                <dd className="t-proof text-h-text">{stat.value}</dd>
+                <dt className="mt-1.5 text-sm font-semibold">{stat.label}</dt>
+                {stat.detail && <p className="t-small mt-0.5 text-ink-soft">{stat.detail}</p>}
+              </div>
+            ))}
+          </dl>
+        </Container>
+      </section>
+
+      <section className="bg-porcelain py-8 sm:py-12 lg:py-16">
+        <Container width="7xl">
+          <SectionIntro eyebrow="How a visit feels" title="Nobody should leave the chair still guessing." highlight="still guessing" />
+          <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {expect.map((item, i) => (
+              <li key={item.title} className="rounded-2xl border border-line bg-white p-5">
+                <span className="font-serif text-2xl font-semibold text-cobalt-deep">0{i + 1}</span>
+                <p className="t-card mt-2">{item.title}</p>
+                <p className="t-small mt-1.5 text-ink-soft">{item.copy}</p>
+              </li>
+            ))}
+          </ul>
+        </Container>
+      </section>
+
+      <SmileNote note={smileNotes[0]} compact className="pb-8 sm:pb-12" />
+
+      <section className="pb-10 sm:pb-14 lg:pb-18">
+        <Container width="7xl">
+          <SectionIntro eyebrow="Who will see you" title="Four dentists, and what each one handles." highlight="Four dentists" />
+          <div className="mt-6">
+            <DoctorSpotlight />
+          </div>
+          <div className="mt-4">
+            <DoctorRoster exclude="dr-mayur-kheni" />
           </div>
         </Container>
-      </Section>
+      </section>
 
-      {/* Independent proof. The only thing on this site a patient can
-          go and check for themselves, so it is restated wherever they
-          might be deciding. */}
-      <Section spacing="sm">
+      <section className="hue-sunshine bg-sunshine-tint py-10 sm:py-14 lg:py-18">
         <Container width="7xl">
-          <GoogleTrustBar placement="about_trust" />
+          <div className="grid gap-6 lg:grid-cols-[.9fr_1.1fr] lg:gap-12">
+            <div>
+              <SectionIntro eyebrow="Reputation" title="What patients say on Google." highlight="Google" />
+              <ProofCluster placement="about_proof" className="mt-6" />
+            </div>
+            <GoogleQuotes placement="about_quotes" className="sm:grid-cols-1 lg:self-center" />
+          </div>
         </Container>
-      </Section>
-      <Section className="bg-ink text-white" spacing="lg"><Container width="7xl"><SectionHeading eyebrow="How we want care to feel" title="Nobody should leave the chair still guessing." copy="Most dental worry comes from not knowing what is happening in your own mouth. So findings are said out loud, options are named in plain words, and you get time to think before anything is booked." /><div className="mt-10 grid gap-4 md:grid-cols-3">{[["You talk first","The appointment opens with your description of the problem, when it started and what it stops you doing. That usually tells the dentist where to look first."],["Plain words, not jargon","Findings are explained in words you could repeat to your family at home. If a clinical term matters to your decision, you will hear what it actually means."],["Some things can wait","Not every finding needs treatment straight away. Where watching is the sensible option, the dentist will say so and tell you what to look out for."]].map(([title,copy]) => <div key={title} className="rounded-2xl border border-white/10 p-6"><h2 className="font-serif text-2xl">{title}</h2><p className="mt-3 text-sm leading-6 text-white/58">{copy}</p></div>)}</div></Container></Section>
-      <Section spacing="lg"><Container width="7xl"><SectionHeading eyebrow="Who will see you" title="Four doctors, and what each one handles." copy="Dr. Mayur Kheni leads the practice. Three more doctors work alongside him, with listed areas of focus covering smile design, children's dentistry and everyday dental care. Degrees and years in practice are listed exactly as each doctor gave them." /><div className="mt-12"><PrincipalDoctor /></div><div className="mt-6"><DoctorRoster exclude="dr-mayur-kheni" /></div></Container></Section>
-      <Section className="bg-[#f1eee7]" spacing="lg"><Container width="7xl"><SectionHeading eyebrow="Both addresses" title="Come to whichever clinic is nearer." copy="Swastik Plaza at Yogi Chowk and Hirabaug on Varachha Main Road. Each clinic has its own number." /><div className="mt-10 grid gap-5 lg:grid-cols-2">{locations.map((location) => <LocationCard key={location.slug} location={location} />)}</div><Link href="/contact/" className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-gold min-h-11 items-center"><MapPin className="size-4" />Ask us which branch suits you <ArrowRight className="size-4" /></Link></Container></Section>
+      </section>
+
+      <section className="hue-green py-10 sm:py-14 lg:py-18">
+        <Container width="7xl">
+          <SectionIntro eyebrow="Two clinics" title="Come to whichever is nearer." highlight="nearer" />
+          <div className="mt-6">
+            <BranchLocator placement="about" />
+          </div>
+        </Container>
+      </section>
+
+      <CtaBand title="Tell us what is bothering you. We will take it from there." highlight="take it from there" placement="about_final" />
     </>
   );
 }

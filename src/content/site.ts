@@ -1,79 +1,91 @@
+/**
+ * Business facts and visitor-facing content for Kheni Dental & Elite Implant
+ * Center, Surat. Everything factual on the site is read from here.
+ *
+ * RULES THAT MUST SURVIVE EDITS
+ *   - Facts come from the clinic. Nothing numeric is invented.
+ *   - No prices anywhere on the site. This is the doctor's instruction.
+ *   - No "painless", "guaranteed", "best", "No. 1", "world-class".
+ *   - No em dashes in visitor-facing copy.
+ *   - The current doctor roster only. Old flyers are not a source.
+ */
+
 export const site = {
   name: "Kheni Dental & Elite Implant Center",
   shortName: "Kheni Dental",
-  domain: "https://khenidentalcare.com",
+  /** Canonical origin. The apex domain redirects here permanently. */
+  domain: "https://www.khenidentalcare.com",
   email: "smile@khenidentalcare.com",
   city: "Surat",
   region: "Gujarat",
   country: "India",
-  tagline: "Dentistry explained before it is done.",
+  tagline: "Dentistry you understand before it starts.",
   description:
-    "Fifteen years of dental care in Surat, led by Dr. Mayur Kheni. Implants, root canals, braces, kids and everyday dentistry at two clinics in the city.",
+    "Kheni Dental & Elite Implant Center: 15 years of dental care in Surat, led by Dr. Mayur Kheni. Implants, root canals, braces, kids dentistry and smile design at two clinics, Yogi Chowk and Hirabaug.",
   instagram: "https://www.instagram.com/khenielite",
+  instagramHandle: "@khenielite",
   primaryPhoneDisplay: "+91 95101 12354",
   primaryPhoneHref: "+919510112354",
   whatsappNumber: "919510112354",
   yearsInSurat: 15,
-  googleRating: "4.9",
-  googleReviewCount: "1,753",
-  googleReviewDisplay: "1,750+",
-  googleReviewBranch: "Yogi Chowk",
+  doctorCount: 4,
+  clinicCount: 2,
   consultationMessage:
-    "Hello Kheni Dental, I would like to book a consultation. Please let me know which days and times are open. Thank you.",
+    "Hello Kheni Dental, I would like to book an appointment. Please let me know which days and times are open. Thank you.",
 } as const;
 
-/**
- * Primary navigation. Six choices, matching how Indian dental sites that
- * convert well prioritise: treatments, the flagship treatment, who treats you,
- * where to go, proof, and how to reach us. Treatments opens a menu of the
- * high-intent treatments rather than sending people to an index page first.
- */
-export type NavItem = { href: string; label: string; hasMenu?: boolean; featured?: boolean };
+/** Clinic-provided schedule. Both clinics. Do not add Sunday hours. */
+export const clinicHours = {
+  days: "Monday to Saturday",
+  morning: "9:30 AM to 1:00 PM",
+  evening: "4:00 PM to 8:00 PM",
+  closed: "Sunday",
+  compact: "Mon to Sat · 9:30 AM to 1 PM · 4 PM to 8 PM",
+} as const;
 
+export type NavItem = { href: string; label: string; hasMenu?: boolean; accent?: boolean };
+
+/** Header and mobile menu. Short on purpose. */
 export const primaryNav: NavItem[] = [
-  { href: "/treatments", label: "Treatments", hasMenu: true },
-  { href: "/treatments/dental-implants-surat", label: "Dental Implants", featured: true },
-  { href: "/doctors", label: "Doctors" },
-  { href: "/locations", label: "Our Clinics" },
-  { href: "/reviews", label: "Reviews" },
-  // Promoted out of the secondary list. Patients travelling to Surat for
-  // treatment are a real part of the practice, and a buried link said the
-  // opposite. Contact stays reachable from the header CTA, the mobile dock
-  // and the footer, so nothing was lost by the swap.
-  { href: "/international-patients", label: "NRI & International" },
+  { href: "/treatments/", label: "Treatments", hasMenu: true },
+  { href: "/treatments/dental-implants-surat/", label: "Dental Implants", accent: true },
+  { href: "/doctors/", label: "Doctors" },
+  { href: "/locations/", label: "Clinics" },
+  { href: "/reviews/", label: "Reviews" },
+  { href: "/international-patients/", label: "NRI & International" },
 ];
 
-/** Lower-priority pages. Shown quietly, never as equal-weight rows. */
+/** Quieter destinations. Shown small in the menu and the footer. */
 export const secondaryNav: NavItem[] = [
-  { href: "/contact", label: "Contact & booking" },
-  { href: "/about", label: "About the clinic" },
-  { href: "/problems-we-treat", label: "Problems we treat" },
-  { href: "/clinic-technology", label: "Our technology" },
-  { href: "/smile-gallery", label: "Before & after" },
-  { href: "/patient-resources", label: "Patient resources" },
+  { href: "/problems-we-treat/", label: "What brings you in?" },
+  { href: "/smile-gallery/", label: "Before & after" },
+  { href: "/patient-resources/", label: "Patient resources" },
+  { href: "/about/", label: "About Kheni Dental" },
+  { href: "/contact/", label: "Contact" },
 ];
 
-/** Full list, used by the footer sitemap. */
+/** Footer sitemap. */
 export const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/treatments", label: "Treatments" },
-  { href: "/doctors", label: "Doctors" },
-  { href: "/locations", label: "Our Clinics" },
-  { href: "/reviews", label: "Reviews" },
-  { href: "/contact", label: "Contact" },
-  { href: "/about", label: "About" },
-  { href: "/international-patients", label: "International & NRI" },
-  { href: "/patient-resources", label: "Resources" },
+  { href: "/treatments/", label: "Treatments" },
+  { href: "/doctors/", label: "Doctors" },
+  { href: "/locations/", label: "Clinics" },
+  { href: "/reviews/", label: "Reviews" },
+  { href: "/international-patients/", label: "NRI & International" },
+  { href: "/about/", label: "About" },
+  { href: "/contact/", label: "Contact" },
 ] as const;
 
-/** Treatments surfaced directly in the navigation menu, in patient language. */
+/** Treatments surfaced in the header menu, in patient language. */
 export const featuredTreatmentSlugs = [
   "dental-implants-surat",
   "root-canal-treatment-surat",
-  "crowns-and-bridges",
   "braces-clear-aligners",
   "cosmetic-smile-dentistry",
   "kids-dentistry-surat",
+  "full-mouth-rehabilitation",
+  "crowns-and-bridges",
+  "gum-care-surat",
 ] as const;
 
 export type Location = {
@@ -82,46 +94,30 @@ export type Location = {
   shortName: string;
   /** How patients recognise the area. Yogi Chowk, not the postal locality. */
   areaLabel: string;
-  /**
-   * The one or two words a Surat patient would actually use for this clinic.
-   * Used anywhere space is tight: rails, proof rows, chips. Splitting
-   * `areaLabel` on the comma is not a substitute, because it yields "Varachha
-   * Main Road" for the branch everyone calls Hirabaug.
-   */
+  /** The one or two words a Surat patient would actually use for this clinic. */
   displayArea: string;
-  /** Full postal address. May still contain the official locality name. */
+  /** Full postal address. */
   address: string;
+  /** The address in three short lines for cards. */
+  addressLines: [string, string, string];
   phoneDisplay: string;
   phoneHref: string;
   whatsappNumber: string;
   /**
    * The branch's identity on Google, and the only map input this codebase
-   * stores. Every Maps URL — profile, directions, embed, write-a-review — is
-   * derived from it in `src/lib/maps.ts`, so a branch cannot inherit another
-   * branch's map. Do not add a second, hand-built map string here: the
-   * previous free-text `mapEmbedQuery` is exactly how both branches ended up
-   * pointing at the same broad area.
+   * stores. Every Maps URL is derived from it in `src/lib/maps.ts`, so a
+   * branch cannot inherit another branch's map.
    */
   googlePlaceId: string;
   /** The exact short link the clinic supplied, resolved against the Place ID. */
   googleShortUrl: string;
   /**
-   * The listing's own pin, taken from the `!8m2!3d<lat>!4d<lng>` parameters of
-   * the canonical Google place URL each short link redirects to. Not the
-   * `@lat,lng,zoom` segment of the same URL, which is only where Google
-   * happened to park the camera and is nearly 3km off for Hirabaug.
-   *
-   * This is what the aerial map is centred on and where its marker is drawn,
-   * so an inaccurate value here is an inaccurate map. Verified per branch in
-   * `src/content/__checks__/branch-data.check.ts`; re-verify rather than
-   * edit in place.
+   * The listing's own pin. This is what the aerial map is centred on and
+   * where its marker is drawn. Verified per branch in
+   * `src/content/__checks__/branch-data.check.ts`; re-verify rather than edit.
    */
   coords: { lat: number; lng: number };
-  /**
-   * Google reputation is tracked per branch. `status` decides whether the
-   * review card shows a real figure or a labelled placeholder, so one branch
-   * can never silently borrow the other branch's rating.
-   */
+  /** Google reputation, per branch. Never borrowed from the other branch. */
   google: {
     status: "verified" | "pending-verification";
     rating?: string;
@@ -130,10 +126,14 @@ export type Location = {
   };
   hours: string;
   hoursNote?: string;
-  /** One short line a patient can act on. Not a paragraph. */
+  /** One short line a patient can act on. */
   note: string;
+  /** Landmark a rickshaw driver would know. */
+  landmark: string;
   /** True for the branch that carries the Elite Implant Center. */
   implantCentre?: boolean;
+  /** Branch accent hue, from the treatment hue set. */
+  hue: "cobalt" | "teal";
 };
 
 export const locations: Location[] = [
@@ -145,6 +145,7 @@ export const locations: Location[] = [
     displayArea: "Yogi Chowk",
     address:
       "Shop No. 38-39, Swastik Plaza, Yogi Chowk Ground, Chikuwadi, Nana Varachha, Surat, Gujarat 395011, India",
+    addressLines: ["Shop No. 38-39, Swastik Plaza", "Yogi Chowk Ground, Chikuwadi, Nana Varachha", "Surat, Gujarat 395011"],
     phoneDisplay: "+91 95101 12354",
     phoneHref: "+919510112354",
     whatsappNumber: "919510112354",
@@ -152,9 +153,11 @@ export const locations: Location[] = [
     googleShortUrl: "https://maps.app.goo.gl/WN2nDHXVK8RajDvE6",
     coords: { lat: 21.2147921, lng: 72.8881639 },
     google: { status: "verified", rating: "4.9", reviewCount: "1,753", verifiedOn: "29 August 2026" },
-    hours: "Mon-Sat 9:30 AM-1:00 PM and 4:00 PM-8:00 PM",
+    hours: "Mon to Sat, 9:30 AM to 1:00 PM and 4:00 PM to 8:00 PM",
     hoursNote: "Clinic-provided hours. Call before travelling if your visit is time-sensitive.",
-    note: "Our original clinic at Yogi Chowk, next to Apple Square. Family dentistry, root canals, braces and kids treatment, with implant care too.",
+    note: "Our original clinic at Yogi Chowk. Family dentistry, root canals, braces and kids treatment, with implant care too.",
+    landmark: "Yogi Chowk Ground, next to Apple Square",
+    hue: "teal",
   },
   {
     slug: "hirabaug",
@@ -164,6 +167,7 @@ export const locations: Location[] = [
     displayArea: "Hirabaug",
     address:
       "2, Varachha Main Road, above Shiv Plywood, near New Shakti Vijay Society, opposite Surat Super Store, Hirabaug, Surat, Gujarat 395006, India",
+    addressLines: ["2, Varachha Main Road, above Shiv Plywood", "Near New Shakti Vijay Society, opp. Surat Super Store", "Hirabaug, Surat, Gujarat 395006"],
     phoneDisplay: "+91 97379 97543",
     phoneHref: "+919737997543",
     whatsappNumber: "919737997543",
@@ -171,15 +175,19 @@ export const locations: Location[] = [
     googleShortUrl: "https://maps.app.goo.gl/7TipkWprNZv2qEQk9",
     coords: { lat: 21.2127579, lng: 72.8584163 },
     google: { status: "verified", rating: "4.9", reviewCount: "210", verifiedOn: "29 August 2026" },
-    hours: "Mon-Sat 9:30 AM-1:00 PM and 4:00 PM-8:00 PM",
+    hours: "Mon to Sat, 9:30 AM to 1:00 PM and 4:00 PM to 8:00 PM",
     hoursNote: "Clinic-provided hours. Call before travelling if your visit is time-sensitive.",
-    note: "Our Elite Implant Center on Varachha Main Road, above Shiv Plywood. Implants, full mouth cases and smile design are led from here.",
+    note: "Our Elite Implant Center on Varachha Main Road. Implants, full mouth cases and smile design are led from here.",
+    landmark: "Above Shiv Plywood, opposite Surat Super Store",
     implantCentre: true,
+    hue: "cobalt",
   },
 ];
 
-// Real Google review excerpts captured during the August 2026 research pass.
-// Never edit, paraphrase or add to these. Only the theme label is editorial.
+/**
+ * Real Google review excerpts captured during the August 2026 research pass.
+ * Never edit, paraphrase or add to these. Only the theme label is editorial.
+ */
 export const reviewHighlights = [
   {
     theme: "At ease",
@@ -198,854 +206,875 @@ export const reviewHighlights = [
   },
 ] as const;
 
+/* ── Colour language ────────────────────────────────────────────────────
+   Each treatment owns one hue. The hue drives its poster, its icon, its
+   chips and the tint of its page, so a patient learns to recognise it
+   without the whole site becoming a rainbow. Values live in globals.css. */
+export type Hue = "cobalt" | "navy" | "teal" | "amber" | "coral" | "violet" | "mint" | "green" | "lavender" | "sky" | "sunshine" | "gold";
+
 export type Doctor = {
   slug: string;
   name: string;
+  /** "Dr. Mayur", for buttons and headings that need a short form. */
+  shortName: string;
   credentials: string;
   specialty: string;
   yearsExperience: number;
-  badges: string[];
+  /** What patients most often come to this doctor for. Confirmed areas only. */
+  focus: string[];
   bio: string;
   philosophy: string;
-  approachHeading: string;
   metaDescription: string;
   relatedTreatmentSlugs: string[];
+  hue: Hue;
+  /** True for the principal dentist. */
+  principal?: boolean;
 };
 
 export const doctors: Doctor[] = [
   {
     slug: "dr-mayur-kheni",
     name: "Dr. Mayur Kheni",
+    shortName: "Dr. Mayur",
     credentials: "B.D.S.",
     specialty: "Implantologist & Cosmetic Dental Surgeon",
     yearsExperience: 15,
-    badges: ["Dental Implants", "Tooth Replacement", "Cosmetic Dentistry"],
+    focus: ["Dental Implants", "Full Mouth Rehabilitation", "Smile Design"],
     bio:
-      "Dr. Mayur Kheni leads Kheni Dental. He works in implantology and cosmetic dental surgery, so people usually reach him about a gap they have stopped chewing on, a denture that keeps shifting, or older dental work that no longer holds up. He has been in practice for 15 years.",
-    philosophy:
-      "Nobody should agree to treatment they could not explain to someone else afterwards. If the reason is still fuzzy, the consultation is not finished.",
-    approachHeading: "Decisions made after the explanation, not before.",
+      "Dr. Mayur Kheni founded Kheni Dental and leads the Elite Implant Center at Hirabaug. Most people reach him about a gap they have stopped chewing on, a denture that keeps moving, or older dental work that no longer holds up. He has been in practice for 15 years.",
+    philosophy: "You should be able to explain your own treatment plan to someone at home. If you cannot, we have not finished talking.",
     metaDescription:
-      "Dr. Mayur Kheni, B.D.S., leads Kheni Dental in Surat. Implantology and cosmetic dental surgery, with 15 years in practice. Ask about an appointment.",
-    relatedTreatmentSlugs: ["dental-implants-surat", "cosmetic-smile-dentistry", "full-mouth-rehabilitation"],
+      "Dr. Mayur Kheni, B.D.S., Implantologist & Cosmetic Dental Surgeon, leads Kheni Dental & Elite Implant Center in Surat. 15 years in practice. Book an appointment.",
+    relatedTreatmentSlugs: ["dental-implants-surat", "full-mouth-rehabilitation", "cosmetic-smile-dentistry"],
+    hue: "cobalt",
+    principal: true,
   },
   {
     slug: "dr-jinal-monapara",
     name: "Dr. Jinal Monapara",
+    shortName: "Dr. Jinal",
     credentials: "B.D.S.",
     specialty: "Dental Surgeon & Smile Designing Specialist",
     yearsExperience: 9,
-    badges: ["Smile Design", "Crowns & Bridges", "General Dentistry"],
+    focus: ["Smile Design", "Crowns & Bridges", "Everyday Dentistry"],
     bio:
-      "Dr. Jinal Monapara is a dental surgeon and smile designing specialist. Patients usually come to her about one thing they keep noticing in photographs, a chipped edge, a gap, a shade that no longer matches, and she talks through what can be changed and what is better left alone. She has 9 years in practice.",
-    philosophy:
-      "The right result is usually the smallest change that gets you what you came for. If you stop recognising yourself in the mirror, we have gone too far.",
-    approachHeading: "The smallest change that does the job.",
+      "Dr. Jinal Monapara is a dental surgeon and smile designing specialist. Patients usually come to her about one thing they keep noticing in photos: a chipped edge, a gap, a shade that no longer matches. She talks through what can change and what is better left alone. Nine years in practice.",
+    philosophy: "The right result is usually the smallest change that gets you what you came for.",
     metaDescription:
-      "Dr. Jinal Monapara, B.D.S., dental surgeon and smile designing specialist at Kheni Dental, Surat. Nine years in practice. Ask what your choices are.",
-    relatedTreatmentSlugs: ["cosmetic-smile-dentistry", "crowns-and-bridges", "general-family-dentistry"],
+      "Dr. Jinal Monapara, B.D.S., Dental Surgeon & Smile Designing Specialist at Kheni Dental, Surat. Nine years in practice. Book an appointment.",
+    relatedTreatmentSlugs: ["cosmetic-smile-dentistry", "crowns-and-bridges", "dental-check-up-surat", "tooth-fillings-surat"],
+    hue: "coral",
   },
   {
     slug: "dr-ishita-dobariya",
     name: "Dr. Ishita Dobariya",
+    shortName: "Dr. Ishita",
     credentials: "B.D.S.",
     specialty: "Dental Surgeon & Kids Specialist",
     yearsExperience: 4,
-    badges: ["Kids Dentistry", "First Dental Visits", "Family Dentistry"],
+    focus: ["Kids Dentistry", "First Dental Visits", "Family Check-ups"],
     bio:
-      "Dr. Ishita Dobariya is a dental surgeon and the Kids Specialist at Kheni Dental. Most of her appointments are with children, including first visits and the child who has already decided they will not open their mouth. She works at a pace the child can manage, tells the parent what she is seeing as she goes, and has 4 years in practice.",
-    philosophy:
-      "A child who is not frightened this time will sit down more easily next time. That matters more to me than getting everything finished in one appointment.",
-    approachHeading: "What a first visit should feel like.",
+      "Dr. Ishita Dobariya is a dental surgeon and the Kids Specialist at Kheni Dental. Most of her day is spent with children, including first visits and the child who has already decided not to open their mouth. She works at the pace the child can manage and tells the parent what she is seeing as she goes. Four years in practice.",
+    philosophy: "A child who is not frightened this time will sit down more easily next time. That matters more than finishing everything in one visit.",
     metaDescription:
-      "Dr. Ishita Dobariya, B.D.S., dental surgeon and Kids Specialist at Kheni Dental, Surat. Four years in practice, working mostly with children.",
-    relatedTreatmentSlugs: ["kids-dentistry-surat", "general-family-dentistry"],
+      "Dr. Ishita Dobariya, B.D.S., Dental Surgeon & Kids Specialist at Kheni Dental, Surat. Four years in practice, working mostly with children.",
+    relatedTreatmentSlugs: ["kids-dentistry-surat", "dental-check-up-surat", "tooth-fillings-surat"],
+    hue: "mint",
   },
   {
     slug: "dr-parita-vastarpara",
     name: "Dr. Parita Vastarpara",
+    shortName: "Dr. Parita",
     credentials: "B.D.S.",
     specialty: "Dental Surgeon",
     yearsExperience: 4,
-    badges: ["Everyday Dentistry", "Root Canal Treatment", "Preventive Checks"],
+    focus: ["Root Canal Treatment", "Fillings", "Check-ups"],
     bio:
-      "Dr. Parita Vastarpara is a dental surgeon at Kheni Dental. She sees people for everyday dental needs, the check-up that is well overdue, a filling, a tooth that has started aching at night. Most of it is work that is easier done now than later, and she has four years of experience.",
-    philosophy:
-      "Most people are not avoiding the dentist so much as avoiding not knowing what is wrong. Once you hear it in plain words, the rest of the appointment gets much easier.",
-    approachHeading: "Plain words before anything else happens.",
+      "Dr. Parita Vastarpara is a dental surgeon at Kheni Dental. She sees people for everyday dental needs: the check-up that is overdue, a filling, a tooth that has started aching at night. Most of it is work that is easier done now than later. Four years in practice.",
+    philosophy: "Most people are not avoiding the dentist. They are avoiding not knowing what is wrong. Plain words fix that.",
     metaDescription:
-      "Dr. Parita Vastarpara, B.D.S., is a dental surgeon at Kheni Dental in Surat, with 4 years in practice covering everyday dentistry and check-ups.",
-    relatedTreatmentSlugs: ["general-family-dentistry", "root-canal-treatment-surat", "crowns-and-bridges"],
+      "Dr. Parita Vastarpara, B.D.S., Dental Surgeon at Kheni Dental in Surat. Four years in practice covering root canals, fillings and check-ups.",
+    relatedTreatmentSlugs: ["root-canal-treatment-surat", "tooth-fillings-surat", "dental-check-up-surat", "crowns-and-bridges"],
+    hue: "teal",
   },
 ];
 
+export type TreatmentCategory = "restorative" | "everyday" | "cosmetic" | "kids" | "surgical";
+
 export type Treatment = {
   slug: string;
+  /** Patient-facing name. Used everywhere. */
   title: string;
+  /** Shorter form for chips and the dock. */
+  shortTitle: string;
   seoTitle: string;
   metaDescription: string;
-  eyebrow: string;
-  problem: string;
-  emotionalHeadline: string;
+  hue: Hue;
+  category: TreatmentCategory;
+  /** The sentence a patient arrives with, in their own words. */
+  concern: string;
+  /** The page headline. Warm, direct, no promises. */
+  headline: string;
+  /** One sentence for cards. */
   short: string;
+  /** Two or three sentences. What it is and when it is used. */
   intro: string;
-  benefits: string[];
-  aside: { title: string; copy: string };
-  processHeading: string;
-  process: { title: string; copy: string }[];
+  /** "You might need this if" signs. Patient language. */
+  signs: string[];
+  /** What happens at a visit. Three or four steps. */
+  visit: { title: string; copy: string }[];
+  /** What to expect after. Honest, short. */
+  expect: string[];
+  worthKnowing: { title: string; copy: string };
+  doctorSlugs: string[];
   ctaTitle: string;
+  whatsappMessage: string;
   faqs: { question: string; answer: string }[];
+  /** Shown in the homepage poster grid. Six at most. */
+  featured?: boolean;
 };
 
 export const treatments: Treatment[] = [
   {
     slug: "dental-implants-surat",
     title: "Dental Implants",
-    seoTitle: "Dental Implants in Surat",
+    shortTitle: "Implants",
+    seoTitle: "Dental Implants in Surat | Elite Implant Center",
     metaDescription:
-      "Missing a tooth and chewing on one side? Learn how dental implants in Surat are assessed, staged and honestly compared with bridges and dentures.",
-    eyebrow: "Implant dentistry in Surat",
-    problem: "I only chew on one side now.",
-    emotionalHeadline: "A tooth you do not have to think about.",
-    short:
-      "For a missing tooth or a denture that shifts, an implant can carry a fixed replacement, once an examination shows your bone and gums can support one.",
+      "Dental implants in Surat at Kheni Dental & Elite Implant Center. Single, multiple and full mouth implants planned by Dr. Mayur Kheni after examination and imaging.",
+    hue: "cobalt",
+    category: "restorative",
+    concern: "I only chew on one side now.",
+    headline: "A fixed tooth for the gap you have been working around.",
+    short: "A small post placed in the jawbone that holds a fixed replacement tooth, for a missing tooth or a denture that moves.",
     intro:
-      "A missing tooth changes how you eat before you notice it. You move food to the other side, you choose the softer thing on the menu, and after a while you stop noticing that you have changed the way you eat. A dental implant is a small post placed in the jawbone that holds a replacement tooth, so it is anchored in the bone instead of resting on the gum or clipping onto neighbouring teeth. Whether it suits you depends on your bone, your gums, your general health and what you want to be able to bite into again.",
-    benefits: [
-      "Chewing on both sides, not just one",
-      "A replacement anchored in bone, not resting on gum",
-      "Speaking and laughing without thinking about the gap",
-      "Healthy neighbouring teeth left untouched where possible",
+      "A missing tooth changes how you eat before you notice it. You move food to the other side and pick the softer thing on the menu. An implant is a small post placed in the jawbone that holds a replacement tooth, so it is anchored in bone rather than resting on the gum or clipping onto the teeth beside it. Whether one suits you depends on your bone, your gums and your general health, which is checked before anything is recommended.",
+    signs: [
+      "One or more teeth missing",
+      "A denture that slips when you eat or talk",
+      "A bridge that has loosened or failed",
+      "You chew on one side to avoid a gap",
     ],
-    aside: {
+    visit: [
+      { title: "Consultation", copy: "You tell us which side you chew on and what you have stopped eating. The dentist examines the gap, the gums and the teeth on either side." },
+      { title: "Examination and imaging", copy: "Bone cannot be judged by looking, so implant planning usually needs imaging. The dentist decides what is appropriate for you." },
+      { title: "Your treatment plan", copy: "Implant, bridge or denture, explained plainly with the stages, the visits and the time between them. Waiting is discussed too, if waiting is sensible." },
+      { title: "Implant treatment", copy: "The implant is placed under local anaesthesia and given time to bond with the bone." },
+      { title: "Final tooth and follow-up", copy: "The final crown or set of teeth is fitted once the implant has settled, and you are shown how to clean around it." },
+    ],
+    expect: [
+      "Some soreness and swelling for a few days after placement",
+      "Softer food while the implant heals",
+      "Several months between placement and the final tooth in many cases",
+      "Review visits to check healing",
+    ],
+    worthKnowing: {
       title: "Why some people are told to wait",
-      copy: "Uncontrolled gum disease, unmanaged diabetes, heavy smoking and thin bone can all change whether an implant is placed now, placed later or not placed at all. Those things are judged in the chair, not on a screen, so read this as the questions worth raising at the consultation.",
+      copy: "Active gum disease, unmanaged diabetes, heavy smoking and thin bone can all change whether an implant is placed now, later, or not at all. These are judged in the chair, so bring them up at the consultation.",
     },
-    processHeading: "How an implant decision is actually made.",
-    process: [
-      {
-        title: "Tell us what you avoid",
-        copy: "We start with the practical things. Which side you chew on, which foods you have quietly dropped, and whether anything shifts when you talk.",
-      },
-      {
-        title: "Examination and imaging",
-        copy: "The dentist examines your gums, the bone under the gap, your bite and the teeth on either side. Imaging is used where it is needed, because the bone is what decides how much an implant can be asked to do.",
-      },
-      {
-        title: "Implant, bridge or denture",
-        copy: "You get a straight account of what each one involves, how long it takes and what it asks of the teeth around it. That includes the case for waiting, if waiting is the sensible thing this year.",
-      },
-      {
-        title: "Placement, healing, final tooth",
-        copy: "The implant is placed, then given time to bond with the bone before the final tooth is fitted on top. You will have the visit schedule, the healing expectations and the cleaning routine explained before the first appointment.",
-      },
-    ],
+    doctorSlugs: ["dr-mayur-kheni"],
     ctaTitle: "Find out whether an implant suits your case.",
+    whatsappMessage: "Hello Kheni Dental, I would like to ask about dental implants and book a consultation. Thank you.",
+    featured: true,
     faqs: [
       {
         question: "Will I be able to eat normally again?",
-        answer: "That is what the treatment is aiming at, and most people find chewing gets easier once the final tooth is fitted. How close it feels to your own tooth depends on how many teeth are being replaced, the state of the teeth biting against it and how well the implant settles into the bone. There is also a healing stretch where you will be asked to stay on softer food. Your dentist will tell you what to expect at each stage.",
+        answer: "That is the aim, and most people find chewing gets easier once the final tooth is fitted. How close it feels to your own tooth depends on how many teeth are replaced, the teeth biting against it and how well the implant settles. There is a healing stretch on softer food first. Your dentist will tell you what to expect at each stage.",
       },
       {
-        question: "Is it very painful?",
-        answer: "The placement is done under local anaesthesia, so you should not feel the procedure itself. Afterwards there is usually some soreness and swelling for a few days, and your dentist will explain what is normal for your case and how to manage it. If anything feels worse than you were told to expect, call the clinic instead of waiting it out.",
+        question: "Does it hurt?",
+        answer: "The implant is placed under local anaesthesia, so you should not feel the procedure itself. Some soreness and swelling for a few days afterwards is normal. Your dentist will explain what is expected for your case and what to do if it feels worse than that.",
       },
       {
         question: "How long does the whole thing take?",
-        answer: "Longer than most people expect, because the bone needs time to bond with the implant between the placement and the final tooth. In many cases that means several months with review visits in between, and some people need preparatory treatment first, such as gum care, or a bone graft to build up the ridge where the implant will sit. A realistic sequence can only be given to you after the examination, not before.",
+        answer: "Longer than most people expect, because the bone needs time to bond with the implant before the final tooth goes on. In many cases that means a few months with review visits in between. Some people need gum treatment or bone preparation first. A realistic timeline comes after the examination, not before.",
       },
       {
-        question: "Should I get an implant or a bridge?",
-        answer: "Both can be a sound choice, and neither is automatically better. A bridge is usually quicker and leans on the teeth on either side for support, which means those teeth get prepared even when they are perfectly healthy. An implant stands on its own in the bone and leaves the neighbours alone, but it needs enough bone, settled gums and more time. Bring the question to the consultation, because the answer sits in what is beside the gap and underneath it.",
-      },
-    ],
-  },
-  {
-    slug: "full-mouth-rehabilitation",
-    title: "Full Mouth Rehabilitation",
-    seoTitle: "Full Mouth Rehabilitation in Surat",
-    metaDescription:
-      "When several teeth need work, the order matters. Full mouth rehabilitation in Surat at Kheni Dental, planned in stages so you deal with one at a time.",
-    eyebrow: "Full mouth rehabilitation",
-    problem: "Too many teeth need work and I do not know where to start.",
-    emotionalHeadline: "You do not have to fix everything at once.",
-    short:
-      "When several teeth need attention, we put the work in a sensible order so you deal with one stage at a time instead of everything at once.",
-    intro:
-      "Rarely is it just one thing that has gone wrong. A tooth broke, another was taken out years ago, an old crown has come loose and the bite has quietly changed along with all of it. Full mouth rehabilitation is the name for treating that as one connected problem instead of a queue of unrelated appointments. After an examination, your dentist works out what has to happen first, what can safely wait, and how the stages fit together.",
-    benefits: [
-      "One plan instead of scattered separate repairs",
-      "You know what comes first and why",
-      "Bite, gums and missing teeth reviewed together",
-      "The whole sequence explained before work starts",
-    ],
-    aside: {
-      title: "The order matters as much as the work",
-      copy: "When several things are wrong at once, the sequence often decides the result more than any single procedure does, because gums and bite usually have to be settled before new teeth are built on top of them. Working out that order is the first real task of the consultation, and it needs someone looking in your mouth.",
-    },
-    processHeading: "How the order of work is decided.",
-    process: [
-      {
-        title: "One long first visit",
-        copy: "Instead of looking only at the tooth troubling you most, we go through every tooth, your gums, your bite and any older dental work still in place.",
+        question: "Implant or bridge?",
+        answer: "Both can be sound choices. A bridge is usually quicker and uses the teeth on either side for support, which means those teeth are prepared even if they are healthy. An implant stands on its own in the bone and leaves the neighbours alone, but it needs enough bone, settled gums and more time. The answer sits in what is beside the gap and underneath it.",
       },
       {
-        title: "Sorting urgent from later",
-        copy: "Some things need attention soon, such as infection or a tooth that cannot be kept. Others can wait, and knowing which is which takes most of the weight off straight away.",
-      },
-      {
-        title: "The sequence, written out",
-        copy: "You get the stages in order, what each one involves and roughly how much time sits between them, so you can plan the rest of your life around them.",
-      },
-      {
-        title: "Built stage by stage",
-        copy: "Each phase is finished and checked before the next one starts, and the plan is adjusted if your mouth responds differently than expected. Once the work is done, we agree how often it should be reviewed.",
-      },
-    ],
-    ctaTitle: "Bring the whole list to one appointment.",
-    faqs: [
-      {
-        question: "How long does the whole treatment take?",
-        answer: "Usually months rather than weeks, because healing between stages cannot be rushed. The number of teeth involved, the state of your gums and whether implants or gum treatment are part of the plan all change the timing. Your dentist can give you a realistic range once the examination and imaging are done, not before.",
-      },
-      {
-        question: "Do I have to commit to all of it at the start?",
-        answer: "No. What you agree to first is usually the part that protects your health, such as infection, loose teeth or gum problems. The rest can be discussed once that phase is behind you, and it is reasonable to ask how long a decision can wait.",
-      },
-      {
-        question: "How do I know I really need this much work?",
-        answer: "Ask your dentist to show you what they are seeing, tooth by tooth, and to explain what happens if a particular item is left alone. If you cannot follow the reasoning behind a plan, it is worth questioning. Taking a second opinion before a large course of treatment is a normal and sensible thing to do.",
-      },
-      {
-        question: "Can I eat and go to work normally in between stages?",
-        answer: "For most of the plan, yes, though some phases involve temporary teeth or a softer diet for a while. We try to sequence the work so you are not left without something to chew on. Tell us about travel, work or a family event in advance so the stages can be arranged around them.",
+        question: "How is the cost decided?",
+        answer: "It depends on how many teeth are involved, the condition of the bone, whether any preparation is needed first and the final tooth that goes on top. After the examination you get the full plan, stage by stage, with the estimate for each stage, before any treatment starts.",
       },
     ],
   },
   {
     slug: "root-canal-treatment-surat",
     title: "Root Canal Treatment",
+    shortTitle: "Root Canal",
     seoTitle: "Root Canal Treatment in Surat",
     metaDescription:
-      "Tooth pain that keeps you awake needs a cause, not a guess. Root canal treatment in Surat at Kheni Dental, aimed at keeping your own tooth where possible.",
-    eyebrow: "Root canal care",
-    problem: "This tooth keeps me up at night.",
-    emotionalHeadline: "Ease the pain. Keep the tooth where we can.",
-    short:
-      "Settling the pain from an inflamed or infected tooth and, where the tooth can be saved, keeping it in your mouth rather than replacing it.",
+      "Root canal treatment in Surat at Kheni Dental. For tooth pain from an infected or inflamed tooth, aimed at settling the pain and keeping your own tooth where possible.",
+    hue: "teal",
+    category: "restorative",
+    concern: "This tooth keeps me up at night.",
+    headline: "Settle the pain. Keep the tooth where we can.",
+    short: "Cleans out an infected or inflamed tooth from the inside and seals it, so the pain settles and your own tooth stays.",
     intro:
-      "Tooth pain has a habit of arriving at night, when nothing else is going on to distract you. Not every ache needs a root canal, so the first job is working out what is actually causing it. If the soft tissue inside the tooth is inflamed or infected, root canal treatment cleans out that space, seals it and lets the tooth carry on doing its work. After an examination your dentist will tell you whether that is the right answer for your tooth.",
-    benefits: [
-      "Treats the infection causing the pain",
-      "Keeps your own tooth where that is possible",
-      "A straight answer about what went wrong",
-      "Comfort planned around you before treatment starts",
+      "Tooth pain has a habit of arriving at night. Not every ache needs a root canal, so the first job is finding the cause. If the soft tissue inside the tooth is inflamed or infected, root canal treatment cleans that space, seals it and lets the tooth carry on working. A crown or filling usually protects it afterwards.",
+    signs: [
+      "Throbbing pain that wakes you at night",
+      "A tooth that hurts when you bite",
+      "Sensitivity to hot or cold that lingers",
+      "Swelling or a small bump on the gum near a tooth",
     ],
-    aside: {
+    visit: [
+      { title: "Find the cause", copy: "You tell us when it hurts and what sets it off. The dentist examines the tooth and takes any imaging needed to see the roots." },
+      { title: "Get you comfortable", copy: "Local anaesthesia is planned before treatment starts. You are told what you are likely to feel during and after." },
+      { title: "Clean and seal", copy: "The space inside the tooth is cleaned, disinfected and sealed. This is often done over more than one visit." },
+      { title: "Protect the tooth", copy: "A treated tooth usually needs a filling or a crown so it can take chewing pressure again." },
+    ],
+    expect: [
+      "Tenderness when biting for some days",
+      "Chew on the other side until it settles",
+      "A follow-up to fit the crown or filling",
+      "Call if pain gets worse instead of easing",
+    ],
+    worthKnowing: {
       title: "Pain that stops is not proof",
-      copy: "When the nerve inside a tooth dies, the ache can fade on its own while the infection quietly continues underneath. If a tooth hurt badly last week and feels fine now, it still deserves an examination rather than a wait.",
+      copy: "When the nerve inside a tooth dies, the ache can fade while the infection continues underneath. A tooth that hurt badly last week and feels fine now still deserves an examination.",
     },
-    processHeading: "How a painful tooth is usually handled.",
-    process: [
-      {
-        title: "Work out the cause",
-        copy: "You tell us when it hurts, what sets it off and how long it has been going on. Examination and any imaging your dentist needs fill in the rest.",
-      },
-      {
-        title: "Getting you comfortable",
-        copy: "Anaesthesia is planned before treatment begins. Your dentist will also tell you what you are likely to feel during the appointment and in the days after.",
-      },
-      {
-        title: "Cleaning and sealing",
-        copy: "The space inside the tooth is cleaned, disinfected and sealed. This is often done over more than one appointment, and your dentist will say how many your tooth is likely to need.",
-      },
-      {
-        title: "Protecting the tooth",
-        copy: "A treated tooth usually needs a filling or a crown so it can take the pressure of chewing again. Healing and bite are checked at review.",
-      },
-    ],
+    doctorSlugs: ["dr-parita-vastarpara"],
     ctaTitle: "Call us before the next bad night.",
+    whatsappMessage: "Hello Kheni Dental, I have tooth pain and would like to book an appointment. Thank you.",
+    featured: true,
     faqs: [
       {
         question: "Will the root canal hurt?",
-        answer: "Anaesthesia is used so the tooth and the area around it are numb while the work is done. Most people feel some tenderness for a few days afterwards, especially when biting on that side. Your dentist will explain what to expect for your tooth and what to do if the soreness does not settle.",
+        answer: "Anaesthesia is used so the tooth and the area around it are numb while the work is done. Most people feel some tenderness for a few days afterwards, especially when biting on that side. Your dentist will explain what to expect and what to do if the soreness does not settle.",
       },
       {
         question: "Can it be finished in one visit?",
-        answer: "Often it takes more than one appointment. How many depends on the tooth, how many canals it has and how much infection is present, and your dentist can give you a realistic number after examining you. Please plan for more than a single sitting so the timing does not surprise you.",
+        answer: "Often it takes more than one. How many depends on the tooth, how many canals it has and how much infection is present. Your dentist can give you a realistic number after examining you.",
       },
       {
         question: "Why not just take the tooth out?",
-        answer: "Removing a tooth ends the pain too, but it leaves a gap that usually needs replacing later with a bridge or an implant. A natural tooth that can be saved keeps your bite the way it already is and means less dental work down the line. Whether yours can be saved depends on how much sound tooth is left and what the examination shows.",
+        answer: "Removing a tooth ends the pain too, but it leaves a gap that usually needs replacing later with a bridge or an implant. A natural tooth that can be saved keeps your bite the way it is. Whether yours can be saved depends on how much sound tooth is left.",
       },
       {
-        question: "How long will the tooth last afterwards?",
-        answer: "A treated tooth that has been properly protected can serve you for many years, though nobody can put a figure on it. How you chew, the health of the gum around it, how much tooth structure remains and the covering placed on top all play a part. Regular check-ups help pick up a problem while it is still small.",
+        question: "How is the cost decided?",
+        answer: "By which tooth it is, how many canals it has, how much infection there is and what the tooth needs afterwards, such as a filling or a crown. The dentist explains the plan and the estimate after examining the tooth.",
+      },
+    ],
+  },
+  {
+    slug: "braces-clear-aligners",
+    title: "Braces & Aligners",
+    shortTitle: "Braces",
+    seoTitle: "Braces & Clear Aligners in Surat",
+    metaDescription:
+      "Braces and clear aligners in Surat at Kheni Dental. Crowding, gaps and bites that do not meet, assessed first so you know which option suits your case and how long it takes.",
+    hue: "violet",
+    category: "cosmetic",
+    concern: "My teeth are crowded and I do not want visible braces at work.",
+    headline: "Straighter teeth, with the option that suits your case.",
+    short: "Moves crowded, gapped or uneven teeth into place with braces or clear aligners, depending on the movement your teeth need.",
+    intro:
+      "Adults who ask about aligners are rarely chasing a picture. They are tired of one tooth sitting in front of another, or a bite that keeps wearing the same edges. Braces and clear aligners both move teeth, but they do not suit every case equally. Which one fits yours depends on how far the teeth have to move, not on which you would rather wear.",
+    signs: [
+      "Crowded or overlapping teeth",
+      "Gaps you would like closed",
+      "Upper and lower teeth that do not meet properly",
+      "Teeth that have shifted since earlier braces",
+    ],
+    visit: [
+      { title: "Start with your complaint", copy: "Which tooth bothers you, and whether your bite has started to feel off when you close." },
+      { title: "Measure the movement", copy: "Photographs, models and measurements show which teeth have to move, how far and in what order." },
+      { title: "Braces or aligners", copy: "Only now does the appliance question get answered, along with the likely length of treatment and what you will do every day." },
+      { title: "Wear it, then hold it", copy: "Teeth are checked and adjusted at set intervals. Retainers stop them sliding back afterwards." },
+    ],
+    expect: [
+      "Months rather than weeks of treatment",
+      "Some pressure for a few days after each adjustment",
+      "Aligners out for meals and photographs",
+      "Retainers after treatment, for as long as your dentist advises",
+    ],
+    worthKnowing: {
+      title: "Why a photo cannot answer this",
+      copy: "People often send a picture of their front teeth and ask whether aligners will work. Suitability rests on how the back teeth meet and how far roots have to move, and that only shows up on examination.",
+    },
+    doctorSlugs: [],
+    ctaTitle: "Find out which option your case needs.",
+    whatsappMessage: "Hello Kheni Dental, I would like to ask about braces or clear aligners and book a consultation. Thank you.",
+    featured: true,
+    faqs: [
+      {
+        question: "Will anyone at work notice?",
+        answer: "Clear aligners sit over the teeth and are far less obvious than metal braces, but they are not invisible. They also come out for meals. If your case is better handled with braces, the dentist will go through how visible each option is before you decide.",
+      },
+      {
+        question: "How long will it take?",
+        answer: "Usually longer than people hope. Tooth movement is counted in months, and the range is wide because it depends on how far the teeth have to travel and how many hours a day removable aligners are actually worn. You get an estimate for your own case at the planning stage.",
+      },
+      {
+        question: "Am I too old for braces?",
+        answer: "Adults have orthodontic treatment routinely. Gum health and the bone supporting your teeth matter more than age, so those are checked before alignment is planned.",
+      },
+      {
+        question: "How is the cost decided?",
+        answer: "By the type of appliance, how much movement is needed and how long treatment is likely to run. The dentist explains the plan and the estimate after the assessment.",
+      },
+    ],
+  },
+  {
+    slug: "cosmetic-smile-dentistry",
+    title: "Smile Design",
+    shortTitle: "Smile Design",
+    seoTitle: "Smile Design & Cosmetic Dentistry in Surat",
+    metaDescription:
+      "Smile design in Surat at Kheni Dental. Chipped, worn, stained or uneven teeth assessed first, then the smallest option that gets the result: whitening, bonding, veneers or crowns.",
+    hue: "coral",
+    category: "cosmetic",
+    concern: "I have started smiling with my mouth closed.",
+    headline: "Change what bothers you. Keep the rest.",
+    short: "Improves the colour, shape or spacing of your front teeth, starting with the smallest change that gets the result.",
+    intro:
+      "Ask anyone what bothers them about their smile and you get one or two specific answers. A chipped edge, a gap that seems wider, a tooth that sits back, a colour that no longer matches. The first question is not which procedure to book, it is which of those things is genuinely bothering you and why the tooth looks that way. Some concerns are settled by whitening or a small reshape. Others need the bite or the gums sorted first.",
+    signs: [
+      "A chipped or worn front tooth",
+      "Teeth that look yellow or stained",
+      "A gap or an uneven edge you notice in photos",
+      "An old filling or crown that no longer matches",
+    ],
+    visit: [
+      { title: "Tell us what you notice", copy: "Bring a photo if it is easier to point at than describe. We want your words before any procedure gets named." },
+      { title: "Check the health first", copy: "Teeth, gums, bite and older fillings are examined, because cosmetic work placed over an untreated problem does not hold." },
+      { title: "Compare the real options", copy: "What each option changes, how much tooth it uses and what looking after it involves. Where a lighter approach does the job, we say so." },
+      { title: "Agree before anything starts", copy: "Nothing begins until you know the sequence, the number of visits and what the result can and cannot do." },
+    ],
+    expect: [
+      "Whitening and bonding can usually be revisited later",
+      "Reshaping removes enamel that does not grow back",
+      "Some sensitivity after whitening for a short time",
+      "Upkeep that depends on the option chosen",
+    ],
+    worthKnowing: {
+      title: "Some cosmetic work cannot be undone",
+      copy: "Anything that reshapes a tooth removes enamel permanently. That is a decision to make in the chair after an examination, not from a page.",
+    },
+    doctorSlugs: ["dr-jinal-monapara", "dr-mayur-kheni"],
+    ctaTitle: "Start with a conversation, not a procedure.",
+    whatsappMessage: "Hello Kheni Dental, I would like to ask about smile design and book a consultation. Thank you.",
+    featured: true,
+    faqs: [
+      {
+        question: "Will people be able to tell?",
+        answer: "That depends on how much is changed and how well the shape and colour sit with your face. Small corrections usually read as your own teeth looking tidier. Say up front how visible you want the result to be.",
+      },
+      {
+        question: "Do I need veneers, or is there something smaller?",
+        answer: "Often there is something smaller. Whitening, polishing an uneven edge, bonding a chip or closing a gap with alignment handle a lot of what people come in worried about. Veneers and crowns are considered when the tooth itself is damaged, worn or too discoloured for a lighter approach.",
+      },
+      {
+        question: "Will whitening work on my teeth?",
+        answer: "It depends on why the teeth look the way they do. Surface staining from tea, coffee, tobacco or paan behaves differently from colour that comes from inside the tooth. Existing crowns, veneers and white fillings do not change colour with whitening. An examination is the only way to know.",
+      },
+      {
+        question: "How is the cost decided?",
+        answer: "By which option suits your teeth and how many teeth are involved. After the examination the dentist explains the choices and the estimate for each before anything starts.",
+      },
+    ],
+  },
+  {
+    slug: "full-mouth-rehabilitation",
+    title: "Full Mouth Rehabilitation",
+    shortTitle: "Full Mouth",
+    seoTitle: "Full Mouth Rehabilitation in Surat",
+    metaDescription:
+      "Full mouth rehabilitation in Surat at Kheni Dental & Elite Implant Center. When several teeth need work, the order matters. Planned in stages by Dr. Mayur Kheni.",
+    hue: "navy",
+    category: "restorative",
+    concern: "Too many teeth need work and I do not know where to start.",
+    headline: "You do not have to fix everything at once.",
+    short: "When several teeth need attention, one plan puts the work in a sensible order so you deal with one stage at a time.",
+    intro:
+      "Rarely is it just one thing. A tooth broke, another was taken out years ago, an old crown has come loose and the bite has quietly changed with all of it. Full mouth rehabilitation treats that as one connected problem instead of a queue of unrelated appointments. After an examination, your dentist works out what has to happen first, what can wait, and how the stages fit together.",
+    signs: [
+      "Several missing, broken or worn teeth",
+      "Old dental work failing in more than one place",
+      "A bite that has changed or collapsed",
+      "Dentures you no longer trust",
+    ],
+    visit: [
+      { title: "One long first visit", copy: "Every tooth, your gums, your bite and any older dental work are looked at together, with imaging where needed." },
+      { title: "Urgent from later", copy: "Infection or a tooth that cannot be kept comes first. Knowing what can wait takes most of the weight off straight away." },
+      { title: "The sequence, written out", copy: "You get the stages in order, what each involves and roughly how much time sits between them." },
+      { title: "Built stage by stage", copy: "Each phase is finished and checked before the next starts, and the plan adjusts if your mouth responds differently." },
+    ],
+    expect: [
+      "Months rather than weeks, because healing cannot be rushed",
+      "Temporary teeth or a softer diet during some phases",
+      "The freedom to agree to one stage at a time",
+      "A review schedule once the work is done",
+    ],
+    worthKnowing: {
+      title: "The order matters as much as the work",
+      copy: "Gums and bite usually have to be settled before new teeth are built on top of them. Working out that order is the first real task of the consultation.",
+    },
+    doctorSlugs: ["dr-mayur-kheni"],
+    ctaTitle: "Bring the whole list to one appointment.",
+    whatsappMessage: "Hello Kheni Dental, several of my teeth need work and I would like to book a consultation to plan it. Thank you.",
+    featured: true,
+    faqs: [
+      {
+        question: "Do I have to commit to all of it at the start?",
+        answer: "No. What you agree to first is usually the part that protects your health, such as infection, loose teeth or gum problems. The rest can be discussed once that phase is behind you.",
+      },
+      {
+        question: "How do I know I really need this much work?",
+        answer: "Ask the dentist to show you what they are seeing, tooth by tooth, and what happens if a particular item is left alone. Taking a second opinion before a large course of treatment is normal and sensible.",
+      },
+      {
+        question: "Can I eat and work normally between stages?",
+        answer: "For most of the plan, yes, though some phases involve temporary teeth or a softer diet. Tell us about travel, work or a family event in advance so stages can be arranged around them.",
+      },
+      {
+        question: "How is the cost decided?",
+        answer: "By the number of teeth involved, which treatments the plan needs and how many stages it runs to. You get the full plan with an estimate for each stage before treatment starts, and you can agree to it one stage at a time.",
       },
     ],
   },
   {
     slug: "crowns-and-bridges",
     title: "Crowns & Bridges",
+    shortTitle: "Crowns",
     seoTitle: "Dental Crowns & Bridges in Surat",
     metaDescription:
-      "Chewing on one side because a tooth feels weak? Kheni Dental in Surat plans crowns and bridges around your bite so that tooth can take normal use again.",
-    eyebrow: "Dental crowns and bridges",
-    problem: "I am scared to bite down on that tooth.",
-    emotionalHeadline: "Bite down without bracing yourself.",
-    short:
-      "For a tooth you have stopped trusting, a crown covers and strengthens what is left, and a bridge fills a gap so chewing feels ordinary again.",
+      "Crowns and bridges in Surat at Kheni Dental. A crown strengthens a weak or broken tooth; a bridge fills a gap. Both planned around your bite.",
+    hue: "amber",
+    category: "restorative",
+    concern: "I am scared to bite down on that tooth.",
+    headline: "Bite down without bracing yourself.",
+    short: "A crown covers and strengthens a weak or broken tooth. A bridge fills a gap using the teeth on either side.",
     intro:
-      "You already know which tooth it is. It is the one you steer hard food away from, the one that twinges on ice or a nut, the one that has been filled and refilled until there is not much of it left. A crown fits over what remains and holds it together so the tooth can take normal chewing force. A bridge does a related job across a gap, using the teeth on either side for support, and whether either suits you depends on how much sound tooth and healthy gum there is to work with.",
-    benefits: [
-      "Everyday chewing without guarding that tooth",
-      "Cover and support for a heavily repaired tooth",
-      "Shade and shape matched to neighbouring teeth",
-      "A bite checked so nothing feels high",
+      "You already know which tooth it is. The one you steer hard food away from, the one that twinges on ice, the one that has been filled and refilled until not much is left. A crown fits over what remains so the tooth can take normal chewing force again. A bridge does a related job across a gap, using the teeth on either side for support.",
+    signs: [
+      "A tooth that has cracked or broken",
+      "A large old filling that keeps failing",
+      "A tooth after root canal treatment",
+      "A gap where a bridge could fit",
     ],
-    aside: {
+    visit: [
+      { title: "What the tooth can take", copy: "How much sound tooth is left, how the gum is doing and where your bite lands on it. Then crown, bridge or a smaller repair." },
+      { title: "Getting the tooth ready", copy: "The tooth is shaped so the new cover sits over it without feeling bulky. A temporary is fitted while the final one is made." },
+      { title: "Measuring and matching", copy: "Records of your teeth guide how the crown is built, and the shade is picked against the teeth on either side." },
+      { title: "Fitting and checking", copy: "Fit, contact with neighbouring teeth and your bite are checked before anything is fixed in place." },
+    ],
+    expect: [
+      "A temporary crown for a short while",
+      "Slight sensitivity to hot and cold at first",
+      "A quick adjustment if the bite feels high",
+      "Cleaning at the gum line like any other tooth",
+    ],
+    worthKnowing: {
       title: "A crown covers, it does not cure",
-      copy: "Capping a tooth does not stop decay starting at the gum line, so a crowned tooth still needs brushing and cleaning between the teeth like any other. And whether a crack has already reached the nerve, which would change the plan, is something only an examination and imaging can tell you, not a web page.",
+      copy: "A crowned tooth still needs brushing and cleaning between the teeth. Whether a crack has already reached the nerve is something only an examination and imaging can tell.",
     },
-    processHeading: "From assessment to the finished tooth.",
-    process: [
-      {
-        title: "What the tooth can take",
-        copy: "We check how much sound tooth is left, how the gum around it is doing and where your bite lands on it. Then we talk through whether a crown, a bridge or a smaller repair makes more sense for you.",
-      },
-      {
-        title: "Getting the tooth ready",
-        copy: "Where a crown suits, the tooth is shaped so the new cover can sit over it without feeling bulky. You are usually given a temporary to wear while the final one is being made.",
-      },
-      {
-        title: "Measuring and matching",
-        copy: "Records of your teeth guide how the crown is built for your bite, and the shade is picked against the teeth on either side so the repair sits quietly among them.",
-      },
-      {
-        title: "Fitting and checking",
-        copy: "Before anything is fixed in place we check the fit, the contact with the teeth beside it and how it feels when you close and move your jaw side to side. If something feels high, say so, that is easy to adjust.",
-      },
-    ],
+    doctorSlugs: ["dr-jinal-monapara", "dr-parita-vastarpara"],
+    featured: true,
     ctaTitle: "Let us look at the tooth you do not trust.",
+    whatsappMessage: "Hello Kheni Dental, I would like to ask about a crown or bridge and book an appointment. Thank you.",
     faqs: [
       {
         question: "Will it feel like my own tooth?",
-        answer: "Most people stop noticing a well-fitted crown within a few days, though it can feel slightly different at first while your bite settles around it. Some sensitivity to hot and cold for a short period is common. If it still feels high or awkward after a week, come back and let us adjust it rather than putting up with it.",
-      },
-      {
-        question: "How long will a crown or bridge last?",
-        answer: "There is no honest single number. It depends on the tooth underneath, how heavy your bite is, whether you grind at night and how well the edges are kept clean. At your review the dentist can tell you what is most likely to shorten or extend the life of yours.",
+        answer: "Most people stop noticing a well-fitted crown within a few days. Some sensitivity to hot and cold for a short period is common. If it still feels high after a week, come back and let us adjust it.",
       },
       {
         question: "Can I just have a filling instead?",
-        answer: "Sometimes, yes, and we would say so. When enough strong tooth is left around it, a filling is the smaller and simpler repair. A crown tends to be discussed when so much of the tooth has been lost or cracked that a filling would risk breaking away along with it.",
+        answer: "Sometimes, yes, and we would say so. When enough strong tooth is left, a filling is the smaller repair. A crown is discussed when so much of the tooth has been lost or cracked that a filling would risk breaking away with it.",
       },
       {
-        question: "Will a crown make the tooth as strong as it was?",
-        answer: "A bridge uses the teeth on either side of the gap for support, so those teeth have to be prepared. An implant does not involve them, but it depends on the bone and gum at that site and takes longer overall. What the neighbouring teeth are already like often decides it, and your dentist will set out both options for your particular gap.",
-      },
-    ],
-  },
-  {
-    slug: "cosmetic-smile-dentistry",
-    title: "Smile Design & Cosmetic Dentistry",
-    seoTitle: "Smile Designing in Surat | Cosmetic Dentistry",
-    metaDescription:
-      "Thinking about smile designing in Surat? Kheni Dental looks at what actually needs changing first, then explains the smallest option that gets you there.",
-    eyebrow: "Smile designing",
-    problem: "I have started smiling with my mouth closed.",
-    emotionalHeadline: "Change what bothers you. Keep the rest.",
-    short:
-      "If your teeth look worn, uneven, stained or chipped, we work out what actually needs changing before suggesting whitening, bonding, veneers or crowns.",
-    intro:
-      "Ask anyone what bothers them about their smile and you usually get one or two very specific answers. A chipped edge, a gap that seems wider than it used to be, a tooth that sits back from the others, a colour that no longer matches. The useful first question is not which procedure to book, it is which of those things is genuinely bothering you and why the tooth looks that way. Some concerns are settled by whitening or a small reshape, others need the bite or the gums sorted out first, and that only becomes clear after an examination.",
-    benefits: [
-      "The smallest change that gets the result",
-      "Healthy tooth structure kept wherever it can be",
-      "Colour, shape and spacing judged together",
-      "An honest answer if nothing needs doing",
-    ],
-    aside: {
-      title: "Some cosmetic work cannot be undone",
-      copy: "Whitening and bonding can usually be revisited later, but anything that reshapes a tooth removes enamel that does not grow back. That is a decision to make in the chair after an examination, not from a page like this one.",
-    },
-    processHeading: "How we work out what to change.",
-    process: [
-      {
-        title: "Tell us what you notice",
-        copy: "Bring a photo if it is easier to point at than describe. We want to hear what bothers you in your own words before any procedure gets named.",
-      },
-      {
-        title: "Check the health first",
-        copy: "Teeth, gums, bite and older fillings are examined, because cosmetic work placed over an untreated problem tends not to hold.",
-      },
-      {
-        title: "Compare the real options",
-        copy: "You hear what each option changes, how much tooth it uses up and what looking after it will involve. Where a lighter approach can do the job, we say so.",
-      },
-      {
-        title: "Agree before anything starts",
-        copy: "Nothing begins until you know the sequence, the number of visits and what the result can and cannot do.",
-      },
-    ],
-    ctaTitle: "Start with a conversation, not a procedure.",
-    faqs: [
-      {
-        question: "Will people be able to tell I have had work done?",
-        answer: "That depends on how much is changed and how well the shape and colour sit with the rest of your face. Small corrections usually read as your own teeth looking tidier. If you want a big change in colour or length, people close to you will notice something, so it is worth saying up front how visible you want the result to be.",
-      },
-      {
-        question: "Do I need veneers, or is there something smaller?",
-        answer: "Often there is something smaller. Whitening, polishing an uneven edge, bonding a chip or closing a gap with alignment can handle a lot of what people come in worried about. Veneers and crowns are considered when the tooth itself is damaged, worn or too discoloured for a lighter approach, and your dentist will explain why one is being suggested over the other.",
-      },
-      {
-        question: "Will whitening actually work on my teeth?",
-        answer: "It depends on why the teeth look the way they do. Surface staining from tea, coffee, tobacco or paan behaves differently from colour that comes from inside the tooth after an old injury or treatment. Existing crowns, veneers and white fillings do not change colour with whitening, so they may need to be matched afterwards. An examination is the only way to know which of these applies to you.",
-      },
-      {
-        question: "How long will the result hold up?",
-        answer: "It varies with the option chosen, your bite, your habits and how the work is looked after at home. Edges can chip, whitening fades at different rates for different people, and grinding shortens the life of most cosmetic work. Ask specifically what the upkeep looks like for the option you are considering before you agree to it.",
+        question: "How is the cost decided?",
+        answer: "By the material chosen, the number of teeth involved and whether the tooth needs any treatment first. The dentist explains the options and the estimate after examining the tooth.",
       },
     ],
   },
   {
     slug: "kids-dentistry-surat",
     title: "Kids Dentistry",
+    shortTitle: "Kids",
     seoTitle: "Kids Dentist in Surat",
     metaDescription:
-      "Kids dentist in Surat: children's dental visits paced around your child, with plain words for them and straight answers for you. Book at Kheni Dental.",
-    eyebrow: "Kids dentist in Surat",
-    problem: "My child is scared and I do not want to make it worse.",
-    emotionalHeadline: "A first visit your child does not dread.",
-    short:
-      "A calmer first appointment, then check-ups that stay easy: children's dental care paced around what your child can manage, with straight answers for parents.",
+      "Kids dentist in Surat. Children's dental visits at Kheni Dental paced around your child, with Dr. Ishita Dobariya, our Kids Specialist. Plain words for them, straight answers for you.",
+    hue: "mint",
+    category: "kids",
+    concern: "My child is scared and I do not want to make it worse.",
+    headline: "A first visit your child does not dread.",
+    short: "Children's check-ups and treatment paced around what your child can manage, with straight answers for parents.",
     intro:
-      "Most parents walk in a little tense, worried the visit will end in tears and put their child off dentists for years. That worry is fair, and it changes how we run children's appointments. Dr. Ishita Dobariya, our Kids Specialist, lets a child look around, ask what the little mirror is for and decide they are safe before anything gets checked. Whatever needs attention is explained to you in plain words first, so you are never guessing what is about to happen in the chair.",
-    benefits: [
-      "A pace set by your child, not the clock",
-      "Explanations your child can actually follow",
-      "Small problems spotted while they are still small",
+      "Most parents walk in a little tense, worried the visit will end in tears and put their child off dentists for years. That worry changes how we run children's appointments. Dr. Ishita Dobariya, our Kids Specialist, lets a child look around, ask what the little mirror is for and decide they are safe before anything is checked. Whatever needs attention is explained to you in plain words first.",
+    signs: [
+      "A first dental visit",
+      "A child who is anxious after a bad experience elsewhere",
+      "A cavity, a wobbly tooth or a knocked tooth",
+      "Advice on brushing, thumb habits or diet",
+    ],
+    visit: [
+      { title: "Before you arrive", copy: "Tell us on the phone if your child is anxious. We can look for a quieter slot and keep the first visit short." },
+      { title: "Time to look around", copy: "Your child sits in the chair, sees the mirror and hears what each thing does before anyone counts a tooth." },
+      { title: "The check itself", copy: "Teeth, gums and bite are checked at whatever pace your child allows. You stay beside the chair." },
+      { title: "What you hear next", copy: "If something needs treating, you hear what it is, what the choices are and what happens if you wait." },
+    ],
+    expect: [
+      "A first visit that may be nothing more than sitting in the chair",
+      "A second short visit that usually goes better",
+      "Numbing explained to your child in their own words if it is needed",
       "Brushing and diet advice suited to their age",
     ],
-    aside: {
+    worthKnowing: {
       title: "What you say at home matters more",
-      copy: "Children take more from the way a parent describes the visit than from anything they could read on this page, so it helps to keep it ordinary and avoid promising that nothing will be done. If your child has had a hard time at a dental visit before, tell us on the phone rather than in the waiting room, and the appointment can be planned around it.",
+      copy: "Keep the build-up short and ordinary, and avoid promising that nothing will be done. If your child has had a hard time at a dental visit before, tell us on the phone rather than in the waiting room.",
     },
-    processHeading: "How a children's appointment usually goes.",
-    process: [
-      {
-        title: "Before you arrive",
-        copy: "Tell us on the phone if your child is anxious or has had a difficult visit somewhere else. We can look for a quieter slot and keep the first appointment short.",
-      },
-      {
-        title: "Time to look around",
-        copy: "Your child sits in the chair, sees the mirror and hears what each thing does before anyone counts a single tooth.",
-      },
-      {
-        title: "The check itself",
-        copy: "Teeth, gums and bite are checked at whatever pace your child allows. You can stay beside the chair and ask what we are looking at.",
-      },
-      {
-        title: "What you hear next",
-        copy: "If something needs treating, you hear what it is, what the choices are and what happens if you wait, before anything is booked.",
-      },
-    ],
+    doctorSlugs: ["dr-ishita-dobariya"],
     ctaTitle: "Tell us about your child before the visit.",
+    whatsappMessage: "Hello Kheni Dental, I would like to book a visit for my child. Thank you.",
+    featured: true,
     faqs: [
       {
         question: "How old should my child be for the first visit?",
-        answer: "Common professional guidance is to bring a child in once the first teeth appear, or around the first birthday. An early visit is mostly about you: feeding, brushing, thumb habits and what to watch for. Very little is done to the child at that age.",
+        answer: "Common professional guidance is to bring a child in once the first teeth appear, or around the first birthday. An early visit is mostly about you: feeding, brushing, thumb habits and what to watch for.",
       },
       {
         question: "What if my child cries or will not open their mouth?",
-        answer: "It happens often, and nobody is going to be held down. Sometimes the first appointment ends with nothing more than sitting in the chair and having teeth counted, which is a fine result. A short second visit usually goes better because the room is no longer new.",
+        answer: "It happens often, and nobody is held down. Sometimes the first appointment ends with nothing more than sitting in the chair. A short second visit usually goes better because the room is no longer new.",
       },
       {
-        question: "Do baby teeth with cavities really need treating? They fall out anyway.",
-        answer: "Sometimes yes, sometimes no, and it depends on which tooth it is and how long before it is due to come out. Baby teeth hold space for the adult ones and can hurt or become infected in the meantime. Dr. Ishita will tell you after examining the tooth whether it is worth treating or watching.",
-      },
-      {
-        question: "Will my child need an injection?",
-        answer: "A check-up on its own does not involve one. If numbing is needed for a filling or an extraction, you will be told beforehand rather than your child finding out in the chair, and it will be described to them in words that suit their age. Some soreness afterwards is possible, and we will explain what to expect.",
+        question: "Do baby teeth with cavities really need treating?",
+        answer: "Sometimes yes, sometimes no. It depends on which tooth it is and how long before it is due to come out. Baby teeth hold space for the adult ones and can hurt or become infected in the meantime. Dr. Ishita will tell you after examining the tooth.",
       },
     ],
   },
   {
     slug: "gum-care-surat",
     title: "Gum Care",
+    shortTitle: "Gums",
     seoTitle: "Gum Treatment in Surat for Bleeding Gums",
     metaDescription:
-      "Gums that bleed, swell or affect your breath are worth checking early. Kheni Dental in Surat examines the cause and explains the treatment it needs.",
-    eyebrow: "Gum health",
-    problem: "My gums bleed when I brush.",
-    emotionalHeadline: "Gums that bleed are asking for attention.",
-    short:
-      "If your gums bleed, swell or your breath has changed, an examination can find the cause and set out what treatment and daily habits are needed.",
+      "Gum care in Surat at Kheni Dental. Gums that bleed, swell or affect your breath are checked early, cleaned properly and given a daily routine that works.",
+    hue: "green",
+    category: "everyday",
+    concern: "My gums bleed when I brush.",
+    headline: "Gums that bleed are asking for attention.",
+    short: "Finds out why your gums bleed or swell, cleans away what is causing it and sets a daily routine that keeps it away.",
     intro:
-      "It usually shows up in the sink, or when someone stands a little too close. Bleeding, swelling and breath that does not freshen after brushing tend to begin in the same place, at the line where gum meets tooth. How much treatment is needed depends on how long it has been going on and whether the bone holding the tooth has been affected, so an examination comes before anything is recommended.",
-    benefits: [
-      "An honest read on how far it has gone",
-      "Deposits cleaned above and below the gum line",
-      "A home routine matched to where you bleed",
+      "It usually shows up in the sink, or when someone stands a little too close. Bleeding, swelling and breath that does not freshen after brushing tend to start in the same place: the line where gum meets tooth. How much treatment is needed depends on how long it has been going on and whether the bone holding the tooth has been affected.",
+    signs: [
+      "Blood when you brush or floss",
+      "Red, swollen or tender gums",
+      "Bad breath that brushing does not fix",
+      "Gums pulling back or teeth feeling loose",
+    ],
+    visit: [
+      { title: "Check every tooth", copy: "Where the bleeding starts, how much deposit has built up and whether anything feels loose. Imaging where the bone needs to be seen." },
+      { title: "Tell you what we found", copy: "Where the gums are healthy, where they are not, and what is driving it." },
+      { title: "Clean it properly", copy: "Deposits are removed above and below the gum line. How many visits depends on how much there is." },
+      { title: "Watch how it settles", copy: "Gums need a few weeks to respond. We look again and adjust the routine." },
+    ],
+    expect: [
+      "Some sensitivity to cold for a few days after cleaning",
+      "Gums that feel different once the build-up is gone",
+      "A brushing and cleaning routine matched to where you bleed",
       "Regular checks so it does not creep back",
     ],
-    aside: {
+    worthKnowing: {
       title: "Gums can stop bleeding without healing",
-      copy: "Bleeding often eases off on its own for a while, and people who smoke may bleed very little even when the gums are not healthy. So the state of your gums is checked tooth by tooth during an examination, never judged from how they look or feel at home.",
+      copy: "Bleeding often eases off for a while, and people who smoke may bleed very little even when the gums are not healthy. Gum health is checked tooth by tooth, never judged from how it feels at home.",
     },
-    processHeading: "What an examination of your gums involves.",
-    process: [
-      {
-        title: "Check every tooth",
-        copy: "We look at where the bleeding starts, how much deposit has built up and whether anything has begun to feel loose. Imaging is used where the bone underneath needs to be seen.",
-      },
-      {
-        title: "Tell you what we found",
-        copy: "You hear where the gums are healthy, where they are not and what is driving it, in words you can repeat to someone at home.",
-      },
-      {
-        title: "Clean it properly",
-        copy: "Treatment usually starts with removing deposits above and below the gum line. How many visits that takes depends on how much there is and how deep it sits.",
-      },
-      {
-        title: "Watch how it settles",
-        copy: "Gums need a few weeks to respond. We look again after that and adjust the daily routine or the treatment depending on what has changed.",
-      },
-    ],
+    doctorSlugs: [],
     ctaTitle: "Tell us what your gums are doing.",
+    whatsappMessage: "Hello Kheni Dental, my gums have been bleeding and I would like to book a check. Thank you.",
     faqs: [
       {
         question: "My gums only bleed sometimes. Is that still a problem?",
-        answer: "It is worth mentioning, especially if it happens at the same spot every time. Healthy gums do not usually bleed from ordinary brushing. It may turn out to be something minor, but an examination is how you find out, rather than waiting to see whether it stops.",
-      },
-      {
-        question: "Will a cleaning make my teeth sensitive or loose?",
-        answer: "Teeth can feel different for a while afterwards, because the gum had been resting against hardened build-up instead of clean tooth. Sensitivity to cold in the first few days is common and usually settles. Tell your dentist if it does not, since there are ways to manage it.",
-      },
-      {
-        question: "Can bad breath be coming from my gums?",
-        answer: "Gums can be one of the causes, along with the tongue, a dry mouth, a decayed tooth or something further down. If brushing and mouthwash only help for an hour or two, the source is usually still there. An examination can tell you whether the gums are involved or whether to look elsewhere.",
+        answer: "It is worth mentioning, especially if it happens at the same spot every time. Healthy gums do not usually bleed from ordinary brushing.",
       },
       {
         question: "Is gum disease reversible?",
-        answer: "Inflammation that is limited to the gum can often settle once the deposits are removed and the daily routine changes. Once bone around the tooth has been lost, the aim shifts to stopping further loss and holding on to what is there. Your dentist will tell you which of those two situations you are in after examining you.",
-      },
-    ],
-  },
-  {
-    slug: "braces-clear-aligners",
-    title: "Braces & Clear Aligners",
-    seoTitle: "Clear Aligners & Braces in Surat",
-    metaDescription:
-      "Clear aligners and braces in Surat. We check crowding, spacing and how your bite meets, then explain which option suits your case and how long it takes.",
-    eyebrow: "Alignment and bite",
-    problem: "My teeth are crowding and I do not want visible braces at work.",
-    emotionalHeadline: "Straighten your teeth without announcing it.",
-    short:
-      "If crowding, gaps or a bite that does not meet properly bother you, alignment can be planned with braces or clear aligners, depending on what your case needs.",
-    intro:
-      "Adults who ask about aligners are rarely chasing a picture. They are tired of one tooth sitting in front of another, or of a bite that keeps wearing the same edges down. Braces and clear aligners both move teeth, but they do not suit every case equally, and which one fits yours depends on the movement your teeth need rather than on which appliance you would prefer to wear. An examination settles that question in a way a website cannot.",
-    benefits: [
-      "A less visible option where your case allows",
-      "How your teeth meet, not just how they look",
-      "An honest time estimate before you commit",
-      "Straighter teeth are easier to keep clean",
-    ],
-    aside: {
-      title: "Why a photo cannot answer this",
-      copy: "People often send a picture of their front teeth and ask whether aligners will work for them. Front teeth are the easy part, because suitability rests on how your back teeth meet and how far the roots have to move, and that only shows up on examination.",
-    },
-    processHeading: "What happens before anything goes on your teeth.",
-    process: [
-      {
-        title: "Start with your complaint",
-        copy: "Tell us which tooth bothers you, and whether your bite has started to feel off when you close. That list shapes what the dentist looks for.",
+        answer: "Inflammation limited to the gum can often settle once deposits are removed and the daily routine changes. Once bone around the tooth has been lost, the aim shifts to stopping further loss. Your dentist will tell you which situation you are in.",
       },
       {
-        title: "Measure the movement",
-        copy: "Photographs, models and measurements let the dentist work out which teeth have to move, how far, and in what order.",
-      },
-      {
-        title: "Decide braces or aligners",
-        copy: "Only now does the appliance question get answered, along with the likely length of treatment and what you will be asked to do every day.",
-      },
-      {
-        title: "Wear it, then hold it",
-        copy: "During treatment your teeth are checked and adjusted at set intervals. Once the movement is finished, retainers stop the teeth sliding back, and your dentist will explain how long you need to keep wearing them.",
-      },
-    ],
-    ctaTitle: "Find out which option your case actually needs.",
-    faqs: [
-      {
-        question: "Will anyone at work notice?",
-        answer: "Clear aligners sit over the teeth and are far less obvious than metal braces, but they are not invisible and someone sitting close to you may spot them. They also come out for meals and photographs. If your case is better handled with braces, the dentist will go through the options and how visible each one is before you decide.",
-      },
-      {
-        question: "How long will this actually take?",
-        answer: "Usually longer than people hope. Tooth movement is counted in months rather than weeks, and the range is wide because it depends on how far the teeth have to travel, what your bite is doing, and how many hours a day removable aligners are genuinely worn. You should get an estimate for your own case at the planning stage, before you agree to anything.",
-      },
-      {
-        question: "Am I too old for braces or aligners?",
-        answer: "Adults have orthodontic treatment routinely, and teeth can be moved well beyond the teenage years. Gum health and the bone supporting your teeth matter more than your age, so those are checked before alignment is planned. If something needs attention there, it is treated first.",
-      },
-      {
-        question: "Can I just order aligners online instead?",
-        answer: "Aligners supplied without an in-person examination skip the parts that decide whether the plan is safe, such as gum health, root position and how your back teeth meet. Moving teeth without supervision can create problems that are harder to sort out than the original crowding. If the cost is what is holding you back, say so at the consultation and the dentist will tell you what is realistic.",
+        question: "Can bad breath come from my gums?",
+        answer: "Gums can be one cause, along with the tongue, a dry mouth or a decayed tooth. If brushing and mouthwash only help for an hour or two, the source is usually still there.",
       },
     ],
   },
   {
     slug: "wisdom-tooth-oral-surgery",
-    title: "Wisdom Tooth & Oral Surgery",
-    seoTitle: "Wisdom Tooth Treatment in Surat",
+    title: "Wisdom Tooth",
+    shortTitle: "Wisdom Tooth",
+    seoTitle: "Wisdom Tooth Treatment & Removal in Surat",
     metaDescription:
-      "Sore, swollen wisdom tooth? Kheni Dental in Surat examines the cause first, then explains whether removal is needed and what recovery actually involves.",
-    eyebrow: "Wisdom tooth care",
-    problem: "My wisdom tooth hurts and the jaw feels swollen.",
-    emotionalHeadline: "Find out if it really has to come out.",
-    short:
-      "When a wisdom tooth causes pain or swelling, we look at the cause first, then explain whether removal, treatment or simply watching it makes sense.",
+      "Wisdom tooth pain or swelling? Kheni Dental in Surat examines the cause first, then explains whether removal, treatment or simply watching it makes sense.",
+    hue: "lavender",
+    category: "surgical",
+    concern: "My wisdom tooth hurts and the jaw feels swollen.",
+    headline: "Find out if it really has to come out.",
+    short: "Looks at the cause of wisdom tooth pain first, then explains whether removal, treatment or watching it makes sense.",
     intro:
-      "Pain at the back of the jaw is hard to ignore and hard to describe. It can come from a wisdom tooth pressing on the tooth in front, from gum that keeps getting inflamed over a tooth that is only half through, from decay in a spot your brush never reaches, or from something that has nothing to do with the wisdom tooth at all. Those causes do not lead to the same answer, which is why an examination and imaging come before any talk of surgery. Some wisdom teeth are settled and can be left alone, and others cause trouble that keeps coming back until the tooth is out.",
-    benefits: [
-      "A clear answer on whether it stays",
-      "The cause of the pain identified first",
-      "You know what the first week involves",
-      "Someone to call if healing feels off",
+      "Pain at the back of the jaw is hard to ignore and hard to describe. It can come from a wisdom tooth pressing on the tooth in front, from gum that keeps getting inflamed over a tooth that is only half through, or from decay in a spot your brush never reaches. Those causes do not lead to the same answer, which is why examination and imaging come before any talk of removal.",
+    signs: [
+      "Pain or swelling at the back of the jaw",
+      "Gum that keeps getting sore over a half-erupted tooth",
+      "Food trapping behind the last tooth",
+      "A wisdom tooth pushing on the tooth in front",
     ],
-    aside: {
-      title: "When wisdom tooth pain needs urgent care",
-      copy: "Most wisdom tooth pain can be assessed at an ordinary appointment, but swelling that spreads towards the eye or neck, difficulty swallowing, or a jaw you cannot open properly are reasons to seek urgent care instead of waiting. No page can tell how far an infection has moved, so call the clinic and describe what you are seeing.",
+    visit: [
+      { title: "Look at the whole area", copy: "The tooth, the gum around it and the teeth beside it, with imaging to see the roots and how the tooth sits." },
+      { title: "Decide whether it comes out", copy: "A well-positioned tooth you can keep clean may just be watched. One that keeps getting infected is discussed for removal, with the reason explained." },
+      { title: "Plan the removal", copy: "Anaesthesia, roughly how long the appointment takes and what makes your case straightforward or more involved." },
+      { title: "Get through the first week", copy: "Written instructions on eating, cleaning, swelling and rest, and a number to call." },
+    ],
+    expect: [
+      "Swelling and stiffness for a few days, often peaking around day two",
+      "A couple of quiet days rather than back to normal by morning",
+      "Softer food while the area heals",
+      "A review if one is needed",
+    ],
+    worthKnowing: {
+      title: "When it needs urgent care",
+      copy: "Swelling that spreads towards the eye or neck, difficulty swallowing, or a jaw you cannot open properly are reasons to seek urgent care rather than wait. Call the clinic and describe what you are seeing.",
     },
-    processHeading: "Working out whether it needs to come out.",
-    process: [
-      {
-        title: "Look at the whole area",
-        copy: "We check the tooth, the gum around it and the teeth beside it, and use imaging to see the roots and how the tooth sits under the gum.",
-      },
-      {
-        title: "Decide whether it comes out",
-        copy: "If the tooth is well positioned and you can keep it clean, watching it may be the sensible choice. If it keeps getting infected, is harming the tooth in front or traps food where no brush reaches, we will say so and explain why.",
-      },
-      {
-        title: "Plan the removal",
-        copy: "Before you agree to a date, we go through the anaesthesia, roughly how long the appointment takes, and what makes your case straightforward or more involved.",
-      },
-      {
-        title: "Get through the first week",
-        copy: "You go home with written instructions on eating, cleaning, swelling and rest, and a number to call. Healing is checked when a review is needed.",
-      },
-    ],
+    doctorSlugs: [],
     ctaTitle: "Get an answer before it flares up again.",
+    whatsappMessage: "Hello Kheni Dental, my wisdom tooth is troubling me and I would like to book an appointment. Thank you.",
     faqs: [
       {
         question: "Does a wisdom tooth always have to be removed?",
-        answer: "No. A wisdom tooth that has come through in a workable position, stays clean and is not harming its neighbour can often just be watched. Removal is discussed when there is repeated infection, decay, pressure on the tooth in front, or a position that makes cleaning impossible. That call is made after examining you, not from symptoms alone.",
-      },
-      {
-        question: "How bad is the swelling afterwards, honestly?",
-        answer: "Some swelling and stiffness over the first few days is normal, and for many people it peaks around the second day before it starts settling. How much you get depends on how deep the tooth sat and how much work the removal involved. Your dentist will tell you what to expect in your case and what would count as more than expected.",
+        answer: "No. A wisdom tooth that has come through in a workable position, stays clean and is not harming its neighbour can often just be watched. Removal is discussed when there is repeated infection, decay, pressure on the tooth in front, or a position that makes cleaning impossible.",
       },
       {
         question: "Can I go back to work the next day?",
-        answer: "Some people take the day of surgery and the day after quietly at home, and some need longer than that. Talking, chewing and bending over all feel different for a few days. It is better to plan a light couple of days than to assume you will be back to normal by morning.",
+        answer: "Some people take the day of surgery and the day after quietly at home, and some need longer. Talking, chewing and bending over all feel different for a few days. Plan a light couple of days.",
       },
       {
         question: "Is it safe to just take painkillers and wait?",
-        answer: "Painkillers can quieten the symptom for a while, but they do not clear an infection or change where the tooth is sitting. Pain that keeps returning to the same spot usually means something has not resolved. Repeated self-medication also makes the picture harder to read by the time you are examined, so get a tooth that has flared up more than once looked at.",
+        answer: "Painkillers quieten the symptom for a while, but they do not clear an infection or change where the tooth is sitting. Pain that keeps returning to the same spot usually means something has not resolved.",
       },
     ],
   },
   {
-    slug: "general-family-dentistry",
-    title: "General & Family Dentistry",
-    seoTitle: "Family Dentist in Surat",
+    slug: "dental-check-up-surat",
+    title: "Dental Check-up",
+    shortTitle: "Check-up",
+    seoTitle: "Dental Check-up & Cleaning in Surat",
     metaDescription:
-      "A family dentist in Surat for check-ups, cleaning and fillings, adults and children alike. If it has been a while since your last visit, that is fine.",
-    eyebrow: "Everyday dentistry",
-    problem: "It has been longer than I would like since my last check-up.",
-    emotionalHeadline: "Small problems are easier to keep small.",
-    short:
-      "One clinic for the whole family, covering check-ups, cleaning, fillings and the everyday repairs that stop a small problem turning into a long appointment.",
+      "Dental check-up in Surat at Kheni Dental. A proper look at your teeth and gums, cleaning where needed, and a straight answer about what needs doing and what can wait.",
+    hue: "sky",
+    category: "everyday",
+    concern: "It has been longer than I would like since my last check-up.",
+    headline: "Small problems are easier to keep small.",
+    short: "A proper look at your teeth and gums, cleaning where it is needed, and a plain answer about what needs doing and what can wait.",
     intro:
-      "Plenty of people put off a check-up because nothing hurts, or because it has been so long that going back feels awkward. That gap is more common than you think, and it is not something you will be lectured about here. Most everyday dentistry is small work, a look, a clean, a filling before a tooth cracks, and small work usually stays small when it is caught early.",
-    benefits: [
-      "One clinic for every age at home",
-      "Small repairs caught before they get bigger",
-      "Records for the whole family in one place",
-      "Honest answers about what can safely wait",
+      "Plenty of people put off a check-up because nothing hurts, or because it has been so long that going back feels awkward. That gap is more common than you think, and nobody here will lecture you about it. Most of what a check-up finds is small work, and small work stays small when it is caught early.",
+    signs: [
+      "It has been more than a year since your last visit",
+      "You want to be seen before something starts hurting",
+      "You would like your teeth cleaned",
+      "The whole family needs a dentist in one place",
     ],
-    aside: {
+    visit: [
+      { title: "Say when you last came", copy: "Roughly how long it has been and whether anything has been bothering you. There is no wrong answer." },
+      { title: "A proper look", copy: "Teeth, gums and the soft tissues, including the areas you cannot see in the mirror at home." },
+      { title: "Cleaning where needed", copy: "Build-up is removed and your teeth polished, with a routine to keep them that way." },
+      { title: "What needs doing, in order", copy: "What needs attention now, what is worth watching, and what is fine as it is." },
+    ],
+    expect: [
+      "A visit that is mostly examination and conversation",
+      "Some sensitivity for a day or two after cleaning",
+      "A next-visit interval set for you, not by a rule",
+      "Small repairs sequenced over a few visits if needed",
+    ],
+    worthKnowing: {
       title: "Feeling fine is not the same as fine",
-      copy: "Decay between teeth, a cracked filling and early gum changes often cause nothing at all until they are well established, which is exactly why check-ups exist. How often you personally need one depends on what an examination actually finds, so the interval is set for you rather than by a rule.",
+      copy: "Decay between teeth, a cracked filling and early gum changes often cause nothing at all until they are well established. That is exactly why check-ups exist.",
     },
-    processHeading: "What a routine visit actually looks like.",
-    process: [
-      {
-        title: "Say when you last came",
-        copy: "Tell us roughly how long it has been and whether anything has been bothering you. There is no wrong answer, and it helps us know where to look first.",
-      },
-      {
-        title: "A proper look",
-        copy: "We check the teeth, gums and soft tissues, including the areas you cannot see in the mirror at home.",
-      },
-      {
-        title: "What needs doing, in order",
-        copy: "You will hear what needs attention now, what is worth watching, and what is fine as it is. If something can wait, we will say so.",
-      },
-      {
-        title: "Agree the next visit",
-        copy: "Before you leave, we settle on how long to leave it until the next check and what is worth changing at home in between.",
-      },
-    ],
+    doctorSlugs: ["dr-parita-vastarpara", "dr-ishita-dobariya", "dr-jinal-monapara"],
     ctaTitle: "Book the check-up you keep putting off.",
+    whatsappMessage: "Hello Kheni Dental, I would like to book a dental check-up. Thank you.",
     faqs: [
       {
-        question: "I have not been to a dentist in years. Where do I even start?",
-        answer: "This is one of the most common reasons people book, so you will not be the first that week. The first visit is mostly examination and conversation, so you leave knowing where you stand. If several things need attention, they can be sequenced over a few visits instead of being done all at once.",
+        question: "I have not been to a dentist in years. Where do I start?",
+        answer: "This is one of the most common reasons people book. The first visit is mostly examination and conversation, so you leave knowing where you stand. If several things need attention, they are sequenced over a few visits.",
       },
       {
         question: "Nothing hurts. Do I still need to come in?",
-        answer: "Pain tends to be a late signal rather than an early one, so a check-up is still useful when everything feels normal. An examination can pick up decay between teeth, a cracked filling or early gum changes while they are still small. What is found is what decides whether anything needs doing at all.",
-      },
-      {
-        question: "How often should we come for a check-up?",
-        answer: "It varies from person to person. Some people are fine with a longer interval, others are seen more often because of gum health, previous treatment, diet or habits. Your dentist will suggest an interval after examining you rather than applying one rule to everybody.",
+        answer: "Pain tends to be a late signal. A check-up picks up decay between teeth, a cracked filling or early gum changes while they are still small.",
       },
       {
         question: "Can my children and I be seen at the same clinic?",
-        answer: "Kheni Dental treats adults and children, and there are two clinics in Surat, Swastik Plaza and Hirabaug. Call the branch you plan to visit to check doctor availability for the day you want, especially if you are booking more than one person at a time.",
+        answer: "Yes. Kheni Dental treats adults and children at both clinics. Call the branch you plan to visit to check doctor availability if you are booking more than one person.",
+      },
+    ],
+  },
+  {
+    slug: "tooth-fillings-surat",
+    title: "Fillings",
+    shortTitle: "Fillings",
+    seoTitle: "Tooth Fillings in Surat",
+    metaDescription:
+      "Tooth fillings in Surat at Kheni Dental. A cavity or a chipped tooth repaired before it grows into a bigger problem, with the shade matched to your own tooth.",
+    hue: "sky",
+    category: "everyday",
+    concern: "There is a hole in my tooth and food keeps getting stuck.",
+    headline: "Fix the small hole before it becomes a big one.",
+    short: "Repairs a cavity or a small chip with a filling matched to your tooth, before it grows into something bigger.",
+    intro:
+      "A cavity rarely announces itself. Food starts catching in one spot, or cold water finds a tooth it never used to bother. A filling removes the decayed part and rebuilds the tooth so it can be cleaned and chewed on normally. Caught early, it is a short appointment. Left alone, the same tooth may end up needing a root canal or a crown.",
+    signs: [
+      "Food getting stuck in one place",
+      "A dark spot or a visible hole",
+      "A tooth that is sensitive to sweet or cold",
+      "A small chip or a filling that has come out",
+    ],
+    visit: [
+      { title: "Find the cavity", copy: "The tooth is examined and imaging used where decay between teeth needs to be seen." },
+      { title: "Numb the area", copy: "Local anaesthesia if the cavity is deep enough to need it. You are told beforehand." },
+      { title: "Remove and rebuild", copy: "The decayed part is removed and the tooth rebuilt with a filling shaped to your bite." },
+      { title: "Check the bite", copy: "You close your teeth and move your jaw so nothing feels high before you leave." },
+    ],
+    expect: [
+      "Numbness for a few hours if anaesthesia was used",
+      "Mild sensitivity for a few days",
+      "A quick adjustment if the bite feels high",
+      "Normal brushing and cleaning from that evening",
+    ],
+    worthKnowing: {
+      title: "A filling that keeps failing is telling you something",
+      copy: "When a large filling breaks again and again, it may be that not enough sound tooth is left to hold it. That is when a crown gets discussed, and the dentist will say so plainly.",
+    },
+    doctorSlugs: ["dr-parita-vastarpara", "dr-jinal-monapara", "dr-ishita-dobariya"],
+    ctaTitle: "Get the small hole looked at this week.",
+    whatsappMessage: "Hello Kheni Dental, I think I need a filling and would like to book an appointment. Thank you.",
+    faqs: [
+      {
+        question: "Will the filling be visible?",
+        answer: "Tooth-coloured fillings are matched to the shade of your own tooth, so on a front tooth they are hard to spot. Your dentist will discuss the material that suits the tooth and the bite.",
+      },
+      {
+        question: "How long does a filling take?",
+        answer: "A single small filling is usually done in one visit. Several fillings, or a deep one, may be spread over more than one appointment so each is done properly.",
+      },
+      {
+        question: "How is the cost decided?",
+        answer: "By the size of the cavity, the material used and how many teeth need attention. The dentist tells you the estimate after examining the tooth.",
       },
     ],
   },
 ];
 
+export const treatmentBySlug = (slug: string) => treatments.find((t) => t.slug === slug);
+export const doctorBySlug = (slug: string) => doctors.find((d) => d.slug === slug);
+
 /**
- * "How can we help?" entry points.
+ * "What brings you in today?"
  *
  * Nine things a patient can recognise about their own mouth in a second, in
- * the words they would actually use. This is the fastest route into the site
- * and deliberately carries no explanation: tapping one goes straight to the
- * relevant treatment.
+ * the words they would actually use. Tapping one goes straight to the
+ * relevant treatment. It never diagnoses; it only points.
  */
-export const helpTopics = [
-  { label: "Tooth pain", href: "/treatments/root-canal-treatment-surat/" },
-  { label: "Missing tooth", href: "/treatments/dental-implants-surat/" },
-  { label: "Loose denture", href: "/treatments/dental-implants-surat/" },
-  { label: "Broken tooth", href: "/treatments/crowns-and-bridges/" },
-  { label: "Yellow or stained teeth", href: "/treatments/cosmetic-smile-dentistry/" },
-  { label: "Crooked teeth", href: "/treatments/braces-clear-aligners/" },
-  { label: "Bleeding gums", href: "/treatments/gum-care-surat/" },
-  { label: "My child's teeth", href: "/treatments/kids-dentistry-surat/" },
-  { label: "Just a check-up", href: "/treatments/general-family-dentistry/" },
-] as const;
+export type Concern = {
+  id: string;
+  label: string;
+  /** One short reassuring line. */
+  sub: string;
+  href: string;
+  hue: Hue;
+  /** Illustration key, resolved by the concern icon component. */
+  icon: "pain" | "gap" | "crooked" | "smile" | "child" | "gums" | "wisdom" | "broken" | "checkup";
+};
 
-export const problems = [
-  {
-    title: "I am missing a tooth",
-    detail: "We look at the gap, the bone around it and the teeth on either side. Your dentist then explains which replacement options are realistic for your case, including implants.",
-    href: "/treatments/dental-implants-surat",
-  },
-  {
-    title: "A toothache is keeping me awake",
-    detail: "Pain is the symptom, not the diagnosis. An examination and imaging show which tooth is involved and whether root canal treatment or something else is the right answer.",
-    href: "/treatments/root-canal-treatment-surat",
-  },
-  {
-    title: "My gums bleed when I brush",
-    detail: "Bleeding is worth checking early rather than waiting to see if it settles. A gum examination shows how far the problem has gone and what will actually help.",
-    href: "/treatments/gum-care-surat",
-  },
-  {
-    title: "I hide my teeth in photos",
-    detail: "Tell us what you notice first, whether that is colour, shape, spacing or a chipped edge. Some changes need very little, and we will say so before suggesting anything bigger.",
-    href: "/treatments/cosmetic-smile-dentistry",
-  },
-  {
-    title: "My child is scared of the dentist",
-    detail: "The first visit is mostly about letting your child settle and get used to the chair. Nothing is done without explaining it to you first.",
-    href: "/treatments/kids-dentistry-surat",
-  },
-  {
-    title: "My teeth are crooked or spaced",
-    detail: "An assessment of your bite comes before any talk of braces or aligners. What suits you depends on how the teeth need to move and how long that will realistically take.",
-    href: "/treatments/braces-clear-aligners",
-  },
-  {
-    title: "My wisdom tooth is swollen and sore",
-    detail: "Not every wisdom tooth has to come out. Examination and imaging show whether the tooth can be watched or whether removal is the sensible step.",
-    href: "/treatments/wisdom-tooth-oral-surgery",
-  },
-  {
-    title: "Too many teeth need work",
-    detail: "When several things need doing at once, the useful first step is putting them in order. Your dentist separates what is urgent from what can wait, then plans the rest in stages.",
-    href: "/treatments/full-mouth-rehabilitation",
-  },
-] as const;
+export const concerns: Concern[] = [
+  { id: "pain", label: "Tooth pain", sub: "Aching, throbbing or sensitive", href: "/treatments/root-canal-treatment-surat/", hue: "teal", icon: "pain" },
+  { id: "gap", label: "Missing tooth", sub: "One gap, several, or a loose denture", href: "/treatments/dental-implants-surat/", hue: "cobalt", icon: "gap" },
+  { id: "crooked", label: "Crooked teeth", sub: "Crowding, gaps or a bite that is off", href: "/treatments/braces-clear-aligners/", hue: "violet", icon: "crooked" },
+  { id: "smile", label: "Smile appearance", sub: "Colour, shape or a chipped edge", href: "/treatments/cosmetic-smile-dentistry/", hue: "coral", icon: "smile" },
+  { id: "child", label: "My child's teeth", sub: "First visit, cavity or a scared child", href: "/treatments/kids-dentistry-surat/", hue: "mint", icon: "child" },
+  { id: "gums", label: "Bleeding gums", sub: "Blood when brushing, swelling, bad breath", href: "/treatments/gum-care-surat/", hue: "green", icon: "gums" },
+  { id: "wisdom", label: "Wisdom tooth", sub: "Pain or swelling at the back", href: "/treatments/wisdom-tooth-oral-surgery/", hue: "lavender", icon: "wisdom" },
+  { id: "broken", label: "Broken or chipped tooth", sub: "Cracked, worn or a lost filling", href: "/treatments/crowns-and-bridges/", hue: "amber", icon: "broken" },
+  { id: "checkup", label: "Just a check-up", sub: "Overdue, or a clean and a look", href: "/treatments/dental-check-up-surat/", hue: "sky", icon: "checkup" },
+];
+
+/**
+ * Smile Notes.
+ *
+ * Short Kheni lines set between sections. They are brand voice, never
+ * patient quotes, and never claims. One highlighted word each.
+ */
+export type SmileNote = { line: string; highlight: string; hue: Hue };
+
+export const smileNotes: SmileNote[] = [
+  { line: "Come with a concern. Leave with a clear next step.", highlight: "clear", hue: "cobalt" },
+  { line: "Good dentistry starts with listening.", highlight: "listening", hue: "coral" },
+  { line: "Two clinics. One familiar standard of care.", highlight: "familiar", hue: "teal" },
+  { line: "Your smile is personal. The plan should be too.", highlight: "personal", hue: "violet" },
+  { line: "No treatment begins before you understand why.", highlight: "why", hue: "green" },
+  { line: "A missing tooth changes more than your smile.", highlight: "more", hue: "cobalt" },
+];
 
 export const resources = [
   {
     title: "Your first visit",
     description: "What to bring, how much time to allow and the questions worth asking while you are still in the chair.",
-    href: "/patient-resources#first-visit",
+    href: "/patient-resources/#first-visit",
   },
   {
     title: "Thinking about implants",
-    description: "A plain-language walk through assessment, planning, the stages of treatment and what looking after an implant involves.",
-    href: "/patient-resources#implant-guide",
+    description: "A plain walk through assessment, planning, the stages of treatment and what looking after an implant involves.",
+    href: "/patient-resources/#implant-care",
   },
   {
     title: "After a root canal",
-    description: "How the tooth may feel over the next few days, what helps, and the signs that mean you should call the clinic.",
-    href: "/patient-resources#root-canal-aftercare",
+    description: "How the tooth may feel over the next few days, what helps, and the signs that mean you should call.",
+    href: "/patient-resources/#aftercare",
   },
   {
     title: "Bringing a child in",
-    description: "Small things parents can do at home beforehand so the appointment feels less strange to a young child.",
-    href: "/patient-resources#kids-visit",
+    description: "Small things parents can do at home so the appointment feels less strange to a young child.",
+    href: "/patient-resources/#kids",
   },
 ] as const;
 
 export const homepageFaqs = [
   {
-    question: "Do I need to know what treatment I want before I come in?",
+    question: "Do I need to know which treatment I need?",
     answer:
-      "No. Most people arrive with a symptom, not a diagnosis. Tell us what you have noticed and where, and the examination will sort out the rest.",
+      "No. Most people arrive with a symptom, not a diagnosis. Tell us what you have noticed and where, and the examination sorts out the rest.",
   },
   {
-    question: "What actually happens in the first appointment?",
+    question: "Which Kheni clinic should I visit?",
     answer:
-      "We talk about what is bothering you, then check your teeth, gums and bite. You leave knowing what was found, what your options are and what the next step would be.",
+      "Whichever is easier to reach. Swastik Plaza is at Yogi Chowk and the Elite Implant Center is at Hirabaug on Varachha Main Road. Implant and full mouth cases are led from Hirabaug. If you are not sure, message us and we will suggest one.",
   },
   {
-    question: "Which of the two clinics should I go to?",
+    question: "Do you treat children?",
     answer:
-      "Either one. Swastik Plaza is at Yogi Chowk and Hirabaug is on Varachha Main Road. Call or WhatsApp us and we will tell you which is easier for you to reach.",
+      "Yes. Dr. Ishita Dobariya is our Kids Specialist and children's visits are paced around what the child can manage. Tell us on the phone if your child is anxious.",
   },
   {
-    question: "Can I message on WhatsApp instead of calling?",
+    question: "How do I book?",
     answer:
-      "Yes. WhatsApp is fine for asking about appointment times or which clinic suits you. Please keep medical details for the consultation itself rather than the chat.",
+      "Tap Book Appointment and choose WhatsApp or a call, or simply call the clinic you want to visit. You do not need to fill in a long form.",
   },
   {
-    question: "I have put this off for years. Is it too late?",
+    question: "How is treatment cost decided?",
     answer:
-      "People come to us after long gaps more often than you would think, and nobody here will lecture you about it. We look at where things stand today and work out what to do first.",
+      "Cost depends on the treatment needed after examination. The dentist explains the plan and the estimate before treatment, and for staged work you can agree to one stage at a time.",
   },
-] as const;
-
-/**
- * Text-only entries on the positioning rail. The rail generates the years,
- * both branch ratings and both review counts from verified data, so nothing
- * numeric belongs in this list. Add a treatment or a positioning line only.
- */
-export const tickerItems = [
-  "Dental implants",
-  "Full mouth rehabilitation",
-  "Smile design",
-  "Root canal treatment",
-  "Kids dentistry",
-  "Two clinics in Surat",
-  "NRI and international patients",
-  "Gujarati, Hindi and English",
+  {
+    question: "How long will my treatment take?",
+    answer:
+      "It depends on the treatment. A check-up or a filling is usually one visit. Root canals often take more than one. Braces, implants and full mouth work run over months because teeth and bone need time. You get a realistic timeline after the examination.",
+  },
+  {
+    question: "What should I bring to my first visit?",
+    answer:
+      "The names of any medicines you take, any old X-rays or reports you still have, and a rough idea of when the problem started. That is enough.",
+  },
+  {
+    question: "Can NRIs and international patients plan before travelling?",
+    answer:
+      "Yes. Send your travel dates and what you would like looked at on WhatsApp before you book flights. We will tell you what realistically fits into your trip and what would need a second visit.",
+  },
 ] as const;

@@ -1,379 +1,212 @@
 import type { Metadata } from "next";
-import { showContentGaps } from "@/components/kheni/pending";
 import Link from "next/link";
-import { notFound } from "next/navigation";
-import { ArrowRight, ChevronDown, MessageCircle, Phone, Star } from "lucide-react";
+import { ArrowRight, ChevronDown } from "lucide-react";
 
+import { ImplantDiagram } from "@/components/kheni/art/diagrams";
+import { ClinicShorts } from "@/components/kheni/clinic-shorts";
+import { CtaBand } from "@/components/kheni/cta-band";
+import { DoctorSpotlight } from "@/components/kheni/doctor-spotlight";
+import { StartingPoints } from "@/components/kheni/implant/starting-points";
+import { ViewTracker } from "@/components/kheni/implant/view-tracker";
+import { ProcessSteps } from "@/components/kheni/process-steps";
+import { BranchProof, ProofChip, ProofCluster } from "@/components/kheni/proof";
+import { ResultsPreview } from "@/components/kheni/results-preview";
+import { SectionIntro } from "@/components/kheni/section-intro";
+import { SmileNote } from "@/components/kheni/smile-note";
 import { Accordion } from "@/components/ui/accordion";
 import { Container } from "@/components/ui/container";
-import { Section } from "@/components/ui/section";
-import { BranchGoogleCard } from "@/components/kheni/branch-google-card";
-import { CaseResultsGrid } from "@/components/kheni/case-results";
-import {
-  ImplantSystemRail,
-  ImplantWorkflowPending,
-  PriceTable,
-  TechnologyGrid,
-  TickList,
-} from "@/components/kheni/capability-grids";
-import { ImplantDiagram } from "@/components/kheni/implant/implant-diagram";
-import { OptionComparison } from "@/components/kheni/implant/option-comparison";
-import { StartingPointNavigator } from "@/components/kheni/implant/starting-point-navigator";
-import { PrincipalDoctor } from "@/components/kheni/doctor-authority";
-import { ProofBand } from "@/components/kheni/proof-band";
-import { VideoStoryGrid } from "@/components/kheni/stories";
+import { BookButton, CallButton, WhatsAppButton } from "@/components/ui/cta";
 import { implantCapabilities } from "@/content/capabilities";
-import { treatmentStats } from "@/content/clinic-proof";
-import { decisionStages, implantFaqs, implantHero, planFactors } from "@/content/implant-center";
-import { doctors, locations, site, treatments } from "@/content/site";
-import { whatsappUrl } from "@/lib/links";
-import { placeUrl } from "@/lib/maps";
+import { comparison, implantFaqs, implantHero, implantProcess, planFactors } from "@/content/implant-center";
+import { doctors, locations, smileNotes, treatments } from "@/content/site";
 
-const SLUG = "dental-implants-surat";
-const treatment = treatments.find((item) => item.slug === SLUG);
+const treatment = treatments.find((t) => t.slug === "dental-implants-surat")!;
+const hirabaug = locations.find((l) => l.implantCentre) ?? locations[1];
+const drMayur = doctors.find((d) => d.slug === "dr-mayur-kheni") ?? doctors[0];
 
 export const metadata: Metadata = {
   alternates: { canonical: "/treatments/dental-implants-surat/" },
-  title: treatment?.seoTitle ?? "Dental Implants in Surat",
-  description:
-    "Dental implants in Surat at Kheni Dental & Elite Implant Center, Hirabaug and Yogi Chowk. Single, multiple and full mouth implants led by Dr. Mayur Kheni.",
+  title: treatment.seoTitle,
+  description: treatment.metaDescription,
 };
 
-/** Plain-language benefits. No absolutes, no guarantees. */
-const benefits = [
-  "Chew on both sides again",
-  "Fixed in the jawbone, not resting on the gum",
-  "Neighbouring teeth usually left untouched",
-  "Speak and laugh without thinking about the gap",
-];
-
 /**
- * Flagship implant page, rebuilt shorter.
- *
- * The previous version ran to fifteen reading-heavy sections. This one keeps
- * the same substance but moves the comparison table and the planning factors
- * into disclosures, merges the consultation and process sections, and folds
- * the timeline and cost explanations into a single cost block. What is left
- * above the fold is what a patient came for: what kind of case they have,
- * what it costs, who does it and how to book.
+ * The flagship. Deeper palette than the rest of the site: navy, cobalt, a
+ * little gold, aqua and white. The process the doctor asked for sits high,
+ * the diagram is the hero visual, and every claim is one the clinic has
+ * confirmed. No technique names, brands, day-counts, warranties or prices.
  */
 export default function DentalImplantsPage() {
-  if (!treatment) notFound();
-  const doctor = doctors.find((item) => item.slug === "dr-mayur-kheni");
-  const hirabaug = locations.find((item) => item.slug === "hirabaug");
-
   return (
     <>
-      {/* ── Hero ─────────────────────────────────────────────────────────── */}
-      <section className="grain relative isolate overflow-hidden bg-ink text-white">
-        <div aria-hidden="true" className="bloom-gold pointer-events-none absolute inset-0 -z-10" />
-        <Container width="7xl" className="relative grid gap-10 py-12 lg:grid-cols-[1.05fr_.95fr] lg:items-center lg:gap-14 lg:py-16">
+      <ViewTracker event="treatment_view" placement="treatment_dental-implants-surat" />
+
+      {/* ── Hero ─────────────────────────────────────────────────────── */}
+      <section className="hue-cobalt relative isolate overflow-hidden bg-ink text-white">
+        <div aria-hidden="true" className="absolute -left-24 -top-24 size-96 rounded-full bg-cobalt opacity-50 blur-3xl" />
+        <div aria-hidden="true" className="absolute -right-20 bottom-0 size-80 rounded-full bg-teal opacity-25 blur-3xl" />
+        <Container width="7xl" className="relative grid gap-8 py-9 sm:py-12 lg:grid-cols-[1.05fr_.95fr] lg:items-center lg:gap-14 lg:py-16">
           <div>
-            <p className="t-eyebrow text-gold">{implantHero.eyebrow}</p>
-            <h1 className="mt-5 t-h1">
-              Dental Implants in Surat
+            <p className="t-eyebrow text-gold-soft">{implantHero.eyebrow}</p>
+            <h1 className="t-h1 measure-head mt-3 [--h-text:var(--sunshine)] [--h-soft:transparent]">
+              Dental implants in Surat, <span className="hl">planned properly.</span>
             </h1>
-            <p className="mt-5 max-w-lg t-stand text-white/60">
-              Replace a missing tooth with one that is fixed in the jawbone. Single, multiple and full mouth
-              implants at our Elite Implant Center, led by Dr. Mayur Kheni.
-            </p>
-
-            <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
-              <a
-                href={placeUrl(locations[0])}
-                target="_blank"
-                rel="noreferrer"
-                data-track="review_click"
-                data-placement="implant_hero_google"
-                className="inline-flex min-h-11 items-center gap-2 rounded-full border border-gold/25 bg-gold/[.07] px-4 text-sm"
-              >
-                <span className="flex gap-0.5 text-gold" aria-hidden="true">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} className="size-3.5 fill-current" />
-                  ))}
-                </span>
-                <strong className="text-white">{site.googleRating}</strong>
-                <span className="text-white/50">Yogi Chowk</span>
-              </a>
-              <span className="text-sm text-white/45">{doctor?.yearsExperience} years in practice</span>
-            </div>
-
-            <div className="mt-7 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
-              <Link
-                href="/contact/#book"
-                data-track="appointment_start"
-                data-placement="implant_hero"
-                className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-gold px-6 text-sm font-semibold text-ink sm:whitespace-nowrap"
-              >
-                Book Appointment
-                <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
-              </Link>
-              <a
-                href={`tel:${hirabaug?.phoneHref ?? site.primaryPhoneHref}`}
-                data-track="phone_click"
-                data-placement="implant_hero"
-                data-branch="hirabaug"
-                className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-white/15 px-6 text-sm font-semibold sm:whitespace-nowrap"
-              >
-                <Phone className="size-4 text-gold" aria-hidden="true" />
-                Call Clinic
-              </a>
-              <a
-                href={whatsappUrl(implantHero.whatsappMessage)}
-                target="_blank"
-                rel="noreferrer"
-                data-track="whatsapp_click"
-                data-placement="implant_hero"
-                className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-white/15 px-6 text-sm font-semibold sm:whitespace-nowrap"
-              >
-                <MessageCircle className="size-4 text-gold" aria-hidden="true" />
-                WhatsApp
-              </a>
+            <p className="t-stand measure-stand mt-4 text-white/75">{implantHero.standfirst}</p>
+            <ProofChip placement="implant_hero" tone="dark" className="mt-5" />
+            <div className="mt-6 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
+              <BookButton placement="implant_hero" branch={hirabaug.slug} label="Book an implant consultation" className="bg-sunshine text-ink shadow-none hover:bg-sunshine-soft" />
+              <WhatsAppButton placement="implant_hero" location={hirabaug} message={implantHero.whatsappMessage} />
+              <CallButton placement="implant_hero" location={hirabaug} variant="onDark" className="hidden sm:inline-flex" />
             </div>
           </div>
-
-          <figure className="rounded-2xl border border-gold/15 bg-white/[.02] p-6 sm:p-8">
-            <ImplantDiagram className="mx-auto w-full max-w-[22rem] text-white" />
-            <figcaption className="mt-3 text-center text-xs text-white/35">
-              Crown, abutment, post and jawbone
-            </figcaption>
-          </figure>
+          <div className="rounded-[1.75rem] bg-porcelain p-4 text-ink sm:p-6">
+            <ImplantDiagram />
+          </div>
         </Container>
       </section>
 
-      {/* ── Proof ────────────────────────────────────────────────────────── */}
-      <section className="border-y border-white/10 bg-[#111110] py-9 text-white sm:py-11">
+      {/* ── Kinds of case ────────────────────────────────────────────── */}
+      <section className="hue-cobalt py-10 sm:py-14 lg:py-18">
         <Container width="7xl">
-          <ProofBand stats={treatmentStats} />
-        </Container>
-      </section>
-
-      {/* ── Case types + benefits, with the comparison behind a disclosure ── */}
-      <Section spacing="md">
-        <Container width="7xl">
-          <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
-            <div>
-              <h2 className="t-h2">
-                What kind of case is yours?
-              </h2>
-              <ul className="mt-7 grid gap-2.5">
-                {implantCapabilities.map((item) => (
-                  <li key={item.id} className="rounded-xl border border-border bg-card px-5 py-4">
-                    <p className="font-serif text-lg leading-tight">{item.title}</p>
-                    <p className="mt-1 text-sm leading-6 text-muted-foreground">{item.copy}</p>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h2 className="t-h2">Why an implant</h2>
-              <div className="mt-7">
-                <TickList items={benefits} />
-              </div>
-
-              <details className="group mt-8 rounded-2xl border border-border bg-card">
-                <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 px-5 text-sm font-semibold marker:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring">
-                  Compare implant, bridge and denture
-                  <ChevronDown
-                    className="size-4 shrink-0 text-gold transition-transform group-open:rotate-180"
-                    aria-hidden="true"
-                  />
-                </summary>
-                <div className="border-t border-border p-3 sm:p-4">
-                  <OptionComparison />
-                </div>
-              </details>
-            </div>
-          </div>
-        </Container>
-      </Section>
-
-      {/* ── Your situation ───────────────────────────────────────────────── */}
-      <Section className="grain relative isolate bg-ink text-white" spacing="md">
-        <Container width="7xl">
-          <h2 className="t-h2">
-            What are you trying to solve?
-          </h2>
-          <div className="mt-8">
-            <StartingPointNavigator />
-          </div>
-        </Container>
-      </Section>
-
-      {/* ── Process ──────────────────────────────────────────────────────── */}
-      <Section className="bg-[#f1eee7]" spacing="md">
-        <Container width="7xl">
-          <h2 className="t-h2">How treatment works</h2>
-          <ol className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-            {decisionStages.map((stage, index) => (
-              <li key={stage.title} className="rounded-2xl border border-border bg-white p-5">
-                <span aria-hidden="true" className="font-serif text-2xl text-gold/50">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <h3 className="mt-3 font-serif text-lg leading-tight">{stage.title}</h3>
-                <p className="mt-2 text-sm leading-6 text-muted-foreground">{stage.copy}</p>
+          <SectionIntro eyebrow="What we plan" title="Single tooth to full mouth." highlight="full mouth" copy="Four kinds of case, all planned by Dr. Mayur Kheni at the Hirabaug clinic after an examination and imaging." />
+          <ul className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
+            {implantCapabilities.map((item, index) => (
+              <li key={item.id} className="rounded-2xl bg-cobalt-tint p-4 sm:p-5">
+                <span className="font-serif text-2xl font-semibold text-cobalt-deep">0{index + 1}</span>
+                <p className="t-card mt-2">{item.title}</p>
+                <p className="t-small mt-1.5 text-ink-soft">{item.copy}</p>
               </li>
             ))}
-          </ol>
+          </ul>
+        </Container>
+      </section>
 
-          <details className="group mt-6 rounded-2xl border border-border bg-white">
-            <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 px-5 text-sm font-semibold marker:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring">
-              What can change the plan
-              <ChevronDown
-                className="size-4 shrink-0 text-gold transition-transform group-open:rotate-180"
-                aria-hidden="true"
-              />
+      {/* ── Process ──────────────────────────────────────────────────── */}
+      <section className="hue-cobalt bg-cobalt-tint py-10 sm:py-14 lg:py-18">
+        <Container width="7xl">
+          <SectionIntro eyebrow={implantProcess.eyebrow} title={implantProcess.title} highlight="final tooth" copy={implantProcess.copy} />
+          <ProcessSteps steps={implantProcess.steps} columns={5} className="mt-6 sm:mt-8" dense />
+          <details className="group mt-5 rounded-2xl bg-white ring-1 ring-line">
+            <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 px-5 text-[.9375rem] font-semibold marker:hidden focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-cobalt [&::-webkit-details-marker]:hidden">
+              {planFactors.title}
+              <ChevronDown className="size-4 shrink-0 text-cobalt-deep transition-transform group-open:rotate-180" aria-hidden="true" />
             </summary>
-            <div className="border-t border-border p-5">
-              <p className="text-sm leading-6 text-muted-foreground">{planFactors.copy}</p>
-              <dl className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {planFactors.factors.map((factor) => (
-                  <div key={factor.title}>
-                    <dt className="text-sm font-semibold">{factor.title}</dt>
-                    <dd className="mt-1 text-sm leading-6 text-muted-foreground">{factor.copy}</dd>
+            <div className="border-t border-line p-5">
+              <p className="t-body text-ink-soft">{planFactors.copy}</p>
+              <dl className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {planFactors.factors.map((f) => (
+                  <div key={f.title}>
+                    <dt className="text-[.9375rem] font-semibold">{f.title}</dt>
+                    <dd className="t-small mt-1 text-ink-soft">{f.copy}</dd>
                   </div>
                 ))}
               </dl>
             </div>
           </details>
         </Container>
-      </Section>
+      </section>
 
-      {/* ── Dr. Mayur ────────────────────────────────────────────────────── */}
-      {doctor && (
-        <Section spacing="md">
-          <Container width="7xl">
-            <PrincipalDoctor doctor={doctor} />
-          </Container>
-        </Section>
-      )}
-
-      {/*
-        Technology and systems.
-
-        The equipment grid, the implant-system rail and the surgical-options
-        list are all still unconfirmed, so each renders nothing now. That left
-        a heading over an empty page, which is why the whole section is behind
-        the same switch: it comes back the moment the clinic names one machine
-        or one implant system, and until then the page goes straight from how
-        treatment works to who does it.
-      */}
-      {showContentGaps && (
-        <Section spacing="md">
-          <Container width="7xl">
-            <h2 className="t-h2">Technology and systems</h2>
-            <div className="mt-8">
-              <TechnologyGrid />
-            </div>
-            <div className="mt-10 grid gap-8 lg:grid-cols-2">
-              <div>
-                <h3 className="text-[.7rem] font-semibold uppercase tracking-[.2em] text-gold">Implant systems</h3>
-                <div className="mt-4">
-                  <ImplantSystemRail tone="light" />
-                </div>
-              </div>
-              <div>
-                <h3 className="text-[.7rem] font-semibold uppercase tracking-[.2em] text-gold">Surgical options</h3>
-                <div className="mt-4">
-                  <ImplantWorkflowPending tone="light" />
-                </div>
-              </div>
-            </div>
-          </Container>
-        </Section>
-      )}
-
-      {/* ── Results ──────────────────────────────────────────────────────── */}
-      <Section className="bg-[#f1eee7]" spacing="md">
+      {/* ── Your situation ───────────────────────────────────────────── */}
+      <section className="hue-cobalt py-10 sm:py-14 lg:py-18">
         <Container width="7xl">
-          <h2 className="t-h2">Implant results</h2>
-          <div className="mt-8">
-            <CaseResultsGrid limit={3} />
-          </div>
-        </Container>
-      </Section>
-
-      {/* ── Cost ─────────────────────────────────────────────────────────── */}
-      <Section spacing="md">
-        <Container width="7xl">
-          <div className="grid gap-8 lg:grid-cols-[.85fr_1.15fr] lg:gap-14">
-            <div>
-              <h2 className="t-h2">What it costs</h2>
-              <p className="mt-4 text-sm leading-6 text-muted-foreground">
-                What an implant costs depends on how many teeth are involved, the condition of the bone and the
-                final tooth that goes on top. You get the full plan, stage by stage, before treatment starts.
-              </p>
-            </div>
-            <PriceTable limit={4} />
-          </div>
-        </Container>
-      </Section>
-
-      {/* ── Proof ────────────────────────────────────────────────────────── */}
-      <Section className="grain relative isolate bg-ink text-white" spacing="md">
-        <Container width="7xl">
-          <h2 className="t-h2">What patients say</h2>
-          <div className="mt-8 grid gap-4 md:grid-cols-2">
-            {locations.map((location) => (
-              <BranchGoogleCard
-                key={location.slug}
-                location={location}
-                dark
-                placement={`implant_google_${location.slug}`}
-              />
-            ))}
-          </div>
-          <div className="mt-8">
-            <VideoStoryGrid tone="dark" />
-          </div>
-        </Container>
-      </Section>
-
-      {/* ── FAQ ──────────────────────────────────────────────────────────── */}
-      <Section className="bg-[#f1eee7]" spacing="md">
-        <Container width="7xl">
-          <div className="grid gap-8 lg:grid-cols-[.7fr_1.3fr] lg:gap-14">
-            <h2 className="t-h2">Implant questions</h2>
-            <Accordion items={implantFaqs} className="bg-white" />
-          </div>
-        </Container>
-      </Section>
-
-      {/* ── Book ─────────────────────────────────────────────────────────── */}
-      <section className="bg-gold py-14 text-ink sm:py-16">
-        <Container width="7xl" className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
-          <div>
-            <h2 className="max-w-xl t-h1">
-              Talk to us about an implant.
-            </h2>
-            <p className="mt-3 max-w-lg text-sm leading-6 text-ink/70">
-              {hirabaug ? `Elite Implant Center, ${hirabaug.areaLabel}.` : "Two clinics in Surat."} Book a time or send
-              us a message.
-            </p>
-          </div>
-          <div className="flex flex-col gap-2.5 sm:flex-row">
-            <Link
-              href="/contact/#book"
-              data-track="appointment_start"
-              data-placement="implant_final_cta"
-              className="inline-flex min-h-13 items-center justify-center rounded-full bg-ink px-6 text-sm font-semibold text-white sm:whitespace-nowrap"
-            >
-              Book Appointment
-            </Link>
-            <a
-              href={whatsappUrl(implantHero.whatsappMessage)}
-              target="_blank"
-              rel="noreferrer"
-              data-track="whatsapp_click"
-              data-placement="implant_final_cta"
-              className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-ink/25 px-6 text-sm font-semibold sm:whitespace-nowrap"
-            >
-              <MessageCircle className="size-4" aria-hidden="true" />
-              WhatsApp
-            </a>
+          <SectionIntro eyebrow="Your situation" title="Which of these is closest to you?" highlight="closest" />
+          <div className="mt-6 sm:mt-8">
+            <StartingPoints />
           </div>
         </Container>
       </section>
+
+      {/* ── Compare ──────────────────────────────────────────────────── */}
+      <section className="hue-teal bg-teal-tint py-10 sm:py-14 lg:py-18">
+        <Container width="7xl">
+          <SectionIntro eyebrow="Know the words" title={comparison.title} highlight="bridge or denture" copy={comparison.copy} />
+          <details className="group mt-6 overflow-hidden rounded-[1.5rem] bg-white ring-1 ring-line">
+            <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 px-5 text-[.9375rem] font-semibold marker:hidden focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-teal [&::-webkit-details-marker]:hidden">
+              See the comparison
+              <ChevronDown className="size-4 shrink-0 text-teal-text transition-transform group-open:rotate-180" aria-hidden="true" />
+            </summary>
+            <div className="hidden grid-cols-[1fr_1fr_1fr_1fr] gap-x-4 border-y border-line bg-teal-tint/60 px-5 py-3 md:grid">
+              <span className="t-eyebrow text-ink-soft">Compare</span>
+              {comparison.columns.map((c) => (
+                <span key={c} className={`t-eyebrow ${c === "Implant" ? "text-cobalt-deep" : "text-ink-soft"}`}>{c}</span>
+              ))}
+            </div>
+            <div className="divide-y divide-line">
+              {comparison.rows.map((row) => (
+                <div key={row.label} className="grid gap-x-4 gap-y-2 px-5 py-4 md:grid-cols-[1fr_1fr_1fr_1fr]">
+                  <h3 className="text-[.9375rem] font-semibold">{row.label}</h3>
+                  {(["implant", "bridge", "denture"] as const).map((key) => (
+                    <p key={key} className={`t-small rounded-lg px-3 py-2 md:px-0 md:py-0 ${key === "implant" ? "bg-cobalt-tint text-ink md:bg-transparent" : "text-ink-soft"}`}>
+                      <span className="mr-1.5 font-semibold capitalize text-ink md:hidden">{key}:</span>
+                      {row[key]}
+                    </p>
+                  ))}
+                </div>
+              ))}
+            </div>
+            <p className="t-small border-t border-line bg-teal-tint/60 px-5 py-4 text-ink-soft">{comparison.note}</p>
+          </details>
+        </Container>
+      </section>
+
+      {/* ── Dr. Mayur ────────────────────────────────────────────────── */}
+      <section className="py-10 sm:py-14 lg:py-18">
+        <Container width="7xl">
+          <DoctorSpotlight doctor={drMayur} />
+        </Container>
+      </section>
+
+      <SmileNote note={smileNotes[5]} compact />
+
+      {/* ── Results and proof ────────────────────────────────────────── */}
+      <section className="hue-sunshine bg-sunshine-tint py-10 sm:py-14 lg:py-18">
+        <Container width="7xl">
+          <SectionIntro eyebrow="Results" title="Implant results, shown honestly." highlight="honestly" />
+          <ResultsPreview limit={2} placement="implant_results" className="mt-6" />
+        </Container>
+      </section>
+
+      <section className="hue-cobalt py-10 sm:py-14 lg:py-18">
+        <Container width="7xl">
+          <div className="grid gap-5 lg:grid-cols-[1fr_1fr]">
+            <BranchProof location={hirabaug} placement="implant_google_hirabaug" />
+            <ProofCluster placement="implant_proof" />
+          </div>
+          <div className="mt-8">
+            <SectionIntro eyebrow="From the clinic" title="Patients on the day their treatment finished." highlight="finished" />
+            <ClinicShorts limit={3} kind="patient" className="mt-5" />
+          </div>
+        </Container>
+      </section>
+
+      {/* ── Questions ────────────────────────────────────────────────── */}
+      <section className="hue-cobalt bg-cobalt-tint py-10 sm:py-14 lg:py-18">
+        <Container width="7xl">
+          <div className="grid gap-6 lg:grid-cols-[.7fr_1.3fr] lg:gap-14">
+            <div>
+              <SectionIntro eyebrow="Questions" title="Implant questions, answered plainly." highlight="plainly" />
+              <div className="mt-6 rounded-2xl bg-white p-5 ring-1 ring-line">
+                <p className="t-eyebrow text-coral-text">Visiting Surat from abroad?</p>
+                <p className="t-small mt-2 text-ink-soft">Implant treatment is staged. Tell us your dates before you book flights and we will say what is realistic on one trip.</p>
+                <Link href="/international-patients/" className="mt-3 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-cobalt-deep">
+                  How a visit works
+                  <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
+                </Link>
+              </div>
+            </div>
+            <Accordion items={[...treatment.faqs, ...implantFaqs]} name="implant-faq" />
+          </div>
+        </Container>
+      </section>
+
+      <CtaBand
+        title="Talk to us about an implant."
+        highlight="implant"
+        copy={`Elite Implant Center, ${hirabaug.areaLabel}. Book a time or send a message.`}
+        placement="implant_final"
+        location={hirabaug}
+        whatsappMessage={implantHero.whatsappMessage}
+      />
     </>
   );
 }

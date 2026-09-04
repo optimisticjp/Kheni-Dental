@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowRight, ArrowUpRight, MessageCircle, Phone } from "lucide-react";
 
-import { InitialsPortrait, PendingTag } from "@/components/kheni/pending";
+import { CtaBand } from "@/components/kheni/cta-band";
+import { DoctorSpotlight, TeamLink } from "@/components/kheni/doctor-spotlight";
+import { ViewTracker } from "@/components/kheni/implant/view-tracker";
+import { ProofCluster } from "@/components/kheni/proof";
+import { SectionIntro } from "@/components/kheni/section-intro";
+import { SmileNote } from "@/components/kheni/smile-note";
+import { TreatmentRow } from "@/components/kheni/treatment-poster";
 import { Container } from "@/components/ui/container";
-import { Section } from "@/components/ui/section";
-import { languages } from "@/content/clinic-proof";
-import { doctors, site, treatments } from "@/content/site";
-import { whatsappUrl } from "@/lib/links";
+import { doctors, locations, treatments } from "@/content/site";
 
 export function generateStaticParams() {
   return doctors.map((doctor) => ({ slug: doctor.slug }));
@@ -16,175 +17,60 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const doctor = doctors.find((item) => item.slug === slug);
+  const doctor = doctors.find((d) => d.slug === slug);
   if (!doctor) return {};
-  return {
-    title: `${doctor.name}, ${doctor.credentials}`,
-    description: doctor.metaDescription,
-    alternates: { canonical: `/doctors/${slug}/` },
-  };
+  return { title: `${doctor.name}, ${doctor.credentials}`, description: doctor.metaDescription, alternates: { canonical: `/doctors/${slug}/` } };
 }
 
 export default async function DoctorPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const doctor = doctors.find((item) => item.slug === slug);
+  const doctor = doctors.find((d) => d.slug === slug);
   if (!doctor) notFound();
 
-  const message = `Hello Kheni Dental, I would like to book an appointment with ${doctor.name}.`;
   const related = treatments.filter((t) => doctor.relatedTreatmentSlugs.includes(t.slug));
+  const message = `Hello Kheni Dental, I would like to book an appointment with ${doctor.name}. Thank you.`;
 
   return (
     <>
-      {/* Facts first: name, degree, specialty, years, what they treat, book. */}
-      <section className="bg-ink text-white">
-        <Container width="7xl" className="grid gap-10 py-12 lg:grid-cols-[.75fr_1.25fr] lg:items-center lg:gap-14 lg:py-16">
-          {/* On a phone this used to open with 460px of empty portrait frame
-              before the doctor's own name. The name leads in the DOM now and
-              the frame follows; lg:order-first restores the portrait-left
-              composition on desktop, where there is room for both at once. */}
-          <div className="lg:order-last">
-            <p className="t-eyebrow text-gold">{doctor.specialty}</p>
-            <h1 className="mt-4 t-h1">
-              {doctor.name}
-            </h1>
-
-            <dl className="mt-6 flex flex-wrap gap-x-10 gap-y-4 border-y border-white/10 py-5">
-              <div>
-                <dt className="text-[.6rem] uppercase tracking-[.14em] text-white/40">Qualification</dt>
-                <dd className="mt-1 text-sm font-semibold">{doctor.credentials}</dd>
-              </div>
-              <div>
-                <dt className="text-[.6rem] uppercase tracking-[.14em] text-white/40">Experience</dt>
-                <dd className="mt-1 text-sm font-semibold text-gold">{doctor.yearsExperience} years</dd>
-              </div>
-              <div>
-                <dt className="text-[.6rem] uppercase tracking-[.14em] text-white/40">Speaks</dt>
-                <dd className="mt-1 text-sm font-semibold">{languages.join(", ")}</dd>
-              </div>
-            </dl>
-
-            <ul className="mt-6 flex flex-wrap gap-2">
-              {doctor.badges.map((badge) => (
-                <li
-                  key={badge}
-                  className="inline-flex rounded-full border border-gold/25 bg-gold/[.07] px-3 py-1.5 text-xs text-gold"
-                >
-                  {badge}
-                </li>
-              ))}
-            </ul>
-
-            <p className="mt-6 max-w-xl t-stand text-white/60">{doctor.bio}</p>
-
-            <div className="mt-8 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
-              <Link
-                href="/contact/#book"
-                data-track="appointment_start"
-                data-placement="doctor_profile"
-                className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-gold px-6 text-sm font-semibold text-ink sm:whitespace-nowrap"
-              >
-                Book Appointment
-                <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
-              </Link>
-              <a
-                href={`tel:${site.primaryPhoneHref}`}
-                data-track="phone_click"
-                data-placement="doctor_profile"
-                className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-white/15 px-6 text-sm font-semibold sm:whitespace-nowrap"
-              >
-                <Phone className="size-4 text-gold" aria-hidden="true" />
-                Call Clinic
-              </a>
-              <a
-                href={whatsappUrl(message)}
-                target="_blank"
-                rel="noreferrer"
-                data-track="whatsapp_click"
-                data-placement="doctor_profile"
-                className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-white/15 px-6 text-sm font-semibold sm:whitespace-nowrap"
-              >
-                <MessageCircle className="size-4 text-gold" aria-hidden="true" />
-                WhatsApp
-              </a>
-            </div>
-          </div>
-
-          <InitialsPortrait
-            name={doctor.name}
-            className="aspect-[3/2] w-full lg:order-first lg:aspect-[4/5]"
-          />
+      <ViewTracker event="doctor_profile_view" placement={`doctor_${doctor.slug}`} />
+      <section className="py-6 sm:py-10 lg:py-14">
+        <Container width="7xl">
+          <DoctorSpotlight doctor={doctor} as="h1" />
         </Container>
       </section>
 
-      <Section spacing="md">
-        <Container width="7xl">
-          <div className="grid gap-10 lg:grid-cols-[1.1fr_.9fr] lg:gap-16">
-            <div>
-              <h2 className="t-h2">
-                {doctor.approachHeading}
-              </h2>
-              <blockquote className="mt-6 border-l-2 border-gold/50 pl-5 font-serif text-xl leading-snug">
-                &ldquo;{doctor.philosophy}&rdquo;
-              </blockquote>
-            </div>
+      <SmileNote note={{ line: doctor.philosophy, highlight: "", hue: doctor.hue }} compact className="pb-8 sm:pb-12" />
 
-            {/* Structured credential slots so the doctor can fill them in. */}
-            <div className="rounded-2xl border border-border bg-card p-6">
-              <h2 className="font-serif text-xl leading-tight">Training and memberships</h2>
-              <ul className="mt-4 space-y-3">
-                {["Postgraduate training", "Professional membership", "Certification"].map((item) => (
-                  <li key={item} className="flex items-center justify-between gap-3 border-b border-border pb-3 text-sm last:border-0 last:pb-0">
-                    <span className="text-muted-foreground">{item}</span>
-                    <PendingTag label="To confirm" />
+      <section className={`hue-${doctor.hue} pb-10 sm:pb-14 lg:pb-18`}>
+        <Container width="7xl">
+          <div className="grid gap-8 lg:grid-cols-[1.1fr_.9fr] lg:gap-14">
+            <div>
+              <SectionIntro eyebrow="Treatments" title={`What ${doctor.shortName} works with.`} highlight={doctor.shortName} />
+              <div className="mt-5 grid gap-3">
+                {related.map((t) => (
+                  <TreatmentRow key={t.slug} treatment={t} placement={`doctor_${doctor.slug}`} />
+                ))}
+              </div>
+            </div>
+            <div>
+              <SectionIntro eyebrow="Where" title="Two clinics in Surat." highlight="Two clinics" copy="Call the clinic you plan to visit to check which days this dentist is there." />
+              <ul className="mt-5 grid gap-3">
+                {locations.map((l) => (
+                  <li key={l.slug} className={`hue-${l.hue} rounded-2xl bg-h-tint p-4`}>
+                    <p className="font-semibold">{l.displayArea}</p>
+                    <p className="t-small mt-0.5 text-ink-soft">{l.landmark}</p>
+                    <p className="t-small mt-1 text-ink-soft">{l.hours}</p>
                   </li>
                 ))}
               </ul>
+              <ProofCluster placement={`doctor_proof_${doctor.slug}`} className="mt-4" />
             </div>
           </div>
+          <TeamLink />
         </Container>
-      </Section>
+      </section>
 
-      {related.length > 0 && (
-        <Section className="bg-[#f1eee7]" spacing="md">
-          <Container width="7xl">
-            <h2 className="t-h2">
-              Treatments {doctor.name.split(" ").slice(0, 2).join(" ")} works with
-            </h2>
-            <ul className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {related.map((t) => (
-                <li key={t.slug}>
-                  <Link
-                    href={`/treatments/${t.slug}/`}
-                    data-track="treatment_view"
-                    data-placement="doctor_profile"
-                    className="group flex min-h-[4.5rem] items-center justify-between gap-4 rounded-2xl border border-border bg-white px-5 py-4"
-                  >
-                    <span className="font-serif text-lg leading-tight">{t.title}</span>
-                    <ArrowUpRight
-                      className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-gold"
-                      aria-hidden="true"
-                    />
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </Container>
-        </Section>
-      )}
-
-      <Section spacing="md">
-        <Container width="7xl">
-          <div className="flex flex-wrap items-center justify-between gap-5 rounded-2xl border border-border bg-card p-6 sm:p-8">
-            <p className="font-serif text-2xl leading-tight">Meet the rest of the team</p>
-            <Link
-              href="/doctors/"
-              className="inline-flex min-h-12 items-center gap-2 rounded-full border border-border px-5 text-sm font-semibold text-gold"
-            >
-              All doctors <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
-            </Link>
-          </div>
-        </Container>
-      </Section>
+      <CtaBand title={`Book an appointment with ${doctor.name}.`} highlight={doctor.name} placement={`doctor_final_${doctor.slug}`} hue={doctor.hue} whatsappMessage={message} />
     </>
   );
 }

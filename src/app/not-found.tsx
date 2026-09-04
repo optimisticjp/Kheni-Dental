@@ -1,3 +1,27 @@
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+
 import { Container } from "@/components/ui/container";
-export default function NotFound(){return <section className="bg-ink py-28 text-white"><Container width="4xl" className="text-center"><p className="text-xs font-semibold uppercase tracking-[.24em] text-gold">404</p><h1 className="mt-5 font-serif text-6xl">We cannot find that page.</h1><p className="mt-5 text-white/55">The link may be old, or a character may have gone missing from it. You can look through the treatments we offer, pick whichever of our two Surat clinics is easier for you to reach, or simply call and tell the team what is troubling you. You do not need to know the name of the treatment.</p><div className="mt-8 flex justify-center gap-3"><Link href="/" className="rounded-full bg-gold px-6 py-3 text-sm font-semibold text-ink">Home</Link><Link href="/treatments/" className="rounded-full border border-white/15 px-6 py-3 text-sm">See treatments</Link></div></Container></section>}
+import { BookButton, WhatsAppButton } from "@/components/ui/cta";
+
+export default function NotFound() {
+  return (
+    <section className="hue-coral field relative isolate overflow-hidden" style={{ ["--f1" as string]: "var(--coral-tint)", ["--f2" as string]: "var(--sunshine-tint)", ["--f3" as string]: "var(--sky-tint)" }}>
+      <Container width="4xl" className="relative py-16 sm:py-24">
+        <p className="t-eyebrow text-coral-text">404</p>
+        <h1 className="t-h1 mt-3">
+          We cannot find <span className="hl">that page.</span>
+        </h1>
+        <p className="t-stand measure-stand mt-4 text-ink-soft">The link may be old. You can look through the treatments, pick a clinic, or just tell us what is troubling you.</p>
+        <div className="mt-6 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
+          <BookButton placement="not_found" />
+          <WhatsAppButton placement="not_found" variant="secondary" />
+          <Link href="/treatments/" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-5 text-[.9375rem] font-semibold ring-1 ring-line">
+            See treatments
+            <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
+          </Link>
+        </div>
+      </Container>
+    </section>
+  );
+}

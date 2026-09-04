@@ -1,12 +1,12 @@
 # Source Facts and Verification Notes
 
-Snapshot prepared 27 August 2026. Recheck public ratings and hours immediately before launch because these can change.
+Snapshot prepared 27 August 2026, updated 29 August 2026 (Google counts) and 3 September 2026 (domain, YouTube). Recheck public ratings and hours immediately before launch because these can change.
 
 ## Clinic-provided facts
 
 ### Brand
 - Kheni Dental & Elite Implant Center
-- Domain selected: https://www.khenidentalcare.com
+- Domain: https://www.khenidentalcare.com (canonical). The apex `khenidentalcare.com` redirects to www with a 301, preserving paths and query strings (verified 3 September 2026). Plain `http://` does not yet redirect to `https://`; enable "Always Use HTTPS" in Cloudflare before launch.
 - Patient-facing email selected: smile@khenidentalcare.com
 
 ### Doctors
@@ -19,9 +19,18 @@ Snapshot prepared 27 August 2026. Recheck public ratings and hours immediately b
 - Swastik Plaza branch: +91 95101 12354
 - Hirabaug: +91 97379 97543
 
-### Maps links provided by the client
-- Swastik Plaza Google Maps profile: https://maps.app.goo.gl/iKskGAZuZL92Tm7G7
-- Hirabaug: https://maps.app.goo.gl/hkHmTr8ZxLYaH8Vc9
+### Maps links provided by the client (29 August 2026)
+- Swastik Plaza: https://maps.app.goo.gl/WN2nDHXVK8RajDvE6 (Place ID ChIJddZdiXpP4DsRvtrOvXjbQqA, pin 21.2147921, 72.8881639)
+- Hirabaug: https://maps.app.goo.gl/7TipkWprNZv2qEQk9 (Place ID ChIJ89yBAKVP4DsR3TYY_211oRg, pin 21.2127579, 72.8584163)
+
+### Google reputation (clinic-verified 29 August 2026)
+- Swastik Plaza / Yogi Chowk: 4.9, 1,753 reviews
+- Hirabaug: 4.9, 210 reviews
+- Combined 1,963, always labelled as a sum across two listings. A live re-check from this environment was not possible (Google serves a script shell), so the clinic-verified values stand.
+
+### Clinic YouTube channel (verified 3 September 2026)
+- https://www.youtube.com/channel/UCA4ralOJwb8mrttegjyZcEQ ("Kheni Dental & Elite Implant Center"). Public Shorts from this channel are linked in `src/content/videos.ts` and played only after a tap.
+- Instagram @khenielite is clinic-provided and linked, not embedded; its public content could not be verified from this environment.
 
 ## Public profile snapshot
 
