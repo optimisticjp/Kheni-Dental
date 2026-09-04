@@ -153,7 +153,11 @@ added. The FAQ answers "How is cost decided?" without numbers.
 
 ## Before launch
 
-- [ ] Set `NEXT_PUBLIC_ALLOW_INDEXING=true` (robots.txt currently blocks all)
+- [ ] Set `NEXT_PUBLIC_ALLOW_INDEXING=true`. Until then the site carries
+      `<meta name="robots" content="noindex, nofollow">` and a robots.txt that
+      names Googlebot, Bingbot and the rest individually. Both are needed:
+      Cloudflare's managed robots.txt prepends its own `User-agent: *` group
+      with `Allow: /`, which would otherwise win over ours.
 - [ ] Set `NEXT_PUBLIC_ENABLE_SCHEMA=true`
 - [ ] Set `NEXT_PUBLIC_SITE_URL=https://www.khenidentalcare.com`
 - [ ] In Cloudflare, turn on "Always Use HTTPS" so `http://` requests redirect

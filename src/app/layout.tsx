@@ -17,6 +17,9 @@ import "@/content/__checks__/branch-data.check";
 import "@/content/__checks__/content-integrity.check";
 import "./globals.css";
 
+/** Search indexing stays off until the clinic approves launch. */
+const allowIndexing = process.env.NEXT_PUBLIC_ALLOW_INDEXING === "true";
+
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || site.domain),
   title: { default: `${site.name} | Dentist in Surat`, template: `%s | ${site.shortName}` },
@@ -25,6 +28,20 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
   openGraph: { title: site.name, description: site.description, type: "website", locale: "en_IN", siteName: site.name },
   twitter: { card: "summary_large_image", title: site.name, description: site.description },
+  /**
+   * A meta tag, not just robots.txt.
+   *
+   * Cloudflare's managed robots.txt prepends its own `User-agent: *` group
+   * carrying `Allow: /`. Crawlers merge groups that share a user-agent, and
+   * when two rules are equally specific — `Allow: /` against our
+   * `Disallow: /` — the least restrictive one wins. So robots.txt alone
+   * cannot be trusted to hold indexing off on this deployment.
+   *
+   * `noindex` is the reliable instruction, and it works precisely because
+   * the page is fetchable: a crawler that reads the page reads this too.
+   * It disappears the moment NEXT_PUBLIC_ALLOW_INDEXING is set to true.
+   */
+  robots: allowIndexing ? undefined : { index: false, follow: false, googleBot: { index: false, follow: false } },
 };
 
 /**

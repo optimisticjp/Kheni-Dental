@@ -36,7 +36,8 @@ with the Playwright scripts kept alongside the session (`interactions.mjs`,
 - Videos: no iframe until tap, then the privacy-enhanced YouTube domain
 - No horizontal overflow at 320, 360, 375, 390, 430, 768, 820, 834, 1024,
   1280, 1366, 1440, 1536, 1920
-- Canonical, robots (disallow while unlaunched), sitemap on the www origin
+- Canonical, robots.txt (disallow, search crawlers named individually),
+  the `noindex` meta tag, sitemap on the www origin
 - Rendered pages free of forbidden claims and placeholder markers
 
 ## Screenshot passes
