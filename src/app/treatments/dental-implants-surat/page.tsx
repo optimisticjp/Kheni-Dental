@@ -19,13 +19,12 @@ import { BookButton, CallButton, WhatsAppButton } from "@/components/ui/cta";
 import { implantCapabilities } from "@/content/capabilities";
 import { comparison, implantFaqs, implantHero, implantProcess, planFactors } from "@/content/implant-center";
 import { doctors, locations, smileNotes, treatments } from "@/content/site";
-import { PriceCard } from "@/components/kheni/demo/price-table";
 import { PromiseStrip } from "@/components/kheni/demo/promise-strip";
 import { StatBand } from "@/components/kheni/demo/stat-band";
 import { VideoWall } from "@/components/kheni/demo/video-wall";
 import { CaseWall } from "@/components/kheni/demo/result-gallery";
 import { TestimonialCard } from "@/components/kheni/demo/testimonial-wall";
-import { demoContentActive, demoPriceBySlug, demoStats, demoTestimonials } from "@/content/demo";
+import { demoContentActive, demoStats, demoTestimonials } from "@/content/demo";
 
 const treatment = treatments.find((t) => t.slug === "dental-implants-surat")!;
 const hirabaug = locations.find((l) => l.implantCentre) ?? locations[1];
@@ -218,19 +217,11 @@ export default function DentalImplantsPage() {
 
           <section className="hue-cobalt py-10 sm:py-14 lg:py-18">
             <Container width="7xl">
-              <div className="grid gap-8 lg:grid-cols-[.9fr_1.1fr] lg:gap-12">
-                <div>
-                  <SectionIntro eyebrow="What it costs" title="An indicative range, per implant." highlight="per implant" copy="The final figure depends on the bone, the number of implants and the crown." />
-                  {demoPriceBySlug["dental-implants-surat"] && <PriceCard price={demoPriceBySlug["dental-implants-surat"]} className="mt-6" />}
-                </div>
-                <div>
-                  <SectionIntro eyebrow="Implant patients" title="What people said afterwards." highlight="afterwards" />
-                  <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                    {demoTestimonials.filter((t) => t.treatmentSlug === "dental-implants-surat").slice(0, 4).map((story) => (
-                      <TestimonialCard key={story.id} story={story} />
-                    ))}
-                  </div>
-                </div>
+              <SectionIntro eyebrow="Implant patients" title="What people said afterwards." highlight="afterwards" />
+              <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                {demoTestimonials.filter((t) => t.treatmentSlug === "dental-implants-surat").slice(0, 4).map((story) => (
+                  <TestimonialCard key={story.id} story={story} />
+                ))}
               </div>
             </Container>
           </section>

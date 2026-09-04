@@ -1,5 +1,9 @@
 # Demo content layer
 
+**No prices anywhere.** The doctor's standing instruction that treatment
+rates are not published holds in this layer too: there are no rupee figures,
+ranges, EMI lines or estimates on any page, with the flag on or off.
+
 Everything in `src/content/demo/` and `src/components/kheni/demo/` is
 **invented**. It exists so the clinic can see what the marketing patterns the
 verified site leaves out actually look like on this design, and decide which
@@ -26,7 +30,6 @@ To go live on real content: replace what is listed below, set
 | Item | Where | Notes |
 | --- | --- | --- |
 | Volume counters (32,400 patients, 9,600 implants, and the rest) | `demoStats` | Nothing is counted. Numbers chosen to look plausible. |
-| Prices, ranges, EMI figures, "what's included" | `demoPricing` | The doctor's standing instruction is that no rates are published. |
 | Superlative hero copy ("best", "#1", "painless", "world-class", "guaranteed") | `demoSuperHero`, `demoMarqueeClaims` | None of it is supportable. |
 | Process promises (new teeth in a day, 98.6% success, lifetime warranty) | `demoPromises` | Timing, success rate and warranty are all made up. |
 | Dentist qualifications and memberships (M.D.S., fellowships, certifications) | `demoCredentials` | **Highest risk.** These are fabricated qualifications attached to four real, named dentists. All four hold B.D.S. Replace or delete before anything goes public. |
@@ -38,19 +41,19 @@ To go live on real content: replace what is listed below, set
 | Video testimonials (8) | `demoVideoStories` | The YouTube ids are **real** clips from the clinic's own channel, used only so a poster frame loads. The names, places, treatments and quotes attached to them are invented and do not describe those videos. |
 | Before/after cases and the unlabelled result wall | `demoCases`, `demoResultDump` | Drawn SVG frames, not patients. |
 | Photography | `src/components/kheni/demo/art.tsx` | Drawn gradient fields at the exact crop a real photograph will take. No stock imagery is used or linked. |
-| "Free quote" side tab, "free consultation" CTA | `demoQuoteTab`, `demoSuperHero` | Not confirmed as free. |
+| "Free consultation" CTA | `demoSuperHero` | Not confirmed as free. The "Ask a dentist" side tab offers a look at a photo, not an estimate. |
 
 ## Where each pattern renders
 
 - **Homepage** stock hero, claim marquee, press strip, promise strip, icon
-  grid, horizontal accordion, stat band, six price cards, six testimonials
-  plus the rating summary, four video testimonials, awards row, press quotes,
-  the labelled case wall.
-- **/treatments/** icon grid and the full eleven-card price table.
-- **/treatments/[slug]/** the treatment's price card, its testimonials, a
-  four-tile result grid.
+  grid, horizontal accordion, stat band, six testimonials plus the rating
+  summary, four video testimonials, awards row, press quotes, the labelled
+  case wall.
+- **/treatments/** icon grid.
+- **/treatments/[slug]/** the treatment's testimonials and a four-tile result
+  grid.
 - **/treatments/dental-implants-surat/** promise strip, implant stat band,
-  price card, testimonials, case wall, video wall.
+  testimonials, case wall, video wall.
 - **/reviews/** rating summary, full sixteen-card testimonial wall, video
   wall, awards and press.
 - **/smile-gallery/** labelled case wall, the unlabelled twelve-tile grid,
@@ -59,20 +62,18 @@ To go live on real content: replace what is listed below, set
 - **/doctors/[slug]/** invented qualifications and the doctor's testimonials.
 - **/about/** stat band, claim marquee, press strip, awards, press quotes,
   notable patients.
-- **Every page** the rotated "Free quote" side tab and a one-line sample
+- **Every page** the rotated "Ask a dentist" side tab and a one-line sample
   content notice above the footer.
 
 ## Known costs of these patterns
 
 Worth weighing before keeping any of them.
 
-- The homepage runs to about 23,600px on a 390px phone, roughly double the
-  verified 12,400px. Twelve marketing patterns stacked on one page is what
+- The homepage runs to about 19,000px on a 390px phone, well over the
+  verified 12,400px. Eleven marketing patterns stacked on one page is what
   that costs.
 - The rotated side tab is fixed to the right edge and floats over whatever is
   behind it, including headings. That is what a fixed side tab does; it is not
   a layout bug that can be fixed while keeping the pattern.
 - Fourteen accordion panels only fit a desktop row at 3.25rem spines. Add a
   fifteenth and the open panel starts losing width.
-- Eleven price cards stacked on a phone is about 5,000px, which is why the
-  homepage shows six and links to the rest.

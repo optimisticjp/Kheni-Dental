@@ -24,7 +24,6 @@ import { StatBand } from "@/components/kheni/demo/stat-band";
 import { IconServiceGrid } from "@/components/kheni/demo/icon-grid";
 import { HorizontalAccordion } from "@/components/kheni/demo/horizontal-accordion";
 import { PromiseStrip } from "@/components/kheni/demo/promise-strip";
-import { PriceTable } from "@/components/kheni/demo/price-table";
 import { RatingSummary, TestimonialWall } from "@/components/kheni/demo/testimonial-wall";
 import { VideoWall } from "@/components/kheni/demo/video-wall";
 import { AwardsRow, PressQuotes, PressStrip } from "@/components/kheni/demo/press-strip";
@@ -262,20 +261,6 @@ export default function Home() {
 
       {demoContentActive && (
         <>
-          {/* ── Prices ──────────────────────────────────────────────── */}
-          <section id="pricing" className="anchor hue-amber py-10 sm:py-14 lg:py-20">
-            <Container width="7xl">
-              <SectionIntro eyebrow="Treatment rates" title="What things cost, before you ask." highlight="before you ask" copy="Indicative ranges, with what is included and the monthly EMI figure. Placeholder numbers." />
-              {/* Six here, all eleven on the treatments index. Eleven price cards
-                  stacked on a phone is 5,000px of scrolling before the next section. */}
-              <PriceTable className="mt-6 sm:mt-8" slugs={["dental-implants-surat", "root-canal-treatment-surat", "braces-clear-aligners", "cosmetic-smile-dentistry", "full-mouth-rehabilitation", "crowns-and-bridges"]} />
-              <Link href="/treatments/#pricing" className="mt-5 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-h-text">
-                Rates for all {treatments.length} treatments
-                <ArrowUpRight className="cta-arrow size-4" aria-hidden="true" />
-              </Link>
-            </Container>
-          </section>
-
           {/* ── Testimonial wall ────────────────────────────────────── */}
           <section className="hue-sunshine py-10 sm:py-14 lg:py-20">
             <Container width="7xl">

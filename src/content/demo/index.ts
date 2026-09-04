@@ -4,15 +4,19 @@
  * ────────────────────────────────────────────────────────────────────────────
  *
  * The clinic asked to see the look and feel of the marketing patterns the
- * verified site deliberately leaves out: volume counters, price tables,
- * superlative headlines, award rows, a testimonial wall, video testimonials,
- * a press strip, a claim marquee and so on. None of it is confirmed. All of
- * it is placeholder, written to be replaced.
+ * verified site deliberately leaves out: volume counters, superlative
+ * headlines, award rows, a testimonial wall, video testimonials, a press
+ * strip, a claim marquee and so on. None of it is confirmed. All of it is
+ * placeholder, written to be replaced.
+ *
+ * Rates are the exception: the doctor's standing instruction is that no
+ * treatment prices are published, and that holds here too. There are no
+ * rupee figures, ranges, EMI lines or estimates anywhere in this layer.
  *
  * Rules for this file:
  *
- *  1. Nothing here is true. Patient names, cities, quotes, counts, prices,
- *     awards, publications and credentials are all fabricated for layout.
+ *  1. Nothing here is true. Patient names, cities, quotes, counts, awards,
+ *     publications and credentials are all fabricated for layout.
  *  2. It only renders while `demoContentActive` is true, which is the default
  *     for review builds and is switched off with NEXT_PUBLIC_DEMO_CONTENT=false.
  *  3. `src/content/__checks__/content-integrity.check.ts` fails the build if
@@ -25,8 +29,6 @@
  * The highest-risk items, to swap first:
  *   - `demoCredentials`: invented qualifications attached to real, named
  *     dentists. Must be replaced or removed before anything goes public.
- *   - `demoPricing`: invented rupee figures. The doctor's standing
- *     instruction is that no rates are published.
  *   - `demoAwards` and `demoPress`: fictional bodies and mastheads.
  */
 
@@ -37,7 +39,7 @@ export const demoContentActive = process.env.NEXT_PUBLIC_DEMO_CONTENT !== "false
 
 /** One line the layout can show so nobody mistakes the demo layer for fact. */
 export const demoNotice =
-  "Sample content: figures, prices, names, quotes, awards and credentials on this preview are placeholders for layout review and are not the clinic's real information.";
+  "Sample content: figures, names, quotes, awards and credentials on this preview are placeholders for layout review and are not the clinic's real information.";
 
 /* ── 1. Volume counters ─────────────────────────────────────────────────── */
 
@@ -78,7 +80,7 @@ export const demoMarqueeClaims = [
   "98.6% implant success rate",
   "Award-winning full mouth rehabilitation",
   "NRI patients from 23 countries",
-  "0% EMI on treatments above ₹25,000",
+  "0% finance available on major treatment",
   "Digital smile preview before you decide",
 ];
 
@@ -97,7 +99,7 @@ export const demoSuperHero = {
     "Lifetime warranty on premium Swiss implant systems",
   ],
   primaryCta: "Claim your free consultation",
-  secondaryCta: "See today's offers",
+  secondaryCta: "See patient results",
 };
 
 export const demoPromises = [
@@ -107,126 +109,7 @@ export const demoPromises = [
   { id: "p4", value: "Lifetime", title: "Warranty", copy: "Every premium implant carries a lifetime warranty on the fixture and a 10 year warranty on the crown." },
 ];
 
-/* ── 4. Prices ──────────────────────────────────────────────────────────── */
-
-export type DemoPrice = {
-  treatmentSlug: string;
-  label: string;
-  from: number;
-  to: number;
-  unit: string;
-  includes: string[];
-  emiFrom?: number;
-  popular?: boolean;
-};
-
-export const demoPricing: DemoPrice[] = [
-  {
-    treatmentSlug: "dental-implants-surat",
-    label: "Dental implant",
-    from: 24000,
-    to: 62000,
-    unit: "per implant",
-    includes: ["Consultation and 3D scan", "Implant fixture and abutment", "Zirconia crown", "All review visits for 12 months"],
-    emiFrom: 2000,
-    popular: true,
-  },
-  {
-    treatmentSlug: "root-canal-treatment-surat",
-    label: "Root canal treatment",
-    from: 3500,
-    to: 9000,
-    unit: "per tooth",
-    includes: ["Digital X-ray", "Single sitting treatment", "Post and core if needed", "Follow-up review"],
-    emiFrom: 600,
-  },
-  {
-    treatmentSlug: "braces-clear-aligners",
-    label: "Braces and clear aligners",
-    from: 32000,
-    to: 185000,
-    unit: "full course",
-    includes: ["Records, photos and scan", "All appliances and wires", "Monthly adjustment visits", "Retainers for one year"],
-    emiFrom: 3200,
-    popular: true,
-  },
-  {
-    treatmentSlug: "cosmetic-smile-dentistry",
-    label: "Smile design",
-    from: 48000,
-    to: 240000,
-    unit: "per case",
-    includes: ["Digital smile preview", "Trial smile mock-up", "Veneers or crowns", "Shade matching and polish"],
-    emiFrom: 4000,
-  },
-  {
-    treatmentSlug: "full-mouth-rehabilitation",
-    label: "Full mouth rehabilitation",
-    from: 185000,
-    to: 720000,
-    unit: "per arch onwards",
-    includes: ["Full diagnostic work-up", "Staged treatment plan", "Implants or crowns as planned", "Two years of review visits"],
-    emiFrom: 9500,
-  },
-  {
-    treatmentSlug: "crowns-and-bridges",
-    label: "Crown or bridge",
-    from: 3500,
-    to: 22000,
-    unit: "per unit",
-    includes: ["Tooth preparation", "Digital impression", "Laboratory crown", "Fit and bite adjustment"],
-  },
-  {
-    treatmentSlug: "kids-dentistry-surat",
-    label: "Kids dentistry",
-    from: 800,
-    to: 6500,
-    unit: "per visit",
-    includes: ["Child friendly examination", "Cleaning or filling", "Fluoride application", "Parent briefing"],
-  },
-  {
-    treatmentSlug: "gum-care-surat",
-    label: "Gum treatment",
-    from: 2500,
-    to: 18000,
-    unit: "per course",
-    includes: ["Scaling and polishing", "Deep cleaning if needed", "Laser gum contouring", "Home care plan"],
-  },
-  {
-    treatmentSlug: "wisdom-tooth-oral-surgery",
-    label: "Wisdom tooth removal",
-    from: 3000,
-    to: 14000,
-    unit: "per tooth",
-    includes: ["OPG X-ray", "Surgical removal", "Medication for the week", "Suture removal visit"],
-  },
-  {
-    treatmentSlug: "dental-check-up-surat",
-    label: "Check-up and cleaning",
-    from: 300,
-    to: 1800,
-    unit: "per visit",
-    includes: ["Full mouth examination", "Digital X-ray if needed", "Scaling and polishing", "Written treatment plan"],
-  },
-  {
-    treatmentSlug: "tooth-fillings-surat",
-    label: "Tooth filling",
-    from: 900,
-    to: 3500,
-    unit: "per tooth",
-    includes: ["Decay removal", "Tooth coloured composite", "Shade matching", "Bite check"],
-  },
-];
-
-export const demoPricingNote =
-  "Indicative ranges only. The final figure depends on what the dentist finds at the examination. 0% EMI available on treatments above ₹25,000 through partner banks.";
-
-export const demoPriceBySlug = Object.fromEntries(demoPricing.map((p) => [p.treatmentSlug, p]));
-
-/** Formats to Indian digit grouping, e.g. 1,85,000. */
-export const inr = (n: number) => `₹${n.toLocaleString("en-IN")}`;
-
-/* ── 5. Credentials and awards ──────────────────────────────────────────── */
+/* ── 4. Credentials and awards ──────────────────────────────────────────── */
 
 export type DemoCredential = { doctorSlug: string; credentials: string; qualifications: string[]; memberships: string[] };
 
@@ -294,7 +177,7 @@ export const demoAccreditations = [
   "Green OT sterilisation certified",
 ];
 
-/* ── 6. Press and celebrity proof ───────────────────────────────────────── */
+/* ── 5. Press and celebrity proof ───────────────────────────────────────── */
 
 export type DemoPress = { id: string; outlet: string; quote: string; date: string };
 
@@ -317,7 +200,7 @@ export const demoNotables: DemoNotable[] = [
   { id: "n4", name: "Meera Shah", role: "Textile entrepreneur", quote: "Full mouth work planned around my travel, not the other way round.", hue: "sunshine" },
 ];
 
-/* ── 7. Testimonial wall ────────────────────────────────────────────────── */
+/* ── 6. Testimonial wall ────────────────────────────────────────────────── */
 
 export type DemoTestimonial = {
   id: string;
@@ -356,7 +239,7 @@ export const demoTestimonials: DemoTestimonial[] = [
 
 export const demoRatingSummary = { average: "4.9", total: 1284, breakdown: [{ stars: 5, count: 1189 }, { stars: 4, count: 71 }, { stars: 3, count: 15 }, { stars: 2, count: 5 }, { stars: 1, count: 4 }] };
 
-/* ── 8. Video testimonial wall ──────────────────────────────────────────── */
+/* ── 7. Video testimonial wall ──────────────────────────────────────────── */
 
 export type DemoVideoStory = {
   id: string;
@@ -381,7 +264,7 @@ export const demoVideoStories: DemoVideoStory[] = [
   { id: "v8", youtubeId: "OizBmbJSTx8", name: "Jignesh B.", place: "Dubai, UAE", treatment: "Eight veneers", quote: "The trial smile is what sold me.", language: "English", hue: "teal" },
 ];
 
-/* ── 9. Result gallery ──────────────────────────────────────────────────── */
+/* ── 8. Result gallery ──────────────────────────────────────────────────── */
 
 export type DemoResult = { id: string; label?: string; hue: Hue; tone: [string, string] };
 
@@ -411,7 +294,7 @@ export const demoCases: DemoCase[] = [
   { id: "c4", label: "Loose lower denture", detail: "Four implants and a fixed bridge, 6 months", hue: "sunshine", before: ["#f2f0e9", "#d5cfbb"], after: ["#fff8e6", "#ffe39c"] },
 ];
 
-/* ── 10. Horizontal accordion (problems) ────────────────────────────────── */
+/* ── 9. Horizontal accordion (problems) ────────────────────────────────── */
 
 export type DemoPanel = { id: string; label: string; heading: string; copy: string; href: string; hue: Hue; stat: string };
 
@@ -432,17 +315,17 @@ export const demoProblemPanels: DemoPanel[] = [
   { id: "nri", label: "Visiting Surat", heading: "Treatment planned around your trip", copy: "Send dates and photos before you fly. You land with a schedule, not a queue.", href: "/international-patients/", hue: "coral", stat: "23 countries" },
 ];
 
-/* ── 11. Rotated quote tab ──────────────────────────────────────────────── */
+/* ── 10. Rotated quote tab ──────────────────────────────────────────────── */
 
 export const demoQuoteTab = {
-  label: "Free quote",
-  title: "Free treatment estimate",
-  copy: "Send a photo of the tooth and we will send back an indicative range within one working day. No obligation, no visit needed.",
+  label: "Ask a dentist",
+  title: "Send us a photo",
+  copy: "Send a photo of the tooth that is bothering you and a dentist will tell you what it looks like and what usually comes next. Within one working day.",
   cta: "Send a photo on WhatsApp",
-  message: "Hello Kheni Dental, I would like a free treatment estimate. Here is a photo of the tooth I am worried about:",
+  message: "Hello Kheni Dental, I would like to ask about a tooth. Here is a photo of what is bothering me:",
 };
 
-/* ── 12. Icon service grid ──────────────────────────────────────────────── */
+/* ── 11. Icon service grid ──────────────────────────────────────────────── */
 
 export type DemoService = { id: string; label: string; slug: string; hue: Hue; glyph: string };
 

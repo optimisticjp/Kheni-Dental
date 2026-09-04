@@ -62,7 +62,7 @@ export function StockHero({ className }: { className?: string }) {
             <BookButton placement="demo_hero" size="lg" label={demoSuperHero.primaryCta} className="px-4 sm:px-7" />
             <WhatsAppButton placement="demo_hero" size="lg" className="px-4 sm:px-7" />
           </div>
-          <Link href="#pricing" className="mt-3 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-cobalt-deep">
+          <Link href="/smile-gallery/" className="mt-3 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-cobalt-deep">
             {demoSuperHero.secondaryCta}
             <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
           </Link>

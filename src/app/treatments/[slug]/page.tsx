@@ -21,10 +21,9 @@ import { Container } from "@/components/ui/container";
 import { BookButton, WhatsAppButton } from "@/components/ui/cta";
 import { caseCategories } from "@/content/cases";
 import { doctors, locations, smileNotes, treatments } from "@/content/site";
-import { PriceCard } from "@/components/kheni/demo/price-table";
 import { TestimonialCard } from "@/components/kheni/demo/testimonial-wall";
 import { ResultDump } from "@/components/kheni/demo/result-gallery";
-import { demoContentActive, demoPriceBySlug, demoTestimonials } from "@/content/demo";
+import { demoContentActive, demoTestimonials } from "@/content/demo";
 
 export function generateStaticParams() {
   return treatments.filter((t) => t.slug !== "dental-implants-surat").map((t) => ({ slug: t.slug }));
@@ -194,22 +193,14 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
       {demoContentActive && (
         <section className={`hue-${treatment.hue} py-10 sm:py-14 lg:py-18`}>
           <Container width="7xl">
-            <div className="grid gap-8 lg:grid-cols-[.9fr_1.1fr] lg:gap-12">
-              <div>
-                <SectionIntro eyebrow="What it costs" title="An indicative range." highlight="indicative" copy="The final figure depends on what the dentist finds at the examination." />
-                {demoPriceBySlug[treatment.slug] && <PriceCard price={demoPriceBySlug[treatment.slug]} className="mt-6" />}
-              </div>
-              <div>
-                <SectionIntro eyebrow="Patients on this treatment" title="What people said afterwards." highlight="afterwards" />
-                <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                  {demoTestimonials.filter((t) => t.treatmentSlug === treatment.slug).slice(0, 4).map((story) => (
-                    <TestimonialCard key={story.id} story={story} />
-                  ))}
-                </div>
-                <p className="t-eyebrow mt-8 text-h-text">Recent results</p>
-                <ResultDump className="mt-3" limit={4} />
-              </div>
+            <SectionIntro eyebrow="Patients on this treatment" title="What people said afterwards." highlight="afterwards" />
+            <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {demoTestimonials.filter((t) => t.treatmentSlug === treatment.slug).slice(0, 4).map((story) => (
+                <TestimonialCard key={story.id} story={story} />
+              ))}
             </div>
+            <p className="t-eyebrow mt-8 text-h-text">Recent results</p>
+            <ResultDump className="mt-3" limit={4} />
           </Container>
         </section>
       )}
