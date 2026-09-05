@@ -77,3 +77,41 @@ Worth weighing before keeping any of them.
   a layout bug that can be fixed while keeping the pattern.
 - Fourteen accordion panels only fit a desktop row at 3.25rem spines. Add a
   fifteenth and the open panel starts losing width.
+
+## Live in production
+
+As of 5 September 2026 this layer is deployed to https://www.khenidentalcare.com
+with `NEXT_PUBLIC_DEMO_CONTENT` unset, which means **on**. The clinic owner
+asked for it to go live so the patterns can be judged on the real domain.
+
+What that means in practice:
+
+- Search engines are still shut out. The build refuses to compile with demo
+  content active and `NEXT_PUBLIC_ALLOW_INDEXING=true`, so production carries
+  `<meta name="robots" content="noindex, nofollow">` and a robots.txt that
+  names every major crawler. Google will not list these pages.
+- The pages are still publicly reachable. Anyone with a link, or anyone who
+  types the address, sees the invented content.
+
+To take it down, set `NEXT_PUBLIC_DEMO_CONTENT=false` in the deploy
+environment (`.github/workflows/deploy-cloudflare.yml`, the "Build for
+Cloudflare" step) and push. Production reverts to the verified site with no
+code changes.
+
+### Replace before this site is promoted anywhere
+
+In priority order:
+
+1. `demoCredentials` in `src/content/demo/index.ts`. Fabricated M.D.S.
+   degrees, fellowships and certifications on Dr. Mayur Kheni, Dr. Jinal
+   Monapara, Dr. Ishita Dobariya and Dr. Parita Vastarpara. All four hold
+   B.D.S. This is a claim about identifiable real people's professional
+   qualifications, published on a healthcare site.
+2. `demoTestimonials` and `demoVideoStories`. Sixteen invented patients and
+   eight invented video captions. The video ids are real clinic clips; the
+   people named on those cards did not say those things.
+3. `demoAwards` and `demoPress`. Fictional award bodies and mastheads.
+4. `demoNotables`. Fictional public figures presented as patients.
+5. `demoStats`, `demoPromises`, `demoSuperHero`, `demoMarqueeClaims`. The
+   volume counts, the 98.6% success rate, the lifetime warranty, "painless",
+   "#1" and "guaranteed".
