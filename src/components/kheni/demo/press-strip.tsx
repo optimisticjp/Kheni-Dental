@@ -1,8 +1,10 @@
 import { BadgeCheck, Quote, Trophy } from "lucide-react";
 
-import { PressWordmark, StockPortrait } from "@/components/kheni/demo/art";
+import { PressWordmark } from "@/components/kheni/demo/art";
+import { photoSrcSet } from "@/components/kheni/media-frame";
 import { Container } from "@/components/ui/container";
 import { demoAccreditations, demoAwards, demoNotables, demoPress } from "@/content/demo";
+import { notablePhotos } from "@/content/photos";
 import { cn } from "@/lib/utils";
 
 /**
@@ -82,10 +84,22 @@ export function NotableStrip({ className }: { className?: string }) {
     <div className={cn("min-w-0", className)}>
       <div className="edge-fade -mx-4 px-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0 lg:[mask-image:none]">
         <ul className="rail-snap flex gap-3 overflow-x-auto pb-2 lg:grid lg:grid-cols-4 lg:overflow-visible lg:gap-4">
-          {demoNotables.map((person, index) => (
+          {demoNotables.map((person) => (
             <li key={person.id} className={`hue-${person.hue} w-[72vw] shrink-0 overflow-hidden rounded-[1.25rem] border border-line bg-white sm:w-[44vw] lg:w-auto`}>
               <div className="relative aspect-[4/3] overflow-hidden bg-h-tint">
-                <StockPortrait seed={index} label={`Illustration standing in for a photograph of ${person.name}`} />
+                {notablePhotos[person.id] && (
+                  // eslint-disable-next-line @next/next/no-img-element -- images are unoptimized site-wide
+                  <img
+                    src={notablePhotos[person.id].src}
+                    srcSet={photoSrcSet(notablePhotos[person.id].src)}
+                    sizes="(min-width: 1024px) 300px, 72vw"
+                    alt={notablePhotos[person.id].alt}
+                    loading="lazy"
+                    decoding="async"
+                    className="absolute inset-0 size-full object-cover"
+                    style={{ objectPosition: notablePhotos[person.id].objectPosition }}
+                  />
+                )}
               </div>
               <div className="p-4">
                 <p className="text-sm font-semibold text-ink">{person.name}</p>

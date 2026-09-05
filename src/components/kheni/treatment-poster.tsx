@@ -2,7 +2,8 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 import { TreatmentArt } from "@/components/kheni/art/treatment-art";
-import { MediaFrame } from "@/components/kheni/media-frame";
+import { MediaFrame, photoSrcSet } from "@/components/kheni/media-frame";
+import { treatmentPhotos } from "@/content/photos";
 import type { Treatment } from "@/content/site";
 import { cn } from "@/lib/utils";
 
@@ -19,7 +20,7 @@ export function TreatmentPoster({
   treatment,
   featured = false,
   placement,
-  photo,
+  photo: photoOverride,
   className,
 }: {
   treatment: Treatment;
@@ -28,6 +29,7 @@ export function TreatmentPoster({
   photo?: { src: string; alt: string; objectPosition?: string };
   className?: string;
 }) {
+  const photo = photoOverride ?? treatmentPhotos[treatment.slug];
   return (
     <Link
       href={`/treatments/${treatment.slug}/`}
@@ -64,6 +66,7 @@ export function TreatmentPoster({
 
 /** Compact row for a phone: illustration thumbnail, name, one line. */
 export function TreatmentRow({ treatment, placement }: { treatment: Treatment; placement: string }) {
+  const photo = treatmentPhotos[treatment.slug];
   return (
     <Link
       href={`/treatments/${treatment.slug}/`}
@@ -71,8 +74,13 @@ export function TreatmentRow({ treatment, placement }: { treatment: Treatment; p
       data-placement={placement}
       className={`hue-${treatment.hue} flex min-h-[4.5rem] items-center gap-3.5 rounded-2xl border border-line bg-white p-2.5 pr-4`}
     >
-      <span className="grid size-14 shrink-0 place-items-center overflow-hidden rounded-xl bg-h-tint">
-        <TreatmentArt slug={treatment.slug} className="size-12" />
+      <span className="relative grid size-14 shrink-0 place-items-center overflow-hidden rounded-xl bg-h-tint">
+        {photo ? (
+          // eslint-disable-next-line @next/next/no-img-element -- images are unoptimized site-wide
+          <img src={photo.src} srcSet={photoSrcSet(photo.src)} sizes="56px" alt="" loading="lazy" decoding="async" className="absolute inset-0 size-full object-cover" style={{ objectPosition: photo.objectPosition }} />
+        ) : (
+          <TreatmentArt slug={treatment.slug} className="size-12" />
+        )}
       </span>
       <span className="min-w-0 flex-1">
         <span className="block font-semibold leading-tight">{treatment.title}</span>
@@ -88,6 +96,7 @@ export function TreatmentRow({ treatment, placement }: { treatment: Treatment; p
  * Two per row; the first may span both columns as a wide tile.
  */
 export function TreatmentTile({ treatment, placement, wide = false }: { treatment: Treatment; placement: string; wide?: boolean }) {
+  const photo = treatmentPhotos[treatment.slug];
   return (
     <Link
       href={`/treatments/${treatment.slug}/`}
@@ -96,7 +105,12 @@ export function TreatmentTile({ treatment, placement, wide = false }: { treatmen
       className={cn(`hue-${treatment.hue} lift flex overflow-hidden rounded-2xl border border-line bg-white`, wide ? "col-span-2 flex-row items-stretch" : "flex-col")}
     >
       <span className={cn("relative block shrink-0 overflow-hidden bg-h-tint", wide ? "w-[38%]" : "aspect-[16/10] w-full")}>
-        <TreatmentArt slug={treatment.slug} className="absolute inset-0 size-full" />
+        {photo ? (
+          // eslint-disable-next-line @next/next/no-img-element -- images are unoptimized site-wide
+          <img src={photo.src} srcSet={photoSrcSet(photo.src)} sizes="50vw" alt="" loading="lazy" decoding="async" className="absolute inset-0 size-full object-cover" style={{ objectPosition: photo.objectPosition }} />
+        ) : (
+          <TreatmentArt slug={treatment.slug} className="absolute inset-0 size-full" />
+        )}
       </span>
       <span className="flex min-w-0 flex-1 flex-col justify-center p-3">
         <span className="block font-serif text-[1.05rem] font-medium leading-tight tracking-[-.015em]">{treatment.title}</span>

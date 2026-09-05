@@ -10,6 +10,7 @@ import { SectionIntro } from "@/components/kheni/section-intro";
 import { SmileNote } from "@/components/kheni/smile-note";
 import { Container } from "@/components/ui/container";
 import { proofStats } from "@/content/clinic-proof";
+import { aboutPhoto } from "@/content/photos";
 import { site, smileNotes } from "@/content/site";
 import { StatBand } from "@/components/kheni/demo/stat-band";
 import { AwardsRow, NotableStrip, PressQuotes, PressStrip } from "@/components/kheni/demo/press-strip";
@@ -39,7 +40,7 @@ export default function AboutPage() {
         highlight="explaining"
         copy="Dr. Mayur Kheni founded the practice, and three more dentists now see patients alongside him across two clinics. A visit still begins the same way: by asking what brought you in and listening to the answer."
         hue="cobalt"
-        aside={<MediaFrame ratio="4 / 3" mobileRatio="16 / 9" from="lg" className="hue-cobalt rounded-[1.75rem] ring-1 ring-line" />}
+        aside={<MediaFrame ratio="4 / 3" mobileRatio="16 / 9" from="lg" src={aboutPhoto.src} alt={aboutPhoto.alt} objectPosition={aboutPhoto.objectPosition} className="hue-cobalt rounded-[1.75rem] ring-1 ring-line" />}
       />
 
       <section className="py-8 sm:py-12">

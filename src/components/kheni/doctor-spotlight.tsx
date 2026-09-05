@@ -5,6 +5,7 @@ import { MediaFrame } from "@/components/kheni/media-frame";
 import { BookButton, WhatsAppButton } from "@/components/ui/cta";
 import { languages } from "@/content/clinic-proof";
 import { googleReputation } from "@/content/google-reputation";
+import { doctorPhotos } from "@/content/photos";
 import { doctors, treatments, type Doctor } from "@/content/site";
 import { cn } from "@/lib/utils";
 
@@ -22,8 +23,11 @@ import { cn } from "@/lib/utils";
 
 function Portrait({ doctor, className, ratio = "4 / 5", mobileRatio, from = "sm" }: { doctor: Doctor; className?: string; ratio?: string; mobileRatio?: string; from?: "sm" | "lg" }) {
   const initials = doctor.name.replace(/^Dr\.?\s*/i, "").split(/\s+/).slice(0, 2).map((p) => p[0]).join("");
+  // With a photograph MediaFrame renders it; the monogram field below is the
+  // fallback for a doctor whose portrait has not arrived yet.
+  const photo = doctorPhotos[doctor.slug];
   return (
-    <MediaFrame ratio={ratio} mobileRatio={mobileRatio} from={from} className={cn("rounded-[1.5rem]", className)}>
+    <MediaFrame src={photo?.src} alt={photo?.alt} objectPosition={photo?.objectPosition} ratio={ratio} mobileRatio={mobileRatio} from={from} className={cn("rounded-[1.5rem]", className)}>
       <div className="absolute inset-0">
         <div aria-hidden="true" className="absolute -right-12 -top-12 size-48 rounded-full bg-h-soft opacity-80" />
         <div aria-hidden="true" className="absolute -bottom-10 -left-10 size-40 rounded-full bg-h-fill opacity-20" />

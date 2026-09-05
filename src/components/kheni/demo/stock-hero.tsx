@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { ArrowRight, BadgeCheck, Check, Star } from "lucide-react";
 
-import { StockPortrait } from "@/components/kheni/demo/art";
 import { StatStrip } from "@/components/kheni/demo/stat-band";
+import { photoSrcSet } from "@/components/kheni/media-frame";
 import { Container } from "@/components/ui/container";
 import { BookButton, WhatsAppButton } from "@/components/ui/cta";
 import { demoHeroStats, demoRatingSummary, demoSuperHero } from "@/content/demo";
+import { heroPhoto } from "@/content/photos";
 import { cn } from "@/lib/utils";
 
 /**
@@ -70,10 +71,22 @@ export function StockHero({ className }: { className?: string }) {
 
         <div className="relative">
           <div className="relative overflow-hidden rounded-[1.75rem] bg-white ring-1 ring-line [aspect-ratio:4/3.4] lg:[aspect-ratio:5/5.4]">
-            <StockPortrait seed={0} label="Illustration standing in for the clinic's hero photograph" />
-            <div className="absolute bottom-3 left-3 right-3 rounded-2xl bg-white/90 p-3 backdrop-blur sm:bottom-4 sm:left-4 sm:right-4 sm:p-4">
-              <p className="text-[.8125rem] font-semibold text-ink sm:text-sm">Dr. Mayur Kheni, Elite Implant Center</p>
-              <p className="t-small mt-0.5 text-ink-soft">Hirabaug, most mornings since 2011.</p>
+            {/* eslint-disable-next-line @next/next/no-img-element -- images are unoptimized site-wide */}
+            <img
+              src={heroPhoto.src}
+              srcSet={photoSrcSet(heroPhoto.src)}
+              sizes="(min-width: 1024px) 560px, 100vw"
+              alt={heroPhoto.alt}
+              fetchPriority="high"
+              decoding="async"
+              className="absolute inset-0 size-full object-cover"
+              style={{ objectPosition: heroPhoto.objectPosition }}
+            />
+            {/* A scrim, so white caption text holds against a bright window. */}
+            <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-ink/70 to-transparent" />
+            <div className="absolute bottom-4 left-4 right-4">
+              <p className="text-[.8125rem] font-semibold text-white sm:text-sm">Dr. Mayur Kheni, Elite Implant Center</p>
+              <p className="text-[.75rem] text-white/75">Hirabaug, most mornings since 2011.</p>
             </div>
           </div>
           <StatStrip stats={demoHeroStats} className="mt-3 [&>div]:bg-ink [&>div]:ring-ink/10" />

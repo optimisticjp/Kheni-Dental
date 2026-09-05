@@ -8,6 +8,7 @@ import { AnalyticsScripts } from "@/components/tracking/analytics";
 import { ConsentBanner } from "@/components/tracking/consent-banner";
 import { TrackLinks } from "@/components/tracking/track-links";
 import { StructuredData } from "@/components/tracking/structured-data";
+import { ogImage } from "@/content/photos";
 import { site } from "@/content/site";
 import { DemoNotice } from "@/components/kheni/demo/demo-notice";
 import { QuoteTab } from "@/components/kheni/demo/quote-tab";
@@ -29,8 +30,17 @@ export const metadata: Metadata = {
   description: site.description,
   applicationName: site.name,
   alternates: { canonical: "/" },
-  openGraph: { title: site.name, description: site.description, type: "website", locale: "en_IN", siteName: site.name },
-  twitter: { card: "summary_large_image", title: site.name, description: site.description },
+  openGraph: {
+    title: site.name,
+    description: site.description,
+    type: "website",
+    locale: "en_IN",
+    siteName: site.name,
+    // The picture that shows when the site is forwarded on WhatsApp, which
+    // is how most people here will first see it.
+    images: [{ url: ogImage, width: 1200, height: 630, alt: `${site.name}, Surat` }],
+  },
+  twitter: { card: "summary_large_image", title: site.name, description: site.description, images: [ogImage] },
   /**
    * A meta tag, not just robots.txt.
    *

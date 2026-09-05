@@ -12,6 +12,19 @@ import { cn } from "@/lib/utils";
  * `children` lets a poster illustration sit in the frame instead, so a real
  * photograph replaces it later without any layout change.
  */
+/**
+ * The responsive set for a photograph.
+ *
+ * `scripts/resize-images.mjs` writes a 640w and a 1024w variant beside every
+ * source, so the widths are derivable from the file name and no per-photo
+ * bookkeeping is needed. A phone downloads about a sixth of what it used to.
+ */
+export function photoSrcSet(src?: string) {
+  if (!src || !src.endsWith(".jpg")) return undefined;
+  const stem = src.slice(0, -4);
+  return `${stem}-640w.jpg 640w, ${stem}-1024w.jpg 1024w, ${src} 1536w`;
+}
+
 export function MediaFrame({
   src,
   alt,
@@ -22,6 +35,7 @@ export function MediaFrame({
   children,
   priority = false,
   from = "sm",
+  sizes = "(min-width: 1024px) 640px, 100vw",
 }: {
   src?: string;
   alt?: string;
@@ -34,6 +48,8 @@ export function MediaFrame({
   priority?: boolean;
   /** The breakpoint at which `ratio` replaces `mobileRatio`. Tablets keep the wide crop with "lg". */
   from?: "sm" | "lg";
+  /** How wide the frame renders, so the browser can pick a variant. */
+  sizes?: string;
 }) {
   const style = {
     ["--ratio" as string]: ratio,
@@ -53,6 +69,8 @@ export function MediaFrame({
         // eslint-disable-next-line @next/next/no-img-element -- images are unoptimized site-wide
         <img
           src={src}
+          srcSet={photoSrcSet(src)}
+          sizes={sizes}
           alt={alt ?? ""}
           loading={priority ? "eager" : "lazy"}
           fetchPriority={priority ? "high" : undefined}

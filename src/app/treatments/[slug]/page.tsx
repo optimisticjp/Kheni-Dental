@@ -20,6 +20,7 @@ import { Accordion } from "@/components/ui/accordion";
 import { Container } from "@/components/ui/container";
 import { BookButton, WhatsAppButton } from "@/components/ui/cta";
 import { caseCategories } from "@/content/cases";
+import { treatmentPhotos } from "@/content/photos";
 import { doctors, locations, smileNotes, treatments } from "@/content/site";
 import { TestimonialCard } from "@/components/kheni/demo/testimonial-wall";
 import { ResultDump } from "@/components/kheni/demo/result-gallery";
@@ -64,7 +65,15 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
         copy={treatment.short}
         hue={treatment.hue}
         aside={
-          <MediaFrame ratio="4 / 3" mobileRatio="16 / 9" from="lg" className="rounded-[1.75rem] bg-white ring-1 ring-line">
+          <MediaFrame
+            ratio="4 / 3"
+            mobileRatio="16 / 9"
+            from="lg"
+            src={treatmentPhotos[treatment.slug]?.src}
+            alt={treatmentPhotos[treatment.slug]?.alt}
+            objectPosition={treatmentPhotos[treatment.slug]?.objectPosition}
+            className="rounded-[1.75rem] bg-white ring-1 ring-line"
+          >
             <div className={`hue-${treatment.hue} absolute inset-0 bg-h-tint`}>
               <TreatmentArt slug={treatment.slug} className="absolute inset-0 size-full" title={`${treatment.title} illustration`} />
             </div>

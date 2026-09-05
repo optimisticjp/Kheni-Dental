@@ -5,7 +5,6 @@ import { Accordion } from "@/components/ui/accordion";
 import { Container } from "@/components/ui/container";
 import { BookButton, WhatsAppButton } from "@/components/ui/cta";
 import { ImplantDiagram } from "@/components/kheni/art/diagrams";
-import { TreatmentArt } from "@/components/kheni/art/treatment-art";
 import { BranchLocator } from "@/components/kheni/branch-locator";
 import { ClinicShorts } from "@/components/kheni/clinic-shorts";
 import { ConcernFinder } from "@/components/kheni/concern-finder";
@@ -34,6 +33,7 @@ import { googleReputation, verifiedBranches } from "@/content/google-reputation"
 import { implantProcess } from "@/content/implant-center";
 import { homepageFaqs, locations, site, treatments } from "@/content/site";
 import { GlobeSurat } from "@/components/kheni/art/diagrams";
+import { heroPhoto } from "@/content/photos";
 import { placeUrl } from "@/lib/maps";
 
 /**
@@ -94,21 +94,21 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Right: a colourful clinic visual with a photo slot, and the two clinics as proof chips. */}
+          {/* Right: the clinic photograph, and the two clinics as proof chips.
+              This slot held a 2x2 grid of treatment illustrations while there
+              was no photograph. The treatments section below covers that
+              ground, so the picture takes the space now. */}
           <div className="relative">
-            <MediaFrame ratio="5 / 4" mobileRatio="16 / 9" from="lg" className="rounded-[1.75rem] bg-white ring-1 ring-line" priority>
-              <div className="absolute inset-0 grid grid-cols-2 gap-2 p-2">
-                {["dental-implants-surat", "cosmetic-smile-dentistry", "kids-dentistry-surat", "root-canal-treatment-surat"].map((slug) => {
-                  const t = treatments.find((x) => x.slug === slug)!;
-                  return (
-                    <Link key={slug} href={`/treatments/${slug}/`} data-track="treatment_view" data-placement="home_hero_tiles" className={`hue-${t.hue} lift relative overflow-hidden rounded-[1.1rem] bg-h-tint`}>
-                      <TreatmentArt slug={slug} className="absolute inset-0 size-full" />
-                      <span className="absolute bottom-2 left-2 rounded-full bg-white/90 px-2.5 py-1 text-[.72rem] font-semibold text-ink">{t.title}</span>
-                    </Link>
-                  );
-                })}
-              </div>
-            </MediaFrame>
+            <MediaFrame
+              ratio="5 / 4"
+              mobileRatio="16 / 9"
+              from="lg"
+              src={heroPhoto.src}
+              alt={heroPhoto.alt}
+              objectPosition={heroPhoto.objectPosition}
+              className="rounded-[1.75rem] bg-white ring-1 ring-line"
+              priority
+            />
             <ul className="mt-3 grid grid-cols-2 gap-2">
               {verifiedBranches.map((b) => (
                 <li key={b.location.slug} className={`hue-${b.location.hue}`}>

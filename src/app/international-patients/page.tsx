@@ -8,7 +8,9 @@ import { ViewTracker } from "@/components/kheni/implant/view-tracker";
 import { PageHero } from "@/components/kheni/page-hero";
 import { ProcessSteps } from "@/components/kheni/process-steps";
 import { ProofCluster } from "@/components/kheni/proof";
+import { MediaFrame } from "@/components/kheni/media-frame";
 import { SectionIntro } from "@/components/kheni/section-intro";
+import { internationalPhoto } from "@/content/photos";
 import { SmileNote } from "@/components/kheni/smile-note";
 import { TreatmentRow } from "@/components/kheni/treatment-poster";
 import { Accordion } from "@/components/ui/accordion";
@@ -91,8 +93,20 @@ export default function InternationalPage() {
 
       <section className="hue-coral py-10 sm:py-14 lg:py-18">
         <Container width="7xl">
-          <SectionIntro eyebrow="How a visit works" title="From your first message to your flight home." highlight="flight home" />
-          <ProcessSteps steps={journey} columns={5} className="mt-6 sm:mt-8" />
+          <div className="grid gap-8 lg:grid-cols-[1.15fr_.85fr] lg:items-center lg:gap-12">
+            <div>
+              <SectionIntro eyebrow="How a visit works" title="From your first message to your flight home." highlight="flight home" />
+              <ProcessSteps steps={journey} columns={5} className="mt-6 sm:mt-8" dense />
+            </div>
+            <MediaFrame
+              ratio="4 / 3"
+              mobileRatio="16 / 9"
+              from="lg"
+              src={internationalPhoto.src}
+              alt={internationalPhoto.alt}
+              className="rounded-[1.5rem] ring-1 ring-line"
+            />
+          </div>
         </Container>
       </section>
 

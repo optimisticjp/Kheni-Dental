@@ -11,6 +11,7 @@ import { SectionIntro } from "@/components/kheni/section-intro";
 import { TreatmentRow } from "@/components/kheni/treatment-poster";
 import { Container } from "@/components/ui/container";
 import { BookButton, CallButton, WhatsAppButton } from "@/components/ui/cta";
+import { locationPhotos } from "@/content/photos";
 import { doctors, locations, treatments } from "@/content/site";
 
 export function generateStaticParams() {
@@ -114,9 +115,16 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
             <div>
               <SectionIntro eyebrow="Inside the clinic" title={location.implantCentre ? "Where implant cases are planned." : "Our original clinic at Yogi Chowk."} highlight={location.implantCentre ? "implant cases" : "original clinic"} />
               <div className="mt-5 grid grid-cols-3 gap-2">
-                <MediaFrame ratio="1 / 1" className="col-span-2 row-span-2 rounded-[1.25rem]" />
-                <MediaFrame ratio="1 / 1" className="rounded-[1.25rem]" />
-                <MediaFrame ratio="1 / 1" className="rounded-[1.25rem]" />
+                {(locationPhotos[location.slug] ?? []).map((photo, i) => (
+                  <MediaFrame
+                    key={photo.src}
+                    ratio="1 / 1"
+                    src={photo.src}
+                    alt={photo.alt}
+                    objectPosition={photo.objectPosition}
+                    className={i === 0 ? "col-span-2 row-span-2 rounded-[1.25rem]" : "rounded-[1.25rem]"}
+                  />
+                ))}
               </div>
             </div>
             <div>
