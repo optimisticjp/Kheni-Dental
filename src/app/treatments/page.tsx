@@ -76,7 +76,7 @@ export default function TreatmentsPage() {
         <>
           <section className="hue-navy py-10 sm:py-14 lg:py-20">
             <Container width="7xl">
-              <SectionIntro eyebrow="At a glance" title="Every service, one tap away." highlight="one tap" />
+              <SectionIntro eyebrow="At a glance" title="Twelve things, one waiting room." highlight="one waiting room" />
               <IconServiceGrid className="mt-6 sm:mt-8" />
             </Container>
           </section>

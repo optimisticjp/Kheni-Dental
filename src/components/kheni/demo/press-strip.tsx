@@ -15,7 +15,7 @@ export function PressStrip({ className }: { className?: string }) {
   return (
     <div className={cn("border-y border-line bg-white/70 py-5 sm:py-6", className)}>
       <Container width="7xl">
-        <p className="t-eyebrow text-center text-ink-soft">As seen in</p>
+        <p className="t-eyebrow text-center text-ink-soft">Written about in</p>
         <div className="edge-fade -mx-4 mt-4 min-w-0 px-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0">
           <ul className="flex items-center gap-6 overflow-x-auto pb-1 text-ink/45 sm:gap-10 lg:justify-center">
             {demoPress.map((item) => (

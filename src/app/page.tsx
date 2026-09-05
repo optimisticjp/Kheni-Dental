@@ -162,7 +162,7 @@ export default function Home() {
           {/* ── Icon service grid ───────────────────────────────────── */}
           <section className="hue-navy py-10 sm:py-14 lg:py-20">
             <Container width="7xl">
-              <SectionIntro eyebrow="Everything we do" title="Twelve services, one clinic." highlight="one clinic" copy="The flat icon grid, four across on a phone. Tap any tile to read the full treatment page." />
+              <SectionIntro eyebrow="Everything we do" title="Twelve things, one waiting room." highlight="one waiting room" copy="Whatever brought you here, it is on this grid somewhere. Tap it and read the whole story before you book." />
               <IconServiceGrid className="mt-6 sm:mt-8" />
             </Container>
           </section>
@@ -198,7 +198,7 @@ export default function Home() {
       {demoContentActive && (
         <section className="hue-teal py-10 sm:py-14 lg:py-20">
           <Container width="7xl">
-            <SectionIntro eyebrow="Problems we treat" title="Fourteen reasons people walk in." highlight="Fourteen" copy="The horizontal accordion, on the phone as well as the desktop. Tap a spine to open it, swipe to reach the rest." />
+            <SectionIntro eyebrow="Problems we treat" title="Fourteen reasons people walk through the door." highlight="Fourteen" copy="Yours is almost certainly one of them. Open the one that sounds like you and swipe for the rest." />
             <HorizontalAccordion className="mt-6 sm:mt-8" />
           </Container>
         </section>
@@ -266,7 +266,7 @@ export default function Home() {
             <Container width="7xl">
               <div className="grid gap-8 lg:grid-cols-[.85fr_1.15fr] lg:items-start lg:gap-12">
                 <div className="lg:sticky lg:top-24">
-                  <SectionIntro eyebrow="Patient stories" title={`${demoRatingSummary.total.toLocaleString("en-IN")} patients have told us how it went.`} highlight="how it went" />
+                  <SectionIntro eyebrow="Patient stories" title={`${demoRatingSummary.total.toLocaleString("en-IN")} people have told us how it went.`} highlight="how it went" copy="Not a curated handful. The whole wall, four stars and all." />
                   <RatingSummary className="mt-6" />
                   <Link href="/reviews/" data-track="review_click" data-placement="home_testimonials" className="mt-4 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-cobalt-deep">
                     Read all {demoRatingSummary.total.toLocaleString("en-IN")} reviews
@@ -282,7 +282,7 @@ export default function Home() {
           <section className="hue-violet relative isolate overflow-hidden bg-ink py-10 text-white sm:py-14 lg:py-20">
             <div aria-hidden="true" className="absolute -right-24 top-0 size-80 rounded-full bg-violet opacity-30 blur-3xl" />
             <Container width="7xl" className="relative">
-              <SectionIntro tone="dark" eyebrow="On camera" title="Patients, in their own words." highlight="own words" copy="Nothing loads until you tap. The player runs on YouTube's privacy domain." />
+              <SectionIntro tone="dark" eyebrow="On camera" title="Some of them said it out loud." highlight="out loud" copy="Filmed on the day the work finished. Nothing plays until you tap it." />
               <VideoWall className="mt-6 sm:mt-8" limit={4} />
             </Container>
           </section>
@@ -290,7 +290,7 @@ export default function Home() {
           {/* ── Recognition ─────────────────────────────────────────── */}
           <section className="hue-gold py-10 sm:py-14 lg:py-20">
             <Container width="7xl">
-              <SectionIntro eyebrow="Recognition" title="Awards, accreditation and press." highlight="press" />
+              <SectionIntro eyebrow="Recognition" title="What other people have said about us." highlight="other people" copy="Awards, accreditation, and a few write-ups we did not ask for." />
               <AwardsRow className="mt-6 sm:mt-8" />
               <PressQuotes className="mt-8" />
             </Container>
@@ -303,7 +303,7 @@ export default function Home() {
       {demoContentActive && (
         <section className="hue-cobalt py-10 sm:py-14 lg:py-20">
           <Container width="7xl">
-            <SectionIntro eyebrow="Smile gallery" title="Before and after, drag to compare." highlight="drag to compare" copy="Four labelled cases with the treatment and the timeline named, then the unlabelled wall the reference clinics publish." />
+            <SectionIntro eyebrow="Smile gallery" title="Drag the handle. Watch it change." highlight="Watch it change" copy="Four cases with the treatment and the timeline named on each one, so you can see what you would actually be signing up for." />
             <CaseWall className="mt-6 sm:mt-8" />
             <Link href="/smile-gallery/" className="mt-6 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-h-text">
               The full smile gallery

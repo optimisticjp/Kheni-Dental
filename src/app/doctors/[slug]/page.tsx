@@ -78,11 +78,11 @@ export default async function DoctorPage({ params }: { params: Promise<{ slug: s
           <Container width="7xl">
             <div className="grid gap-8 lg:grid-cols-[.85fr_1.15fr] lg:gap-12">
               <div>
-                <SectionIntro eyebrow="Qualifications" title={`${doctor.shortName}'s training.`} highlight={doctor.shortName} />
+                <SectionIntro eyebrow="Qualifications" title={`Where ${doctor.shortName} learned all this.`} highlight={doctor.shortName} />
                 <DoctorCredentials doctorSlug={doctor.slug} className="mt-6" />
               </div>
               <div>
-                <SectionIntro eyebrow="Patients" title={`Treated by ${doctor.shortName}.`} highlight={doctor.shortName} />
+                <SectionIntro eyebrow="Patients" title={`People who sat in ${doctor.shortName}'s chair.`} highlight={doctor.shortName} />
                 <div className="mt-6 grid gap-3 sm:grid-cols-2">
                   {demoTestimonials
                     .filter((t) => doctor.relatedTreatmentSlugs.includes(t.treatmentSlug))

@@ -53,7 +53,7 @@ function StatCell({ stat, run, compact }: { stat: DemoStat; run: boolean; compac
   );
 }
 
-export function StatBand({ stats = demoStats, className, eyebrow = "By the numbers", title = "Fifteen years, counted." }: { stats?: DemoStat[]; className?: string; eyebrow?: string; title?: string }) {
+export function StatBand({ stats = demoStats, className, eyebrow = "By the numbers", title = "Fifteen years, added up." }: { stats?: DemoStat[]; className?: string; eyebrow?: string; title?: string }) {
   const ref = useRef<HTMLElement>(null);
   const [run, setRun] = useState(false);
 
@@ -83,7 +83,7 @@ export function StatBand({ stats = demoStats, className, eyebrow = "By the numbe
             <p className="t-eyebrow text-sunshine">{eyebrow}</p>
             <h2 className="t-h2 mt-2 text-white">{title}</h2>
           </div>
-          <p className="t-small max-w-xs text-white/55">Figures cover both Surat clinics since 2011.</p>
+          <p className="t-small max-w-xs text-white/55">Both clinics, every year since 2011.</p>
         </div>
         <div className="mt-6 grid grid-cols-2 gap-2.5 sm:mt-8 sm:grid-cols-4 sm:gap-3 lg:gap-4">
           {stats.map((stat) => (

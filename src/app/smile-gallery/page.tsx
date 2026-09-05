@@ -55,21 +55,21 @@ export default function SmileGalleryPage() {
         <>
           <section className="hue-cobalt py-10 sm:py-14 lg:py-20">
             <Container width="7xl">
-              <SectionIntro eyebrow="Labelled cases" title="Drag the handle to compare." highlight="drag" copy="Treatment, arch and timeline named on every pair." />
+              <SectionIntro eyebrow="Labelled cases" title="Drag the handle. Watch it change." highlight="Watch it change" copy="Treatment, arch and how long it took, named on every pair. No mystery." />
               <CaseWall className="mt-6 sm:mt-8" />
             </Container>
           </section>
 
           <section className="hue-teal py-10 sm:py-14 lg:py-20">
             <Container width="7xl">
-              <SectionIntro eyebrow="The full wall" title="Everything else, unlabelled." highlight="unlabelled" copy="The grid the reference clinics publish: crops with no treatment, no dentist and no date attached." />
+              <SectionIntro eyebrow="The full wall" title="And a few hundred more." highlight="a few hundred" copy="Fifteen years of before and after, stacked without captions. Ask about any one of them." />
               <ResultDump className="mt-6 sm:mt-8" limit={12} />
             </Container>
           </section>
 
           <section className="hue-violet relative isolate overflow-hidden bg-ink py-10 text-white sm:py-14 lg:py-20">
             <Container width="7xl" className="relative">
-              <SectionIntro tone="dark" eyebrow="On camera" title="The same cases, on video." highlight="on video" />
+              <SectionIntro tone="dark" eyebrow="On camera" title="Some of them said it out loud." highlight="out loud" />
               <VideoWall className="mt-6 sm:mt-8" />
             </Container>
           </section>

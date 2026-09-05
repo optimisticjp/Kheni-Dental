@@ -69,7 +69,7 @@ export default function ProblemsPage() {
       {demoContentActive && (
         <section className="hue-teal py-10 sm:py-14 lg:py-20">
           <Container width="7xl">
-            <SectionIntro eyebrow="All fourteen" title="Open one, swipe for the rest." highlight="swipe" copy="The horizontal expanding accordion, on the phone as well as the desktop." />
+            <SectionIntro eyebrow="All fourteen" title="Open the one that sounds like you." highlight="sounds like you" copy="Then swipe along for the rest. Every one of them ends with what we actually do about it." />
             <HorizontalAccordion className="mt-6 sm:mt-8" />
           </Container>
         </section>

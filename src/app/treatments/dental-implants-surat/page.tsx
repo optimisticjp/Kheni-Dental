@@ -212,12 +212,12 @@ export default function DentalImplantsPage() {
           <StatBand
             stats={demoStats.filter((stat) => ["implants", "rehab", "nri", "countries"].includes(stat.id))}
             eyebrow="The Elite Implant Center"
-            title="Implant work, counted."
+            title="Fifteen years of implant work, counted."
           />
 
           <section className="hue-cobalt py-10 sm:py-14 lg:py-18">
             <Container width="7xl">
-              <SectionIntro eyebrow="Implant patients" title="What people said afterwards." highlight="afterwards" />
+              <SectionIntro eyebrow="Implant patients" title="What they said once it was done." highlight="once it was done" />
               <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                 {demoTestimonials.filter((t) => t.treatmentSlug === "dental-implants-surat").slice(0, 4).map((story) => (
                   <TestimonialCard key={story.id} story={story} />
@@ -228,14 +228,14 @@ export default function DentalImplantsPage() {
 
           <section className="hue-sunshine py-10 sm:py-14 lg:py-18">
             <Container width="7xl">
-              <SectionIntro eyebrow="Implant results" title="Before and after, drag to compare." highlight="drag to compare" />
+              <SectionIntro eyebrow="Implant results" title="Drag the handle. Watch the gap close." highlight="Watch the gap close" />
               <CaseWall className="mt-6 sm:mt-8" />
             </Container>
           </section>
 
           <section className="hue-violet relative isolate overflow-hidden bg-ink py-10 text-white sm:py-14 lg:py-18">
             <Container width="7xl" className="relative">
-              <SectionIntro tone="dark" eyebrow="On camera" title="Implant patients, in their own words." highlight="own words" />
+              <SectionIntro tone="dark" eyebrow="On camera" title="Some of them said it out loud." highlight="out loud" />
               <VideoWall className="mt-6 sm:mt-8" limit={4} />
             </Container>
           </section>

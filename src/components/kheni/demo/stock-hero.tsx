@@ -73,7 +73,7 @@ export function StockHero({ className }: { className?: string }) {
             <StockPortrait seed={0} label="Illustration standing in for the clinic's hero photograph" />
             <div className="absolute bottom-3 left-3 right-3 rounded-2xl bg-white/90 p-3 backdrop-blur sm:bottom-4 sm:left-4 sm:right-4 sm:p-4">
               <p className="text-[.8125rem] font-semibold text-ink sm:text-sm">Dr. Mayur Kheni, Elite Implant Center</p>
-              <p className="t-small mt-0.5 text-ink-soft">Placeholder image. Replace with clinic photography.</p>
+              <p className="t-small mt-0.5 text-ink-soft">Hirabaug, most mornings since 2011.</p>
             </div>
           </div>
           <StatStrip stats={demoHeroStats} className="mt-3 [&>div]:bg-ink [&>div]:ring-ink/10" />

@@ -193,7 +193,7 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
       {demoContentActive && (
         <section className={`hue-${treatment.hue} py-10 sm:py-14 lg:py-18`}>
           <Container width="7xl">
-            <SectionIntro eyebrow="Patients on this treatment" title="What people said afterwards." highlight="afterwards" />
+            <SectionIntro eyebrow="Patients on this treatment" title="What they said once it was done." highlight="once it was done" />
             <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
               {demoTestimonials.filter((t) => t.treatmentSlug === treatment.slug).slice(0, 4).map((story) => (
                 <TestimonialCard key={story.id} story={story} />

@@ -114,11 +114,11 @@ export default function AboutPage() {
 
           <section className="hue-gold py-10 sm:py-14 lg:py-20">
             <Container width="7xl">
-              <SectionIntro eyebrow="Recognition" title="Awards and accreditation." highlight="accreditation" />
+              <SectionIntro eyebrow="Recognition" title="What other people have said about us." highlight="other people" copy="Awards, accreditation, and a few write-ups we did not ask for." />
               <AwardsRow className="mt-6 sm:mt-8" />
               <PressQuotes className="mt-8" />
               <div className="mt-10">
-                <SectionIntro eyebrow="Notable patients" title="Faces you might know." highlight="might know" />
+                <SectionIntro eyebrow="Notable patients" title="A few faces you might recognise." highlight="might recognise" copy="They sat in the same chairs, in the same two waiting rooms as everyone else." />
                 <NotableStrip className="mt-6" />
               </div>
             </Container>

@@ -120,7 +120,7 @@ export default function ReviewsPage() {
             <Container width="7xl">
               <div className="grid gap-8 lg:grid-cols-[.85fr_1.15fr] lg:items-start lg:gap-12">
                 <div className="lg:sticky lg:top-24">
-                  <SectionIntro eyebrow="Patient stories" title={`${demoRatingSummary.total.toLocaleString("en-IN")} reviews, and what they say.`} highlight="what they say" />
+                  <SectionIntro eyebrow="Patient stories" title={`All ${demoRatingSummary.total.toLocaleString("en-IN")} of them, not the best twelve.`} highlight="not the best twelve" copy="Sorted the way they came in. The four star ones are in here too." />
                   <RatingSummary className="mt-6" />
                 </div>
                 <TestimonialWall />
@@ -131,14 +131,14 @@ export default function ReviewsPage() {
           <section className="hue-violet relative isolate overflow-hidden bg-ink py-10 text-white sm:py-14 lg:py-20">
             <div aria-hidden="true" className="absolute -right-24 top-0 size-80 rounded-full bg-violet opacity-30 blur-3xl" />
             <Container width="7xl" className="relative">
-              <SectionIntro tone="dark" eyebrow="On camera" title="Patients, in their own words." highlight="own words" />
+              <SectionIntro tone="dark" eyebrow="On camera" title="Some of them said it out loud." highlight="out loud" copy="Filmed on the day the work finished, in Gujarati and English." />
               <VideoWall className="mt-6 sm:mt-8" />
             </Container>
           </section>
 
           <section className="hue-gold py-10 sm:py-14 lg:py-20">
             <Container width="7xl">
-              <SectionIntro eyebrow="Recognition" title="Awards, accreditation and press." highlight="press" />
+              <SectionIntro eyebrow="Recognition" title="What other people have said about us." highlight="other people" />
               <AwardsRow className="mt-6 sm:mt-8" />
               <PressQuotes className="mt-8" />
             </Container>
