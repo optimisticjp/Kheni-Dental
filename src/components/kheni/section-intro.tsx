@@ -18,7 +18,7 @@ export function SectionIntro({
 }: {
   eyebrow?: string;
   title: string;
-  highlight?: string;
+  highlight?: string | string[];
   copy?: string;
   align?: "left" | "center";
   tone?: "light" | "dark";
@@ -38,16 +38,27 @@ export function SectionIntro({
   );
 }
 
-/** Splits a heading around its highlighted word. Exact, case-sensitive match. */
-export function Highlighted({ title, highlight }: { title: string; highlight?: string }) {
-  if (!highlight) return <>{title}</>;
-  const index = title.indexOf(highlight);
-  if (index === -1) return <>{title}</>;
-  return (
-    <>
-      {title.slice(0, index)}
-      <span className="hl">{highlight}</span>
-      {title.slice(index + highlight.length)}
-    </>
-  );
+/**
+ * Sets one or more phrases of a heading in the hue.
+ *
+ * "From your first visit to your final tooth" wants both ends lit, the way
+ * the reference clinics do it, so `highlight` accepts an array. Matching is
+ * exact and case-sensitive; a phrase that is not in the title is ignored
+ * rather than crashing the page.
+ */
+export function Highlighted({ title, highlight }: { title: string; highlight?: string | string[] }) {
+  const phrases = (Array.isArray(highlight) ? highlight : highlight ? [highlight] : []).filter((h) => h && title.includes(h));
+  if (phrases.length === 0) return <>{title}</>;
+  // Walk the title once, left to right, lighting each phrase where it first appears after the previous one.
+  const out: React.ReactNode[] = [];
+  let cursor = 0;
+  for (const phrase of phrases) {
+    const at = title.indexOf(phrase, cursor);
+    if (at === -1) continue;
+    if (at > cursor) out.push(title.slice(cursor, at));
+    out.push(<span key={at} className="hl">{phrase}</span>);
+    cursor = at + phrase.length;
+  }
+  if (cursor < title.length) out.push(title.slice(cursor));
+  return <>{out}</>;
 }

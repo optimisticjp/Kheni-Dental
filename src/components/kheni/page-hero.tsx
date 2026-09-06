@@ -22,7 +22,7 @@ export function PageHero({
 }: {
   eyebrow: string;
   title: string;
-  highlight?: string;
+  highlight?: string | string[];
   copy?: string;
   hue?: Hue;
   aside?: React.ReactNode;

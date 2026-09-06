@@ -14,9 +14,9 @@ import { cn } from "@/lib/utils";
  * They are schematic, not surgical.
  */
 
-type Part = { n: number; name: string; note: string; swatch: string };
+export type Part = { n: number; name: string; note: string; swatch: string };
 
-function Legend({ parts, className }: { parts: Part[]; className?: string }) {
+export function Legend({ parts, className }: { parts: Part[]; className?: string }) {
   return (
     <ol className={cn("grid gap-2", className)}>
       {parts.map((part) => (
@@ -38,7 +38,7 @@ function Legend({ parts, className }: { parts: Part[]; className?: string }) {
   );
 }
 
-function Marker({ x, y, n, swatch }: { x: number; y: number; n: number; swatch: string }) {
+export function Marker({ x, y, n, swatch }: { x: number; y: number; n: number; swatch: string }) {
   return (
     <g>
       <circle cx={x} cy={y} r="13" fill={swatch} stroke="#ffffff" strokeWidth="3" />

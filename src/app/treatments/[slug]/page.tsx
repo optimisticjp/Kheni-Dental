@@ -3,7 +3,19 @@ import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { ArrowUpRight, Check } from "lucide-react";
 
-import { ToothAnatomyDiagram } from "@/components/kheni/art/diagrams";
+import {
+  AlignerMovementDiagram,
+  BiteMapDiagram,
+  BridgeDiagram,
+  CariesDiagram,
+  CrownDiagram,
+  GumStagesDiagram,
+  KidsTeethDiagram,
+  RootCanalStagesDiagram,
+  SmileLineDiagram,
+  ToothSectionDiagram,
+  WisdomImpactionDiagram,
+} from "@/components/kheni/art/anatomy";
 import { TreatmentArt } from "@/components/kheni/art/treatment-art";
 import { CtaBand } from "@/components/kheni/cta-band";
 import { DoctorCard, TeamLink } from "@/components/kheni/doctor-spotlight";
@@ -21,7 +33,7 @@ import { Container } from "@/components/ui/container";
 import { BookButton, WhatsAppButton } from "@/components/ui/cta";
 import { caseCategories } from "@/content/cases";
 import { treatmentPhotos } from "@/content/photos";
-import { doctors, locations, smileNotes, treatments } from "@/content/site";
+import { doctors, locations, treatments } from "@/content/site";
 import { TestimonialCard } from "@/components/kheni/demo/testimonial-wall";
 import { ResultDump } from "@/components/kheni/demo/result-gallery";
 import { demoContentActive, demoTestimonials } from "@/content/demo";
@@ -40,8 +52,22 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 /** Treatments whose results can be photographed, so the results block is shown. */
 const resultCategories = new Set(caseCategories.map((c) => c.toLowerCase()));
 
-/** A diagram belongs where the question is "what part of my tooth is treated?" */
-const anatomySlugs = new Set(["root-canal-treatment-surat", "tooth-fillings-surat", "gum-care-surat"]);
+/**
+ * One diagram per treatment, each answering the question a patient has on
+ * that page. The caption under each is the question it answers.
+ */
+const DIAGRAMS: Record<string, { caption: string; Diagram: React.ComponentType<{ className?: string }>[] }> = {
+  "root-canal-treatment-surat": { caption: "What a root canal actually does, in three stages.", Diagram: [RootCanalStagesDiagram, ToothSectionDiagram] },
+  "tooth-fillings-surat": { caption: "How deep a cavity has gone decides what it needs.", Diagram: [CariesDiagram, ToothSectionDiagram] },
+  "gum-care-surat": { caption: "Where healthy gums end and gum disease begins.", Diagram: [GumStagesDiagram] },
+  "crowns-and-bridges": { caption: "A crown fits over a tooth. A bridge spans a gap.", Diagram: [CrownDiagram, BridgeDiagram] },
+  "wisdom-tooth-oral-surgery": { caption: "Why a wisdom tooth with no room hurts.", Diagram: [WisdomImpactionDiagram] },
+  "braces-clear-aligners": { caption: "How a clear tray moves teeth a little at a time.", Diagram: [AlignerMovementDiagram] },
+  "kids-dentistry-surat": { caption: "The adult tooth is already waiting underneath.", Diagram: [KidsTeethDiagram] },
+  "cosmetic-smile-dentistry": { caption: "The six teeth people mean when they say their smile.", Diagram: [SmileLineDiagram] },
+  "full-mouth-rehabilitation": { caption: "How several separate problems become one plan.", Diagram: [BiteMapDiagram] },
+  "dental-check-up-surat": { caption: "What the dentist is looking at, layer by layer.", Diagram: [ToothSectionDiagram] },
+};
 
 export default async function TreatmentPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -54,7 +80,8 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
   const more = related.length < 3 ? treatments.filter((t) => t.slug !== slug && !related.includes(t)).slice(0, 3 - related.length) : [];
   const showResults = resultCategories.has(treatment.title.toLowerCase()) || treatment.slug === "cosmetic-smile-dentistry";
   const kids = treatment.slug === "kids-dentistry-surat";
-  const note = smileNotes.find((n) => n.hue === treatment.hue) ?? smileNotes[1];
+  const lead = team[0];
+  const diagrams = DIAGRAMS[treatment.slug];
 
   return (
     <>
@@ -91,13 +118,8 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
         <Container width="7xl">
           <div className="grid gap-8 lg:grid-cols-[1.15fr_.85fr] lg:gap-14">
             <div>
-              <SectionIntro eyebrow={treatment.title} title={`What ${treatment.title.toLowerCase()} ${treatment.title.endsWith("s") ? "are" : "is"}, in plain words.`} highlight="plain words" />
+              <SectionIntro eyebrow={treatment.title} title={treatment.plainTitle.title} highlight={treatment.plainTitle.highlight} />
               <p className="t-stand measure-body mt-5 text-ink-soft">{treatment.intro}</p>
-              {anatomySlugs.has(treatment.slug) && (
-                <div className="mt-6 rounded-[1.5rem] bg-white p-4 ring-1 ring-line sm:p-6">
-                  <ToothAnatomyDiagram className="mx-auto w-full max-w-md" />
-                </div>
-              )}
             </div>
             <div className="rounded-[1.5rem] bg-h-tint p-5 sm:p-6">
               <p className="t-eyebrow text-h-text">{kids ? "Bring your child in for" : "You might need this if"}</p>
@@ -113,14 +135,25 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
               </ul>
             </div>
           </div>
+
+          {diagrams && (
+            <div className="mt-8 space-y-4 sm:mt-10">
+              <p className="t-eyebrow text-h-text">{diagrams.caption}</p>
+              {diagrams.Diagram.map((Diagram, i) => (
+                <div key={i} className="rounded-[1.5rem] bg-white p-4 ring-1 ring-line sm:p-6 lg:p-8">
+                  <Diagram />
+                </div>
+              ))}
+            </div>
+          )}
         </Container>
       </section>
 
       {/* ── At a visit ───────────────────────────────────────────────── */}
       <section className={`hue-${treatment.hue} bg-h-tint py-10 sm:py-14 lg:py-18`}>
         <Container width="7xl">
-          <SectionIntro eyebrow="At your visit" title="What happens, step by step." highlight="step by step" />
-          <ProcessSteps steps={treatment.visit} columns={treatment.visit.length === 5 ? 5 : 4} className="mt-6 sm:mt-8" />
+          <SectionIntro eyebrow="At your visit" title={treatment.visitTitle.title} highlight={treatment.visitTitle.highlight} />
+          <ProcessSteps steps={treatment.visit} columns={treatment.visit.length === 5 ? 5 : 4} className="mt-6 sm:mt-8" variant="cards" />
           <div className="mt-6 grid gap-4 lg:grid-cols-[1fr_1fr]">
             <div className="rounded-[1.5rem] bg-white p-5 ring-1 ring-line sm:p-6">
               <p className="t-eyebrow text-h-text">What to expect after</p>
@@ -145,7 +178,13 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
       {/* ── Who handles it ───────────────────────────────────────────── */}
       <section className="py-10 sm:py-14 lg:py-18">
         <Container width="7xl">
-          <SectionIntro eyebrow="Who you will see" title={team.length ? `Who handles ${treatment.title.toLowerCase()} at Kheni.` : "Any of our four dentists."} highlight={team.length ? "Who handles" : "four dentists"} copy={team.length ? undefined : "Book at either clinic and tell us what is troubling you. The dentist you see will examine you and explain the plan."} />
+          <SectionIntro eyebrow="Who you will see" title={team.length ? `The dentists who do this every week.` : "Any of our four dentists."} highlight={team.length ? "every week" : "four dentists"} copy={team.length ? undefined : "Book at either clinic and tell us what is troubling you. The dentist you see will examine you and explain the plan."} />
+          {lead && (
+            <figure className={`hue-${lead.hue} mt-6 rounded-[1.5rem] bg-h-tint px-6 py-6 sm:px-8 sm:py-7`}>
+              <blockquote className="font-serif text-[1.35rem] font-medium leading-snug tracking-[-.015em] text-ink sm:text-[1.6rem]">&ldquo;{lead.philosophy}&rdquo;</blockquote>
+              <figcaption className="t-eyebrow mt-3 text-h-text">{lead.name}</figcaption>
+            </figure>
+          )}
           {team.length > 0 ? (
             <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {team.map((doctor) => (
@@ -166,7 +205,7 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
         </section>
       )}
 
-      <SmileNote note={note} compact className={showResults ? "py-10 sm:py-14" : "pb-4"} />
+      <SmileNote note={{ line: treatment.note.line, highlight: treatment.note.highlight, hue: treatment.hue }} />
 
       {/* ── Proof and questions ──────────────────────────────────────── */}
       <section className={`hue-${treatment.hue} py-10 sm:py-14 lg:py-18`}>

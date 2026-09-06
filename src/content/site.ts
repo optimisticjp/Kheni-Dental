@@ -326,6 +326,15 @@ export type Treatment = {
   /** What to expect after. Honest, short. */
   expect: string[];
   worthKnowing: { title: string; copy: string };
+  /**
+   * Section headlines for this treatment's page, so the page does not fall
+   * back on "What X is, in plain words" eleven times over. `highlight` may
+   * name one phrase or two; both are set in the hue.
+   */
+  plainTitle: { title: string; highlight: string | string[] };
+  visitTitle: { title: string; highlight: string | string[] };
+  /** One Kheni line set large on the page. Brand voice, never a claim. */
+  note: { line: string; highlight: string };
   doctorSlugs: string[];
   ctaTitle: string;
   whatsappMessage: string;
@@ -372,6 +381,9 @@ export const treatments: Treatment[] = [
       title: "Why some people are told to wait",
       copy: "Active gum disease, unmanaged diabetes, heavy smoking and thin bone can all change whether an implant is placed now, later, or not at all. These are judged in the chair, so bring them up at the consultation.",
     },
+    plainTitle: { title: "A tooth with its own root.", highlight: "its own root" },
+    visitTitle: { title: "Five stages, with a pause between each one.", highlight: "a pause" },
+    note: { line: "The gap you stopped noticing is the one your other teeth noticed.", highlight: "other teeth" },
     doctorSlugs: ["dr-mayur-kheni"],
     ctaTitle: "Find out whether an implant suits your case.",
     whatsappMessage: "Hello Kheni Dental, I would like to ask about dental implants and book a consultation. Thank you.",
@@ -435,6 +447,9 @@ export const treatments: Treatment[] = [
       title: "Pain that stops is not proof",
       copy: "When the nerve inside a tooth dies, the ache can fade while the infection continues underneath. A tooth that hurt badly last week and feels fine now still deserves an examination.",
     },
+    plainTitle: { title: "The tooth stays. The ache does not.", highlight: "The ache does not" },
+    visitTitle: { title: "Numb first. Then the actual work.", highlight: "Numb first" },
+    note: { line: "Nobody remembers the root canal. They remember the night before it.", highlight: "the night before" },
     doctorSlugs: ["dr-parita-vastarpara"],
     ctaTitle: "Call us before the next bad night.",
     whatsappMessage: "Hello Kheni Dental, I have tooth pain and would like to book an appointment. Thank you.",
@@ -468,7 +483,7 @@ export const treatments: Treatment[] = [
     hue: "violet",
     category: "cosmetic",
     concern: "My teeth are crowded and I do not want visible braces at work.",
-    headline: "Straighter teeth, with the option that suits your case.",
+    headline: "Straighter teeth, and a say in how visible the work is.",
     short: "Moves crowded, gapped or uneven teeth into place with braces or clear aligners, depending on the movement your teeth need.",
     intro:
       "Adults who ask about aligners are rarely chasing a picture. They are tired of one tooth sitting in front of another, or a bite that keeps wearing the same edges. Braces and clear aligners both move teeth, but they do not suit every case equally. Which one fits yours depends on how far the teeth have to move, not on which you would rather wear.",
@@ -494,6 +509,9 @@ export const treatments: Treatment[] = [
       title: "Why a photo cannot answer this",
       copy: "People often send a picture of their front teeth and ask whether aligners will work. Suitability rests on how the back teeth meet and how far roots have to move, and that only shows up on examination.",
     },
+    plainTitle: { title: "Two ways to move a tooth.", highlight: "move a tooth" },
+    visitTitle: { title: "Measure first. Choose second.", highlight: "Choose second" },
+    note: { line: "Teeth move a millimetre at a time. That is why it works.", highlight: "a millimetre at a time" },
     doctorSlugs: [],
     ctaTitle: "Find out which option your case needs.",
     whatsappMessage: "Hello Kheni Dental, I would like to ask about braces or clear aligners and book a consultation. Thank you.",
@@ -553,6 +571,9 @@ export const treatments: Treatment[] = [
       title: "Some cosmetic work cannot be undone",
       copy: "Anything that reshapes a tooth removes enamel permanently. That is a decision to make in the chair after an examination, not from a page.",
     },
+    plainTitle: { title: "Usually it is one tooth. Sometimes two.", highlight: "one tooth" },
+    visitTitle: { title: "See it before you agree to it.", highlight: "before you agree" },
+    note: { line: "A good smile design is the one nobody can point to.", highlight: "nobody can point to" },
     doctorSlugs: ["dr-jinal-monapara", "dr-mayur-kheni"],
     ctaTitle: "Start with a conversation, not a procedure.",
     whatsappMessage: "Hello Kheni Dental, I would like to ask about smile design and book a consultation. Thank you.",
@@ -612,6 +633,9 @@ export const treatments: Treatment[] = [
       title: "The order matters as much as the work",
       copy: "Gums and bite usually have to be settled before new teeth are built on top of them. Working out that order is the first real task of the consultation.",
     },
+    plainTitle: { title: "One plan instead of a queue of appointments.", highlight: "One plan" },
+    visitTitle: { title: "Urgent first. The rest in order.", highlight: "in order" },
+    note: { line: "Bring the whole list. We will put it in order.", highlight: "in order" },
     doctorSlugs: ["dr-mayur-kheni"],
     ctaTitle: "Bring the whole list to one appointment.",
     whatsappMessage: "Hello Kheni Dental, several of my teeth need work and I would like to book a consultation to plan it. Thank you.",
@@ -671,6 +695,9 @@ export const treatments: Treatment[] = [
       title: "A crown covers, it does not cure",
       copy: "A crowned tooth still needs brushing and cleaning between the teeth. Whether a crack has already reached the nerve is something only an examination and imaging can tell.",
     },
+    plainTitle: { title: "A cap for a tooth that has had enough.", highlight: "had enough" },
+    visitTitle: { title: "Two visits, and a tooth you can trust again.", highlight: "trust again" },
+    note: { line: "You already know which tooth it is.", highlight: "which tooth" },
     doctorSlugs: ["dr-jinal-monapara", "dr-parita-vastarpara"],
     featured: true,
     ctaTitle: "Let us look at the tooth you do not trust.",
@@ -726,6 +753,9 @@ export const treatments: Treatment[] = [
       title: "What you say at home matters more",
       copy: "Keep the build-up short and ordinary, and avoid promising that nothing will be done. If your child has had a hard time at a dental visit before, tell us on the phone rather than in the waiting room.",
     },
+    plainTitle: { title: "The first visit is mostly looking around.", highlight: "looking around" },
+    visitTitle: { title: "At the child's pace, not the clock's.", highlight: "the child's pace" },
+    note: { line: "First we make friends with the chair.", highlight: "make friends" },
     doctorSlugs: ["dr-ishita-dobariya"],
     ctaTitle: "Tell us about your child before the visit.",
     whatsappMessage: "Hello Kheni Dental, I would like to book a visit for my child. Thank you.",
@@ -781,6 +811,9 @@ export const treatments: Treatment[] = [
       title: "Gums can stop bleeding without healing",
       copy: "Bleeding often eases off for a while, and people who smoke may bleed very little even when the gums are not healthy. Gum health is checked tooth by tooth, never judged from how it feels at home.",
     },
+    plainTitle: { title: "It starts where the gum meets the tooth.", highlight: "where the gum meets the tooth" },
+    visitTitle: { title: "Clean below the gumline, where a brush cannot reach.", highlight: "below the gumline" },
+    note: { line: "Pink in the sink is common. It is not normal.", highlight: "not normal" },
     doctorSlugs: [],
     ctaTitle: "Tell us what your gums are doing.",
     whatsappMessage: "Hello Kheni Dental, my gums have been bleeding and I would like to book a check. Thank you.",
@@ -835,6 +868,9 @@ export const treatments: Treatment[] = [
       title: "When it needs urgent care",
       copy: "Swelling that spreads towards the eye or neck, difficulty swallowing, or a jaw you cannot open properly are reasons to seek urgent care rather than wait. Call the clinic and describe what you are seeing.",
     },
+    plainTitle: { title: "A tooth that arrived late and out of room.", highlight: "out of room" },
+    visitTitle: { title: "An answer first. Removal only if it is the answer.", highlight: "An answer first" },
+    note: { line: "Not every wisdom tooth needs to leave. Some only need watching.", highlight: "watching" },
     doctorSlugs: [],
     ctaTitle: "Get an answer before it flares up again.",
     whatsappMessage: "Hello Kheni Dental, my wisdom tooth is troubling me and I would like to book an appointment. Thank you.",
@@ -889,6 +925,9 @@ export const treatments: Treatment[] = [
       title: "Feeling fine is not the same as fine",
       copy: "Decay between teeth, a cracked filling and early gum changes often cause nothing at all until they are well established. That is exactly why check-ups exist.",
     },
+    plainTitle: { title: "A proper look, and a plain list.", highlight: "plain list" },
+    visitTitle: { title: "Say how long it has been. Then we start.", highlight: "Then we start" },
+    note: { line: "Nobody here counts the years since your last visit.", highlight: "counts the years" },
     doctorSlugs: ["dr-parita-vastarpara", "dr-ishita-dobariya", "dr-jinal-monapara"],
     ctaTitle: "Book the check-up you keep putting off.",
     whatsappMessage: "Hello Kheni Dental, I would like to book a dental check-up. Thank you.",
@@ -943,6 +982,9 @@ export const treatments: Treatment[] = [
       title: "A filling that keeps failing is telling you something",
       copy: "When a large filling breaks again and again, it may be that not enough sound tooth is left to hold it. That is when a crown gets discussed, and the dentist will say so plainly.",
     },
+    plainTitle: { title: "Decay goes deeper than it looks.", highlight: "deeper than it looks" },
+    visitTitle: { title: "One visit, if we catch it in time.", highlight: "in time" },
+    note: { line: "Cold water found the tooth before you did.", highlight: "before you did" },
     doctorSlugs: ["dr-parita-vastarpara", "dr-jinal-monapara", "dr-ishita-dobariya"],
     ctaTitle: "Get the small hole looked at this week.",
     whatsappMessage: "Hello Kheni Dental, I think I need a filling and would like to book an appointment. Thank you.",
@@ -1011,6 +1053,12 @@ export const smileNotes: SmileNote[] = [
   { line: "Your smile is personal. The plan should be too.", highlight: "personal", hue: "violet" },
   { line: "No treatment begins before you understand why.", highlight: "why", hue: "green" },
   { line: "A missing tooth changes more than your smile.", highlight: "more", hue: "cobalt" },
+  { line: "The right treatment is often the smaller one.", highlight: "smaller", hue: "amber" },
+  { line: "Chew on both sides again.", highlight: "both sides", hue: "sunshine" },
+  { line: "Pain is information. We start there.", highlight: "information", hue: "teal" },
+  { line: "A tooth saved beats a tooth replaced.", highlight: "saved", hue: "mint" },
+  { line: "Ask the question you think is silly. It never is.", highlight: "never is", hue: "lavender" },
+  { line: "Fifteen years in, and we still explain every step.", highlight: "every step", hue: "sky" },
 ];
 
 export const resources = [

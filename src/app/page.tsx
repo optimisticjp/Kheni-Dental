@@ -14,7 +14,7 @@ import { MediaFrame } from "@/components/kheni/media-frame";
 import { ProcessSteps } from "@/components/kheni/process-steps";
 import { GoogleQuotes, ProofCluster, Stars } from "@/components/kheni/proof";
 import { ResultsPreview } from "@/components/kheni/results-preview";
-import { SectionIntro } from "@/components/kheni/section-intro";
+import { Highlighted, SectionIntro } from "@/components/kheni/section-intro";
 import { SmileNote } from "@/components/kheni/smile-note";
 import { TreatmentPoster, TreatmentTile } from "@/components/kheni/treatment-poster";
 import { StockHero } from "@/components/kheni/demo/stock-hero";
@@ -175,7 +175,7 @@ export default function Home() {
       <section className="hue-cobalt py-10 sm:py-14 lg:py-20">
         <Container width="7xl">
           <div className="flex flex-wrap items-end justify-between gap-4">
-            <SectionIntro eyebrow="Treatments" title="Everyday dentistry to full mouth rehabilitation." highlight="full mouth" />
+            <SectionIntro eyebrow="Treatments" title="From a check-up to a whole new bite." highlight={["check-up", "whole new bite"]} />
             <Link href="/treatments/" className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-cobalt-deep">
               All {treatments.length} treatments
               <ArrowUpRight className="cta-arrow size-4" aria-hidden="true" />
@@ -241,7 +241,9 @@ export default function Home() {
 
           <div className="mt-10 border-t border-white/10 pt-8 lg:mt-12">
             <p className="t-eyebrow text-gold-soft">{implantProcess.eyebrow}</p>
-            <h3 className="t-h2 mt-2 text-white">{implantProcess.title}</h3>
+            <h3 className="t-h2 mt-2 text-white [--h-text:var(--sunshine)] [--h-soft:transparent]">
+              <Highlighted title={implantProcess.title} highlight={["first visit", "final tooth"]} />
+            </h3>
             <div className="mt-6 [--h-fill:var(--sunshine)] [--h-on-fill:var(--ink)] [--h-soft:rgba(255,255,255,.2)] [&_li]:bg-white/[.06] [&_li]:ring-white/10 [&_li]:text-white [&_p]:text-white/65">
               <ProcessSteps steps={implantProcess.steps} columns={5} dense />
             </div>
@@ -376,7 +378,7 @@ export default function Home() {
       {/* ── From the clinic ─────────────────────────────────────────── */}
       <section className="hue-violet py-10 sm:py-14 lg:py-20">
         <Container width="7xl">
-          <SectionIntro eyebrow="From the clinic" title="Short videos from our dentists." highlight="Short videos" copy="Brushing tips, kids' teeth, and patients on the day their treatment finished, in Gujarati and English." />
+          <SectionIntro eyebrow="From the clinic" title="Two minutes with a dentist, in Gujarati or English." highlight={["Two minutes", "Gujarati or English"]} copy="Brushing tips, kids' teeth, and patients on the day their treatment finished." />
           <ClinicShorts limit={6} className="mt-6 sm:mt-8" />
         </Container>
       </section>

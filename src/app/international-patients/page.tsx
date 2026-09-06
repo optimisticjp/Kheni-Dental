@@ -95,8 +95,8 @@ export default function InternationalPage() {
         <Container width="7xl">
           <div className="grid gap-8 lg:grid-cols-[1.15fr_.85fr] lg:items-center lg:gap-12">
             <div>
-              <SectionIntro eyebrow="How a visit works" title="From your first message to your flight home." highlight="flight home" />
-              <ProcessSteps steps={journey} columns={5} className="mt-6 sm:mt-8" dense />
+              <SectionIntro eyebrow="How a visit works" title="From your first message to your flight home." highlight={["first message", "flight home"]} />
+              <ProcessSteps steps={journey} columns={5} className="mt-6 sm:mt-8" variant="cards" dense />
             </div>
             <MediaFrame
               ratio="4 / 3"

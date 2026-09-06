@@ -90,8 +90,8 @@ export default function DentalImplantsPage() {
       {/* ── Process ──────────────────────────────────────────────────── */}
       <section className="hue-cobalt bg-cobalt-tint py-10 sm:py-14 lg:py-18">
         <Container width="7xl">
-          <SectionIntro eyebrow={implantProcess.eyebrow} title={implantProcess.title} highlight="final tooth" copy={implantProcess.copy} />
-          <ProcessSteps steps={implantProcess.steps} columns={5} className="mt-6 sm:mt-8" dense />
+          <SectionIntro eyebrow={implantProcess.eyebrow} title={implantProcess.title} highlight={["first visit", "final tooth"]} copy={implantProcess.copy} />
+          <ProcessSteps steps={implantProcess.steps} columns={5} className="mt-6 sm:mt-8" variant="cards" />
           <details className="group mt-5 rounded-2xl bg-white ring-1 ring-line">
             <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 px-5 text-[.9375rem] font-semibold marker:hidden focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-cobalt [&::-webkit-details-marker]:hidden">
               {planFactors.title}

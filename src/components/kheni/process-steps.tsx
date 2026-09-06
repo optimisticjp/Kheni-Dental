@@ -1,32 +1,75 @@
+import { ClipboardList, MessageCircle, ScanLine, Sparkles, Stethoscope, type LucideIcon } from "lucide-react";
+
 import { cn } from "@/lib/utils";
 
 /**
- * Numbered steps with a connector, in the section's hue. Stacks vertically
- * with a left rail on phones; runs as a row with a line between steps on
- * desktop. Numbers are the visual anchor; nothing bounces.
+ * Numbered steps, two ways.
+ *
+ *   rail    the original. A numbered disc, a connector, title and copy.
+ *           Compact, and the one to use inside a dark or busy section.
+ *
+ *   cards   the pattern the clinic pointed at: a white card with a glyph in
+ *           a soft circle top left, the title and copy, and a large numeral
+ *           printed faintly in the bottom right corner like a page number.
+ *           The numeral is aria-hidden; the <ol> already carries the order.
+ *
+ * Both stack on a phone and run as a row from lg. Nothing animates.
  */
+export type ProcessStep = { title: string; copy: string; icon?: LucideIcon };
+
+/** Glyphs by position, for steps that do not name their own. */
+const DEFAULT_ICONS: LucideIcon[] = [MessageCircle, ScanLine, ClipboardList, Stethoscope, Sparkles];
+
 export function ProcessSteps({
   steps,
   className,
   columns = 5,
   dense = false,
+  variant = "rail",
 }: {
-  steps: readonly { title: string; copy: string }[];
+  steps: readonly ProcessStep[];
   className?: string;
   columns?: 3 | 4 | 5;
   /** On phones, show titles only; the copy returns from sm up. */
   dense?: boolean;
+  variant?: "rail" | "cards";
 }) {
+  const grid = cn(
+    "relative grid gap-3 lg:gap-4",
+    columns === 5 && "lg:grid-cols-5",
+    columns === 4 && "lg:grid-cols-4",
+    columns === 3 && "lg:grid-cols-3",
+    className,
+  );
+
+  if (variant === "cards") {
+    return (
+      <ol className={cn(grid, "sm:grid-cols-2")}>
+        {steps.map((step, index) => {
+          const Icon = step.icon ?? DEFAULT_ICONS[index % DEFAULT_ICONS.length];
+          return (
+            <li key={step.title} className="relative isolate overflow-hidden rounded-[1.25rem] bg-white p-5 ring-1 ring-line sm:p-6">
+              <span aria-hidden="true" className="grid size-12 place-items-center rounded-full bg-h-tint text-h-text">
+                <Icon className="size-5" strokeWidth={1.75} />
+              </span>
+              <h3 className="t-card mt-5 pr-10">{step.title}</h3>
+              <p className={cn("t-small mt-2 text-ink-soft", dense && "hidden sm:block")}>{step.copy}</p>
+              {/* The page-number numeral. Set in the serif, very large and very faint. */}
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute -bottom-3 -right-1 select-none font-serif text-[5rem] font-semibold leading-none tracking-[-.06em] text-h-fill opacity-[.14]"
+              >
+                {String(index + 1).padStart(2, "0")}
+              </span>
+            </li>
+          );
+        })}
+      </ol>
+    );
+  }
+
   return (
-    <ol
-      className={cn(
-        "relative grid gap-3 lg:gap-4",
-        columns === 5 && "lg:grid-cols-5",
-        columns === 4 && "lg:grid-cols-4",
-        columns === 3 && "lg:grid-cols-3",
-        className,
-      )}
-    >
+    <ol className={grid}>
       {steps.map((step, index) => (
         <li key={step.title} className={cn("relative flex gap-4 rounded-2xl bg-white p-4 ring-1 ring-line lg:flex-col lg:gap-0 lg:p-5", dense && "items-center py-3 lg:items-stretch lg:py-5")}>
           <div className="relative flex shrink-0 flex-col items-center lg:mb-4 lg:flex-row">

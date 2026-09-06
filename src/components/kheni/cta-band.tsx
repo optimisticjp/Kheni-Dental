@@ -19,7 +19,7 @@ export function CtaBand({
   className,
 }: {
   title: string;
-  highlight?: string;
+  highlight?: string | string[];
   copy?: string;
   placement: string;
   hue?: Hue;
