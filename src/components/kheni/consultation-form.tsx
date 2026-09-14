@@ -13,7 +13,7 @@ import { pushTrackingEvent } from "@/lib/tracking";
  * Book button.
  */
 const field =
-  "mt-1.5 h-12 w-full rounded-xl border border-line-strong bg-white px-4 text-base outline-none focus:border-cobalt focus:ring-[3px] focus:ring-cobalt/25";
+  "mt-1.5 h-12 w-full rounded-xl border border-line-strong bg-white px-4 text-base outline-none focus:border-blue focus:ring-[3px] focus:ring-blue/25";
 
 export function ConsultationForm({ international = false }: { international?: boolean }) {
   const [name, setName] = useState("");
@@ -42,7 +42,7 @@ export function ConsultationForm({ international = false }: { international?: bo
   return (
     <form onSubmit={submit} className="grid gap-4 rounded-[1.5rem] border border-line bg-white p-5 sm:p-7" id="book">
       <div>
-        <p className="t-eyebrow text-cobalt-deep">Request an appointment</p>
+        <p className="t-eyebrow text-blue-deep">Request an appointment</p>
         <h2 className="t-h3 mt-2">Four details, then WhatsApp opens with them typed in.</h2>
       </div>
       <div>

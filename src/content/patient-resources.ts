@@ -39,7 +39,7 @@ export const resourceCategories: ResourceCategory[] = [
     id: "first-visit",
     label: "Before your visit",
     intro: "What to bring, what will happen, and how to make it easier if you are dreading it.",
-    hue: "sky",
+    hue: "blue",
     guides: [
       {
         id: "first-visit-guide",
@@ -65,7 +65,7 @@ export const resourceCategories: ResourceCategory[] = [
     id: "aftercare",
     label: "After treatment",
     intro: "What to expect over the next few days, what helps, and when to pick up the phone.",
-    hue: "teal",
+    hue: "aqua",
     guides: [
       {
         id: "root-canal-aftercare",
@@ -87,7 +87,7 @@ export const resourceCategories: ResourceCategory[] = [
     id: "implant-care",
     label: "Implant care",
     intro: "Implants do not decay, but the gum and bone holding them still need looking after.",
-    hue: "cobalt",
+    hue: "blue",
     guides: [
       {
         id: "implant-guide",
@@ -108,7 +108,7 @@ export const resourceCategories: ResourceCategory[] = [
     id: "kids",
     label: "Kids",
     intro: "First visits, brushing battles, and getting a child to sit down without a fight.",
-    hue: "mint",
+    hue: "butter",
     guides: [
       {
         id: "kids-visit",
@@ -128,7 +128,7 @@ export const resourceCategories: ResourceCategory[] = [
     id: "orthodontics",
     label: "Braces & aligners",
     intro: "Keeping teeth clean while they are moving, and keeping them where they end up.",
-    hue: "violet",
+    hue: "blue",
     guides: [
       { id: "braces-cleaning", title: "Cleaning with braces on", summary: "The bits people miss, and what to keep in your bag.", status: "pending", needs: "Your cleaning instructions for fixed braces and what you recommend patients carry." },
       { id: "aligner-care", title: "Looking after aligners", summary: "Wear time, cleaning, and what to do if you lose one.", status: "pending", needs: "Your aligner wear-time instruction and what a patient should do about a lost or cracked tray." },

@@ -41,7 +41,7 @@ export function BeforeAfterSlider({
   const id = useId();
 
   return (
-    <figure className={cn("ba relative isolate select-none overflow-hidden rounded-[1.25rem] bg-navy-tint", className)} style={{ ["--split" as string]: `${split}%`, aspectRatio: ratio }}>
+    <figure className={cn("ba relative isolate select-none overflow-hidden rounded-[1.25rem] bg-cream-2", className)} style={{ ["--split" as string]: `${split}%`, aspectRatio: ratio }}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={before} alt={beforeAlt} className="absolute inset-0 size-full object-cover" draggable={false} />
       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -50,7 +50,7 @@ export function BeforeAfterSlider({
       <span aria-hidden="true" className="absolute left-3 top-3 rounded-full bg-ink/80 px-2.5 py-1 text-[.7rem] font-bold uppercase tracking-[.1em] text-white">
         Before
       </span>
-      <span aria-hidden="true" className="absolute right-3 top-3 rounded-full bg-cobalt px-2.5 py-1 text-[.7rem] font-bold uppercase tracking-[.1em] text-white">
+      <span aria-hidden="true" className="absolute right-3 top-3 rounded-full bg-blue px-2.5 py-1 text-[.7rem] font-bold uppercase tracking-[.1em] text-white">
         After
       </span>
 

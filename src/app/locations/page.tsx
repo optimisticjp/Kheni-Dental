@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 
 import { BranchLocator } from "@/components/kheni/branch-locator";
+import { BrandLine } from "@/components/kheni/brand-line";
 import { CtaBand } from "@/components/kheni/cta-band";
 import { PageHero } from "@/components/kheni/page-hero";
-import { SmileNote } from "@/components/kheni/smile-note";
 import { Container } from "@/components/ui/container";
-import { clinicHours, smileNotes } from "@/content/site";
+import { clinicHours } from "@/content/site";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/locations/" },
@@ -17,21 +17,14 @@ export const metadata: Metadata = {
 export default function LocationsPage() {
   return (
     <>
-      <PageHero
-        eyebrow="Two clinics in Surat"
-        title="Come to whichever is nearer."
-        highlight="nearer"
-        copy={`Swastik Plaza at Yogi Chowk, and the Elite Implant Center at Hirabaug on Varachha Main Road. ${clinicHours.compact}.`}
-        hue="green"
-        compact
-      />
-      <section className="hue-green py-8 sm:py-12 lg:py-16">
+      <PageHero eyebrow="Two clinics in Surat" title="Two clinics. Pick the one closer to you." highlight="closer to you" copy={`Swastik Plaza at Yogi Chowk, and the Elite Implant Center at Hirabaug on Varachha Main Road. ${clinicHours.compact}.`} hue="aqua" compact />
+      <section className="py-8 sm:py-12 lg:py-16">
         <Container width="7xl">
           <BranchLocator placement="locations" />
         </Container>
       </section>
-      <SmileNote note={smileNotes[2]} compact className="pb-10 sm:pb-14" />
-      <CtaBand title="Not sure which clinic? Ask us." highlight="Ask us" copy="Message with your area and we will suggest the easier one to reach." placement="locations_final" hue="green" />
+      <BrandLine id="clinics" />
+      <CtaBand title="Not sure which clinic? Ask us." highlight="Ask us" copy="Message with your area and we will suggest the easier one to reach." placement="locations_final" />
     </>
   );
 }

@@ -55,7 +55,7 @@ Real doctor and clinic photography is still required. Do not open search indexin
 
 ## September 2026: V4 redesign
 
-The site moved from a dark black/gold system to "vibrant clinical editorial": porcelain and navy with cobalt, aqua, coral and sunshine, one hue per treatment, original SVG illustrations, a three-action mobile dock and a clinic-choice booking sheet. Demo patient content was removed; the build now refuses prices, superlatives and unconsented proof. See `PROJECT_BRIEF.md` and `docs/CLINIC-CONTENT-NEEDED.md`.
+The site is now the V5 "modern Indian smile studio" system (see `PROJECT_BRIEF.md`): six colours used as full fields, Bricolage Grotesque display type, the smile-window motif, and the clinic's real Instagram Reels as a first-class section. Earlier: it moved from a dark black/gold system to "vibrant clinical editorial": porcelain and navy with cobalt, aqua, coral and sunshine, one hue per treatment, original SVG illustrations, a three-action mobile dock and a clinic-choice booking sheet. Demo patient content was removed; the build now refuses prices, superlatives and unconsented proof. See `PROJECT_BRIEF.md` and `docs/CLINIC-CONTENT-NEEDED.md`.
 
 ## August 2026 reputation + Maps pass
 

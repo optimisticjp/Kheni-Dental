@@ -29,8 +29,8 @@ Snapshot prepared 27 August 2026, updated 29 August 2026 (Google counts) and 3 S
 - Combined 1,963, always labelled as a sum across two listings. A live re-check from this environment was not possible (Google serves a script shell), so the clinic-verified values stand.
 
 ### Clinic YouTube channel (verified 3 September 2026)
-- https://www.youtube.com/channel/UCA4ralOJwb8mrttegjyZcEQ ("Kheni Dental & Elite Implant Center"). Public Shorts from this channel are linked in `src/content/videos.ts` and played only after a tap.
-- Instagram @khenielite is clinic-provided and linked, not embedded; its public content could not be verified from this environment.
+- https://www.youtube.com/channel/UCA4ralOJwb8mrttegjyZcEQ ("Kheni Dental & Elite Implant Center", handle @khenidentaleliteimplantcen1300). Re-checked 13 September 2026: 42 public videos. Sixteen Shorts and ten longer videos (Gujarati and Hindi education, a clinic tour, patient clips, three tagged by the clinic as Dr. Jinal's) are listed in `src/content/videos.ts` and played only after a tap.
+- Instagram @khenielite (verified 13 September 2026): a public account, "Kheni Dental & Elite Implant". Five public Reels were opened and checked against Instagram's own page data and are listed in `src/content/instagram.ts` with the clinic's own poster frames saved locally. The site links to each exact Reel and never embeds Instagram's script. Follower and post counts are not published.
 
 ## Public profile snapshot
 

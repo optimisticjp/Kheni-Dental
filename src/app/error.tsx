@@ -14,26 +14,26 @@ import { whatsappUrl } from "@/lib/links";
  */
 export default function Error({ reset }: { error: Error & { digest?: string }; reset: () => void }) {
   return (
-    <section className="hue-coral field relative isolate flex min-h-[70vh] items-center overflow-hidden" style={{ ["--f1" as string]: "var(--coral-tint)", ["--f2" as string]: "var(--sunshine-tint)", ["--f3" as string]: "var(--sky-tint)" }}>
+    <section className="on-coral mood-coral relative isolate flex min-h-[70vh] items-center overflow-hidden bg-coral text-ink">
       <Container width="7xl" className="relative py-14">
-        <p className="t-eyebrow text-coral-text">Something went wrong</p>
+        <p className="t-eyebrow text-coral-deep">Something went wrong</p>
         <h1 className="t-h1 measure-head mt-3">This page did not load properly.</h1>
         <p className="t-stand measure-stand mt-4 text-ink-soft">Nothing you did caused it. Try again, or reach the clinic directly.</p>
         <div className="mt-6 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
-          <button type="button" onClick={reset} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-cobalt px-5 text-[.9375rem] font-semibold text-white">
+          <button type="button" onClick={reset} className="btn btn-ink">
             <RotateCw className="size-4" aria-hidden="true" />
             Try again
           </button>
-          <a href={`tel:${site.primaryPhoneHref}`} data-track="phone_click" data-placement="error_page" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-5 text-[.9375rem] font-semibold ring-1 ring-line">
-            <Phone className="size-4 text-cobalt-deep" aria-hidden="true" />
+          <a href={`tel:${site.primaryPhoneHref}`} data-track="phone_click" data-placement="error_page" className="btn btn-white">
+            <Phone className="size-4 text-ink" aria-hidden="true" />
             {site.primaryPhoneDisplay}
           </a>
-          <a href={whatsappUrl()} target="_blank" rel="noreferrer" data-track="whatsapp_click" data-placement="error_page" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-whatsapp px-5 text-[.9375rem] font-semibold text-white">
+          <a href={whatsappUrl()} target="_blank" rel="noreferrer" data-track="whatsapp_click" data-placement="error_page" className="btn btn-whatsapp">
             <MessageCircle className="size-4" aria-hidden="true" />
             WhatsApp
           </a>
         </div>
-        <Link href="/" className="mt-6 inline-flex min-h-11 items-center text-sm font-semibold text-cobalt-deep">
+        <Link href="/" className="mt-6 inline-flex min-h-11 items-center text-sm font-bold text-ink underline underline-offset-4">
           Back to the homepage
         </Link>
       </Container>

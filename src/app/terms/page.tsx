@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function TermsPage() {
   return (
     <>
-      <PageHero eyebrow="Terms and medical disclaimer" title="Website information is not a diagnosis." highlight="not a diagnosis" copy="This site can help you understand a common dental problem and walk into a consultation better prepared. It cannot tell you what is wrong or which treatment you need. That takes an examination." hue="sky" proof={false} compact />
+      <PageHero eyebrow="Terms and medical disclaimer" title="Website information is not a diagnosis." highlight="not a diagnosis" copy="This site can help you understand a common dental problem and walk into a consultation better prepared. It cannot tell you what is wrong or which treatment you need. That takes an examination." hue="blue" proof={false} compact />
       <section className="py-10 sm:py-14">
         <Container width="4xl" className="prose-kheni">
           <h2>General information only</h2>

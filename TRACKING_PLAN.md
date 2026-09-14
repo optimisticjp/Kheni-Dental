@@ -27,6 +27,9 @@ The consent banner does not appear when GTM is not configured.
 - `international_patient_contact`
 - `review_click`
 - `resource_download`
+- `video_play`
+- `instagram_reel_open`
+- `instagram_profile_click`
 
 ## Healthcare privacy rule
 

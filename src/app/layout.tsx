@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Inter } from "next/font/google";
+import { Bricolage_Grotesque, Instrument_Serif, Inter } from "next/font/google";
 import { Footer } from "@/components/layout/footer";
 import { Navbar } from "@/components/layout/navbar";
 import { BookSheet } from "@/components/kheni/book-sheet";
@@ -10,9 +10,6 @@ import { TrackLinks } from "@/components/tracking/track-links";
 import { StructuredData } from "@/components/tracking/structured-data";
 import { ogImage } from "@/content/photos";
 import { site } from "@/content/site";
-import { DemoNotice } from "@/components/kheni/demo/demo-notice";
-import { QuoteTab } from "@/components/kheni/demo/quote-tab";
-import { demoContentActive } from "@/content/demo";
 // Fails the build if a branch's Place ID drifts or two branches ever share
 // map, phone or listing data.
 import "@/content/__checks__/branch-data.check";
@@ -58,15 +55,25 @@ export const metadata: Metadata = {
 };
 
 /**
- * Fonts, self-hosted at build time via next/font. Fraunces is variable with
- * optical size, SOFT and WONK axes, so one file covers a hero heading and a
- * card title. Inter carries body and interface text.
+ * Fonts, self-hosted at build time via next/font.
+ *
+ *   Bricolage Grotesque  display. Variable, with an optical-size axis, so a
+ *                        hero headline and a card title come from one file.
+ *   Instrument Serif     the one italic word of warmth inside a headline.
+ *   Inter                everything read at length or tapped.
  */
-const fraunces = Fraunces({
+const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
-  axes: ["opsz", "SOFT", "WONK"],
+  axes: ["opsz", "wdth"],
+  variable: "--font-bricolage",
+  display: "swap",
+});
+
+const instrument = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
   style: ["normal", "italic"],
-  variable: "--font-fraunces",
+  variable: "--font-instrument",
   display: "swap",
 });
 
@@ -80,24 +87,22 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  themeColor: "#fffbf6",
+  themeColor: "#1e46f5",
   colorScheme: "light",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${inter.variable}`}>
-      {/* Bottom padding reserves the mobile dock's height plus the phone's safe area. */}
-      <body className="flex min-h-dvh flex-col pb-[calc(4.25rem+env(safe-area-inset-bottom))] md:pb-0">
+    <html lang="en" className={`${bricolage.variable} ${instrument.variable} ${inter.variable}`}>
+      {/* Bottom padding reserves the floating action pill's height plus the phone's safe area. */}
+      <body className="flex min-h-dvh flex-col pb-[calc(5rem+env(safe-area-inset-bottom))] md:pb-0">
         <AnalyticsScripts />
         <StructuredData />
         <TrackLinks />
         <Navbar />
         <main className="flex-1">{children}</main>
-        {demoContentActive && <DemoNotice />}
         <Footer />
         <MobileDock />
-        {demoContentActive && <QuoteTab />}
         <BookSheet />
         <ConsentBanner />
       </body>

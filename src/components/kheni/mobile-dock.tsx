@@ -1,89 +1,50 @@
 "use client";
 
 import Link from "next/link";
-import { CalendarDays, MapPin, MessageCircle, Phone } from "lucide-react";
+import { MapPin, MessageCircle, Phone } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 import { locations, site } from "@/content/site";
 import { bookHref, branchWhatsappUrl, whatsappUrl } from "@/lib/links";
 import { directionsUrl } from "@/lib/maps";
-import { cn } from "@/lib/utils";
 
 /**
- * The mobile dock. Three actions, never five.
+ * The floating action pill. Not a tab bar: one ink pill, inset from the
+ * edges and the safe area, with Book as its blue heart and Call and
+ * WhatsApp as two round buttons beside it.
  *
- *   [ Book Appointment (wide, cobalt) ] [ Call ] [ WhatsApp ]
+ *   ( Book Appointment  ●call  ●whatsapp )
  *
- * On a clinic page the wide slot becomes Directions for that clinic, and
- * Call and WhatsApp follow the same branch, so a patient on the Hirabaug
- * page reaches Hirabaug and never Swastik Plaza.
- *
- * Home and Treatments are not here: the header handles navigation, and
- * the space is worth more to content and conversion than to two links.
+ * On a clinic page Book becomes Directions to that clinic, and Call and
+ * WhatsApp follow the same branch, so a patient on the Hirabaug page
+ * reaches Hirabaug and never Swastik Plaza.
  */
 export function MobileDock() {
   const pathname = usePathname();
   const active = locations.find((location) => pathname.includes(`/locations/${location.slug}`));
 
-  const side =
-    "flex min-h-[3.25rem] flex-col items-center justify-center gap-0.5 rounded-2xl px-2 text-[.7rem] font-semibold leading-none text-ink focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-cobalt";
+  const round = "grid size-12 shrink-0 place-items-center rounded-full focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-butter";
 
   return (
-    <nav
-      aria-label="Quick actions"
-      className="glass fixed inset-x-0 bottom-0 z-40 border-t border-line px-3 pt-2 pb-[calc(.5rem+env(safe-area-inset-bottom))] md:hidden"
-    >
-      <div className="grid grid-cols-[1fr_4.25rem_4.25rem] gap-2">
+    <nav aria-label="Quick actions" className="fixed inset-x-3 bottom-[calc(.75rem+env(safe-area-inset-bottom))] z-40 md:hidden">
+      <div className="mx-auto flex max-w-md items-center gap-1.5 rounded-full bg-ink p-1.5 shadow-[0_18px_40px_-16px_rgba(11,22,51,.7)] ring-1 ring-white/10">
         {active ? (
-          <a
-            href={directionsUrl(active)}
-            target="_blank"
-            rel="noreferrer"
-            data-track="directions_click"
-            data-placement="mobile_dock_location"
-            data-branch={active.slug}
-            className={cn(
-              "flex min-h-[3.25rem] items-center justify-center gap-2 rounded-2xl bg-cobalt text-[.9375rem] font-semibold text-white focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-white",
-            )}
-          >
-            <MapPin className="size-[1.1rem]" aria-hidden="true" />
+          <a href={directionsUrl(active)} target="_blank" rel="noreferrer" data-track="directions_click" data-placement="mobile_dock_location" data-branch={active.slug} className="flex min-h-12 flex-1 items-center justify-center gap-2 rounded-full bg-blue px-4 text-[.95rem] font-bold text-white focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-butter">
+            <MapPin className="size-[1.1rem] text-butter" aria-hidden="true" />
             Directions to {active.displayArea}
           </a>
         ) : (
-          <Link
-            href={bookHref}
-            data-book
-            data-track="appointment_start"
-            data-placement="mobile_dock"
-            className="flex min-h-[3.25rem] items-center justify-center gap-2 rounded-2xl bg-cobalt text-[.9375rem] font-semibold text-white focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-white"
-          >
-            <CalendarDays className="size-[1.1rem]" aria-hidden="true" />
+          <Link href={bookHref} data-book data-track="appointment_start" data-placement="mobile_dock" className="flex min-h-12 flex-1 items-center justify-center gap-2 rounded-full bg-blue px-4 text-[.95rem] font-bold text-white focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-butter">
             Book Appointment
           </Link>
         )}
 
-        <a
-          href={`tel:${active?.phoneHref || site.primaryPhoneHref}`}
-          data-track="phone_click"
-          data-placement="mobile_dock"
-          data-branch={active?.slug}
-          className={cn(side, "bg-white ring-1 ring-inset ring-line-strong")}
-        >
-          <Phone className="size-[1.2rem] text-cobalt" aria-hidden="true" />
-          Call
+        <a href={`tel:${active?.phoneHref || site.primaryPhoneHref}`} data-track="phone_click" data-placement="mobile_dock" data-branch={active?.slug} aria-label={active ? `Call ${active.displayArea}` : "Call the clinic"} className={`${round} bg-white/12 text-white`}>
+          <Phone className="size-5" aria-hidden="true" />
         </a>
 
-        <a
-          href={active ? branchWhatsappUrl(active) : whatsappUrl()}
-          target="_blank"
-          rel="noreferrer"
-          data-track="whatsapp_click"
-          data-placement="mobile_dock"
-          data-branch={active?.slug}
-          className={cn(side, "bg-whatsapp text-white")}
-        >
-          <MessageCircle className="size-[1.2rem]" aria-hidden="true" />
-          WhatsApp
+        <a href={active ? branchWhatsappUrl(active) : whatsappUrl()} target="_blank" rel="noreferrer" data-track="whatsapp_click" data-placement="mobile_dock" data-branch={active?.slug} aria-label="Message on WhatsApp" className={`${round} bg-whatsapp text-white`}>
+          <MessageCircle className="size-5" aria-hidden="true" />
         </a>
       </div>
     </nav>

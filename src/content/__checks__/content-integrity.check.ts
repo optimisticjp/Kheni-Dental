@@ -3,8 +3,8 @@ import { caseResults } from "@/content/cases";
 import { patientStories, videoStories } from "@/content/patient-stories";
 import { implantFaqs, startingPoints, planFactors, comparison, implantProcess, implantHero } from "@/content/implant-center";
 import { resourceCategories } from "@/content/patient-resources";
-import { concerns, doctors, homepageFaqs, locations, site, smileNotes, treatments } from "@/content/site";
-import { demoContentActive } from "@/content/demo";
+import { instagramReels } from "@/content/instagram";
+import { brandLines, concerns, doctors, homepageFaqs, locations, site, treatments } from "@/content/site";
 
 /**
  * Factual-claim audit, enforced at build time.
@@ -21,13 +21,8 @@ import { demoContentActive } from "@/content/demo";
  *
  * Imported by `src/app/layout.tsx`, so it runs on every build.
  *
- * Scope. This audits the *verified* content files, the ones that will still
- * be here when the demo layer is gone. `src/content/demo/` is deliberately
- * exempt: it exists to show the clinic what the patterns it asked about look
- * like, and every claim in it would fail on purpose. What guards that layer
- * instead is the rule at the bottom of this file: demo content and search
- * indexing may never be switched on together. So an invented price or an
- * invented award can be reviewed, and can never be published.
+ * There is no demo or sample-content layer any more. Everything the site
+ * renders is audited here, and an invented figure has nowhere to live.
  */
 
 const FORBIDDEN: { pattern: RegExp; why: string }[] = [
@@ -83,7 +78,8 @@ export function assertContentIntegrity(): void {
   walk("doctors", doctors, errors);
   walk("treatments", treatments, errors);
   walk("concerns", concerns, errors);
-  walk("smileNotes", smileNotes, errors);
+  walk("brandLines", brandLines, errors);
+  walk("instagram", instagramReels.map((r) => ({ title: r.title, summary: r.summary })), errors);
   walk("homepageFaqs", homepageFaqs, errors);
   walk("implantHero", implantHero, errors);
   walk("implantProcess", implantProcess, errors);
@@ -107,6 +103,12 @@ export function assertContentIntegrity(): void {
   for (const v of clinicVideos) {
     if (!/^[A-Za-z0-9_-]{11}$/.test(v.id)) errors.push(`clinic video "${v.title}" has an invalid YouTube id`);
   }
+  // Instagram content must be the clinic's own account, with a real shortcode.
+  for (const r of instagramReels) {
+    if (!/^[A-Za-z0-9_-]{8,14}$/.test(r.shortcode)) errors.push(`instagram reel "${r.title}" has an invalid shortcode`);
+    if (!r.url.startsWith("https://www.instagram.com/")) errors.push(`instagram reel "${r.title}" does not link to instagram.com`);
+    if (r.account !== "khenielite") errors.push(`instagram reel "${r.title}" is not from @khenielite`);
+  }
 
   // The canonical origin must be the www host the apex redirects to.
   if (site.domain !== "https://www.khenidentalcare.com") errors.push(`site.domain must be https://www.khenidentalcare.com, got ${site.domain}`);
@@ -120,21 +122,6 @@ export function assertContentIntegrity(): void {
     if (historic.some((h) => d.name.includes(h))) errors.push(`doctor ${d.name} is from an old flyer, not the current roster`);
   }
   if (doctors.length !== 4) errors.push(`expected 4 doctors on the current roster, found ${doctors.length}`);
-
-  /**
-   * The demo layer and search indexing are mutually exclusive.
-   *
-   * `src/content/demo/` carries invented prices, counts, awards, patient
-   * testimonials and dentist qualifications. It is fine in front of the
-   * clinic and unacceptable in front of a search engine, so the build
-   * refuses the combination rather than relying on anyone to remember.
-   */
-  if (demoContentActive && process.env.NEXT_PUBLIC_ALLOW_INDEXING === "true") {
-    errors.push(
-      "demo content is active while NEXT_PUBLIC_ALLOW_INDEXING is true. " +
-        "Set NEXT_PUBLIC_DEMO_CONTENT=false before enabling indexing, or leave indexing off.",
-    );
-  }
 
   if (errors.length) {
     throw new Error(["", "  Content integrity check failed:", "", ...errors.map((e) => `   - ${e}`), ""].join("\n"));

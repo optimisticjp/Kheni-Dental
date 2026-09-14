@@ -20,11 +20,11 @@ The Next build also runs two build-time guards imported by `src/app/layout.tsx`:
   services; no em dashes; proof (cases, stories, videos) only with consent;
   canonical origin is `https://www.khenidentalcare.com`; four-doctor roster.
 
-## Browser checks (V4)
+## Browser checks (V5)
 
 Run against a local production build (`npm run build && npx next start -p 3100`)
-with the Playwright scripts kept alongside the session (`interactions.mjs`,
-`shoot.mjs`). They cover:
+with the Playwright QA script kept alongside the session (`qa.mjs`, using
+the globally installed Playwright and the pre-installed Chromium). It covers:
 
 - Mobile menu: opens, traps focus, locks body scroll, closes on Escape,
   returns focus to the trigger
@@ -32,8 +32,12 @@ with the Playwright scripts kept alongside the session (`interactions.mjs`,
   Directions and the branch phone on clinic pages
 - Booking sheet: opens from any Book button without navigating, offers both
   clinics plus "not sure", WhatsApp and Call, has focus, closes on Escape
-- Concern finder links, before/after slider (keyboard and label)
+- Instagram: every page links @khenielite, reel cards open the exact Reel
+  in a new tab, posters load from public/images/instagram, and no
+  Instagram script or iframe is ever on the page
 - Videos: no iframe until tap, then the privacy-enhanced YouTube domain
+- Hero reveal disabled under prefers-reduced-motion; FAQ opens by keyboard
+- Form inputs at 16px or more, so iOS does not zoom
 - No horizontal overflow at 320, 360, 375, 390, 430, 768, 820, 834, 1024,
   1280, 1366, 1440, 1536, 1920
 - Canonical, robots.txt (disallow, search crawlers named individually),

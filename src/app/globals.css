@@ -1,456 +1,344 @@
 @import "tailwindcss";
 
-/* ── Vibrant clinical editorial ─────────────────────────────────────────
-   Foundation: porcelain warm white and clean white, with deep navy ink.
-   Action: one confident cobalt. Freshness: aqua. Warmth: coral. Joy: a
-   sunshine highlight. Premium implant detail: a little muted gold.
-   Everything vivid is an accent; most of every screen stays light.
+/* ── Kheni: modern Indian smile studio ─────────────────────────────────
+   Six colours and white. Colour is used as space: whole sections are blue,
+   coral, butter or aqua, and type sits directly on them. Nothing here is a
+   pale chip.
 
-   Every hue below was contrast-tested (scratchpad/tools/contrast.mjs):
-     -text  passes 4.5:1 on porcelain, white and its own -tint
-     ink    passes 4.5:1 on every -fill except cobalt, navy and violet,
-            which take white text instead (see --h-on-fill)
-     hue text is never placed on a -soft shade. Ink is. */
+   Every pairing below was contrast-tested (scratchpad/contrast.mjs):
+     white on blue        6.5   ink on aqua    9.8   ink on coral   6.3
+     ink on butter       12.4   ink on cream  16.2   ink-soft/cream 6.7
+     blue-deep on cream   7.9   aqua-deep/cream 4.6  coral-deep/cream 4.5
+   Butter on blue is 4.5, so it is used for display type only. */
 :root {
-  /* Shared easing for the demo layer's CSS transitions. */
-  --ease-kheni: cubic-bezier(.16, 1, .3, 1);
-  --radius: 1rem;
+  --ease: cubic-bezier(.2, .8, .2, 1);
 
-  --porcelain: #fffbf6;
-  --surface: #ffffff;
-  --ink: #12224a;
-  --ink-soft: #4e5a73;
-  --line: rgba(18, 34, 74, 0.1);
-  --line-strong: rgba(18, 34, 74, 0.18);
+  --ink: #0b1633;
+  --ink-soft: #4a5570;
+  --ink-2: #16234d;
 
-  --cobalt: #1f5bd8;
-  --cobalt-deep: #1a4fbf;
-  --cobalt-tint: #eaf1ff;
-  --cobalt-soft: #cfe0ff;
+  --blue: #1e46f5;
+  --blue-deep: #1636c9;
+  --blue-tint: #e8edff;
 
-  --navy-tint: #e8edf8;
-  --navy-soft: #c9d3ea;
+  --aqua: #22d6c8;
+  --aqua-deep: #0a6d66;
+  --aqua-tint: #dcf7f4;
 
-  --teal: #10b2ac;
-  --teal-text: #0a716f;
-  --teal-tint: #e3f7f5;
-  --teal-soft: #b9ede9;
+  --coral: #ff6a45;
+  --coral-deep: #c2461f;
+  --coral-tint: #ffe9e1;
 
-  --coral: #f26b5b;
-  --coral-text: #bf3a26;
-  --coral-tint: #ffede8;
-  --coral-soft: #ffc9be;
+  --butter: #ffd24a;
+  --butter-deep: #7a5600;
+  --butter-tint: #fff4cc;
 
-  --sunshine: #ffc844;
-  --sunshine-text: #7a5200;
-  --sunshine-tint: #fff6d6;
-  --sunshine-soft: #ffe79a;
+  --cream: #faf3e7;
+  --cream-2: #f3e9d6;
+  --white: #ffffff;
 
-  --gold: #c99a45;
-  --gold-text: #8b6428;
-  --gold-tint: #faf1de;
-  --gold-soft: #efd9a6;
-
-  --amber: #ffb547;
-  --amber-text: #8a5400;
-  --amber-tint: #fff3df;
-  --amber-soft: #ffdda8;
-
-  --violet: #7c5ce6;
-  --violet-text: #5b3fc4;
-  --violet-tint: #f0ecff;
-  --violet-soft: #d6ccff;
-
-  --mint: #5fd3b2;
-  --mint-text: #0f7a5c;
-  --mint-tint: #e4f8f1;
-  --mint-soft: #b8eedd;
-
-  --green: #3fbf7f;
-  --green-text: #157a46;
-  --green-tint: #e4f6ec;
-  --green-soft: #b6e9cc;
-
-  --lavender: #b4a6f0;
-  --lavender-text: #5a4aa8;
-  --lavender-tint: #f0edfb;
-  --lavender-soft: #d9d2f8;
-
-  --sky: #62b6f7;
-  --sky-text: #1a63a8;
-  --sky-tint: #e7f3ff;
-  --sky-soft: #bfe0ff;
-
+  --line: rgba(11, 22, 51, .12);
+  --line-strong: rgba(11, 22, 51, .24);
   --whatsapp: #128c4e;
 
-  /* Legacy names some shared primitives still read. */
-  --background: var(--porcelain);
+  /* Mood defaults (blue). A .mood-* class on any ancestor swaps them. */
+  --m-fill: var(--blue);
+  --m-on: #ffffff;
+  --m-text: var(--blue-deep);
+  --m-tint: var(--blue-tint);
+
+  /* Diagram palette. The anatomy drawings in src/components/kheni/art use
+     a wider set of soft tints so eight parts of a tooth stay tellable
+     apart. They are derived from the six brand colours and only the SVGs
+     read them. */
+  --coral-soft: #ffc9b6;
+  --sky-soft: #cfe0ff;
+  --sky-text: var(--blue-deep);
+  --sunshine-soft: #ffe79a;
+  --sunshine: var(--butter);
+  --amber: #f5a524;
+  --amber-soft: #ffdfa8;
+  --amber-tint: #fff3df;
+  --mint-soft: #b8eedd;
+  --mint-text: var(--aqua-deep);
+  --gold: #c99a45;
+  --gold-soft: #efd9a6;
+  --cobalt: var(--blue);
+  --cobalt-soft: #c3d2ff;
+  --cobalt-tint: var(--blue-tint);
+  --teal: var(--aqua);
+  --teal-soft: #b6e8e3;
+  --teal-text: var(--aqua-deep);
+  --violet: #6b5ce6;
+  --violet-soft: #d6ccff;
+  --lavender-soft: #ddd6f7;
+  --lavender-text: #5a4aa8;
+
+  /* Legacy names read by a couple of primitives. */
+  --background: var(--cream);
   --foreground: var(--ink);
-  --card: var(--surface);
-  --card-foreground: var(--ink);
-  --muted-foreground: var(--ink-soft);
-  --border: var(--line);
-  --input: var(--line-strong);
-  --ring: var(--cobalt);
-  --primary: var(--cobalt);
+  --primary: var(--blue);
   --primary-foreground: #ffffff;
-  --secondary: var(--cobalt-tint);
-  --secondary-foreground: var(--ink);
-  --accent: var(--sunshine-tint);
-  --accent-foreground: var(--ink);
-  --destructive: #b42318;
-  --destructive-foreground: #ffffff;
+  --ring: var(--blue);
+  --border: var(--line);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-
-  --color-porcelain: var(--porcelain);
-  --color-surface: var(--surface);
   --color-ink: var(--ink);
   --color-ink-soft: var(--ink-soft);
+  --color-ink-2: var(--ink-2);
+  --color-blue: var(--blue);
+  --color-blue-deep: var(--blue-deep);
+  --color-blue-tint: var(--blue-tint);
+  --color-aqua: var(--aqua);
+  --color-aqua-deep: var(--aqua-deep);
+  --color-aqua-tint: var(--aqua-tint);
+  --color-coral: var(--coral);
+  --color-coral-deep: var(--coral-deep);
+  --color-coral-tint: var(--coral-tint);
+  --color-butter: var(--butter);
+  --color-butter-deep: var(--butter-deep);
+  --color-butter-tint: var(--butter-tint);
+  --color-cream: var(--cream);
+  --color-cream-2: var(--cream-2);
   --color-line: var(--line);
   --color-line-strong: var(--line-strong);
-  --color-cobalt: var(--cobalt);
-  --color-cobalt-deep: var(--cobalt-deep);
-  --color-cobalt-tint: var(--cobalt-tint);
-  --color-cobalt-soft: var(--cobalt-soft);
-  --color-navy-tint: var(--navy-tint);
-  --color-navy-soft: var(--navy-soft);
-  --color-teal: var(--teal);
-  --color-teal-text: var(--teal-text);
-  --color-teal-tint: var(--teal-tint);
-  --color-teal-soft: var(--teal-soft);
-  --color-coral: var(--coral);
-  --color-coral-text: var(--coral-text);
-  --color-coral-tint: var(--coral-tint);
-  --color-coral-soft: var(--coral-soft);
-  --color-sunshine: var(--sunshine);
-  --color-sunshine-text: var(--sunshine-text);
-  --color-sunshine-tint: var(--sunshine-tint);
-  --color-sunshine-soft: var(--sunshine-soft);
-  --color-gold: var(--gold);
-  --color-gold-text: var(--gold-text);
-  --color-gold-tint: var(--gold-tint);
-  --color-gold-soft: var(--gold-soft);
-  --color-amber: var(--amber);
-  --color-amber-text: var(--amber-text);
-  --color-amber-tint: var(--amber-tint);
-  --color-violet: var(--violet);
-  --color-violet-text: var(--violet-text);
-  --color-violet-tint: var(--violet-tint);
-  --color-mint: var(--mint);
-  --color-mint-text: var(--mint-text);
-  --color-mint-tint: var(--mint-tint);
-  --color-green: var(--green);
-  --color-green-text: var(--green-text);
-  --color-green-tint: var(--green-tint);
-  --color-lavender: var(--lavender);
-  --color-lavender-text: var(--lavender-text);
-  --color-lavender-tint: var(--lavender-tint);
-  --color-sky: var(--sky);
-  --color-sky-text: var(--sky-text);
-  --color-sky-tint: var(--sky-tint);
   --color-whatsapp: var(--whatsapp);
 
-  /* Hue-relative colours. Set per element by a .hue-* class below. */
-  --color-h-fill: var(--h-fill);
-  --color-h-text: var(--h-text);
-  --color-h-tint: var(--h-tint);
-  --color-h-soft: var(--h-soft);
-  --color-h-on-fill: var(--h-on-fill);
+  --color-m-fill: var(--m-fill);
+  --color-m-on: var(--m-on);
+  --color-m-text: var(--m-text);
+  --color-m-tint: var(--m-tint);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-ring: var(--ring);
+  --color-border: var(--border);
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-serif: var(--font-fraunces), Georgia, "Times New Roman", ui-serif, serif;
-  --radius-sm: calc(var(--radius) - 8px);
-  --radius-md: calc(var(--radius) - 4px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 8px);
+  --font-display: var(--font-bricolage), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-accent: var(--font-instrument), Georgia, "Times New Roman", serif;
 }
 
-/* ── Hue classes ───────────────────────────────────────────────────────
-   One class gives a component its whole colour personality. Components
-   read the h-* colours and never a named hue, so a treatment can change
-   colour in site.ts without touching a component. */
-.hue-cobalt   { --h-fill: var(--cobalt);   --h-text: var(--cobalt-deep);   --h-tint: var(--cobalt-tint);   --h-soft: var(--cobalt-soft);   --h-on-fill: #ffffff; }
-.hue-navy     { --h-fill: var(--ink);      --h-text: var(--ink);           --h-tint: var(--navy-tint);     --h-soft: var(--navy-soft);     --h-on-fill: #ffffff; }
-.hue-teal     { --h-fill: var(--teal);     --h-text: var(--teal-text);     --h-tint: var(--teal-tint);     --h-soft: var(--teal-soft);     --h-on-fill: var(--ink); }
-.hue-coral    { --h-fill: var(--coral);    --h-text: var(--coral-text);    --h-tint: var(--coral-tint);    --h-soft: var(--coral-soft);    --h-on-fill: var(--ink); }
-.hue-amber    { --h-fill: var(--amber);    --h-text: var(--amber-text);    --h-tint: var(--amber-tint);    --h-soft: var(--amber-soft);    --h-on-fill: var(--ink); }
-.hue-violet   { --h-fill: var(--violet);   --h-text: var(--violet-text);   --h-tint: var(--violet-tint);   --h-soft: var(--violet-soft);   --h-on-fill: #ffffff; }
-.hue-mint     { --h-fill: var(--mint);     --h-text: var(--mint-text);     --h-tint: var(--mint-tint);     --h-soft: var(--mint-soft);     --h-on-fill: var(--ink); }
-.hue-green    { --h-fill: var(--green);    --h-text: var(--green-text);    --h-tint: var(--green-tint);    --h-soft: var(--green-soft);    --h-on-fill: var(--ink); }
-.hue-lavender { --h-fill: var(--lavender); --h-text: var(--lavender-text); --h-tint: var(--lavender-tint); --h-soft: var(--lavender-soft); --h-on-fill: var(--ink); }
-.hue-sky      { --h-fill: var(--sky);      --h-text: var(--sky-text);      --h-tint: var(--sky-tint);      --h-soft: var(--sky-soft);      --h-on-fill: var(--ink); }
-.hue-gold     { --h-fill: var(--gold);     --h-text: var(--gold-text);     --h-tint: var(--gold-tint);     --h-soft: var(--gold-soft);     --h-on-fill: var(--ink); }
-.hue-sunshine { --h-fill: var(--sunshine); --h-text: var(--sunshine-text); --h-tint: var(--sunshine-tint); --h-soft: var(--sunshine-soft); --h-on-fill: var(--ink); }
+/* ── Moods ─────────────────────────────────────────────────────────────
+   Five moods, not twelve hues. A treatment, a doctor or a clinic owns one
+   and every component reads the m-* colours. */
+.mood-blue   { --m-fill: var(--blue);   --m-on: #ffffff;    --m-text: var(--blue-deep);   --m-tint: var(--blue-tint);   --m-soft: #c3d2ff; }
+.mood-aqua   { --m-fill: var(--aqua);   --m-on: var(--ink); --m-text: var(--aqua-deep);   --m-tint: var(--aqua-tint);   --m-soft: #b6e8e3; }
+.mood-coral  { --m-fill: var(--coral);  --m-on: var(--ink); --m-text: var(--coral-deep);  --m-tint: var(--coral-tint);  --m-soft: #ffc9b6; }
+.mood-butter { --m-fill: var(--butter); --m-on: var(--ink); --m-text: var(--butter-deep); --m-tint: var(--butter-tint); --m-soft: #ffe79a; }
+.mood-ink    { --m-fill: var(--ink);    --m-on: #ffffff;    --m-text: var(--ink);         --m-tint: var(--cream-2);     --m-soft: #c9d0e3; }
+/* The illustrations read the older h-* names; they follow the mood. */
+:root, .mood-blue, .mood-aqua, .mood-coral, .mood-butter, .mood-ink { --h-fill: var(--m-fill); --h-text: var(--m-text); --h-tint: var(--m-tint); --h-soft: var(--m-soft, var(--blue-tint)); }
 
 @layer base {
-  * { border-color: var(--color-border); }
+  * { border-color: var(--line); }
   html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-behavior: smooth; }
   body {
-    background: var(--porcelain);
+    background: var(--cream);
     color: var(--ink);
     font-family: var(--font-sans);
     font-size: 1rem;
-    line-height: 1.6;
+    line-height: 1.55;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
-  ::selection { background: var(--sunshine); color: var(--ink); }
-  :focus-visible { outline: 3px solid var(--cobalt); outline-offset: 3px; border-radius: 4px; }
+  ::selection { background: var(--butter); color: var(--ink); }
+  :focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; border-radius: 6px; }
+  .on-dark :focus-visible, .on-blue :focus-visible { outline-color: var(--butter); }
   a, button { -webkit-tap-highlight-color: transparent; }
-  /* Native dialog reset. */
   dialog { color: inherit; }
-  dialog::backdrop { background: rgba(18, 34, 74, 0.45); }
+  dialog::backdrop { background: rgba(11, 22, 51, .55); }
+  /* Inputs at 16px so iOS does not zoom. */
+  input, select, textarea { font-size: 1rem; }
 }
 
-/* ── Type ──────────────────────────────────────────────────────────────
-   Fraunces for display roles, softened (SOFT 60) so it reads warm rather
-   than sharp; Inter for everything read at length or tapped. Sizes are
-   fluid and deliberately compact on phones: a hero heading takes two or
-   three lines at 390px, never a screen. */
-.font-serif, .t-display, .t-h1, .t-h2, .t-h3, .t-card, .t-proof, .t-note {
-  font-family: var(--font-serif);
-  font-variation-settings: "SOFT" 60, "WONK" 0;
+@layer components {
+/* ── Type ───────────────────────────────────────────────────────────────
+   Bricolage Grotesque for everything that shouts, set heavy and tight so a
+   headline reads as a shape. Instrument Serif italic for one word of
+   warmth inside it. Inter for everything read at length. */
+.t-hero, .t-h1, .t-h2, .t-h3, .t-num, .t-card, .font-display {
+  font-family: var(--font-display);
+  font-weight: 800;
   font-optical-sizing: auto;
-  font-weight: 500;
+  letter-spacing: -.035em;
+  text-wrap: balance;
 }
-.t-display, .t-h1, .t-h2, .t-h3, .t-card, .t-proof, .t-note { text-wrap: balance; }
+.t-hero { font-size: clamp(2.9rem, 1.6rem + 6.4vw, 6.4rem); line-height: .94; letter-spacing: -.045em; }
+.t-h1   { font-size: clamp(2.35rem, 1.5rem + 3.9vw, 4.4rem); line-height: .98; letter-spacing: -.04em; }
+.t-h2   { font-size: clamp(1.9rem, 1.3rem + 2.6vw, 3.1rem);  line-height: 1.02; }
+.t-h3   { font-size: clamp(1.35rem, 1.15rem + .9vw, 1.7rem); line-height: 1.1; letter-spacing: -.025em; }
+.t-card { font-size: 1.25rem; line-height: 1.12; letter-spacing: -.025em; }
+.t-num  { font-size: clamp(3.4rem, 2rem + 7vw, 7.5rem); line-height: .9; letter-spacing: -.05em; font-variant-numeric: tabular-nums; }
 
-.t-display { font-size: clamp(2.375rem, 1.5rem + 3.9vw, 4rem);  line-height: 1.02; letter-spacing: -.035em; }
-.t-h1      { font-size: clamp(2.125rem, 1.4rem + 3vw, 3.25rem); line-height: 1.05; letter-spacing: -.03em; }
-.t-h2      { font-size: clamp(1.75rem, 1.25rem + 2vw, 2.5rem);  line-height: 1.1;  letter-spacing: -.028em; }
-.t-h3      { font-size: clamp(1.25rem, 1.05rem + .8vw, 1.5rem); line-height: 1.2;  letter-spacing: -.02em; }
-.t-card    { font-size: 1.1875rem; line-height: 1.25; letter-spacing: -.018em; }
-.t-proof   { font-size: clamp(2rem, 1.4rem + 2.6vw, 3rem); line-height: .95; letter-spacing: -.035em; font-weight: 600; }
-.t-note    { font-size: clamp(1.5rem, 1rem + 2.4vw, 2.75rem); line-height: 1.12; letter-spacing: -.025em; }
+.t-lead  { font-size: clamp(1.0625rem, 1rem + .35vw, 1.25rem); line-height: 1.5; text-wrap: pretty; }
+.t-body  { font-size: 1rem; line-height: 1.6; text-wrap: pretty; }
+.t-small { font-size: .875rem; line-height: 1.5; text-wrap: pretty; }
+.t-eyebrow { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; line-height: 1.3; }
+.t-label { font-size: .8125rem; font-weight: 600; line-height: 1.4; }
 
-.t-stand   { font-size: clamp(1.0625rem, 1rem + .3vw, 1.1875rem); line-height: 1.55; text-wrap: pretty; }
-.t-body    { font-size: 1rem; line-height: 1.6; text-wrap: pretty; }
-.t-small   { font-size: .875rem; line-height: 1.5; text-wrap: pretty; }
-.t-eyebrow { font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; line-height: 1.3; }
-.t-label   { font-size: .8125rem; font-weight: 600; line-height: 1.4; }
-
-.measure-display { max-width: 16ch; }
-.measure-head    { max-width: 22ch; }
-.measure-body    { max-width: 60ch; }
-.measure-stand   { max-width: 46ch; }
-.measure-narrow  { max-width: 38ch; }
-
-/* The one highlighted word in a heading or Smile Note. Italic Fraunces in
-   the section's hue, with a soft sunshine marker behind it. */
+/* The warm word. Instrument Serif italic, a touch larger, in the mood colour. */
 .hl {
+  font-family: var(--font-accent);
   font-style: italic;
-  font-variation-settings: "SOFT" 80, "WONK" 1;
-  color: var(--h-text, var(--cobalt-deep));
-  background: linear-gradient(transparent 62%, var(--h-soft, var(--sunshine-soft)) 62%, var(--h-soft, var(--sunshine-soft)) 92%, transparent 92%);
-  padding: 0 .06em;
-  border-radius: .2em;
+  font-weight: 400;
+  letter-spacing: -.01em;
+  font-size: 1.06em;
+  color: var(--hl, var(--m-text));
+}
+.on-dark .hl, .on-blue .hl { --hl: var(--butter); }
+.on-coral .hl, .on-aqua .hl, .on-butter .hl { --hl: var(--ink); }
+
+/* Secondary text that stays readable on every field. */
+.muted { color: var(--ink-soft); }
+.on-dark .muted, .on-blue .muted { color: rgba(255, 255, 255, .8); }
+.on-coral .muted, .on-aqua .muted, .on-butter .muted { color: rgba(11, 22, 51, .82); }
+.on-dark .t-eyebrow, .on-blue .t-eyebrow { color: var(--butter); }
+.on-coral .t-eyebrow, .on-aqua .t-eyebrow, .on-butter .t-eyebrow { color: var(--ink); }
+
+.measure-hero { max-width: 12ch; }
+.measure-head { max-width: 18ch; }
+.measure-lead { max-width: 44ch; }
+.measure-body { max-width: 62ch; }
+
+/* ── The smile window ──────────────────────────────────────────────────
+   The Kheni motif. A frame with a flat top and a fully rounded bottom, the
+   silhouette of a crown and the curve of a smile. Its mirror, the arch,
+   carries the K in the mark. */
+.smile     { border-radius: 1.5rem 1.5rem 999px 999px; }
+.smile-sm  { border-radius: 1rem 1rem 999px 999px; }
+.smile-lg  { border-radius: 2rem 2rem 999px 999px; }
+.arch      { border-radius: 999px 999px 1.5rem 1.5rem; }
+.arch-sm   { border-radius: 999px 999px 1rem 1rem; }
+
+/* A concave smile curve cut into the bottom of a colour field, so the next
+   section rises into it. Set on the field; the curve takes the next
+   section's colour through --curve. */
+.smile-cut { position: relative; }
+.smile-cut::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -1px;
+  height: clamp(1.75rem, 6vw, 4.5rem);
+  background: var(--curve, var(--cream));
+  clip-path: ellipse(58% 100% at 50% 100%);
+  pointer-events: none;
 }
 
-/* ── Surfaces and motion ───────────────────────────────────────────── */
-
-/* Frosted header after scroll, mobile sheet, chips on media. */
-.glass {
-  background: rgba(255, 251, 246, 0.82);
-  -webkit-backdrop-filter: saturate(160%) blur(14px);
-  backdrop-filter: saturate(160%) blur(14px);
+/* ── Buttons ─────────────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .6rem;
+  min-height: 3.25rem; padding: 0 1.35rem 0 1.5rem;
+  border-radius: 999px;
+  font-weight: 700; font-size: .95rem; letter-spacing: -.005em; line-height: 1.2; text-align: center;
+  padding-top: .6rem; padding-bottom: .6rem;
+  transition: transform .25s var(--ease), background-color .25s var(--ease), color .25s var(--ease), border-color .25s var(--ease), box-shadow .25s var(--ease);
 }
-
-/* Soft colour field behind a hero or a Smile Note. Two blurred blobs that
-   drift very slowly. Static under reduced motion. */
-.field {
-  background:
-    radial-gradient(60% 55% at 12% 18%, var(--f1, var(--cobalt-tint)) 0, transparent 70%),
-    radial-gradient(48% 50% at 88% 12%, var(--f2, var(--coral-tint)) 0, transparent 68%),
-    radial-gradient(50% 55% at 70% 95%, var(--f3, var(--sunshine-tint)) 0, transparent 70%),
-    var(--porcelain);
-  background-size: 140% 140%;
-  animation: field-drift 22s ease-in-out infinite alternate;
+.btn:active { transform: scale(.975); }
+.btn .arrow {
+  display: grid; place-items: center;
+  width: 1.75rem; height: 1.75rem; margin-right: -.55rem;
+  border-radius: 999px;
+  background: var(--arrow-bg, rgba(255,255,255,.18));
+  color: var(--arrow-fg, currentColor);
+  transition: transform .3s var(--ease), background-color .3s var(--ease);
 }
-@keyframes field-drift {
-  from { background-position: 0% 0%; }
-  to   { background-position: 100% 60%; }
-}
+.btn .arrow svg { width: .95rem; height: .95rem; transition: transform .3s var(--ease); }
+.btn:hover .arrow svg, .btn:focus-visible .arrow svg { transform: translateX(3px); }
+.btn:hover .arrow { background: var(--arrow-bg-hover, rgba(255,255,255,.28)); }
 
-/* Dotted paper texture for editorial panels. Inline SVG, no request. */
-.dots {
-  background-image: radial-gradient(rgba(18, 34, 74, 0.09) 1px, transparent 1.2px);
-  background-size: 18px 18px;
-}
+.btn-primary  { background: var(--blue); color: #fff; box-shadow: 0 12px 28px -14px rgba(30,70,245,.75); }
+.btn-primary:hover { background: var(--blue-deep); }
+.btn-butter   { background: var(--butter); color: var(--ink); --arrow-bg: var(--ink); --arrow-fg: var(--butter); --arrow-bg-hover: var(--ink-2); }
+.btn-butter:hover { background: #ffdb6b; }
+.btn-ink      { background: var(--ink); color: #fff; --arrow-bg: var(--butter); --arrow-fg: var(--ink); --arrow-bg-hover: #ffdb6b; }
+.btn-ink:hover { background: var(--ink-2); }
+.btn-white    { background: #fff; color: var(--ink); --arrow-bg: var(--blue); --arrow-fg: #fff; --arrow-bg-hover: var(--blue-deep); box-shadow: 0 10px 24px -16px rgba(11,22,51,.5); }
+.btn-whatsapp { background: var(--whatsapp); color: #fff; --arrow-bg: rgba(255,255,255,.18); }
+.btn-whatsapp:hover { background: #0f7a44; }
+.btn-outline  { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 2px var(--ink); --arrow-bg: var(--ink); --arrow-fg: #fff; }
+.btn-outline:hover { background: var(--ink); color: #fff; --arrow-bg: var(--butter); --arrow-fg: var(--ink); }
+.btn-outline-light { background: transparent; color: #fff; box-shadow: inset 0 0 0 2px rgba(255,255,255,.7); --arrow-bg: rgba(255,255,255,.15); }
+.btn-outline-light:hover { background: rgba(255,255,255,.1); }
+.btn-lg { min-height: 3.6rem; padding: 0 1.5rem 0 1.75rem; font-size: 1.02rem; }
+.btn-lg .arrow { width: 2rem; height: 2rem; }
+.btn-sm { min-height: 2.6rem; padding: 0 1rem 0 1.1rem; font-size: .85rem; gap: .45rem; }
+.btn-sm .arrow { width: 1.4rem; height: 1.4rem; margin-right: -.35rem; }
+.btn-sm .arrow svg { width: .8rem; height: .8rem; }
 
-/* CTA arrow travel. */
-.cta-arrow { transition: transform .3s cubic-bezier(.16, 1, .3, 1); }
-a:hover .cta-arrow, button:hover .cta-arrow,
-a:focus-visible .cta-arrow, button:focus-visible .cta-arrow { transform: translateX(4px); }
+/* Text link with a circle arrow. */
+.link-arrow { display: inline-flex; align-items: center; gap: .55rem; min-height: 2.75rem; font-weight: 700; font-size: .95rem; }
+.link-arrow .arrow { display: grid; place-items: center; width: 1.75rem; height: 1.75rem; border-radius: 999px; background: var(--arrow-bg, var(--ink)); color: var(--arrow-fg, #fff); transition: transform .3s var(--ease); }
+.link-arrow .arrow svg { width: .9rem; height: .9rem; }
+.link-arrow:hover .arrow { transform: translateX(4px); }
+
+/* ── Surfaces, rails, motion ──────────────────────────────────────────── */
+.glass { background: rgba(250, 243, 231, .86); -webkit-backdrop-filter: saturate(160%) blur(14px); backdrop-filter: saturate(160%) blur(14px); }
+
+.rail {
+  display: flex; gap: .75rem; overflow-x: auto; overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory; scroll-padding-inline: 1rem;
+  -ms-overflow-style: none; scrollbar-width: none;
+  padding-bottom: .25rem;
+}
+.rail::-webkit-scrollbar { display: none; }
+.rail > * { scroll-snap-align: start; flex: 0 0 auto; }
+
+/* Photograph reveal: a smile window opening. Once, on load. */
+
+.reveal-smile { animation: unmask .9s var(--ease) both; }
+
+.rise { animation: rise .6s var(--ease) both; }
+.rise-2 { animation: rise .6s var(--ease) .12s both; }
+.rise-3 { animation: rise .6s var(--ease) .24s both; }
 
 /* Card lift on pointer devices only. */
 @media (hover: hover) {
-  .lift { transition: transform .35s cubic-bezier(.16, 1, .3, 1), box-shadow .35s cubic-bezier(.16, 1, .3, 1); }
-  .lift:hover { transform: translateY(-3px); box-shadow: 0 18px 40px -22px rgba(18, 34, 74, .35); }
+  .lift { transition: transform .35s var(--ease), box-shadow .35s var(--ease); }
+  .lift:hover { transform: translateY(-4px); }
+  .zoom img, .zoom .zoom-target { transition: transform .6s var(--ease); }
+  .zoom:hover img, .zoom:hover .zoom-target { transform: scale(1.04); }
 }
 
-.ease-kheni { transition-timing-function: cubic-bezier(.16, 1, .3, 1); }
-
-/* Touch rails: snap without a visible scrollbar. */
-.rail-snap {
-  scroll-snap-type: x mandatory;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  overscroll-behavior-x: contain;
-}
-.rail-snap::-webkit-scrollbar { display: none; }
-.rail-snap > * { scroll-snap-align: start; }
-
-.edge-fade {
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 1rem, #000 calc(100% - 2rem), transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 1rem, #000 calc(100% - 2rem), transparent);
-}
-
-/* Anchored headings clear the sticky header. */
 .anchor { scroll-margin-top: 5.5rem; }
 
-/* Bottom sheet. */
-.sheet[open] { animation: sheet-in .38s cubic-bezier(.16, 1, .3, 1); }
-@keyframes sheet-in { from { transform: translateY(24px); opacity: 0; } to { transform: none; opacity: 1; } }
+/* Bottom sheet and full-screen menu. */
+.sheet[open] { animation: sheet-in .38s var(--ease); }
 
-/* Mobile menu panel. */
-.menu-in { animation: menu-in .3s cubic-bezier(.16, 1, .3, 1); }
-@keyframes menu-in { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+.menu-in { animation: menu-in .35s var(--ease); }
+
 
 /* Before/after slider. --split is driven by the range input. */
 .ba { --split: 50%; }
 .ba-after { clip-path: inset(0 0 0 var(--split)); }
 .ba-handle { left: var(--split); }
-.ba-range {
-  appearance: none;
-  -webkit-appearance: none;
-  background: transparent;
-  cursor: ew-resize;
-}
+.ba-range { appearance: none; -webkit-appearance: none; background: transparent; cursor: ew-resize; }
 .ba-range::-webkit-slider-thumb { -webkit-appearance: none; width: 44px; height: 100%; background: transparent; }
 .ba-range::-moz-range-thumb { width: 44px; height: 100%; background: transparent; border: 0; }
 .ba-range:focus-visible { outline: none; }
-.ba:has(.ba-range:focus-visible) .ba-knob { outline: 3px solid var(--cobalt); outline-offset: 3px; }
+.ba:has(.ba-range:focus-visible) .ba-knob { outline: 3px solid var(--blue); outline-offset: 3px; }
 
-.prose-kheni h2 { font-family: var(--font-serif); font-variation-settings: "SOFT" 60; font-weight: 500; font-size: clamp(1.5rem, 1.2rem + 1.4vw, 2rem); letter-spacing: -.025em; line-height: 1.15; margin-top: 2.25rem; }
+/* Long-form pages. */
+.prose-kheni h2 { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.5rem, 1.2rem + 1.4vw, 2rem); letter-spacing: -.03em; line-height: 1.1; margin-top: 2.25rem; }
 .prose-kheni p, .prose-kheni li { color: var(--ink-soft); line-height: 1.65; margin-top: .85rem; }
 .prose-kheni ul { padding-left: 1.2rem; list-style: disc; }
-.prose-kheni a { color: var(--cobalt-deep); text-decoration: underline; text-underline-offset: 3px; }
+.prose-kheni a { color: var(--blue-deep); text-decoration: underline; text-underline-offset: 3px; }
 
-/* ── Demo layer ───────────────────────────────────────────────────────────
-   Styles for the marketing patterns in src/components/kheni/demo. They live
-   here rather than inline because each one needs either a keyframe, a
-   container query or a state selector that a utility class cannot express.
-   Delete this block with the demo layer.                                   */
+/* Huge wordmark in the footer. */
+.wordmark { font-family: var(--font-display); font-weight: 800; letter-spacing: -.06em; line-height: .8; font-size: clamp(4.5rem, 24vw, 19rem); }
 
-/* Claim marquee. One animation on a duplicated track. The rail is twice the
-   content width, so translating it by half loops seamlessly.               */
-.marquee-rail { width: max-content; animation: marquee-scroll 42s linear infinite; }
-.marquee:hover .marquee-rail, .marquee:focus-within .marquee-rail { animation-play-state: paused; }
-.marquee-track { display: flex; align-items: center; }
-@keyframes marquee-scroll { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-50%, 0, 0); } }
 
-/* Horizontal expanding accordion.
-   Phone and tablet: a scroll rail of cards that grow when opened.
-   Desktop: fixed height, collapsed panels become vertical spines and the
-   open one takes the rest of the row.                                      */
-.hacc { display: flex; gap: .5rem; overflow-x: auto; padding-bottom: .5rem; }
-.hacc-panel {
-  flex: 0 0 auto;
-  width: 4.25rem;
-  min-width: 4.25rem;
-  border: 1px solid var(--line);
-  border-radius: 1.25rem;
-  overflow: hidden;
-  display: flex;
-  transition: width .45s var(--ease-kheni), min-width .45s var(--ease-kheni), background-color .3s var(--ease-kheni);
 }
-.hacc-panel.hacc-open { width: min(78vw, 22rem); min-width: min(78vw, 22rem); }
-.hacc-spine { flex: 0 0 4.25rem; display: grid; place-items: center; padding: 1rem 0; }
-.hacc-spine-inner { display: flex; flex-direction: column; align-items: center; gap: .75rem; }
-.hacc-label {
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-  transform: rotate(180deg);
-  font-size: .8125rem;
-  font-weight: 600;
-  letter-spacing: .01em;
-  white-space: nowrap;
-  color: var(--ink);
-}
-.hacc-body { flex: 1 1 auto; min-width: 0; }
-/* The inner width is pinned to (open panel width - spine width) so the copy
-   does not reflow line by line while the panel animates open. Anything wider
-   is clipped by the panel's overflow. */
-.hacc-body-inner { padding: 1.25rem 1.25rem 1.25rem .25rem; width: calc(min(78vw, 22rem) - 4.25rem); }
-
-@media (min-width: 1024px) {
-  /* Fourteen spines have to fit a 1216px column and still leave the open
-     panel room to read. At 4.5rem each they did not, and the open panel was
-     squeezed to 100px of clipped text. 3.25rem spines leave it ~400px, and
-     the rail stays scrollable so nothing can escape the container. */
-  .hacc { height: 25rem; gap: .375rem; }
-  .hacc-panel { width: 3.25rem; min-width: 3.25rem; height: 100%; }
-  .hacc-panel.hacc-open { flex: 1 1 auto; width: auto; min-width: 22rem; }
-  .hacc-body-inner { width: auto; padding: 1.75rem 1.75rem 1.75rem .5rem; }
-  .hacc-body-inner > * { max-width: 32rem; }
-  .hacc-spine { flex-basis: 3.25rem; }
-  .hacc-spine-inner { gap: .625rem; }
-}
-
-/* Rotated side tab. Sits above the mobile dock's safe area, never on it. */
-.quote-tab {
-  position: fixed;
-  right: 0;
-  bottom: calc(5.5rem + env(safe-area-inset-bottom));
-  z-index: 40;
-  display: flex;
-  align-items: flex-end;
-  gap: .5rem;
-  transform: translateX(100%);
-  opacity: 0;
-  pointer-events: none;
-  transition: transform .45s var(--ease-kheni), opacity .3s var(--ease-kheni);
-}
-.quote-tab-in { transform: translateX(0); opacity: 1; pointer-events: auto; }
-.quote-tab-handle {
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-  padding: 1rem .5rem;
-  border-radius: .9rem 0 0 .9rem;
-  font-size: .8125rem;
-  font-weight: 600;
-  letter-spacing: .02em;
-  white-space: nowrap;
-  box-shadow: 0 10px 30px -12px rgba(18, 34, 74, .6);
-}
-.quote-tab-handle:focus-visible { outline: 3px solid var(--sunshine); outline-offset: -3px; }
-.quote-tab-panel { width: min(19rem, calc(100vw - 4.5rem)); margin-bottom: 0; }
-@media (min-width: 768px) { .quote-tab { bottom: 2rem; } }
-
+@keyframes unmask { from { clip-path: inset(0 0 100% 0 round 1.5rem 1.5rem 999px 999px); } to { clip-path: inset(0 0 0 0 round 1.5rem 1.5rem 999px 999px); } }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes sheet-in { from { transform: translateY(24px); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes menu-in { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
   html { scroll-behavior: auto; }
-  .field { animation: none; }
-  .marquee-rail { animation: none; }
-  .quote-tab { transition: none; }
-  .hacc-panel { transition: none; }
+  .reveal-smile, .rise, .rise-2, .rise-3 { animation: none; }
 }

@@ -7,20 +7,20 @@ import { placeUrl, writeReviewUrl } from "@/lib/maps";
 import { cn } from "@/lib/utils";
 
 /**
- * Google proof, in three sizes.
+ * Google proof, in four sizes.
  *
- *   ProofChip      one line: 4.9, stars, review count. For heroes and cards.
- *   ProofCluster   the rating large, both listings named, dated. For the
- *                  homepage, the reviews page and decision points.
- *   BranchProof    one clinic's own figure. Never the other clinic's.
+ *   ProofPill    one line: G, 4.9, stars, count. For heroes.
+ *   ProofBig     the rating enormous on a butter field, both listings named.
+ *   BranchProof  one clinic's own figure. Never the other clinic's.
+ *   GoogleQuotes the three verbatim excerpts, in rhythm: one big, two small.
  *
  * Every figure is a verified Google value and every combined count says,
  * in the same breath, that it is two listings added together.
  */
 
-export function Stars({ className, size = "size-3.5" }: { className?: string; size?: string }) {
+export function Stars({ className, size = "size-3.5", tone = "butter" }: { className?: string; size?: string; tone?: "butter" | "ink" }) {
   return (
-    <span className={cn("flex gap-0.5 text-gold", className)} aria-hidden="true">
+    <span className={cn("flex gap-0.5", tone === "butter" ? "text-butter" : "text-ink", className)} aria-hidden="true">
       {Array.from({ length: 5 }).map((_, index) => (
         <Star key={index} className={cn(size, "fill-current")} />
       ))}
@@ -28,7 +28,7 @@ export function Stars({ className, size = "size-3.5" }: { className?: string; si
   );
 }
 
-export function ProofChip({ placement, className, tone = "light" }: { placement: string; className?: string; tone?: "light" | "dark" }) {
+export function ProofPill({ placement, className, tone = "light" }: { placement: string; className?: string; tone?: "light" | "dark" }) {
   const { sharedRating, combinedReviews } = googleReputation;
   if (!sharedRating) return null;
   return (
@@ -36,68 +36,55 @@ export function ProofChip({ placement, className, tone = "light" }: { placement:
       href="/reviews/"
       data-track="review_click"
       data-placement={placement}
-      className={cn(
-        "inline-flex min-h-11 items-center gap-2.5 rounded-full py-1.5 pl-3 pr-4 text-sm",
-        tone === "dark" ? "bg-white/10 text-white ring-1 ring-white/20" : "glass text-ink ring-1 ring-line",
-        className,
-      )}
+      className={cn("inline-flex min-h-12 items-center gap-2.5 rounded-full py-1.5 pl-3 pr-4 text-sm shadow-[0_10px_30px_-18px_rgba(11,22,51,.6)]", tone === "dark" ? "bg-white/10 text-white ring-1 ring-white/25" : "bg-white text-ink", className)}
     >
       <GoogleGlyph className="size-4 shrink-0" />
-      <strong className="font-serif text-lg font-semibold leading-none">{sharedRating}</strong>
-      <Stars />
-      <span className={cn("hidden sm:inline", tone === "dark" ? "text-white/70" : "text-ink-soft")}>{combinedReviews} reviews, two clinics</span>
-      <span className={cn("sm:hidden", tone === "dark" ? "text-white/70" : "text-ink-soft")}>{combinedReviews} reviews</span>
+      <strong className="font-display text-xl font-extrabold leading-none tracking-[-.02em]">{sharedRating}</strong>
+      <Stars tone={tone === "dark" ? "butter" : "ink"} />
+      <span className={cn("font-semibold", tone === "dark" ? "text-white/80" : "text-ink-soft")}>
+        {combinedReviews} reviews<span className="hidden sm:inline"> · two clinics</span>
+      </span>
     </a>
   );
 }
 
-export function ProofCluster({ placement, className }: { placement: string; className?: string }) {
-  const { sharedRating, combinedReviews, combinedLabel, verifiedOn } = googleReputation;
+/** The rating enormous, on whatever field it sits on. */
+export function ProofBig({ placement, className }: { placement: string; className?: string }) {
+  const { sharedRating, combinedReviews, verifiedOn } = googleReputation;
   return (
-    <div className={cn("relative isolate overflow-hidden rounded-[1.5rem] border border-line bg-white p-5 sm:p-6", className)}>
-      <div aria-hidden="true" className="absolute -right-10 -top-10 size-36 rounded-full bg-sunshine-tint" />
-      <div className="relative flex items-center gap-2">
-        <GoogleGlyph className="size-5" />
-        <span className="t-eyebrow text-ink-soft">On Google</span>
-      </div>
-      <div className="relative mt-3 flex flex-wrap items-end gap-x-5 gap-y-2">
-        {sharedRating && (
-          <div className="flex items-end gap-2.5">
-            <span className="t-proof text-ink">{sharedRating}</span>
-            <Stars className="mb-1.5" size="size-4" />
+    <div className={cn("grid gap-6 lg:grid-cols-[auto_1fr] lg:items-end lg:gap-12", className)}>
+      <div>
+        <div className="flex items-end gap-4">
+          <span className="t-num">{sharedRating ?? "–"}</span>
+          <div className="pb-2">
+            <Stars size="size-6" tone="ink" />
+            <p className="mt-2 flex items-center gap-2 text-sm font-bold">
+              <GoogleGlyph className="size-4" />
+              on Google
+            </p>
           </div>
-        )}
-        <div>
-          <p className="font-serif text-2xl font-semibold leading-none">{combinedReviews}</p>
-          <p className="t-small mt-1 max-w-[24ch] text-ink-soft">{combinedLabel}</p>
         </div>
+        <p className="t-h3 mt-3">
+          {combinedReviews} reviews across our two clinic profiles.
+        </p>
+        {verifiedOn && <p className="t-small mt-1 opacity-80">Two separate Google listings, checked {verifiedOn}.</p>}
       </div>
-      <ul className="relative mt-4 grid gap-2 sm:grid-cols-2">
+      <ul className="grid gap-2 sm:grid-cols-2">
         {verifiedBranches.map((branch) => (
-          <li key={branch.location.slug} className={`hue-${branch.location.hue}`}>
-            <a
-              href={placeUrl(branch.location)}
-              target="_blank"
-              rel="noreferrer"
-              data-track="google_reviews_click"
-              data-placement={`${placement}_${branch.location.slug}`}
-              data-branch={branch.location.slug}
-              className="flex min-h-12 items-center justify-between gap-3 rounded-xl bg-h-tint px-3.5 py-2"
-            >
-              <span className="flex items-center gap-2.5">
-                <span aria-hidden="true" className="size-2.5 rounded-full bg-h-fill" />
-                <span className="text-sm font-semibold">{branch.location.displayArea}</span>
+          <li key={branch.location.slug}>
+            <a href={placeUrl(branch.location)} target="_blank" rel="noreferrer" data-track="google_reviews_click" data-placement={`${placement}_${branch.location.slug}`} data-branch={branch.location.slug} className="lift flex min-h-16 items-center justify-between gap-3 rounded-[1.25rem] bg-white px-4 py-3 text-ink">
+              <span>
+                <span className="block font-display text-lg font-extrabold leading-tight tracking-[-.02em]">{branch.location.displayArea}</span>
+                <span className="block text-xs text-ink-soft">{branch.reviewCount} reviews on this listing</span>
               </span>
-              <span className="flex items-center gap-2 text-sm">
-                <span className="font-serif font-semibold">{branch.rating}</span>
-                <span className="text-ink-soft">{branch.reviewCount}</span>
-                <ArrowUpRight className="size-3.5 text-h-text" aria-hidden="true" />
+              <span className="flex items-center gap-2">
+                <span className="font-display text-2xl font-extrabold tracking-[-.03em]">{branch.rating}</span>
+                <ArrowUpRight className="size-4 text-blue-deep" aria-hidden="true" />
               </span>
             </a>
           </li>
         ))}
       </ul>
-      {verifiedOn && <p className="relative mt-3 text-[.72rem] text-ink-soft/80">Two separate Google listings, checked {verifiedOn}.</p>}
     </div>
   );
 }
@@ -105,7 +92,7 @@ export function ProofCluster({ placement, className }: { placement: string; clas
 export function BranchProof({ location, placement, className }: { location: Location; placement: string; className?: string }) {
   const verified = location.google.status === "verified";
   return (
-    <div className={cn(`hue-${location.hue} rounded-[1.5rem] border border-line bg-white p-5 sm:p-6`, className)}>
+    <div className={cn(`mood-${location.hue} rounded-[1.5rem] bg-white p-5 text-ink sm:p-6`, className)}>
       <div className="flex items-start justify-between gap-4">
         <div>
           <span className="inline-flex items-center gap-2">
@@ -116,40 +103,24 @@ export function BranchProof({ location, placement, className }: { location: Loca
           <p className="t-small mt-0.5 text-ink-soft">{location.shortName === location.displayArea ? location.areaLabel : location.shortName}</p>
         </div>
         <div className="shrink-0 text-right">
-          <p className="t-proof text-ink">{verified ? location.google.rating : "–"}</p>
-          {verified && <Stars className="mt-1.5 justify-end" />}
+          <p className="font-display text-5xl font-extrabold tracking-[-.04em]">{verified ? location.google.rating : "–"}</p>
+          {verified && <Stars className="mt-1 justify-end" tone="ink" />}
         </div>
       </div>
       {verified ? (
         <p className="t-body mt-4 text-ink-soft">
-          <strong className="font-serif text-xl font-semibold text-ink">{location.google.reviewCount}</strong> reviews on this clinic&rsquo;s own listing.
+          <strong className="font-display text-xl font-extrabold text-ink">{location.google.reviewCount}</strong> reviews on this clinic&rsquo;s own listing.
           {location.google.verifiedOn && <span className="block text-[.72rem] text-ink-soft/80">Checked {location.google.verifiedOn}</span>}
         </p>
       ) : (
         <p className="t-body mt-4 text-ink-soft">This clinic keeps its own Google listing.</p>
       )}
       <div className="mt-4 flex flex-wrap gap-x-5 gap-y-1">
-        <a
-          href={placeUrl(location)}
-          target="_blank"
-          rel="noreferrer"
-          data-track="google_reviews_click"
-          data-placement={placement}
-          data-branch={location.slug}
-          className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-h-text"
-        >
+        <a href={placeUrl(location)} target="_blank" rel="noreferrer" data-track="google_reviews_click" data-placement={placement} data-branch={location.slug} className="inline-flex min-h-11 items-center gap-1.5 text-sm font-bold text-blue-deep">
           Read reviews
-          <ArrowUpRight className="cta-arrow size-4" aria-hidden="true" />
+          <ArrowUpRight className="size-4" aria-hidden="true" />
         </a>
-        <a
-          href={writeReviewUrl(location)}
-          target="_blank"
-          rel="noreferrer"
-          data-track="review_click"
-          data-placement={`${placement}_write`}
-          data-branch={location.slug}
-          className="inline-flex min-h-11 items-center text-sm font-medium text-ink-soft hover:text-ink"
-        >
+        <a href={writeReviewUrl(location)} target="_blank" rel="noreferrer" data-track="review_click" data-placement={`${placement}_write`} data-branch={location.slug} className="inline-flex min-h-11 items-center text-sm font-semibold text-ink-soft hover:text-ink">
           Write a review
         </a>
       </div>
@@ -157,31 +128,32 @@ export function BranchProof({ location, placement, className }: { location: Loca
   );
 }
 
-/** The three verbatim Google excerpts. Never edited. */
-export function GoogleQuotes({ className, placement }: { className?: string; placement: string }) {
+/** The three verbatim Google excerpts. Never edited. One big, two beside. */
+export function GoogleQuotes({ className, placement, tone = "light" }: { className?: string; placement: string; tone?: "light" | "dark" }) {
+  const [first, ...rest] = reviewHighlights;
+  const dark = tone === "dark";
+  const card = dark ? "bg-white/10 ring-1 ring-white/15" : "bg-white";
   return (
-    <div className={cn("rail-snap -mx-4 flex gap-3 overflow-x-auto px-4 pb-1 sm:mx-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:px-0 sm:pb-0", className)} data-placement={placement}>
-      {reviewHighlights.map((review, index) => (
-        <figure
-          key={review.theme}
-          className={cn(
-            "flex w-[82vw] shrink-0 flex-col rounded-2xl border border-line bg-white p-5 sm:w-auto",
-            index === 0 && "hue-sky",
-            index === 1 && "hue-mint",
-            index === 2 && "hue-coral",
-          )}
-        >
-          <div className="flex items-center justify-between">
-            <span className="rounded-full bg-h-tint px-2.5 py-1 text-[.7rem] font-bold uppercase tracking-[.1em] text-h-text">{review.theme}</span>
-            <Stars size="size-3" />
-          </div>
-          <blockquote className="t-body mt-4 flex-1 text-ink">&ldquo;{review.quote}&rdquo;</blockquote>
-          <figcaption className="t-small mt-4 flex items-center gap-2 border-t border-line pt-3 text-ink-soft">
-            <GoogleGlyph className="size-3.5 shrink-0" />
-            {review.source}, quoted as written
+    <div className={cn("-mx-4 sm:mx-0", className)} data-placement={placement}>
+      {/* Phone: a swipe rail. From sm: one big quote, two beside it. */}
+      <div className="rail px-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:overflow-visible sm:px-0 lg:grid-cols-[1.3fr_1fr]">
+        <figure className={cn("flex w-[82vw] max-w-[22rem] flex-col justify-between rounded-[1.5rem] p-6 sm:w-auto sm:max-w-none sm:p-8 lg:row-span-2", card)}>
+          <blockquote className="t-h3 text-balance">&ldquo;{first.quote}&rdquo;</blockquote>
+          <figcaption className={cn("mt-6 flex items-center gap-2 text-sm font-semibold", dark ? "text-white/75" : "text-ink-soft")}>
+            <GoogleGlyph className="size-4 shrink-0" />
+            {first.source}, quoted as written
           </figcaption>
         </figure>
-      ))}
+        {rest.map((review) => (
+          <figure key={review.theme} className={cn("flex w-[82vw] max-w-[22rem] flex-col justify-between rounded-[1.25rem] p-5 sm:w-auto sm:max-w-none", card)}>
+            <blockquote className="t-body font-semibold">&ldquo;{review.quote}&rdquo;</blockquote>
+            <figcaption className={cn("mt-4 flex items-center gap-2 text-xs font-semibold", dark ? "text-white/70" : "text-ink-soft")}>
+              <GoogleGlyph className="size-3.5 shrink-0" />
+              {review.source}, quoted as written
+            </figcaption>
+          </figure>
+        ))}
+      </div>
     </div>
   );
 }

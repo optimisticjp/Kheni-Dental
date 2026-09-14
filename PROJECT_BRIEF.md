@@ -38,16 +38,25 @@ The site helps people answer five questions:
 3. Phone call
 4. Directions to a clinic
 
-## Visual direction (V4)
+## Visual direction (V5, "modern Indian smile studio")
 
-- Porcelain warm-white foundation, deep navy ink
-- Cobalt as the one action colour; aqua, coral and sunshine as accents;
-  muted gold reserved for the Elite Implant Center and star ratings
-- One hue per treatment, used on its poster, icon, chips and page tint
-- Fraunces for headings (one highlighted word per heading), Inter for body
-- Original SVG illustrations and diagrams until real photography arrives
-- Sticky frosted header; three-action mobile dock (Book, Call, WhatsApp)
-- Subtle motion only, native scrolling, reduced-motion respected
+- Six colours and white, used as space: whole sections are electric blue,
+  butter, aqua, coral, ink or warm cream, and type sits straight on them
+- Ink `#0b1633`, blue `#1e46f5`, aqua `#22d6c8`, coral `#ff6a45`, butter
+  `#ffd24a`, cream `#faf3e7`. Five moods (blue, aqua, coral, butter, ink)
+  replace the old one-hue-per-treatment tokens
+- Bricolage Grotesque for display, set heavy and tight; Instrument Serif
+  italic for one warm word in a headline; Inter for body and interface
+- The smile window: a flat-top, round-bottom frame (and its mirror, the
+  arch) for people, the K mark, section curves and treatment crops
+- Real people only from the clinic's own Instagram frames; object and
+  interior photography elsewhere; no generated faces on named dentists
+- Instagram @khenielite as a first-class section on the homepage, about
+  and reviews pages, with real Reels linked from their own poster frames
+- Cream header that frosts on scroll; a floating ink action pill on phones
+  (Book, Call, WhatsApp); a full-screen blue menu
+- Restrained motion: a one-time smile-window reveal, rail scroll-snap,
+  arrow travel. No scroll hijacking. Reduced motion respected
 
 ## Copy direction
 

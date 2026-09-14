@@ -69,9 +69,6 @@ export function BookSheet() {
     dialogRef.current?.close();
   }, []);
 
-  // Intercept every Book link. Without JavaScript they still reach the form.
-  // Listened for in the capture phase, so it runs before Next's Link handler
-  // (which respects preventDefault) rather than after it has navigated.
   useEffect(() => {
     const onClick = (event: MouseEvent) => {
       if (event.button !== 0 || event.metaKey || event.ctrlKey) return;
@@ -117,27 +114,24 @@ export function BookSheet() {
   const telHref = `tel:${location?.phoneHref ?? site.primaryPhoneHref}`;
   const telLabel = location ? `Call ${location.displayArea}` : `Call ${locations[0].displayArea}`;
 
+  const radio = (selected: boolean) => cn("grid size-6 shrink-0 place-items-center rounded-full border-2", selected ? "border-blue bg-blue text-white" : "border-ink/30");
+
   return (
     <dialog
       ref={dialogRef}
       aria-labelledby="book-sheet-title"
-      className="sheet fixed inset-x-0 bottom-0 top-auto m-0 w-full max-w-none rounded-t-[1.75rem] border-0 bg-porcelain p-0 shadow-[0_-20px_60px_-20px_rgba(18,34,74,.45)] backdrop:bg-ink/45 sm:inset-0 sm:m-auto sm:h-fit sm:max-w-md sm:rounded-[1.75rem]"
+      className="sheet fixed inset-x-0 bottom-0 top-auto m-0 w-full max-w-none rounded-t-[2rem] border-0 bg-cream p-0 text-ink shadow-[0_-20px_60px_-20px_rgba(11,22,51,.5)] backdrop:bg-ink/55 sm:inset-0 sm:m-auto sm:h-fit sm:max-w-md sm:rounded-[2rem]"
     >
       <div className="px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-4 sm:p-6">
         <div aria-hidden="true" className="mx-auto mb-3 h-1.5 w-12 rounded-full bg-ink/15 sm:hidden" />
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="t-eyebrow text-cobalt-deep">Book an appointment</p>
+            <p className="t-eyebrow text-blue-deep">Book an appointment</p>
             <h2 id="book-sheet-title" className="t-h3 mt-1.5">
               Which clinic suits you?
             </h2>
           </div>
-          <button
-            type="button"
-            onClick={close}
-            aria-label="Close"
-            className="grid size-11 shrink-0 place-items-center rounded-full border border-line-strong bg-white"
-          >
+          <button type="button" onClick={close} aria-label="Close" className="grid size-11 shrink-0 place-items-center rounded-full bg-ink text-white">
             <X className="size-5" />
           </button>
         </div>
@@ -146,45 +140,20 @@ export function BookSheet() {
           {locations.map((l) => {
             const selected = choice === l.slug;
             return (
-              <button
-                key={l.slug}
-                type="button"
-                role="radio"
-                aria-checked={selected}
-                onClick={() => pick(l.slug as Choice)}
-                className={cn(
-                  `hue-${l.hue} flex min-h-14 items-center gap-3 rounded-2xl border px-4 py-3 text-left transition-colors`,
-                  selected ? "border-cobalt bg-white ring-2 ring-cobalt" : "border-line bg-white",
-                )}
-              >
-                <span
-                  aria-hidden="true"
-                  className={cn("grid size-6 shrink-0 place-items-center rounded-full border", selected ? "border-cobalt bg-cobalt text-white" : "border-line-strong")}
-                >
+              <button key={l.slug} type="button" role="radio" aria-checked={selected} onClick={() => pick(l.slug as Choice)} className={cn(`mood-${l.hue} flex min-h-14 items-center gap-3 rounded-[1.25rem] bg-white px-4 py-3 text-left transition-shadow`, selected ? "ring-[3px] ring-blue" : "ring-1 ring-line")}>
+                <span aria-hidden="true" className={radio(selected)}>
                   {selected && <Check className="size-3.5" />}
                 </span>
                 <span className="min-w-0 flex-1">
-                  <span className="block font-semibold leading-tight">{l.displayArea}</span>
+                  <span className="block font-display text-lg font-extrabold leading-tight tracking-[-.02em]">{l.displayArea}</span>
                   <span className="t-small block text-ink-soft">{l.shortName === l.displayArea ? l.landmark : `${l.shortName} · ${l.landmark}`}</span>
                 </span>
-                <span aria-hidden="true" className="size-2.5 shrink-0 rounded-full bg-h-fill" />
+                <span aria-hidden="true" className="size-3 shrink-0 rounded-full bg-m-fill" />
               </button>
             );
           })}
-          <button
-            type="button"
-            role="radio"
-            aria-checked={choice === "either"}
-            onClick={() => pick("either")}
-            className={cn(
-              "flex min-h-12 items-center gap-3 rounded-2xl border px-4 py-2.5 text-left text-sm font-medium",
-              choice === "either" ? "border-cobalt bg-white ring-2 ring-cobalt" : "border-line bg-white",
-            )}
-          >
-            <span
-              aria-hidden="true"
-              className={cn("grid size-6 shrink-0 place-items-center rounded-full border", choice === "either" ? "border-cobalt bg-cobalt text-white" : "border-line-strong")}
-            >
+          <button type="button" role="radio" aria-checked={choice === "either"} onClick={() => pick("either")} className={cn("flex min-h-12 items-center gap-3 rounded-[1.25rem] bg-white px-4 py-2.5 text-left text-sm font-semibold", choice === "either" ? "ring-[3px] ring-blue" : "ring-1 ring-line")}>
+            <span aria-hidden="true" className={radio(choice === "either")}>
               {choice === "either" && <Check className="size-3.5" />}
             </span>
             Not sure, either clinic is fine
@@ -193,43 +162,25 @@ export function BookSheet() {
 
         {status && (
           <p className="t-small mt-3 flex items-center gap-2 text-ink-soft">
-            <span aria-hidden="true" className={cn("size-2 rounded-full", status.open ? "bg-green" : "bg-amber")} />
+            <span aria-hidden="true" className={cn("size-2 rounded-full", status.open ? "bg-whatsapp" : "bg-coral")} />
             {status.label}. {clinicHours.days}, {clinicHours.morning} and {clinicHours.evening}.
           </p>
         )}
 
         <div className="mt-4 grid gap-2">
-          <a
-            href={waHref}
-            target="_blank"
-            rel="noreferrer"
-            data-track="whatsapp_click"
-            data-placement={`book_sheet_${placement}`}
-            data-branch={location?.slug}
-            className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-whatsapp text-base font-semibold text-white"
-          >
+          <a href={waHref} target="_blank" rel="noreferrer" data-track="whatsapp_click" data-placement={`book_sheet_${placement}`} data-branch={location?.slug} className="btn btn-whatsapp btn-lg">
             <MessageCircle className="size-5" aria-hidden="true" />
             Book on WhatsApp
           </a>
-          <a
-            href={telHref}
-            data-track="phone_click"
-            data-placement={`book_sheet_${placement}`}
-            data-branch={location?.slug}
-            className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-line-strong bg-white text-base font-semibold text-ink"
-          >
-            <Phone className="size-5 text-cobalt" aria-hidden="true" />
+          <a href={telHref} data-track="phone_click" data-placement={`book_sheet_${placement}`} data-branch={location?.slug} className="btn btn-outline btn-lg">
+            <Phone className="size-5" aria-hidden="true" />
             {telLabel}
           </a>
         </div>
 
-        <Link
-          href="/contact/#book"
-          onClick={close}
-          className="mt-3 inline-flex min-h-10 items-center gap-1.5 text-sm font-medium text-cobalt-deep"
-        >
+        <Link href="/contact/#book" onClick={close} className="mt-3 inline-flex min-h-10 items-center gap-1.5 text-sm font-bold text-blue-deep">
           Prefer to send a request form?
-          <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
+          <ArrowRight className="size-4" aria-hidden="true" />
         </Link>
         <p className="t-small mt-2 text-ink-soft/80">Please keep medical details for the consultation itself.</p>
       </div>

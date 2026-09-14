@@ -1,88 +1,27 @@
-import { ClipboardList, MessageCircle, ScanLine, Sparkles, Stethoscope, type LucideIcon } from "lucide-react";
-
 import { cn } from "@/lib/utils";
 
 /**
- * Numbered steps, two ways.
+ * A process as a story, not five identical cards.
  *
- *   rail    the original. A numbered disc, a connector, title and copy.
- *           Compact, and the one to use inside a dark or busy section.
- *
- *   cards   the pattern the clinic pointed at: a white card with a glyph in
- *           a soft circle top left, the title and copy, and a large numeral
- *           printed faintly in the bottom right corner like a page number.
- *           The numeral is aria-hidden; the <ol> already carries the order.
- *
- * Both stack on a phone and run as a row from lg. Nothing animates.
+ * Each stage gets a huge numeral, a title and a line. On a phone the
+ * stages stack down a single rule with the numeral leading; from lg they
+ * run as a row. `tone` follows the field the steps sit on.
  */
-export type ProcessStep = { title: string; copy: string; icon?: LucideIcon };
+export type ProcessStep = { title: string; copy: string };
 
-/** Glyphs by position, for steps that do not name their own. */
-const DEFAULT_ICONS: LucideIcon[] = [MessageCircle, ScanLine, ClipboardList, Stethoscope, Sparkles];
-
-export function ProcessSteps({
-  steps,
-  className,
-  columns = 5,
-  dense = false,
-  variant = "rail",
-}: {
-  steps: readonly ProcessStep[];
-  className?: string;
-  columns?: 3 | 4 | 5;
-  /** On phones, show titles only; the copy returns from sm up. */
-  dense?: boolean;
-  variant?: "rail" | "cards";
-}) {
-  const grid = cn(
-    "relative grid gap-3 lg:gap-4",
-    columns === 5 && "lg:grid-cols-5",
-    columns === 4 && "lg:grid-cols-4",
-    columns === 3 && "lg:grid-cols-3",
-    className,
-  );
-
-  if (variant === "cards") {
-    return (
-      <ol className={cn(grid, "sm:grid-cols-2")}>
-        {steps.map((step, index) => {
-          const Icon = step.icon ?? DEFAULT_ICONS[index % DEFAULT_ICONS.length];
-          return (
-            <li key={step.title} className="relative isolate overflow-hidden rounded-[1.25rem] bg-white p-5 ring-1 ring-line sm:p-6">
-              <span aria-hidden="true" className="grid size-12 place-items-center rounded-full bg-h-tint text-h-text">
-                <Icon className="size-5" strokeWidth={1.75} />
-              </span>
-              <h3 className="t-card mt-5 pr-10">{step.title}</h3>
-              <p className={cn("t-small mt-2 text-ink-soft", dense && "hidden sm:block")}>{step.copy}</p>
-              {/* The page-number numeral. Set in the serif, very large and very faint. */}
-              <span
-                aria-hidden="true"
-                className="pointer-events-none absolute -bottom-3 -right-1 select-none font-serif text-[5rem] font-semibold leading-none tracking-[-.06em] text-h-fill opacity-[.14]"
-              >
-                {String(index + 1).padStart(2, "0")}
-              </span>
-            </li>
-          );
-        })}
-      </ol>
-    );
-  }
-
+export function ProcessSteps({ steps, className, tone = "light", columns = 5 }: { steps: readonly ProcessStep[]; className?: string; tone?: "light" | "dark"; columns?: 3 | 4 | 5 }) {
+  const dark = tone === "dark";
+  const grid = columns === 5 ? "lg:grid-cols-5" : columns === 4 ? "lg:grid-cols-4" : "lg:grid-cols-3";
   return (
-    <ol className={grid}>
+    <ol className={cn("grid gap-0 lg:gap-6", grid, className)}>
       {steps.map((step, index) => (
-        <li key={step.title} className={cn("relative flex gap-4 rounded-2xl bg-white p-4 ring-1 ring-line lg:flex-col lg:gap-0 lg:p-5", dense && "items-center py-3 lg:items-stretch lg:py-5")}>
-          <div className="relative flex shrink-0 flex-col items-center lg:mb-4 lg:flex-row">
-            <span className="grid size-10 shrink-0 place-items-center rounded-full bg-h-fill font-serif text-lg font-semibold text-h-on-fill">
-              {index + 1}
-            </span>
-            {index < steps.length - 1 && (
-              <span aria-hidden="true" className={cn("mt-2 w-0.5 flex-1 rounded-full bg-h-soft lg:mt-0 lg:ml-2 lg:h-0.5 lg:w-auto lg:flex-1", dense && "hidden sm:block")} />
-            )}
-          </div>
-          <div>
-            <h3 className="t-card">{step.title}</h3>
-            <p className={cn("t-small mt-1.5 text-ink-soft", dense && "hidden sm:block")}>{step.copy}</p>
+        <li key={step.title} className={cn("relative grid grid-cols-[3rem_1fr] gap-3 border-t py-4 lg:block lg:pt-5", dark ? "border-white/20" : "border-ink/15")}>
+          <span aria-hidden="true" className={cn("font-display text-[2.25rem] font-extrabold leading-none tracking-[-.05em] lg:text-[3.5rem]", dark ? "text-butter" : "text-m-text")}>
+            {String(index + 1).padStart(2, "0")}
+          </span>
+          <div className="lg:mt-3">
+            <h3 className="font-display text-xl font-extrabold leading-tight tracking-[-.025em]">{step.title}</h3>
+            <p className={cn("t-small mt-1.5", dark ? "text-white/78" : "text-ink-soft")}>{step.copy}</p>
           </div>
         </li>
       ))}

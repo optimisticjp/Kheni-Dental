@@ -7,27 +7,41 @@ import { bookHref, branchWhatsappUrl, telHref, whatsappUrl } from "@/lib/links";
 import { cn } from "@/lib/utils";
 
 /**
- * The site's buttons. Four looks, used consistently:
+ * The Kheni button system. Pills with a circular arrow that travels on
+ * hover. One primary per section.
  *
- *   primary    cobalt, white text. The one action a section is built around.
- *   whatsapp   deep WhatsApp green, white text. Recognisable at a glance.
- *   secondary  white with a navy hairline. The quieter partner.
- *   ghost      text only, for "see all" links.
+ *   primary       electric blue, white text
+ *   butter        butter yellow, ink text. The primary on blue or ink.
+ *   ink           ink, white text, butter arrow
+ *   white         white, ink text, blue arrow. On coloured fields.
+ *   whatsapp      WhatsApp green
+ *   outline       2px ink outline. The quieter partner on light fields.
+ *   outlineLight  2px white outline. The quieter partner on dark fields.
  *
- * All are at least 48px tall, because most of our visitors are tapping.
+ * All are at least 52px tall, because most visitors are tapping.
  */
-export type CtaVariant = "primary" | "whatsapp" | "secondary" | "ghost" | "onDark";
+export type CtaVariant = "primary" | "butter" | "ink" | "white" | "whatsapp" | "outline" | "outlineLight";
+export type CtaSize = "sm" | "md" | "lg";
 
-export function ctaClass(variant: CtaVariant = "primary", size: "md" | "lg" = "md", className?: string) {
-  return cn(
-    "inline-flex items-center justify-center gap-2 rounded-full text-center font-semibold whitespace-nowrap transition-[transform,background-color,border-color,box-shadow] duration-300 ease-kheni focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-cobalt focus-visible:ring-offset-2",
-    size === "lg" ? "min-h-14 px-7 text-base" : "min-h-12 px-5 text-[.9375rem]",
-    variant === "primary" && "bg-cobalt text-white shadow-[0_10px_24px_-12px_rgba(31,91,216,.7)] hover:bg-cobalt-deep",
-    variant === "whatsapp" && "bg-whatsapp text-white hover:brightness-95",
-    variant === "secondary" && "border border-line-strong bg-white text-ink hover:border-ink/40",
-    variant === "onDark" && "border border-white/30 bg-white/10 text-white hover:bg-white/15",
-    variant === "ghost" && "min-h-11 px-1 text-cobalt-deep hover:underline underline-offset-4",
-    className,
+const VARIANT: Record<CtaVariant, string> = {
+  primary: "btn-primary",
+  butter: "btn-butter",
+  ink: "btn-ink",
+  white: "btn-white",
+  whatsapp: "btn-whatsapp",
+  outline: "btn-outline",
+  outlineLight: "btn-outline-light",
+};
+
+export function ctaClass(variant: CtaVariant = "primary", size: CtaSize = "md", className?: string) {
+  return cn("btn", VARIANT[variant], size === "lg" && "btn-lg", size === "sm" && "btn-sm", className);
+}
+
+export function Arrow({ className }: { className?: string }) {
+  return (
+    <span className={cn("arrow", className)} aria-hidden="true">
+      <ArrowRight />
+    </span>
   );
 }
 
@@ -49,21 +63,14 @@ export function BookButton({
   branch?: string;
   label?: string;
   variant?: CtaVariant;
-  size?: "md" | "lg";
+  size?: CtaSize;
   className?: string;
   arrow?: boolean;
 }) {
   return (
-    <Link
-      href={bookHref}
-      data-book
-      data-branch={branch}
-      data-track="appointment_start"
-      data-placement={placement}
-      className={ctaClass(variant, size, className)}
-    >
+    <Link href={bookHref} data-book data-branch={branch} data-track="appointment_start" data-placement={placement} className={ctaClass(variant, size, className)}>
       {label}
-      {arrow && <ArrowRight className="cta-arrow size-4" aria-hidden="true" />}
+      {arrow && <Arrow />}
     </Link>
   );
 }
@@ -84,22 +91,14 @@ export function WhatsAppButton({
   message?: string;
   label?: string;
   variant?: CtaVariant;
-  size?: "md" | "lg";
+  size?: CtaSize;
   className?: string;
   context?: string;
   track?: "whatsapp_click" | "international_patient_contact";
 }) {
   const href = location && !message ? branchWhatsappUrl(location, context) : whatsappUrl(message, location?.whatsappNumber);
   return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noreferrer"
-      data-track={track}
-      data-placement={placement}
-      data-branch={location?.slug}
-      className={ctaClass(variant, size, className)}
-    >
+    <a href={href} target="_blank" rel="noreferrer" data-track={track} data-placement={placement} data-branch={location?.slug} className={ctaClass(variant, size, className)}>
       <MessageCircle className="size-[1.1rem]" aria-hidden="true" />
       {label}
     </a>
@@ -110,7 +109,7 @@ export function CallButton({
   placement,
   location,
   label,
-  variant = "secondary",
+  variant = "outline",
   size = "md",
   className,
 }: {
@@ -118,19 +117,29 @@ export function CallButton({
   location?: Location;
   label?: string;
   variant?: CtaVariant;
-  size?: "md" | "lg";
+  size?: CtaSize;
   className?: string;
 }) {
   return (
-    <a
-      href={telHref(location)}
-      data-track="phone_click"
-      data-placement={placement}
-      data-branch={location?.slug}
-      className={ctaClass(variant, size, className)}
-    >
+    <a href={telHref(location)} data-track="phone_click" data-placement={placement} data-branch={location?.slug} className={ctaClass(variant, size, className)}>
       <Phone className="size-[1.05rem]" aria-hidden="true" />
       {label ?? (location ? `Call ${location.displayArea}` : `Call ${site.primaryPhoneDisplay}`)}
     </a>
+  );
+}
+
+/** A text link with the travelling circle arrow. */
+export function ArrowLink({ href, children, className, tone = "ink", ...rest }: { href: string; children: React.ReactNode; className?: string; tone?: "ink" | "white" | "blue" } & Record<`data-${string}`, string | undefined>) {
+  const style =
+    tone === "white"
+      ? ({ ["--arrow-bg" as string]: "#ffffff", ["--arrow-fg" as string]: "var(--ink)" } as React.CSSProperties)
+      : tone === "blue"
+        ? ({ ["--arrow-bg" as string]: "var(--blue)", ["--arrow-fg" as string]: "#ffffff" } as React.CSSProperties)
+        : undefined;
+  return (
+    <Link href={href} className={cn("link-arrow", tone === "white" && "text-white", className)} style={style} {...rest}>
+      {children}
+      <Arrow />
+    </Link>
   );
 }

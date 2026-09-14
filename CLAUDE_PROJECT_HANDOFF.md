@@ -12,15 +12,22 @@ Read:
 4. `CONTENT_TO_VERIFY.md`
 5. `TRACKING_PLAN.md`
 6. `docs/CLINIC-CONTENT-NEEDED.md`
-7. `DEMO_CONTENT.md` (what on this build is invented, and how to switch it off)
 
 ## Non-negotiables
 
-- Preserve the V4 "vibrant clinical editorial" system: porcelain foundation,
-  navy ink, cobalt action colour, one hue per treatment (tokens in
-  `src/app/globals.css`).
-- Keep the site mobile-first. Three-action dock (Book, Call, WhatsApp;
-  Directions on clinic pages). Never a five-item dock.
+- Preserve the V5 system: six colours used as full fields, five moods
+  (`mood-*` classes), Bricolage Grotesque + Instrument Serif + Inter, the
+  smile window motif (tokens and classes in `src/app/globals.css`).
+- Keep the site mobile-first. The floating action pill carries three
+  actions (Book, Call, WhatsApp; Directions on clinic pages). Never a
+  five-item bar.
+- Instagram content comes only from `src/content/instagram.ts`: real
+  @khenielite Reels, the clinic's own poster frames saved locally, exact
+  links, no embeds at page load. Never let Instagram silently disappear.
+- No generated face on a named dentist and no generated "patient". Doctor
+  slots render a designed colour field until the clinic sends portraits.
+- There is no demo or sample-content layer. Everything rendered is audited
+  by the content-integrity check.
 - Keep the appointment sheet: Book opens a clinic choice, then WhatsApp or
   call. No backend, no medical questions.
 - No prices, "starting from", EMI or "free consultation". No "painless",

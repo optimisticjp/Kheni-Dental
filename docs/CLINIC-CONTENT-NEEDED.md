@@ -1,24 +1,30 @@
 # What the clinic still needs to send
 
-The V4 site is designed so that every item below drops straight into an
+The site is designed so that every item below drops straight into an
 existing slot. Nothing here is invented, guessed at, or filled in from
 general dental knowledge. Until a line is confirmed, the site simply does
-not make that claim: the slot shows an illustration or a colour field, or
-the section is hidden.
+not make that claim: the slot shows a colour field, or the section is hidden.
 
 Everything on the site today is either clinic-provided (doctors, clinics,
 hours, phones, the 15 years) or independently verifiable (Google ratings and
-review counts, checked 29 August 2026; the clinic's own YouTube Shorts).
+review counts, checked 29 August 2026; the clinic's own YouTube videos and
+public Instagram Reels, checked 13 September 2026).
+
+The generated placeholder photographs that an earlier build carried (four
+dentist faces, a "hero dentist", a team walk, four "patients") have been
+removed. The only people on the site are real, from the clinic's own
+Instagram frames.
 
 ---
 
 ## 1. Photography
 
-The single biggest upgrade. Every photo slot is a `MediaFrame` with a
-designed colour field and the monogram; a real photograph replaces it by
-passing `src` and `alt`, with `objectPosition` for the crop. Slots are
-art-directed for both a portrait and a wide crop, so one shot works on a
-phone and a desktop.
+The single biggest upgrade. Every photo slot is a `MediaFrame` in the
+smile window or a plain frame; a real photograph replaces the colour field
+by adding it to `src/content/photos.ts` with `alt` and, if the crop
+matters, `objectPosition`. Doctor slots are 4:5 portraits (head and
+shoulders, plain background, natural expression). A phone photo against a
+plain wall is fine; the design does not depend on studio lighting.
 
 ### Doctor photos
 - [ ] **Dr. Mayur Kheni**: portrait (4:5) and a wider working shot (16:10)
@@ -71,8 +77,8 @@ Each case needs, in writing, to be added to `src/content/cases.ts`:
 - [ ] When the "after" photograph was taken
 - [ ] **Written patient consent to publish**
 
-The before/after slider is built and demonstrated with a plain illustration
-until real cases arrive. No synthetic patient images will ever be used.
+Nothing renders in the before/after slots until real cases arrive. No
+synthetic patient images will ever be used.
 
 ## 4. Videos
 
@@ -84,8 +90,16 @@ YouTube channel. For patient testimonials the site can add:
 - [ ] Doctor tip videos: link and topic
 - [ ] Clinic tour or "a day at Kheni" video
 
-Instagram (@khenielite) is linked but not embedded. Public Reels can be
-linked if wanted.
+Instagram (@khenielite) is now a first-class section: five public Reels
+are listed in `src/content/instagram.ts` with the clinic's own poster
+frames saved locally, and each card opens the exact Reel. To feature more:
+
+- [ ] Send the Reel links (or shortcodes) the clinic most wants shown, in
+      priority: doctor explanations, patient experiences (with consent),
+      kids, implants, Gujarati content
+- [ ] Confirm which dentist appears in each Reel so cards can name them
+      (today the cards describe the clip and never guess a name)
+- [ ] Say whether follower counts may be shown (they are not, today)
 
 ## 5. Technology and implant systems
 

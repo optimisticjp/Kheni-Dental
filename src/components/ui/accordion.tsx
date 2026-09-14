@@ -2,43 +2,32 @@ import { Plus } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
-export type AccordionItem = {
-  question: string;
-  answer: string;
-};
+export type AccordionItem = { question: string; answer: string };
 
 /**
- * FAQ accordion on native `<details>`/`<summary>`. Zero JavaScript,
- * keyboard accessible, works before hydration.
- *
- * `exclusive` gives every item the same `name`, so opening one closes the
- * others. Used on phones where scanning matters more than comparing.
+ * FAQ on native `<details>`/`<summary>`. No JavaScript, keyboard accessible,
+ * works before hydration. Questions are set in the display face and the
+ * rows are divided by hairlines rather than boxed, so a list of eight reads
+ * as one piece of writing.
  */
-export function Accordion({
-  items,
-  className,
-  exclusive = false,
-  name = "faq",
-}: {
-  items: readonly AccordionItem[];
-  className?: string;
-  exclusive?: boolean;
-  name?: string;
-}) {
+export function Accordion({ items, className, exclusive = false, name = "faq", tone = "light" }: { items: readonly AccordionItem[]; className?: string; exclusive?: boolean; name?: string; tone?: "light" | "dark" }) {
+  const dark = tone === "dark";
   return (
-    <div className={cn("divide-y divide-line overflow-hidden rounded-2xl border border-line bg-white", className)}>
+    <div className={cn("divide-y border-y", dark ? "divide-white/15 border-white/15" : "divide-line border-line", className)}>
       {items.map((item, index) => (
         <details key={index} className="group" name={exclusive ? name : undefined}>
-          <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-left text-[1.0625rem] font-semibold leading-snug marker:hidden [&::-webkit-details-marker]:hidden focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-cobalt">
+          <summary
+            className={cn(
+              "flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 py-4 text-left font-display text-[1.15rem] font-bold leading-tight tracking-[-.02em] marker:hidden [&::-webkit-details-marker]:hidden focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-inset",
+              dark ? "focus-visible:ring-butter" : "focus-visible:ring-blue",
+            )}
+          >
             <span>{item.question}</span>
-            <span
-              aria-hidden="true"
-              className="grid size-8 shrink-0 place-items-center rounded-full bg-h-tint text-h-text transition-transform duration-300 group-open:rotate-45"
-            >
+            <span aria-hidden="true" className={cn("grid size-9 shrink-0 place-items-center rounded-full transition-transform duration-300 group-open:rotate-45", dark ? "bg-butter text-ink" : "bg-ink text-white")}>
               <Plus className="size-4" />
             </span>
           </summary>
-          <div className="t-body px-5 pb-5 pr-14 text-ink-soft">{item.answer}</div>
+          <div className={cn("t-body pb-6 pr-12", dark ? "text-white/80" : "text-ink-soft")}>{item.answer}</div>
         </details>
       ))}
     </div>

@@ -18,9 +18,9 @@ export type Part = { n: number; name: string; note: string; swatch: string };
 
 export function Legend({ parts, className }: { parts: Part[]; className?: string }) {
   return (
-    <ol className={cn("grid gap-2", className)}>
+    <ol className={cn("grid grid-cols-2 gap-2 md:grid-cols-1", className)}>
       {parts.map((part) => (
-        <li key={part.n} className="flex items-start gap-3 rounded-xl bg-white/80 px-3 py-2.5 ring-1 ring-line">
+        <li key={part.n} className="flex items-start gap-2.5 rounded-xl bg-white/85 px-3 py-2.5 ring-1 ring-line">
           <span
             aria-hidden="true"
             className="mt-0.5 grid size-6 shrink-0 place-items-center rounded-full text-[.72rem] font-bold text-ink"
@@ -29,8 +29,8 @@ export function Legend({ parts, className }: { parts: Part[]; className?: string
             {part.n}
           </span>
           <span>
-            <span className="block text-[.9375rem] font-semibold leading-tight">{part.name}</span>
-            <span className="t-small block text-ink-soft">{part.note}</span>
+            <span className="block text-[.9rem] font-bold leading-tight">{part.name}</span>
+            <span className="block text-[.78rem] leading-snug text-ink-soft sm:text-sm">{part.note}</span>
           </span>
         </li>
       ))}

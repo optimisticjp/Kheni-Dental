@@ -19,7 +19,7 @@ export const site = {
   city: "Surat",
   region: "Gujarat",
   country: "India",
-  tagline: "Dentistry you understand before it starts.",
+  tagline: "Walk in worried. Walk out with a plan.",
   description:
     "Kheni Dental & Elite Implant Center: 15 years of dental care in Surat, led by Dr. Mayur Kheni. Implants, root canals, braces, kids dentistry and smile design at two clinics, Yogi Chowk and Hirabaug.",
   instagram: "https://www.instagram.com/khenielite",
@@ -48,11 +48,11 @@ export type NavItem = { href: string; label: string; hasMenu?: boolean; accent?:
 /** Header and mobile menu. Short on purpose. */
 export const primaryNav: NavItem[] = [
   { href: "/treatments/", label: "Treatments", hasMenu: true },
-  { href: "/treatments/dental-implants-surat/", label: "Dental Implants", accent: true },
+  { href: "/treatments/dental-implants-surat/", label: "Implants", accent: true },
   { href: "/doctors/", label: "Doctors" },
   { href: "/locations/", label: "Clinics" },
   { href: "/reviews/", label: "Reviews" },
-  { href: "/international-patients/", label: "NRI & International" },
+  { href: "/international-patients/", label: "NRI" },
 ];
 
 /** Quieter destinations. Shown small in the menu and the footer. */
@@ -133,7 +133,7 @@ export type Location = {
   /** True for the branch that carries the Elite Implant Center. */
   implantCentre?: boolean;
   /** Branch accent hue, from the treatment hue set. */
-  hue: "cobalt" | "teal";
+  hue: "blue" | "aqua";
 };
 
 export const locations: Location[] = [
@@ -157,7 +157,7 @@ export const locations: Location[] = [
     hoursNote: "Clinic-provided hours. Call before travelling if your visit is time-sensitive.",
     note: "Our original clinic at Yogi Chowk. Family dentistry, root canals, braces and kids treatment, with implant care too.",
     landmark: "Yogi Chowk Ground, next to Apple Square",
-    hue: "teal",
+    hue: "aqua",
   },
   {
     slug: "hirabaug",
@@ -180,7 +180,7 @@ export const locations: Location[] = [
     note: "Our Elite Implant Center on Varachha Main Road. Implants, full mouth cases and smile design are led from here.",
     landmark: "Above Shiv Plywood, opposite Surat Super Store",
     implantCentre: true,
-    hue: "cobalt",
+    hue: "blue",
   },
 ];
 
@@ -210,7 +210,7 @@ export const reviewHighlights = [
    Each treatment owns one hue. The hue drives its poster, its icon, its
    chips and the tint of its page, so a patient learns to recognise it
    without the whole site becoming a rainbow. Values live in globals.css. */
-export type Hue = "cobalt" | "navy" | "teal" | "amber" | "coral" | "violet" | "mint" | "green" | "lavender" | "sky" | "sunshine" | "gold";
+export type Hue = "blue" | "aqua" | "coral" | "butter" | "ink";
 
 export type Doctor = {
   slug: string;
@@ -246,7 +246,7 @@ export const doctors: Doctor[] = [
     metaDescription:
       "Dr. Mayur Kheni, B.D.S., Implantologist & Cosmetic Dental Surgeon, leads Kheni Dental & Elite Implant Center in Surat. 15 years in practice. Book an appointment.",
     relatedTreatmentSlugs: ["dental-implants-surat", "full-mouth-rehabilitation", "cosmetic-smile-dentistry"],
-    hue: "cobalt",
+    hue: "blue",
     principal: true,
   },
   {
@@ -279,7 +279,7 @@ export const doctors: Doctor[] = [
     metaDescription:
       "Dr. Ishita Dobariya, B.D.S., Dental Surgeon & Kids Specialist at Kheni Dental, Surat. Four years in practice, working mostly with children.",
     relatedTreatmentSlugs: ["kids-dentistry-surat", "dental-check-up-surat", "tooth-fillings-surat"],
-    hue: "mint",
+    hue: "butter",
   },
   {
     slug: "dr-parita-vastarpara",
@@ -295,7 +295,7 @@ export const doctors: Doctor[] = [
     metaDescription:
       "Dr. Parita Vastarpara, B.D.S., Dental Surgeon at Kheni Dental in Surat. Four years in practice covering root canals, fillings and check-ups.",
     relatedTreatmentSlugs: ["root-canal-treatment-surat", "tooth-fillings-surat", "dental-check-up-surat", "crowns-and-bridges"],
-    hue: "teal",
+    hue: "aqua",
   },
 ];
 
@@ -351,7 +351,7 @@ export const treatments: Treatment[] = [
     seoTitle: "Dental Implants in Surat | Elite Implant Center",
     metaDescription:
       "Dental implants in Surat at Kheni Dental & Elite Implant Center. Single, multiple and full mouth implants planned by Dr. Mayur Kheni after examination and imaging.",
-    hue: "cobalt",
+    hue: "blue",
     category: "restorative",
     concern: "I only chew on one side now.",
     headline: "A fixed tooth for the gap you have been working around.",
@@ -418,7 +418,7 @@ export const treatments: Treatment[] = [
     seoTitle: "Root Canal Treatment in Surat",
     metaDescription:
       "Root canal treatment in Surat at Kheni Dental. For tooth pain from an infected or inflamed tooth, aimed at settling the pain and keeping your own tooth where possible.",
-    hue: "teal",
+    hue: "aqua",
     category: "restorative",
     concern: "This tooth keeps me up at night.",
     headline: "Settle the pain. Keep the tooth where we can.",
@@ -480,7 +480,7 @@ export const treatments: Treatment[] = [
     seoTitle: "Braces & Clear Aligners in Surat",
     metaDescription:
       "Braces and clear aligners in Surat at Kheni Dental. Crowding, gaps and bites that do not meet, assessed first so you know which option suits your case and how long it takes.",
-    hue: "violet",
+    hue: "blue",
     category: "cosmetic",
     concern: "My teeth are crowded and I do not want visible braces at work.",
     headline: "Straighter teeth, and a say in how visible the work is.",
@@ -604,7 +604,7 @@ export const treatments: Treatment[] = [
     seoTitle: "Full Mouth Rehabilitation in Surat",
     metaDescription:
       "Full mouth rehabilitation in Surat at Kheni Dental & Elite Implant Center. When several teeth need work, the order matters. Planned in stages by Dr. Mayur Kheni.",
-    hue: "navy",
+    hue: "ink",
     category: "restorative",
     concern: "Too many teeth need work and I do not know where to start.",
     headline: "You do not have to fix everything at once.",
@@ -666,7 +666,7 @@ export const treatments: Treatment[] = [
     seoTitle: "Dental Crowns & Bridges in Surat",
     metaDescription:
       "Crowns and bridges in Surat at Kheni Dental. A crown strengthens a weak or broken tooth; a bridge fills a gap. Both planned around your bite.",
-    hue: "amber",
+    hue: "butter",
     category: "restorative",
     concern: "I am scared to bite down on that tooth.",
     headline: "Bite down without bracing yourself.",
@@ -724,7 +724,7 @@ export const treatments: Treatment[] = [
     seoTitle: "Kids Dentist in Surat",
     metaDescription:
       "Kids dentist in Surat. Children's dental visits at Kheni Dental paced around your child, with Dr. Ishita Dobariya, our Kids Specialist. Plain words for them, straight answers for you.",
-    hue: "mint",
+    hue: "butter",
     category: "kids",
     concern: "My child is scared and I do not want to make it worse.",
     headline: "A first visit your child does not dread.",
@@ -782,7 +782,7 @@ export const treatments: Treatment[] = [
     seoTitle: "Gum Treatment in Surat for Bleeding Gums",
     metaDescription:
       "Gum care in Surat at Kheni Dental. Gums that bleed, swell or affect your breath are checked early, cleaned properly and given a daily routine that works.",
-    hue: "green",
+    hue: "aqua",
     category: "everyday",
     concern: "My gums bleed when I brush.",
     headline: "Gums that bleed are asking for attention.",
@@ -839,7 +839,7 @@ export const treatments: Treatment[] = [
     seoTitle: "Wisdom Tooth Treatment & Removal in Surat",
     metaDescription:
       "Wisdom tooth pain or swelling? Kheni Dental in Surat examines the cause first, then explains whether removal, treatment or simply watching it makes sense.",
-    hue: "lavender",
+    hue: "coral",
     category: "surgical",
     concern: "My wisdom tooth hurts and the jaw feels swollen.",
     headline: "Find out if it really has to come out.",
@@ -896,7 +896,7 @@ export const treatments: Treatment[] = [
     seoTitle: "Dental Check-up & Cleaning in Surat",
     metaDescription:
       "Dental check-up in Surat at Kheni Dental. A proper look at your teeth and gums, cleaning where needed, and a straight answer about what needs doing and what can wait.",
-    hue: "sky",
+    hue: "blue",
     category: "everyday",
     concern: "It has been longer than I would like since my last check-up.",
     headline: "Small problems are easier to keep small.",
@@ -953,7 +953,7 @@ export const treatments: Treatment[] = [
     seoTitle: "Tooth Fillings in Surat",
     metaDescription:
       "Tooth fillings in Surat at Kheni Dental. A cavity or a chipped tooth repaired before it grows into a bigger problem, with the shade matched to your own tooth.",
-    hue: "sky",
+    hue: "blue",
     category: "everyday",
     concern: "There is a hole in my tooth and food keeps getting stuck.",
     headline: "Fix the small hole before it becomes a big one.",
@@ -1027,39 +1027,36 @@ export type Concern = {
 };
 
 export const concerns: Concern[] = [
-  { id: "pain", label: "Tooth pain", sub: "Aching, throbbing or sensitive", href: "/treatments/root-canal-treatment-surat/", hue: "teal", icon: "pain" },
-  { id: "gap", label: "Missing tooth", sub: "One gap, several, or a loose denture", href: "/treatments/dental-implants-surat/", hue: "cobalt", icon: "gap" },
-  { id: "crooked", label: "Crooked teeth", sub: "Crowding, gaps or a bite that is off", href: "/treatments/braces-clear-aligners/", hue: "violet", icon: "crooked" },
+  { id: "pain", label: "Tooth pain", sub: "Aching, throbbing or sensitive", href: "/treatments/root-canal-treatment-surat/", hue: "aqua", icon: "pain" },
+  { id: "gap", label: "Missing tooth", sub: "One gap, several, or a loose denture", href: "/treatments/dental-implants-surat/", hue: "blue", icon: "gap" },
+  { id: "crooked", label: "Crooked teeth", sub: "Crowding, gaps or a bite that is off", href: "/treatments/braces-clear-aligners/", hue: "blue", icon: "crooked" },
   { id: "smile", label: "Smile appearance", sub: "Colour, shape or a chipped edge", href: "/treatments/cosmetic-smile-dentistry/", hue: "coral", icon: "smile" },
-  { id: "child", label: "My child's teeth", sub: "First visit, cavity or a scared child", href: "/treatments/kids-dentistry-surat/", hue: "mint", icon: "child" },
-  { id: "gums", label: "Bleeding gums", sub: "Blood when brushing, swelling, bad breath", href: "/treatments/gum-care-surat/", hue: "green", icon: "gums" },
-  { id: "wisdom", label: "Wisdom tooth", sub: "Pain or swelling at the back", href: "/treatments/wisdom-tooth-oral-surgery/", hue: "lavender", icon: "wisdom" },
-  { id: "broken", label: "Broken or chipped tooth", sub: "Cracked, worn or a lost filling", href: "/treatments/crowns-and-bridges/", hue: "amber", icon: "broken" },
-  { id: "checkup", label: "Just a check-up", sub: "Overdue, or a clean and a look", href: "/treatments/dental-check-up-surat/", hue: "sky", icon: "checkup" },
+  { id: "child", label: "My child's teeth", sub: "First visit, cavity or a scared child", href: "/treatments/kids-dentistry-surat/", hue: "butter", icon: "child" },
+  { id: "gums", label: "Bleeding gums", sub: "Blood when brushing, swelling, bad breath", href: "/treatments/gum-care-surat/", hue: "aqua", icon: "gums" },
+  { id: "wisdom", label: "Wisdom tooth", sub: "Pain or swelling at the back", href: "/treatments/wisdom-tooth-oral-surgery/", hue: "coral", icon: "wisdom" },
+  { id: "broken", label: "Broken or chipped tooth", sub: "Cracked, worn or a lost filling", href: "/treatments/crowns-and-bridges/", hue: "butter", icon: "broken" },
+  { id: "checkup", label: "Just a check-up", sub: "Overdue, or a clean and a look", href: "/treatments/dental-check-up-surat/", hue: "blue", icon: "checkup" },
 ];
 
 /**
- * Smile Notes.
+ * Kheni brand lines.
  *
- * Short Kheni lines set between sections. They are brand voice, never
- * patient quotes, and never claims. One highlighted word each.
+ * Six lines, written to be said out loud. Brand voice, never a patient
+ * quote, never a claim. `signature` is the one the site leads with; the
+ * rest are used once each, set large on a colour field.
  */
-export type SmileNote = { line: string; highlight: string; hue: Hue };
+export type BrandLine = { id: string; line: string; highlight: string; hue: Hue };
 
-export const smileNotes: SmileNote[] = [
-  { line: "Come with a concern. Leave with a clear next step.", highlight: "clear", hue: "cobalt" },
-  { line: "Good dentistry starts with listening.", highlight: "listening", hue: "coral" },
-  { line: "Two clinics. One familiar standard of care.", highlight: "familiar", hue: "teal" },
-  { line: "Your smile is personal. The plan should be too.", highlight: "personal", hue: "violet" },
-  { line: "No treatment begins before you understand why.", highlight: "why", hue: "green" },
-  { line: "A missing tooth changes more than your smile.", highlight: "more", hue: "cobalt" },
-  { line: "The right treatment is often the smaller one.", highlight: "smaller", hue: "amber" },
-  { line: "Chew on both sides again.", highlight: "both sides", hue: "sunshine" },
-  { line: "Pain is information. We start there.", highlight: "information", hue: "teal" },
-  { line: "A tooth saved beats a tooth replaced.", highlight: "saved", hue: "mint" },
-  { line: "Ask the question you think is silly. It never is.", highlight: "never is", hue: "lavender" },
-  { line: "Fifteen years in, and we still explain every step.", highlight: "every step", hue: "sky" },
+export const brandLines: BrandLine[] = [
+  { id: "signature", line: "Walk in worried. Walk out with a plan.", highlight: "with a plan", hue: "blue" },
+  { id: "first-step", line: "Tell us what is bothering you. That is the whole first step.", highlight: "the whole first step", hue: "coral" },
+  { id: "plan", line: "The plan comes before the drill. Every time.", highlight: "before the drill", hue: "aqua" },
+  { id: "kept", line: "Your own tooth, kept, is the result we like most.", highlight: "kept", hue: "butter" },
+  { id: "clinics", line: "Two clinics. Same care. Same Kheni.", highlight: "Same Kheni", hue: "blue" },
+  { id: "silly", line: "Ask the question you think is silly. It never is.", highlight: "It never is", hue: "coral" },
 ];
+
+export const brandLineById = (id: string) => brandLines.find((l) => l.id === id) ?? brandLines[0];
 
 export const resources = [
   {

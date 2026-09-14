@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
 
+import { ClinicShorts } from "@/components/kheni/clinic-shorts";
 import { CtaBand } from "@/components/kheni/cta-band";
-import { DoctorRoster, DoctorSpotlight } from "@/components/kheni/doctor-spotlight";
+import { DoctorFeature, DoctorRoster } from "@/components/kheni/doctors";
 import { PageHero } from "@/components/kheni/page-hero";
-import { ProofCluster } from "@/components/kheni/proof";
+import { ProofBig } from "@/components/kheni/proof";
 import { SectionIntro } from "@/components/kheni/section-intro";
-import { SmileNote } from "@/components/kheni/smile-note";
 import { Container } from "@/components/ui/container";
 import { languages } from "@/content/clinic-proof";
-import { locations, smileNotes } from "@/content/site";
+import { locations } from "@/content/site";
+import { videosFor } from "@/content/videos";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/doctors/" },
@@ -18,48 +19,54 @@ export const metadata: Metadata = {
 };
 
 export default function DoctorsPage() {
+  const jinal = videosFor({ doctorSlug: "dr-jinal-monapara" }, 3);
   return (
     <>
-      <PageHero
-        eyebrow="Our dentists"
-        title="Know who is treating you before you sit down."
-        highlight="who"
-        copy={`Four dentists across two clinics in Surat, led by Dr. Mayur Kheni. Consultations in ${languages.join(", ")}.`}
-        hue="cobalt"
-        compact
-      />
+      <PageHero eyebrow="Our dentists" title="Know who is treating you before you sit down." highlight="who" copy={`Four dentists across two clinics in Surat, led by Dr. Mayur Kheni. Consultations in ${languages.join(", ")}.`} hue="coral" compact />
 
-      <section className="py-8 sm:py-12 lg:py-16">
+      <section className="mood-blue py-10 sm:py-14 lg:py-20">
         <Container width="7xl">
-          <DoctorSpotlight />
+          <DoctorFeature placement="doctors_feature" />
         </Container>
       </section>
 
-      <section className="bg-porcelain pb-10 sm:pb-14 lg:pb-18">
+      <section className="bg-white py-10 sm:py-14 lg:py-20">
         <Container width="7xl">
-          <SectionIntro eyebrow="The team" title="Three more dentists, each with their own area of work." highlight="area of work" copy="Degrees and years in practice are listed exactly as each doctor gave them." />
-          <div className="mt-6">
-            <DoctorRoster exclude="dr-mayur-kheni" />
-          </div>
-          <div className="mt-6 grid gap-3 rounded-[1.5rem] bg-cobalt-tint p-5 sm:grid-cols-2 sm:p-6">
-            {locations.map((l) => (
-              <p key={l.slug} className="t-small text-ink-soft">
-                <strong className="text-ink">{l.displayArea}:</strong> {l.note}
-              </p>
-            ))}
+          <SectionIntro eyebrow="The team" title="Three more dentists, each with their own area of work." highlight="their own area" copy="Degrees and years in practice are listed exactly as each doctor gave them." />
+          <div className="mt-8">
+            <DoctorRoster exclude="dr-mayur-kheni" placement="doctors_roster" />
           </div>
         </Container>
       </section>
 
-      <SmileNote note={smileNotes[1]} compact className="pb-10 sm:pb-14" />
+      {jinal.length > 0 && (
+        <section className="on-dark mood-ink bg-ink py-10 text-white sm:py-14 lg:py-20">
+          <Container width="7xl">
+            <SectionIntro eyebrow="From the clinic, on YouTube" title="A few minutes with Dr. Jinal, in Gujarati." highlight="Dr. Jinal" copy="Tooth structure, bridges and implants, and stains. Nothing plays until you tap." />
+            <ClinicShorts videos={jinal} limit={3} columns={3} tone="dark" placement="doctors_videos" className="mt-7" />
+          </Container>
+        </section>
+      )}
 
-      <section className="pb-10 sm:pb-14 lg:pb-18">
-        <Container width="7xl">
-          <ProofCluster placement="doctors_proof" />
+      <section className="on-aqua mood-aqua bg-aqua py-10 text-ink sm:py-14 lg:py-20">
+        <Container width="7xl" className="grid gap-6 lg:grid-cols-2 lg:gap-12">
+          {locations.map((l) => (
+            <div key={l.slug}>
+              <p className="t-eyebrow">{l.displayArea}</p>
+              <p className="t-h3 mt-2">{l.note}</p>
+            </div>
+          ))}
+          <p className="t-small lg:col-span-2">Call the clinic you plan to visit to check which days a particular dentist is there.</p>
         </Container>
       </section>
 
-      <CtaBand title="Book with the dentist who fits your problem." highlight="fits" copy="Or tell us what is troubling you and we will suggest who to see and where." placement="doctors_final" />
+      <section className="on-butter bg-butter py-12 text-ink sm:py-16 lg:py-24">
+        <Container width="7xl">
+          <ProofBig placement="doctors_proof" />
+        </Container>
+      </section>
+
+      <CtaBand title="Book with the dentist who fits your problem." highlight="fits your problem" copy="Or tell us what is troubling you and we will suggest who to see and where." placement="doctors_final" />
     </>
   );
 }

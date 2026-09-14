@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function PrivacyPage() {
   return (
     <>
-      <PageHero eyebrow="Privacy" title="Privacy should be easy to understand too." highlight="easy" copy="A short note on what happens to the details you send us, and what this website itself collects." hue="sky" proof={false} compact />
+      <PageHero eyebrow="Privacy" title="Privacy should be easy to understand too." highlight="easy" copy="A short note on what happens to the details you send us, and what this website itself collects." hue="blue" proof={false} compact />
       <section className="py-10 sm:py-14">
         <Container width="4xl" className="prose-kheni">
           <h2>Information you choose to share</h2>

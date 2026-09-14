@@ -1,16 +1,13 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 
+import { BrandLine } from "@/components/kheni/brand-line";
+import { ConcernCards } from "@/components/kheni/concern-cards";
 import { CtaBand } from "@/components/kheni/cta-band";
 import { PageHero } from "@/components/kheni/page-hero";
-import { SmileNote } from "@/components/kheni/smile-note";
-import { TreatmentPoster, TreatmentRow } from "@/components/kheni/treatment-poster";
-import { Container } from "@/components/ui/container";
-import { smileNotes, treatments, type TreatmentCategory } from "@/content/site";
 import { SectionIntro } from "@/components/kheni/section-intro";
-import { IconServiceGrid } from "@/components/kheni/demo/icon-grid";
-import { demoContentActive } from "@/content/demo";
+import { TreatmentLine } from "@/components/kheni/treatment-cards";
+import { Container } from "@/components/ui/container";
+import { treatments, type TreatmentCategory } from "@/content/site";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/treatments/" },
@@ -28,61 +25,43 @@ const groups: { id: TreatmentCategory; label: string }[] = [
 ];
 
 export default function TreatmentsPage() {
+  let n = 0;
   return (
     <>
-      <PageHero
-        eyebrow={`${treatments.length} treatments · two clinics`}
-        title="You do not need the name of the treatment."
-        highlight="name"
-        copy="Have a look through if it helps you put words to the problem. If it does not, tell us what you are feeling and the examination decides where care starts."
-        hue="cobalt"
-      >
-        <Link href="/problems-we-treat/" className="mt-5 inline-flex min-h-12 items-center gap-2 rounded-full bg-white px-5 text-[.9375rem] font-semibold ring-1 ring-line">
-          Start from what is bothering you
-          <ArrowRight className="cta-arrow size-4 text-cobalt-deep" aria-hidden="true" />
-        </Link>
-      </PageHero>
+      <PageHero eyebrow={`${treatments.length} treatments · two clinics`} title="You do not need the name of the treatment." highlight="the name" copy="Have a look through if it helps you put words to the problem. If it does not, tell us what you are feeling and the examination decides where care starts." hue="blue" />
 
-      {/* Phone: compact rows grouped by need. Tablet and up: posters. */}
-      <section className="py-8 sm:py-12 lg:py-16">
-        <Container width="7xl">
-          <div className="space-y-8 sm:hidden">
+      <section className="py-10 sm:py-14 lg:py-20">
+        <Container width="7xl" className="grid gap-10 lg:grid-cols-[.6fr_1.4fr] lg:gap-16 [&>*]:min-w-0">
+          <div className="lg:sticky lg:top-24 lg:self-start">
+            <SectionIntro eyebrow="Everything we do" title="Eleven treatments, in the order people usually need them." highlight="usually need them" />
+          </div>
+          <div>
             {groups.map((group) => {
               const items = treatments.filter((t) => t.category === group.id);
               if (!items.length) return null;
               return (
-                <div key={group.id}>
+                <div key={group.id} className="mb-10 last:mb-0">
                   <h2 className="t-eyebrow text-ink-soft">{group.label}</h2>
-                  <div className="mt-3 grid gap-2.5">
+                  <div className="mt-2">
                     {items.map((t) => (
-                      <TreatmentRow key={t.slug} treatment={t} placement="treatments_index" />
+                      <TreatmentLine key={t.slug} treatment={t} index={n++} placement="treatments_index" />
                     ))}
                   </div>
                 </div>
               );
             })}
           </div>
-          <div className="hidden gap-4 sm:grid sm:grid-cols-2 lg:grid-cols-3">
-            {treatments.map((t, index) => (
-              <TreatmentPoster key={t.slug} treatment={t} featured={index === 0} placement="treatments_index" />
-            ))}
-          </div>
         </Container>
       </section>
 
-      <SmileNote note={smileNotes[4]} compact className="pb-10 sm:pb-14" />
+      <section className="bg-white py-10 sm:py-14 lg:py-20">
+        <Container width="7xl">
+          <SectionIntro eyebrow="Or start here" title="Start from what is bothering you." highlight="bothering you" />
+          <ConcernCards placement="treatments_concerns" className="mt-7" />
+        </Container>
+      </section>
 
-      {demoContentActive && (
-        <>
-          <section className="hue-navy py-10 sm:py-14 lg:py-20">
-            <Container width="7xl">
-              <SectionIntro eyebrow="At a glance" title="Twelve things, one waiting room." highlight="one waiting room" />
-              <IconServiceGrid className="mt-6 sm:mt-8" />
-            </Container>
-          </section>
-
-        </>
-      )}
+      <BrandLine id="plan" />
 
       <CtaBand title="Not sure which one you need? That is normal." highlight="normal" copy="Describe it in your own words. The examination sorts out the rest." placement="treatments_final" />
     </>
