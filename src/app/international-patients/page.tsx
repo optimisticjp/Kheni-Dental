@@ -83,15 +83,15 @@ export default function InternationalPage() {
         title="Dental care in Surat for NRIs and international visitors."
         highlight="Surat"
         copy="Visiting family, or planning dental care during your India trip? Send your dates first. We will tell you what fits into your visit and what would need a second one."
-        hue="coral"
-        aside={<GlobeSurat className="mx-auto w-full max-w-[20rem] lg:max-w-none" />}
+        hue="sky"
+        aside={<div className="rounded-[1.5rem] border border-ivory/10 bg-ivory p-4 lg:ml-auto lg:max-w-md"><GlobeSurat className="mx-auto w-full max-w-[20rem] lg:max-w-none" /></div>}
       >
         <div className="mt-5 flex flex-col gap-2.5 sm:flex-row">
           <WhatsAppButton placement="international_hero" message={NRI_MESSAGE} label="Plan your visit on WhatsApp" track="international_patient_contact" />
         </div>
       </PageHero>
 
-      <section className="hue-coral py-10 sm:py-14 lg:py-18">
+      <section className="py-10 sm:py-14 lg:py-18">
         <Container width="7xl">
           <div className="grid gap-8 lg:grid-cols-[1.15fr_.85fr] lg:items-center lg:gap-12">
             <div>
@@ -110,7 +110,7 @@ export default function InternationalPage() {
         </Container>
       </section>
 
-      <section className="hue-coral bg-coral-tint py-10 sm:py-14 lg:py-18">
+      <section className="bg-sky py-10 sm:py-14 lg:py-18">
         <Container width="7xl">
           <div className="grid gap-8 lg:grid-cols-[1fr_1fr] lg:gap-14">
             <div>
@@ -118,7 +118,7 @@ export default function InternationalPage() {
               <ul className="mt-5 grid gap-2.5 sm:grid-cols-2">
                 {whatToExpect.map((item) => (
                   <li key={item} className="flex items-start gap-3 rounded-xl bg-white px-4 py-3 text-[.9375rem] font-medium leading-snug">
-                    <span className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-coral text-ink">
+                    <span className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-ink text-gold">
                       <Check className="size-3" aria-hidden="true" />
                     </span>
                     {item}
@@ -139,9 +139,9 @@ export default function InternationalPage() {
         </Container>
       </section>
 
-      <SmileNote index={2} compact className="py-10 sm:py-14" />
+      <SmileNote index={2} compact tone="dark" className="py-10 sm:py-14" />
 
-      <section className="hue-coral pb-10 sm:pb-14 lg:pb-18">
+      <section className="pb-10 sm:pb-14 lg:pb-18">
         <Container width="7xl">
           <div className="grid gap-8 lg:grid-cols-[.9fr_1.1fr] lg:gap-14">
             <div>

@@ -1,5 +1,14 @@
 # Image prompts
 
+> **September 2026 note.** Generated people are no longer used anywhere on
+> the site. The doctor portraits, the homepage hero dentist, the team walk,
+> the "patient" treatment photographs and the notable-patient pictures were
+> removed, and the prompts for them below are kept only as a record of the
+> frames. Real clinic photographs go in their place (see
+> `docs/CLINIC-CONTENT-NEEDED.md`). The object and interior prompts still
+> apply; the palette is now ivory, warm sand and near-black with a gold
+> detail, not navy and cobalt.
+
 Every image slot on the site, with a ChatGPT prompt, the exact file name to
 save it as, and the size to generate. Generate, save with the file name
 given, send the folder over, and each one is wired into its frame with no

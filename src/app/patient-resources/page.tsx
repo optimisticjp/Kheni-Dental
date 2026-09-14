@@ -33,6 +33,8 @@ export default function ResourcesPage() {
         highlight="after"
         copy="Short guides for the day before an appointment and the days after one. Written to help you prepare and to tell you when something is worth a phone call."
         hue="sky"
+        tone="light"
+        field="sky"
         compact
       >
         <nav aria-label="Resource categories" className="mt-5 flex flex-wrap gap-2">
@@ -47,7 +49,7 @@ export default function ResourcesPage() {
 
       <section className="hue-coral py-8 sm:py-10">
         <Container width="7xl">
-          <div className="grid gap-5 rounded-[1.5rem] border border-coral/40 bg-coral-tint p-5 sm:p-7 lg:grid-cols-[1fr_auto] lg:items-center">
+          <div className="grid gap-5 rounded-[1.5rem] border border-peach-fill/50 bg-peach p-5 sm:p-7 lg:grid-cols-[1fr_auto] lg:items-center">
             <div>
               <p className="t-eyebrow inline-flex items-center gap-2 text-coral-text">
                 <AlertTriangle className="size-4" aria-hidden="true" />
@@ -84,7 +86,7 @@ export default function ResourcesPage() {
                       <ol className="mt-4 grid gap-2.5">
                         {guide.points.map((point, i) => (
                           <li key={point} className="flex gap-3 rounded-xl bg-h-tint p-4 text-[.9375rem] leading-6">
-                            <span className="mt-0.5 grid size-6 shrink-0 place-items-center rounded-full bg-h-fill text-xs font-bold text-h-on-fill">{i + 1}</span>
+                            <span className="mt-0.5 grid size-6 shrink-0 place-items-center rounded-full bg-ink font-serif text-xs text-gold">{i + 1}</span>
                             <span>{point}</span>
                           </li>
                         ))}

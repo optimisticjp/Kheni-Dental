@@ -8,18 +8,28 @@ import { pushTrackingEvent } from "@/lib/tracking";
 import { cn } from "@/lib/utils";
 
 /**
- * From the clinic: real Shorts from the clinic's own YouTube channel.
+ * From the clinic's YouTube channel: education and longer patient stories.
  *
- * Poster first. Each card is YouTube's own thumbnail at 9:16 with a play
- * control; the player (privacy-enhanced domain) is only created after a
- * tap, and only one plays at a time. No iframes at page load, no autoplay.
+ * Poster first. Each card is YouTube's own thumbnail with a play control;
+ * the player (privacy-enhanced domain) is only created after a tap, and
+ * only one plays at a time. No iframes at page load, no autoplay.
  *
- * On a phone the rail scroll-snaps. On desktop it is a grid.
+ * Instagram carries the living clinic (Reels). YouTube carries what needs
+ * two minutes: a dentist explaining something, a patient telling a story.
  */
-function VideoCard({ video, playing, onPlay }: { video: ClinicVideo; playing: boolean; onPlay: () => void }) {
-  const kindLabel = video.kind === "patient" ? "Patient" : video.kind === "education" ? "Dentist tip" : "Clinic";
+function VideoCard({ video, playing, onPlay, tone, uniform }: { video: ClinicVideo; playing: boolean; onPlay: () => void; tone: "light" | "dark"; uniform?: boolean }) {
+  const kindLabel = video.kind === "patient" ? "Patient story" : video.kind === "education" ? "Dentist explains" : "Clinic";
+  const wide = video.format === "video" && !uniform;
   return (
-    <article className={cn("relative w-[62vw] shrink-0 overflow-hidden rounded-[1.25rem] bg-ink sm:w-[40vw] md:w-auto", playing && "ring-2 ring-sunshine")} style={{ aspectRatio: "9 / 16" }}>
+    <article
+      className={cn(
+        "relative shrink-0 overflow-hidden rounded-[1.25rem] border bg-ink-2",
+        tone === "dark" ? "border-ivory/10" : "border-ink/80",
+        wide ? "w-[82vw] sm:w-[54vw] md:w-auto" : uniform ? "w-[66vw] sm:w-[40vw] md:w-auto" : "w-[58vw] sm:w-[36vw] md:w-auto",
+        playing && "ring-2 ring-gold",
+      )}
+      style={{ aspectRatio: wide ? "16 / 9" : uniform ? "4 / 5" : "9 / 16" }}
+    >
       {playing ? (
         <iframe
           src={embedUrl(video.id)}
@@ -33,23 +43,22 @@ function VideoCard({ video, playing, onPlay }: { video: ClinicVideo; playing: bo
           type="button"
           onClick={onPlay}
           aria-label={`Play video: ${video.title}`}
-          className="group absolute inset-0 block text-left focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-sunshine"
+          className="group absolute inset-0 block text-left focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-gold"
         >
           <picture>
-            <source srcSet={posterUrl(video.id)} />
-            { }
-            <img src={posterFallbackUrl(video.id)} alt="" loading="lazy" decoding="async" className="absolute inset-0 size-full object-cover transition-transform duration-500 ease-kheni group-hover:scale-[1.03]" />
+            <source srcSet={posterUrl(video)} />
+            <img src={posterFallbackUrl(video)} alt="" loading="lazy" decoding="async" className="absolute inset-0 size-full object-cover transition-transform duration-500 ease-kheni group-hover:scale-[1.03]" />
           </picture>
-          <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/20 to-transparent" />
-          <span aria-hidden="true" className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[.68rem] font-bold uppercase tracking-[.1em] text-ink">
+          <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/20 to-ink/10" />
+          <span aria-hidden="true" className="absolute left-3 top-3 rounded-full bg-ink/70 px-2.5 py-1 text-[.62rem] font-semibold uppercase tracking-[.14em] text-gold backdrop-blur-sm">
             {kindLabel}
           </span>
-          <span aria-hidden="true" className="absolute left-1/2 top-1/2 grid size-14 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-white text-ink shadow-[0_8px_24px_rgba(18,34,74,.4)] transition-transform duration-300 group-hover:scale-105">
-            <Play className="ml-0.5 size-6 fill-current" />
+          <span aria-hidden="true" className="absolute left-1/2 top-1/2 grid size-12 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-ivory/60 bg-ink/40 text-ivory backdrop-blur-sm transition-[transform,background-color,color] duration-300 group-hover:scale-105 group-hover:bg-gold group-hover:text-ink">
+            <Play className="ml-0.5 size-5 fill-current" />
           </span>
           <span className="absolute inset-x-0 bottom-0 p-3.5">
-            <span className="line-clamp-2 block text-[.9375rem] font-semibold leading-snug text-white">{video.title}</span>
-            <span className="mt-1 block text-xs text-white/70">{video.language} · Short</span>
+            <span className="line-clamp-2 block font-serif text-[1rem] leading-snug text-ivory">{video.title}</span>
+            <span className="mt-1 block text-[.72rem] text-ivory/65">{video.language} · YouTube</span>
           </span>
         </button>
       )}
@@ -57,10 +66,33 @@ function VideoCard({ video, playing, onPlay }: { video: ClinicVideo; playing: bo
   );
 }
 
-export function ClinicShorts({ limit = 6, kind, className }: { limit?: number; kind?: ClinicVideo["kind"]; className?: string }) {
+export function ClinicShorts({
+  limit = 6,
+  kind,
+  format,
+  className,
+  tone = "light",
+  videos: override,
+  columns = 6,
+  uniform = false,
+}: {
+  limit?: number;
+  kind?: ClinicVideo["kind"];
+  format?: ClinicVideo["format"];
+  className?: string;
+  tone?: "light" | "dark";
+  videos?: ClinicVideo[];
+  columns?: 2 | 3 | 4 | 6;
+  /** Force every card to the same 4:5 frame, for a mixed pair of a Short and a video. */
+  uniform?: boolean;
+}) {
   const [playing, setPlaying] = useState<string | null>(null);
-  const videos = (kind ? clinicVideos.filter((v) => v.kind === kind) : clinicVideos).slice(0, limit);
+  const videos = (override ?? clinicVideos)
+    .filter((v) => (kind ? v.kind === kind : true))
+    .filter((v) => (format ? v.format === format : true))
+    .slice(0, limit);
   if (videos.length === 0) return null;
+  const current = videos.find((v) => v.id === playing);
 
   const play = (id: string) => {
     setPlaying(id);
@@ -70,21 +102,21 @@ export function ClinicShorts({ limit = 6, kind, className }: { limit?: number; k
   return (
     <div className={className}>
       <div className="edge-fade -mx-4 px-4 sm:-mx-6 sm:px-6 md:mx-0 md:px-0 md:[mask-image:none]">
-        <div className="rail-snap flex gap-3 overflow-x-auto pb-2 md:grid md:grid-cols-3 md:overflow-visible lg:grid-cols-6 lg:gap-4">
+        <div className={cn("rail-snap flex gap-3 overflow-x-auto pb-2 md:grid md:overflow-visible lg:gap-4", columns === 6 && "md:grid-cols-3 lg:grid-cols-6", columns === 4 && "md:grid-cols-2 lg:grid-cols-4", columns === 3 && "md:grid-cols-3", columns === 2 && "md:grid-cols-2")}>
           {videos.map((video) => (
-            <VideoCard key={video.id} video={video} playing={playing === video.id} onPlay={() => play(video.id)} />
+            <VideoCard key={video.id} video={video} tone={tone} uniform={uniform} playing={playing === video.id} onPlay={() => play(video.id)} />
           ))}
         </div>
       </div>
       <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
-        <p className="t-small text-ink-soft">Videos play here after a tap, from the clinic&rsquo;s YouTube channel.</p>
+        <p className={cn("t-small", tone === "dark" ? "text-ivory/65" : "text-ink-soft")}>Videos play here after a tap, from the clinic&rsquo;s YouTube channel.</p>
         <a
-          href={playing ? watchUrl(playing) : youtubeChannelUrl}
+          href={current ? watchUrl(current) : youtubeChannelUrl}
           target="_blank"
           rel="noreferrer"
-          className="inline-flex min-h-10 items-center gap-1.5 text-sm font-semibold text-cobalt-deep"
+          className={cn("inline-flex min-h-10 items-center gap-1.5 text-sm font-semibold", tone === "dark" ? "text-gold" : "text-gold-text")}
         >
-          {playing ? "Open on YouTube" : "All videos on YouTube"}
+          {current ? "Open on YouTube" : "All videos on YouTube"}
           <ArrowUpRight className="size-4" aria-hidden="true" />
         </a>
       </div>

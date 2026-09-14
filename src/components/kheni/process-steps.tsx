@@ -26,6 +26,7 @@ export function ProcessSteps({
   columns = 5,
   dense = false,
   variant = "rail",
+  tone = "light",
 }: {
   steps: readonly ProcessStep[];
   className?: string;
@@ -33,7 +34,9 @@ export function ProcessSteps({
   /** On phones, show titles only; the copy returns from sm up. */
   dense?: boolean;
   variant?: "rail" | "cards";
+  tone?: "light" | "dark";
 }) {
+  const dark = tone === "dark";
   const grid = cn(
     "relative grid gap-3 lg:gap-4",
     columns === 5 && "lg:grid-cols-5",
@@ -48,16 +51,16 @@ export function ProcessSteps({
         {steps.map((step, index) => {
           const Icon = step.icon ?? DEFAULT_ICONS[index % DEFAULT_ICONS.length];
           return (
-            <li key={step.title} className="relative isolate overflow-hidden rounded-[1.25rem] bg-white p-5 ring-1 ring-line sm:p-6">
-              <span aria-hidden="true" className="grid size-12 place-items-center rounded-full bg-h-tint text-h-text">
+            <li key={step.title} className={cn("relative isolate overflow-hidden rounded-[1.25rem] p-5 ring-1 sm:p-6", dark ? "bg-ivory/[.05] ring-ivory/10 text-ivory" : "bg-white ring-line")}>
+              <span aria-hidden="true" className={cn("grid size-12 place-items-center rounded-full", dark ? "border border-gold/40 text-gold" : "bg-gold-tint text-gold-text")}>
                 <Icon className="size-5" strokeWidth={1.75} />
               </span>
               <h3 className="t-card mt-5 pr-10">{step.title}</h3>
-              <p className={cn("t-small mt-2 text-ink-soft", dense && "hidden sm:block")}>{step.copy}</p>
+              <p className={cn("t-small mt-2", dark ? "text-ivory/65" : "text-ink-soft", dense && "hidden sm:block")}>{step.copy}</p>
               {/* The page-number numeral. Set in the serif, very large and very faint. */}
               <span
                 aria-hidden="true"
-                className="pointer-events-none absolute -bottom-3 -right-1 select-none font-serif text-[5rem] font-semibold leading-none tracking-[-.06em] text-h-fill opacity-[.14]"
+                className={cn("pointer-events-none absolute -bottom-3 -right-1 select-none font-serif text-[5rem] leading-none tracking-[-.06em] opacity-[.12]", dark ? "text-gold" : "text-ink")}
               >
                 {String(index + 1).padStart(2, "0")}
               </span>
@@ -71,18 +74,18 @@ export function ProcessSteps({
   return (
     <ol className={grid}>
       {steps.map((step, index) => (
-        <li key={step.title} className={cn("relative flex gap-4 rounded-2xl bg-white p-4 ring-1 ring-line lg:flex-col lg:gap-0 lg:p-5", dense && "items-center py-3 lg:items-stretch lg:py-5")}>
+        <li key={step.title} className={cn("relative flex gap-4 rounded-2xl p-4 ring-1 lg:flex-col lg:gap-0 lg:p-5", dark ? "bg-ivory/[.05] ring-ivory/10 text-ivory" : "bg-white ring-line", dense && "items-center py-3 lg:items-stretch lg:py-5")}>
           <div className="relative flex shrink-0 flex-col items-center lg:mb-4 lg:flex-row">
-            <span className="grid size-10 shrink-0 place-items-center rounded-full bg-h-fill font-serif text-lg font-semibold text-h-on-fill">
+            <span className={cn("grid size-10 shrink-0 place-items-center rounded-full font-serif text-lg", dark ? "bg-gold text-ink" : "bg-ink text-gold")}>
               {index + 1}
             </span>
             {index < steps.length - 1 && (
-              <span aria-hidden="true" className={cn("mt-2 w-0.5 flex-1 rounded-full bg-h-soft lg:mt-0 lg:ml-2 lg:h-0.5 lg:w-auto lg:flex-1", dense && "hidden sm:block")} />
+              <span aria-hidden="true" className={cn("mt-2 w-px flex-1 lg:mt-0 lg:ml-2 lg:h-px lg:w-auto lg:flex-1", dark ? "bg-gold/30" : "bg-ink/15", dense && "hidden sm:block")} />
             )}
           </div>
           <div>
             <h3 className="t-card">{step.title}</h3>
-            <p className={cn("t-small mt-1.5 text-ink-soft", dense && "hidden sm:block")}>{step.copy}</p>
+            <p className={cn("t-small mt-1.5", dark ? "text-ivory/65" : "text-ink-soft", dense && "hidden sm:block")}>{step.copy}</p>
           </div>
         </li>
       ))}

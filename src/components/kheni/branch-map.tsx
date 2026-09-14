@@ -22,7 +22,7 @@ const RATIO = {
 
 export function BranchMap({ location, className, size = "standard" }: { location: Location; className?: string; size?: keyof typeof RATIO }) {
   return (
-    <AerialFrame location={location} className={cn("group/map relative isolate overflow-hidden rounded-[1.25rem] bg-navy-tint", RATIO[size], className)}>
+    <AerialFrame location={location} className={cn("group/map relative isolate overflow-hidden rounded-[1.25rem] bg-sand", RATIO[size], className)}>
       <ExactLocationPanel location={location} className="size-full" />
     </AerialFrame>
   );
@@ -71,7 +71,7 @@ export function DirectionsButton({ location, placement, className }: { location:
       data-branch={location.slug}
       className={cn("inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-ink px-5 text-[.9375rem] font-semibold text-white", className)}
     >
-      <MapPin className="size-4 text-sunshine" aria-hidden="true" />
+      <MapPin className="size-4 text-gold" aria-hidden="true" />
       Get Directions
       <ArrowUpRight className="size-4" aria-hidden="true" />
     </a>

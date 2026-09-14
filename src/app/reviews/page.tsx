@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { ClinicShorts } from "@/components/kheni/clinic-shorts";
 import { CtaBand } from "@/components/kheni/cta-band";
 import { PageHero } from "@/components/kheni/page-hero";
-import { BranchProof, GoogleQuotes, ProofCluster } from "@/components/kheni/proof";
+import { BranchProof, GoogleQuotes, ProofPanel } from "@/components/kheni/proof";
 import { ResultsPreview } from "@/components/kheni/results-preview";
 import { SectionIntro } from "@/components/kheni/section-intro";
 import { Container } from "@/components/ui/container";
@@ -12,10 +12,6 @@ import { googleReputation, verifiedBranches } from "@/content/google-reputation"
 import { patientStories, videoStories } from "@/content/patient-stories";
 import { locations } from "@/content/site";
 import { writeReviewUrl } from "@/lib/maps";
-import { RatingSummary, TestimonialWall } from "@/components/kheni/demo/testimonial-wall";
-import { VideoWall } from "@/components/kheni/demo/video-wall";
-import { AwardsRow, PressQuotes } from "@/components/kheni/demo/press-strip";
-import { demoContentActive, demoRatingSummary } from "@/content/demo";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/reviews/" },
@@ -38,9 +34,9 @@ export default function ReviewsPage() {
         title={sharedRating ? `${sharedRating} on Google, across both our clinics.` : "What patients say about both our clinics."}
         highlight={sharedRating ?? undefined}
         copy={`${combinedReviews} reviews, counted across two separate clinic listings. Each clinic keeps its own, so you can read the one you plan to visit.`}
-        hue="sunshine"
+        hue="gold"
         proof={false}
-        aside={<ProofCluster placement="reviews_hero" />}
+        aside={<ProofPanel placement="reviews_hero" className="border-gold/30" />}
       />
 
       <section className="py-10 sm:py-14 lg:py-18">
@@ -56,9 +52,9 @@ export default function ReviewsPage() {
         </Container>
       </section>
 
-      <section className="hue-violet bg-violet-tint py-10 sm:py-14 lg:py-18">
+      <section className="bg-sand py-10 sm:py-14 lg:py-18">
         <Container width="7xl">
-          <SectionIntro eyebrow="Video from the clinic" title="Patients on the day their treatment finished." highlight="finished" copy="Short videos the clinic published on its own YouTube channel. Nothing plays until you tap it." />
+          <SectionIntro eyebrow="Video from the clinic" title="Patients on the day their treatment finished." highlight="finished" copy="Videos the clinic published on its own YouTube channel, including patients who flew in from abroad. Nothing plays until you tap it." />
           <ClinicShorts limit={6} kind="patient" className="mt-6" />
         </Container>
       </section>
@@ -82,14 +78,14 @@ export default function ReviewsPage() {
         </section>
       )}
 
-      <section className="hue-sunshine py-10 sm:py-14 lg:py-18">
+      <section className="py-10 sm:py-14 lg:py-18">
         <Container width="7xl">
           <SectionIntro eyebrow="Before and after" title="Results, shown honestly." highlight="honestly" />
           <ResultsPreview limit={2} placement="reviews_results" className="mt-6" />
         </Container>
       </section>
 
-      <section className="hue-teal bg-teal-tint py-10 sm:py-14 lg:py-18">
+      <section className="bg-mint py-10 sm:py-14 lg:py-18">
         <Container width="7xl">
           <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
             <SectionIntro eyebrow="Been treated with us?" title="Say so where it helps someone else." highlight="helps someone else" copy="Pick the clinic you were seen at, so your review lands on the right listing." />
@@ -103,10 +99,10 @@ export default function ReviewsPage() {
                   data-track="review_click"
                   data-placement={`reviews_write_${b.location.slug}`}
                   data-branch={b.location.slug}
-                  className="inline-flex min-h-13 items-center justify-between gap-4 rounded-full bg-ink px-6 text-[.9375rem] font-semibold text-white"
+                  className="inline-flex min-h-13 items-center justify-between gap-4 rounded-full bg-ink px-6 text-[.9375rem] font-semibold text-ivory"
                 >
                   Review {b.location.displayArea}
-                  <ArrowRight className="cta-arrow size-4 text-sunshine" aria-hidden="true" />
+                  <ArrowRight className="cta-arrow size-4 text-gold" aria-hidden="true" />
                 </a>
               ))}
             </div>
@@ -114,39 +110,8 @@ export default function ReviewsPage() {
         </Container>
       </section>
 
-      {demoContentActive && (
-        <>
-          <section className="hue-sunshine py-10 sm:py-14 lg:py-20">
-            <Container width="7xl">
-              <div className="grid gap-8 lg:grid-cols-[.85fr_1.15fr] lg:items-start lg:gap-12">
-                <div className="lg:sticky lg:top-24">
-                  <SectionIntro eyebrow="Patient stories" title={`All ${demoRatingSummary.total.toLocaleString("en-IN")} of them, not the best twelve.`} highlight="not the best twelve" copy="Sorted the way they came in. The four star ones are in here too." />
-                  <RatingSummary className="mt-6" />
-                </div>
-                <TestimonialWall />
-              </div>
-            </Container>
-          </section>
 
-          <section className="hue-violet relative isolate overflow-hidden bg-ink py-10 text-white sm:py-14 lg:py-20">
-            <div aria-hidden="true" className="absolute -right-24 top-0 size-80 rounded-full bg-violet opacity-30 blur-3xl" />
-            <Container width="7xl" className="relative">
-              <SectionIntro tone="dark" eyebrow="On camera" title="Some of them said it out loud." highlight="out loud" copy="Filmed on the day the work finished, in Gujarati and English." />
-              <VideoWall className="mt-6 sm:mt-8" />
-            </Container>
-          </section>
-
-          <section className="hue-gold py-10 sm:py-14 lg:py-20">
-            <Container width="7xl">
-              <SectionIntro eyebrow="Recognition" title="What other people have said about us." highlight="other people" />
-              <AwardsRow className="mt-6 sm:mt-8" />
-              <PressQuotes className="mt-8" />
-            </Container>
-          </section>
-        </>
-      )}
-
-      <CtaBand title="Ready when you are." highlight="Ready" copy="Book a time at either clinic, or just message and tell us what is bothering you." placement="reviews_final" hue="sunshine" />
+      <CtaBand title="Ready when you are." highlight="Ready" copy="Book a time at either clinic, or just message and tell us what is bothering you." placement="reviews_final" hue="gold" />
     </>
   );
 }

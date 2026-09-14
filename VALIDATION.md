@@ -20,6 +20,18 @@ The Next build also runs two build-time guards imported by `src/app/layout.tsx`:
   services; no em dashes; proof (cases, stories, videos) only with consent;
   canonical origin is `https://www.khenidentalcare.com`; four-doctor roster.
 
+## Browser checks (V5, 14 September 2026)
+
+A 32-check Playwright suite (`qa.mjs`, kept with the session) passed on the
+V5 black/gold build: no horizontal overflow on 19 pages at 14 widths, no
+forbidden claims, canonical www and `noindex` on every page, @khenielite
+linked on every page, robots and sitemap, the floating action pill (three
+actions, 48px targets, Directions and the branch phone on clinic pages),
+the mobile menu (focus, trap, Escape, scroll lock, Instagram link), the
+booking sheet, lazy YouTube on the privacy domain, reel cards linking to
+the exact Reel in a new tab with local posters and no Instagram script,
+16px form inputs, reduced motion, keyboard FAQ. Homepage at 390px: 12,399px.
+
 ## Browser checks (V4)
 
 Run against a local production build (`npm run build && npx next start -p 3100`)

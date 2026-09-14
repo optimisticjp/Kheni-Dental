@@ -16,10 +16,11 @@ const menuTreatments = featuredTreatmentSlugs
   .filter((t): t is (typeof treatments)[number] => Boolean(t));
 
 /**
- * Site header. Light and frosted once the page scrolls, so the colour of
- * whatever is underneath shows through faintly. One primary action (Book)
- * and one immediate action (Call). The treatments menu opens on hover for a
- * mouse and on focus for a keyboard, and every item is a real link.
+ * Site header. Near-black, with the name in ivory and "Elite Implant
+ * Center" in gold. Quiet ivory navigation, the featured link in gold, one
+ * outlined phone action and one gold Book. Frosted once the page scrolls.
+ * The treatments menu opens on hover for a mouse and on focus for a
+ * keyboard, and every item is a real link.
  */
 export function Navbar() {
   const [open, setOpen] = useState(false);
@@ -37,13 +38,13 @@ export function Navbar() {
     <>
       <header
         className={cn(
-          "sticky top-0 z-40 w-full transition-[box-shadow,background-color] duration-300",
-          scrolled ? "glass shadow-[0_1px_0_rgba(18,34,74,.08),0_10px_30px_-24px_rgba(18,34,74,.35)]" : "bg-porcelain",
+          "on-dark sticky top-0 z-40 w-full text-ivory transition-[box-shadow,background-color] duration-300",
+          scrolled ? "glass-dark shadow-[0_1px_0_rgba(255,255,255,.06),0_16px_40px_-28px_rgba(0,0,0,.8)]" : "bg-ink",
         )}
       >
         <Container width="7xl">
           <div className="flex h-16 items-center justify-between gap-4 sm:h-[72px]">
-            <BrandMark />
+            <BrandMark compact />
 
             <nav aria-label="Primary" className="hidden items-center gap-0.5 xl:flex">
               {primaryNav.map((link) =>
@@ -51,28 +52,28 @@ export function Navbar() {
                   <div key={link.href} className="group relative">
                     <Link
                       href={link.href}
-                      className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-2 text-[.9375rem] font-medium text-ink/80 transition-colors hover:bg-cobalt-tint hover:text-ink focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-cobalt"
+                      className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-2 text-[.9375rem] text-ivory/75 transition-colors hover:text-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
                     >
                       {link.label}
                       <ChevronDown className="size-3.5 transition-transform group-hover:rotate-180" aria-hidden="true" />
                     </Link>
                     <div className="invisible absolute left-0 top-full w-72 pt-2 opacity-0 transition-[opacity,visibility] group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
-                      <ul className="overflow-hidden rounded-2xl border border-line bg-white p-1.5 shadow-[0_24px_60px_-24px_rgba(18,34,74,.35)]">
+                      <ul className="grain overflow-hidden rounded-2xl border border-ivory/10 bg-ink-2 p-1.5 shadow-[0_24px_60px_-24px_rgba(0,0,0,.8)]">
                         {menuTreatments.map((treatment) => (
-                          <li key={treatment.slug} className={`hue-${treatment.hue}`}>
+                          <li key={treatment.slug}>
                             <Link
                               href={`/treatments/${treatment.slug}/`}
                               data-track="treatment_view"
                               data-placement="header_menu"
-                              className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-ink/85 hover:bg-h-tint hover:text-ink focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-cobalt"
+                              className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-ivory/80 hover:bg-ivory/[.06] hover:text-ivory focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-gold"
                             >
-                              <span aria-hidden="true" className="size-2.5 rounded-full bg-h-fill" />
+                              <span aria-hidden="true" className="size-1.5 rounded-full bg-gold/70" />
                               {treatment.title}
                             </Link>
                           </li>
                         ))}
-                        <li className="mt-1 border-t border-line pt-1">
-                          <Link href="/treatments/" className="block rounded-xl px-3 py-2.5 text-sm font-semibold text-cobalt-deep hover:bg-cobalt-tint">
+                        <li className="mt-1 border-t border-ivory/10 pt-1">
+                          <Link href="/treatments/" className="block rounded-xl px-3 py-2.5 text-sm font-semibold text-gold hover:bg-ivory/[.06]">
                             All treatments
                           </Link>
                         </li>
@@ -84,8 +85,8 @@ export function Navbar() {
                     key={link.href}
                     href={link.href}
                     className={cn(
-                      "whitespace-nowrap rounded-full px-3 py-2 text-[.9375rem] font-medium transition-colors hover:bg-cobalt-tint hover:text-ink focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-cobalt",
-                      link.accent ? "text-cobalt-deep" : "text-ink/80",
+                      "whitespace-nowrap rounded-full px-3 py-2 text-[.9375rem] transition-colors hover:text-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold",
+                      link.accent ? "text-gold" : "text-ivory/75",
                     )}
                   >
                     {link.label}
@@ -100,19 +101,19 @@ export function Navbar() {
                 data-track="phone_click"
                 data-placement="header"
                 aria-label={`Call the clinic on ${site.primaryPhoneDisplay}`}
-                className="hidden size-11 items-center justify-center gap-2 whitespace-nowrap rounded-full border border-line-strong text-sm font-medium text-ink hover:border-ink/40 md:inline-flex min-[1400px]:size-auto min-[1400px]:px-4"
+                className="hidden size-11 items-center justify-center gap-2 whitespace-nowrap rounded-full border border-ivory/20 text-sm text-ivory/90 hover:border-gold/60 hover:text-gold md:inline-flex min-[1400px]:size-auto min-[1400px]:px-4"
               >
-                <Phone className="size-4 text-cobalt" aria-hidden="true" />
+                <Phone className="size-4 text-gold" aria-hidden="true" />
                 <span className="hidden min-[1400px]:inline">{site.primaryPhoneDisplay}</span>
               </a>
-              <BookButton placement="header" className="hidden md:inline-flex" arrow={false} />
+              <BookButton placement="header" className="hidden whitespace-nowrap shadow-none md:inline-flex" arrow={false} />
               <button
                 type="button"
                 onClick={() => setOpen(true)}
                 aria-label="Open menu"
                 aria-expanded={open}
                 aria-controls={open ? "mobile-menu" : undefined}
-                className="grid size-11 place-items-center rounded-full border border-line-strong text-ink xl:hidden"
+                className="grid size-11 place-items-center rounded-full border border-ivory/20 text-ivory xl:hidden"
               >
                 <Menu className="size-5" />
               </button>

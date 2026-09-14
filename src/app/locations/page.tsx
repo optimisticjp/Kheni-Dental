@@ -25,7 +25,7 @@ export default function LocationsPage() {
         hue="green"
         compact
       />
-      <section className="hue-green py-8 sm:py-12 lg:py-16">
+      <section className="bg-white py-8 sm:py-12 lg:py-16">
         <Container width="7xl">
           <BranchLocator placement="locations" />
         </Container>

@@ -20,7 +20,7 @@ function Tooth({ d = MOLAR, fill = "#ffffff", stroke = "var(--h-text)", ...rest 
   return <path d={d} fill={fill} stroke={stroke} strokeWidth="4" strokeLinejoin="round" {...rest} />;
 }
 
-function Sparkle({ x: xIn, y: yIn, s = 10, fill = "var(--sunshine)" }: { x: number | string; y: number | string; s?: number; fill?: string }) {
+function Sparkle({ x: xIn, y: yIn, s = 10, fill = "var(--gold)" }: { x: number | string; y: number | string; s?: number; fill?: string }) {
   const x = Number(xIn);
   const y = Number(yIn);
   return <path d={`M${x} ${y - s}l${s * 0.3} ${s * 0.7} ${s * 0.7} ${s * 0.3}-${s * 0.7} ${s * 0.3}-${s * 0.3} ${s * 0.7}-${s * 0.3}-${s * 0.7}-${s * 0.7}-${s * 0.3} ${s * 0.7}-${s * 0.3}z`} fill={fill} />;

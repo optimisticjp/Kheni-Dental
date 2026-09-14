@@ -28,9 +28,14 @@ Snapshot prepared 27 August 2026, updated 29 August 2026 (Google counts) and 3 S
 - Hirabaug: 4.9, 210 reviews
 - Combined 1,963, always labelled as a sum across two listings. A live re-check from this environment was not possible (Google serves a script shell), so the clinic-verified values stand.
 
-### Clinic YouTube channel (verified 3 September 2026)
-- https://www.youtube.com/channel/UCA4ralOJwb8mrttegjyZcEQ ("Kheni Dental & Elite Implant Center"). Public Shorts from this channel are linked in `src/content/videos.ts` and played only after a tap.
-- Instagram @khenielite is clinic-provided and linked, not embedded; its public content could not be verified from this environment.
+### Clinic YouTube channel (re-checked 13 September 2026)
+- https://www.youtube.com/channel/UCA4ralOJwb8mrttegjyZcEQ ("Kheni Dental & Elite Implant Center", handle @khenidentaleliteimplantcen1300). 26 public videos (16 Shorts, 10 longer videos) from this channel are listed in `src/content/videos.ts`, played only after a tap on the privacy-enhanced domain. Doctor names are attached only where the clinic's own title names the doctor (three Dr. Jinal videos).
+
+### Instagram @khenielite (re-verified 14 September 2026)
+- https://www.instagram.com/khenielite is public. Five Reels were opened individually and each confirmed as posted by khenielite, still public, with the poster frame matching the saved file (md5 identical to the 13 September capture): DO0n03ykk5a (children's dental camp, September 2025), C0BRyrdJCIu (consultation desk, November 2023), C0DxQZ-JuO2 (treatment in progress, November 2023), C0eOsV5JDeO (a young patient in the chair, December 2023), C0GzY-xpoJE (close work under the light, November 2023).
+- Two further public posts were deliberately not used: ClQBekbIhIp (a before/after graphic; no written consent on file) and DL9OKL2xZCE (a stock-style image, not the clinic).
+- Follower and post counts are not published anywhere on the site.
+- Nothing from Instagram is embedded: each card is the clinic's own poster saved under `public/images/instagram/` and opens the exact Reel in a new tab.
 
 ## Public profile snapshot
 

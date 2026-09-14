@@ -29,7 +29,7 @@ export function Accordion({
     <div className={cn("divide-y divide-line overflow-hidden rounded-2xl border border-line bg-white", className)}>
       {items.map((item, index) => (
         <details key={index} className="group" name={exclusive ? name : undefined}>
-          <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-left text-[1.0625rem] font-semibold leading-snug marker:hidden [&::-webkit-details-marker]:hidden focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-cobalt">
+          <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-left text-[1.0625rem] font-semibold leading-snug marker:hidden [&::-webkit-details-marker]:hidden focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-gold">
             <span>{item.question}</span>
             <span
               aria-hidden="true"

@@ -32,11 +32,8 @@ import { Accordion } from "@/components/ui/accordion";
 import { Container } from "@/components/ui/container";
 import { BookButton, WhatsAppButton } from "@/components/ui/cta";
 import { caseCategories } from "@/content/cases";
-import { treatmentPhotos } from "@/content/photos";
+import { treatmentVisual } from "@/content/photos";
 import { doctors, locations, treatments } from "@/content/site";
-import { TestimonialCard } from "@/components/kheni/demo/testimonial-wall";
-import { ResultDump } from "@/components/kheni/demo/result-gallery";
-import { demoContentActive, demoTestimonials } from "@/content/demo";
 
 export function generateStaticParams() {
   return treatments.filter((t) => t.slug !== "dental-implants-surat").map((t) => ({ slug: t.slug }));
@@ -82,6 +79,7 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
   const kids = treatment.slug === "kids-dentistry-surat";
   const lead = team[0];
   const diagrams = DIAGRAMS[treatment.slug];
+  const visual = treatmentVisual(treatment.slug);
 
   return (
     <>
@@ -91,15 +89,18 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
         title={treatment.headline}
         copy={treatment.short}
         hue={treatment.hue}
+        tone={kids ? "light" : "dark"}
+        field={kids ? "butter" : undefined}
         aside={
           <MediaFrame
             ratio="4 / 3"
             mobileRatio="16 / 9"
             from="lg"
-            src={treatmentPhotos[treatment.slug]?.src}
-            alt={treatmentPhotos[treatment.slug]?.alt}
-            objectPosition={treatmentPhotos[treatment.slug]?.objectPosition}
-            className="rounded-[1.75rem] bg-white ring-1 ring-line"
+            src={visual?.src}
+            alt={visual?.alt}
+            objectPosition={visual?.objectPosition}
+            tone={kids ? "light" : "dark"}
+            className={kids ? "rounded-[1.5rem] ring-1 ring-ink/10" : "rounded-[1.5rem] border border-ivory/10"}
           >
             <div className={`hue-${treatment.hue} absolute inset-0 bg-h-tint`}>
               <TreatmentArt slug={treatment.slug} className="absolute inset-0 size-full" title={`${treatment.title} illustration`} />
@@ -109,7 +110,7 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
       >
         <div className="mt-5 flex flex-col gap-2.5 sm:flex-row">
           <BookButton placement={`treatment_hero_${treatment.slug}`} />
-          <WhatsAppButton placement={`treatment_hero_${treatment.slug}`} message={treatment.whatsappMessage} label="Ask on WhatsApp" variant="secondary" />
+          <WhatsAppButton placement={`treatment_hero_${treatment.slug}`} message={treatment.whatsappMessage} label="Ask on WhatsApp" variant={kids ? "secondary" : "onDark"} />
         </div>
       </PageHero>
 
@@ -122,11 +123,11 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
               <p className="t-stand measure-body mt-5 text-ink-soft">{treatment.intro}</p>
             </div>
             <div className="rounded-[1.5rem] bg-h-tint p-5 sm:p-6">
-              <p className="t-eyebrow text-h-text">{kids ? "Bring your child in for" : "You might need this if"}</p>
+              <p className="t-eyebrow text-gold-text">{kids ? "Bring your child in for" : "You might need this if"}</p>
               <ul className="mt-4 space-y-2.5">
                 {treatment.signs.map((sign) => (
                   <li key={sign} className="flex items-start gap-3 rounded-xl bg-white px-4 py-3 text-[.9375rem] font-medium leading-snug">
-                    <span className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-h-fill text-h-on-fill">
+                    <span className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-ink text-gold">
                       <Check className="size-3" aria-hidden="true" />
                     </span>
                     {sign}
@@ -138,7 +139,7 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
 
           {diagrams && (
             <div className="mt-8 space-y-4 sm:mt-10">
-              <p className="t-eyebrow text-h-text">{diagrams.caption}</p>
+              <p className="t-eyebrow text-gold-text">{diagrams.caption}</p>
               {diagrams.Diagram.map((Diagram, i) => (
                 <div key={i} className="rounded-[1.5rem] bg-white p-4 ring-1 ring-line sm:p-6 lg:p-8">
                   <Diagram />
@@ -156,7 +157,7 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
           <ProcessSteps steps={treatment.visit} columns={treatment.visit.length === 5 ? 5 : 4} className="mt-6 sm:mt-8" variant="cards" />
           <div className="mt-6 grid gap-4 lg:grid-cols-[1fr_1fr]">
             <div className="rounded-[1.5rem] bg-white p-5 ring-1 ring-line sm:p-6">
-              <p className="t-eyebrow text-h-text">What to expect after</p>
+              <p className="t-eyebrow text-gold-text">What to expect after</p>
               <ul className="mt-3 space-y-2">
                 {treatment.expect.map((item) => (
                   <li key={item} className="flex gap-2.5 text-[.9375rem] leading-6 text-ink">
@@ -166,10 +167,10 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
                 ))}
               </ul>
             </div>
-            <div className="rounded-[1.5rem] bg-ink p-5 text-white sm:p-6">
-              <p className="t-eyebrow text-sunshine">Worth knowing</p>
+            <div className="on-dark grain rounded-[1.5rem] border border-gold/20 bg-ink-2 p-5 text-ivory sm:p-6">
+              <p className="t-eyebrow text-gold">Worth knowing</p>
               <p className="t-card mt-3">{treatment.worthKnowing.title}</p>
-              <p className="t-body mt-2 text-white/75">{treatment.worthKnowing.copy}</p>
+              <p className="t-body mt-2 text-ivory/70">{treatment.worthKnowing.copy}</p>
             </div>
           </div>
         </Container>
@@ -180,9 +181,10 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
         <Container width="7xl">
           <SectionIntro eyebrow="Who you will see" title={team.length ? `The dentists who do this every week.` : "Any of our four dentists."} highlight={team.length ? "every week" : "four dentists"} copy={team.length ? undefined : "Book at either clinic and tell us what is troubling you. The dentist you see will examine you and explain the plan."} />
           {lead && (
-            <figure className={`hue-${lead.hue} mt-6 rounded-[1.5rem] bg-h-tint px-6 py-6 sm:px-8 sm:py-7`}>
-              <blockquote className="font-serif text-[1.35rem] font-medium leading-snug tracking-[-.015em] text-ink sm:text-[1.6rem]">&ldquo;{lead.philosophy}&rdquo;</blockquote>
-              <figcaption className="t-eyebrow mt-3 text-h-text">{lead.name}</figcaption>
+            <figure className="mt-6 rounded-[1.5rem] bg-peach px-6 py-6 sm:px-8 sm:py-7">
+              <span aria-hidden="true" className="rule-gold block h-px w-12" />
+              <blockquote className="t-quote mt-4 font-serif text-ink">&ldquo;{lead.philosophy}&rdquo;</blockquote>
+              <figcaption className="t-eyebrow mt-3 text-gold-text">{lead.name}</figcaption>
             </figure>
           )}
           {team.length > 0 ? (
@@ -197,7 +199,7 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
       </section>
 
       {showResults && (
-        <section className="hue-sunshine bg-sunshine-tint py-10 sm:py-14 lg:py-18">
+        <section className="bg-sand py-10 sm:py-14 lg:py-18">
           <Container width="7xl">
             <SectionIntro eyebrow="Results" title="Before and after, shown honestly." highlight="honestly" />
             <ResultsPreview limit={2} placement={`treatment_results_${treatment.slug}`} className="mt-6" />
@@ -205,7 +207,7 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
         </section>
       )}
 
-      <SmileNote note={{ line: treatment.note.line, highlight: treatment.note.highlight, hue: treatment.hue }} />
+      <SmileNote note={{ line: treatment.note.line, highlight: treatment.note.highlight, hue: treatment.hue }} tone={kids ? "light" : "dark"} field={kids ? "mint" : undefined} />
 
       {/* ── Proof and questions ──────────────────────────────────────── */}
       <section className={`hue-${treatment.hue} py-10 sm:py-14 lg:py-18`}>
@@ -225,9 +227,9 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
         <Container width="7xl">
           <div className="flex flex-wrap items-end justify-between gap-3">
             <h2 className="t-h3">Related treatments</h2>
-            <Link href="/treatments/" className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-cobalt-deep">
+            <Link href="/treatments/" className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-ink">
               All treatments
-              <ArrowUpRight className="cta-arrow size-4" aria-hidden="true" />
+              <ArrowUpRight className="cta-arrow size-4 text-gold-text" aria-hidden="true" />
             </Link>
           </div>
           <div className="mt-4 grid gap-3 lg:grid-cols-3">
@@ -238,20 +240,6 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
         </Container>
       </section>
 
-      {demoContentActive && (
-        <section className={`hue-${treatment.hue} py-10 sm:py-14 lg:py-18`}>
-          <Container width="7xl">
-            <SectionIntro eyebrow="Patients on this treatment" title="What they said once it was done." highlight="once it was done" />
-            <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-              {demoTestimonials.filter((t) => t.treatmentSlug === treatment.slug).slice(0, 4).map((story) => (
-                <TestimonialCard key={story.id} story={story} />
-              ))}
-            </div>
-            <p className="t-eyebrow mt-8 text-h-text">Recent results</p>
-            <ResultDump className="mt-3" limit={4} />
-          </Container>
-        </section>
-      )}
 
       <CtaBand
         title={treatment.ctaTitle}

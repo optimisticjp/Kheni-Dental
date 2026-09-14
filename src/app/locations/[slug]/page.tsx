@@ -38,27 +38,31 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
 
   return (
     <>
-      <section className={`hue-${location.hue} field relative isolate overflow-hidden`} style={{ ["--f1" as string]: "var(--h-tint)", ["--f2" as string]: "var(--sunshine-tint)", ["--f3" as string]: "var(--h-soft)" }}>
+      <section className={`hue-${location.hue} on-dark grain relative isolate overflow-hidden bg-ink text-ivory`}>
+        <div aria-hidden="true" className="bloom-gold pointer-events-none absolute inset-0" />
         <Container width="7xl" className="relative grid gap-6 py-7 sm:py-10 lg:grid-cols-[1fr_.95fr] lg:items-center lg:gap-12 lg:py-14">
           <div>
-            <p className="t-eyebrow text-h-text">{location.implantCentre ? "Kheni Dental & Elite Implant Center" : "Kheni Dental"}</p>
+            <p className="t-eyebrow flex items-center gap-3 text-gold">
+              {location.implantCentre ? "Kheni Dental & Elite Implant Center" : "Kheni Dental"}
+              <span aria-hidden="true" className="rule-gold h-px w-12" />
+            </p>
             <h1 className="t-h1 mt-2">
               {location.displayArea}
-              {location.shortName !== location.displayArea && <span className="block text-[.55em] font-medium text-ink-soft">{location.shortName}</span>}
+              {location.shortName !== location.displayArea && <span className="block text-[.55em] text-ivory/60">{location.shortName}</span>}
             </h1>
             {location.google.status === "verified" && (
-              <p className="mt-4 inline-flex min-h-11 items-center gap-2 rounded-full bg-white px-3 ring-1 ring-line">
-                <span className="font-serif text-xl font-semibold leading-none">{location.google.rating}</span>
+              <p className="mt-4 inline-flex min-h-11 items-center gap-2 rounded-full border border-ivory/15 bg-ivory/[.06] px-3">
+                <span className="font-serif text-xl leading-none text-gold">{location.google.rating}</span>
                 <Stars />
-                <span className="t-small text-ink-soft">{location.google.reviewCount} Google reviews for this clinic</span>
+                <span className="t-small text-ivory/70">{location.google.reviewCount} Google reviews for this clinic</span>
               </p>
             )}
-            <p className="t-stand measure-stand mt-4 text-ink-soft">{location.note}</p>
+            <p className="t-stand measure-stand mt-4 text-ivory/70">{location.note}</p>
             <dl className="mt-5 space-y-2.5">
               <div className="flex gap-3">
                 <dt className="sr-only">Address</dt>
-                <MapPin className="mt-1 size-4 shrink-0 text-h-text" aria-hidden="true" />
-                <dd className="t-body">
+                <MapPin className="mt-1 size-4 shrink-0 text-gold" aria-hidden="true" />
+                <dd className="t-body text-ivory/85">
                   {location.addressLines.map((line) => (
                     <span key={line} className="block">{line}</span>
                   ))}
@@ -66,20 +70,20 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
               </div>
               <div className="flex gap-3">
                 <dt className="sr-only">Hours</dt>
-                <Clock3 className="mt-1 size-4 shrink-0 text-h-text" aria-hidden="true" />
-                <dd className="t-body">
+                <Clock3 className="mt-1 size-4 shrink-0 text-gold" aria-hidden="true" />
+                <dd className="t-body text-ivory/85">
                   {location.hours}
-                  {location.hoursNote && <span className="t-small block text-ink-soft">{location.hoursNote}</span>}
+                  {location.hoursNote && <span className="t-small block text-ivory/55">{location.hoursNote}</span>}
                 </dd>
               </div>
             </dl>
             <div className="mt-6 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
-              <DirectionsButton location={location} placement={`location_hero_${location.slug}`} />
-              <CallButton placement={`location_hero_${location.slug}`} location={location} label={location.phoneDisplay} variant="secondary" />
-              <WhatsAppButton placement={`location_hero_${location.slug}`} location={location} variant="secondary" />
+              <DirectionsButton location={location} placement={`location_hero_${location.slug}`} className="bg-gold text-ink [&>svg]:text-ink" />
+              <CallButton placement={`location_hero_${location.slug}`} location={location} label={location.phoneDisplay} variant="onDark" />
+              <WhatsAppButton placement={`location_hero_${location.slug}`} location={location} variant="onDark" />
             </div>
           </div>
-          <BranchMap location={location} size="tall" />
+          <BranchMap location={location} size="tall" className="border border-ivory/10" />
         </Container>
       </section>
 
@@ -88,7 +92,7 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
           <div className="grid gap-5 lg:grid-cols-[1fr_1fr]">
             <BranchProof location={location} placement={`location_google_${location.slug}`} />
             <div className={`hue-${location.hue} rounded-[1.5rem] bg-h-tint p-5 sm:p-6`}>
-              <p className="t-eyebrow text-h-text">Book at this clinic</p>
+              <p className="t-eyebrow text-gold-text">Book at this clinic</p>
               <p className="t-h3 mt-2">Call, WhatsApp or send a request.</p>
               <div className="mt-4 flex flex-col gap-2.5 sm:flex-row">
                 <BookButton placement={`location_${location.slug}`} branch={location.slug} />
@@ -140,7 +144,7 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
                     <span className="t-eyebrow block text-ink-soft">Our other clinic</span>
                     <span className="t-card mt-0.5 block">{other.displayArea}</span>
                   </span>
-                  <ArrowRight className="cta-arrow size-4 text-h-text" aria-hidden="true" />
+                  <ArrowRight className="cta-arrow size-4 text-gold-text" aria-hidden="true" />
                 </Link>
               )}
             </div>

@@ -22,7 +22,7 @@ import { cn } from "@/lib/utils";
 /** Two abstract frames drawn as data-URI SVGs, so the slider can be demonstrated without a photograph. */
 const demoFrame = (label: string, a: string, b: string) =>
   `data:image/svg+xml;utf8,${encodeURIComponent(
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"><rect width="800" height="600" fill="${a}"/><circle cx="560" cy="180" r="170" fill="${b}" opacity=".7"/><circle cx="190" cy="470" r="150" fill="${b}" opacity=".45"/><text x="400" y="318" text-anchor="middle" font-family="Georgia, serif" font-size="46" fill="#12224a" opacity=".55">${label}</text></svg>`,
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"><rect width="800" height="600" fill="${a}"/><circle cx="560" cy="180" r="170" fill="${b}" opacity=".7"/><circle cx="190" cy="470" r="150" fill="${b}" opacity=".45"/><text x="400" y="318" text-anchor="middle" font-family="Georgia, serif" font-size="46" fill="#0d0d0c" opacity=".5">${label}</text></svg>`,
   )}`;
 
 export function ResultsPreview({ limit = 2, className, placement = "results" }: { limit?: number; className?: string; placement?: string }) {
@@ -53,10 +53,10 @@ export function ResultsPreview({ limit = 2, className, placement = "results" }: 
 
   return (
     <div className={cn("grid gap-5 lg:grid-cols-[1fr_1.1fr] lg:items-center", className)}>
-      <div className="hue-cobalt">
+      <div className="hue-gold">
         <BeforeAfterSlider
-          before={demoFrame("Before", "#e8edf8", "#c9d3ea")}
-          after={demoFrame("After", "#eaf1ff", "#ffe79a")}
+          before={demoFrame("Before", "#f1eee7", "#e6e1d6")}
+          after={demoFrame("After", "#fbfaf7", "#ead49e")}
           beforeAlt="Illustration only: a plain 'before' frame, used to demonstrate the comparison slider"
           afterAlt="Illustration only: a plain 'after' frame, used to demonstrate the comparison slider"
           caption="A demonstration of the before and after slider using plain illustrations, not a patient."
@@ -70,7 +70,7 @@ export function ResultsPreview({ limit = 2, className, placement = "results" }: 
           {caseCategories.slice(0, -1).join(", ").toLowerCase()} and {caseCategories.at(-1)?.toLowerCase()}. Until then, the honest answer about what is possible
           for you is the one the dentist gives after looking.
         </p>
-        <Link href="/reviews/" data-track="review_click" data-placement={placement} className="mt-4 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-cobalt-deep">
+        <Link href="/reviews/" data-track="review_click" data-placement={placement} className="mt-4 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-gold-text">
           Read what patients say on Google
           <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
         </Link>

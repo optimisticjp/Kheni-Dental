@@ -42,12 +42,12 @@ export function BranchLocator({ placement = "branch_locator" }: { placement?: st
               onClick={() => select(index)}
               className={cn(
                 `hue-${location.hue} ease-kheni flex min-h-12 items-center justify-center gap-2 rounded-full px-3 text-sm font-semibold transition-colors duration-300`,
-                index === active ? "bg-ink text-white" : "text-ink-soft",
+                index === active ? "bg-ink text-ivory" : "text-ink-soft",
               )}
             >
               <span aria-hidden="true" className="size-2 rounded-full bg-h-fill" />
               {location.displayArea}
-              {location.google.status === "verified" && <span className={cn("text-xs font-medium", index === active ? "text-white/70" : "text-ink-soft")}>{location.google.rating} ★</span>}
+              {location.google.status === "verified" && <span className={cn("text-xs font-medium", index === active ? "text-gold" : "text-ink-soft")}>{location.google.rating} ★</span>}
             </button>
           ))}
         </div>
@@ -69,31 +69,33 @@ function BranchDetail({ location, placement }: { location: (typeof locations)[nu
   const verified = location.google.status === "verified";
   return (
     <div className={`hue-${location.hue} overflow-hidden rounded-[1.5rem] border border-line bg-white`}>
-      <BranchMap location={location} size="compact" className="rounded-none" />
-      <div className="p-4 sm:p-5">
-        <div className="flex items-start justify-between gap-3">
-          <div className="min-w-0">
-            {location.implantCentre && <p className="t-eyebrow mb-1 text-gold-text">Elite Implant Center</p>}
-            <h3 className="t-h3">{location.displayArea}</h3>
-            <p className="t-small mt-0.5 text-ink-soft">{location.shortName === location.displayArea ? location.landmark : `${location.shortName} · ${location.landmark}`}</p>
-          </div>
-          {verified && (
-            <a
-              href={placeUrl(location)}
-              target="_blank"
-              rel="noreferrer"
-              data-track="google_reviews_click"
-              data-placement={`${placement}_${location.slug}_rating`}
-              data-branch={location.slug}
-              className="inline-flex min-h-11 shrink-0 items-center gap-1.5 rounded-full bg-h-tint px-3"
-            >
-              <Stars size="size-3" />
-              <span className="text-sm font-semibold">{location.google.rating}</span>
-              <span className="t-small text-ink-soft">{location.google.reviewCount}</span>
-            </a>
-          )}
+      <div className="on-dark grain flex items-start justify-between gap-3 bg-ink p-4 text-ivory sm:p-5">
+        <div className="min-w-0">
+          <p className="t-eyebrow mb-1 text-gold">{location.implantCentre ? "Elite Implant Center" : "Kheni Dental"}</p>
+          <h3 className="t-h3 text-ivory">{location.displayArea}</h3>
+          <p className="t-small mt-0.5 text-ivory/60">{location.shortName === location.displayArea ? location.landmark : `${location.shortName} · ${location.landmark}`}</p>
         </div>
-        <p className="t-small mt-3 text-ink-soft">{location.hours}</p>
+        {verified && (
+          <a
+            href={placeUrl(location)}
+            target="_blank"
+            rel="noreferrer"
+            data-track="google_reviews_click"
+            data-placement={`${placement}_${location.slug}_rating`}
+            data-branch={location.slug}
+            className="inline-flex min-h-11 shrink-0 flex-col items-end justify-center text-right"
+          >
+            <span className="flex items-center gap-1.5">
+              <Stars size="size-3" />
+              <span className="font-serif text-xl leading-none text-gold">{location.google.rating}</span>
+            </span>
+            <span className="t-small text-ivory/60">{location.google.reviewCount} reviews</span>
+          </a>
+        )}
+      </div>
+      <BranchMap location={location} size="compact" className="rounded-none" />
+      <div className="bg-h-tint p-4 sm:p-5">
+        <p className="t-small text-ink-soft">{location.hours}</p>
         <DirectionsButton location={location} placement={`${placement}_${location.slug}`} className="mt-4 w-full" />
         <div className="mt-2 grid grid-cols-2 gap-2">
           <a
@@ -101,9 +103,9 @@ function BranchDetail({ location, placement }: { location: (typeof locations)[nu
             data-track="phone_click"
             data-placement={`${placement}_${location.slug}`}
             data-branch={location.slug}
-            className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-full border border-line-strong text-sm font-semibold"
+            className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-full border border-ink/25 bg-white text-sm font-semibold"
           >
-            <Phone className="size-3.5 text-cobalt" aria-hidden="true" />
+            <Phone className="size-3.5 text-gold-text" aria-hidden="true" />
             Call
           </a>
           <a
@@ -119,7 +121,7 @@ function BranchDetail({ location, placement }: { location: (typeof locations)[nu
             WhatsApp
           </a>
         </div>
-        <Link href={`/locations/${location.slug}/`} className="mt-3 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-h-text">
+        <Link href={`/locations/${location.slug}/`} className="mt-3 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-ink">
           This clinic in detail
           <ArrowUpRight className="cta-arrow size-3.5" aria-hidden="true" />
         </Link>

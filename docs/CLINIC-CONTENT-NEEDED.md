@@ -84,8 +84,11 @@ YouTube channel. For patient testimonials the site can add:
 - [ ] Doctor tip videos: link and topic
 - [ ] Clinic tour or "a day at Kheni" video
 
-Instagram (@khenielite) is linked but not embedded. Public Reels can be
-linked if wanted.
+Instagram (@khenielite) is now a first-class section: five public Reels
+from the account are shown as the clinic's own poster frames and open the
+exact Reel. To add more, send the Reel link and a one-line description of
+what it shows; each one is opened and checked before it goes in. Nothing
+is embedded, so the site never loads Instagram scripts or cookies.
 
 ## 5. Technology and implant systems
 

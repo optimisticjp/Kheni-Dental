@@ -53,7 +53,11 @@ Read:
 
 Real doctor and clinic photography is still required. Do not open search indexing until content, legal pages, tracking consent and location details have been reviewed.
 
-## September 2026: V4 redesign
+## September 2026: black, ivory, gold, with the windows open (V5)
+
+The visual system returned to the premium near-black, ivory and gold identity the clinic recognises, and let daylight in: a dark header, hero, implant centre, reviews and footer alternate with ivory, white and five soft light fields (sky, mint, peach, lavender, butter) with black type. Gold is rationed to the primary action, stars, hairlines, labels and the few numbers that matter. Real Kheni media everywhere: five verified @khenielite Reels (posters saved locally, each card opens the exact Reel, nothing embedded) and 26 real YouTube videos. The demo layer and every generated face were removed; doctors without a real portrait render as a designed monogram panel. See `PROJECT_BRIEF.md`, `SOURCE_FACTS.md` and `docs/CLINIC-CONTENT-NEEDED.md`.
+
+## September 2026: V4 redesign (superseded)
 
 The site moved from a dark black/gold system to "vibrant clinical editorial": porcelain and navy with cobalt, aqua, coral and sunshine, one hue per treatment, original SVG illustrations, a three-action mobile dock and a clinic-choice booking sheet. Demo patient content was removed; the build now refuses prices, superlatives and unconsented proof. See `PROJECT_BRIEF.md` and `docs/CLINIC-CONTENT-NEEDED.md`.
 

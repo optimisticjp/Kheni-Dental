@@ -87,7 +87,7 @@ export const resourceCategories: ResourceCategory[] = [
     id: "implant-care",
     label: "Implant care",
     intro: "Implants do not decay, but the gum and bone holding them still need looking after.",
-    hue: "cobalt",
+    hue: "gold",
     guides: [
       {
         id: "implant-guide",

@@ -11,15 +11,18 @@
  * loses the top of the head. The percentages below keep the subject where
  * it belongs at every breakpoint.
  *
- * A single value has to serve every frame a picture appears in. The doctor
- * portraits are the tightest case: one 2:3 source feeds a 16:10 frame on a
- * phone, a 4:3 card and a 4:5 frame on desktop. At 28% the phone crop
- * started at the eyebrows. 15% is the value that keeps the whole head in
- * all three, so that is what they use.
+ * WHAT IS AND IS NOT HERE
+ * Only two kinds of picture are wired in: object and interior photography
+ * (an implant, an aligner, a tray of crowns, a treatment room), and the
+ * clinic's own Instagram frames listed in `instagram.ts`, which are the only
+ * real people on the site today. No generated face is attached to a named
+ * dentist and no generated "patient" appears anywhere.
  *
  * Alt text describes what is in the picture, for someone who cannot see it.
  * It does not repeat the heading next to it and it does not sell.
  */
+
+import { instagramReels } from "@/content/instagram";
 
 export type Photo = {
   src: string;
@@ -28,81 +31,39 @@ export type Photo = {
   objectPosition?: string;
 };
 
-/** The homepage hero and the picture that appears when the site is shared. */
-export const heroPhoto: Photo = {
-  src: "/images/home/hero-dentist.jpg",
-  alt: "A dentist seated beside a treatment chair, turning to a patient and pointing at a tablet as he explains something",
-  // Four different frames across the two heroes, the widest being 16:9.
-  // 18% keeps his head clear of the top edge in all of them.
-  objectPosition: "center 18%",
-};
-
 export const ogImage = "/images/og-default.jpg";
 
-/** Doctor portraits, keyed by slug. Frames are 4:5 and 1:1. */
-export const doctorPhotos: Record<string, Photo> = {
-  "dr-mayur-kheni": {
-    src: "/images/doctors/dr-mayur-kheni.jpg",
-    alt: "Dr. Mayur Kheni in a white clinical coat, standing in a treatment room",
-    objectPosition: "center 15%",
-  },
-  "dr-jinal-monapara": {
-    src: "/images/doctors/dr-jinal-monapara.jpg",
-    alt: "Dr. Jinal Monapara in a white clinical coat, standing near a window",
-    objectPosition: "center 15%",
-  },
-  "dr-ishita-dobariya": {
-    src: "/images/doctors/dr-ishita-dobariya.jpg",
-    alt: "Dr. Ishita Dobariya in a white clinical coat, in a bright treatment room",
-    objectPosition: "center 15%",
-  },
-  "dr-parita-vastarpara": {
-    src: "/images/doctors/dr-parita-vastarpara.jpg",
-    alt: "Dr. Parita Vastarpara in a white clinical coat, in a bright treatment room",
-    objectPosition: "center 15%",
-  },
-};
+/**
+ * Doctor portraits, keyed by slug. Empty until the clinic sends real
+ * photographs: no generated face is ever attached to a named dentist. A
+ * doctor without a portrait renders as a designed monogram field, and the
+ * layouts are built to look finished that way. Portrait 4:5, head and
+ * shoulders, plain background. Add the file under public/images/doctors/,
+ * fill the slot, and run `node scripts/resize-images.mjs`.
+ */
+export const doctorPhotos: Record<string, Photo> = {};
 
 /**
  * Treatment photography, keyed by slug. Each one is used twice: the poster on
  * the treatments index at 16:10, and the hero of that treatment's own page at
  * 4:3. One file covers both.
  *
- * None of them is a mouth. They are the moment before or the moment after,
- * which is what a patient is actually deciding about.
+ * Objects only. Treatments without an object photograph borrow a real
+ * Instagram frame of the clinic at work (see `treatmentVisual`) or fall
+ * back to their illustration.
  */
 export const treatmentPhotos: Record<string, Photo> = {
   "dental-implants-surat": {
     src: "/images/treatments/dental-implants-surat.jpg",
     alt: "A single titanium dental implant and a white ceramic crown standing upright on a pale surface",
   },
-  "root-canal-treatment-surat": {
-    src: "/images/treatments/root-canal-treatment-surat.jpg",
-    alt: "A woman asleep on her side in soft morning light, face relaxed",
-    objectPosition: "center 40%",
-  },
   "braces-clear-aligners": {
     src: "/images/treatments/braces-clear-aligners.jpg",
     alt: "A clear dental aligner held up to a window so light passes through it",
   },
-  "cosmetic-smile-dentistry": {
-    src: "/images/treatments/cosmetic-smile-dentistry.jpg",
-    alt: "A woman caught mid laugh, head tilted back, eyes closed",
-    objectPosition: "center 35%",
-  },
-  "full-mouth-rehabilitation": {
-    src: "/images/treatments/full-mouth-rehabilitation.jpg",
-    alt: "An older man at a kitchen counter biting into a whole apple in morning light",
-    objectPosition: "center 38%",
-  },
   "crowns-and-bridges": {
     src: "/images/treatments/crowns-and-bridges.jpg",
     alt: "Ceramic dental crowns arranged on a laboratory tray beside a shade guide",
-  },
-  "kids-dentistry-surat": {
-    src: "/images/treatments/kids-dentistry-surat.jpg",
-    alt: "A young boy in a dental chair holding a small round mirror up to his own face, laughing",
-    objectPosition: "center 35%",
   },
   "gum-care-surat": {
     src: "/images/treatments/gum-care-surat.jpg",
@@ -136,26 +97,30 @@ export const locationPhotos: Record<string, Photo[]> = {
   ],
 };
 
-export const aboutPhoto: Photo = {
-  src: "/images/about/team.jpg",
-  alt: "Four dentists in white coats walking together along a bright clinic corridor, mid conversation",
-  objectPosition: "center 40%",
-};
-
 export const internationalPhoto: Photo = {
   src: "/images/international/plan-your-visit.jpg",
   alt: "An open passport, a boarding pass and a phone laid out on a wooden table",
 };
 
-/**
- * Notable patient photography, keyed by the demo id.
- *
- * These belong to the demo layer: the people are fictional and so are the
- * quotes beside them. The pictures go with them when that layer is removed.
- */
-export const notablePhotos: Record<string, Photo> = {
-  n1: { src: "/images/notables/ravi-deshmukh.jpg", alt: "A singer at a studio microphone, headphones around his neck, mid note", objectPosition: "center 35%" },
-  n2: { src: "/images/notables/kavya-trivedi.jpg", alt: "An actor in a makeup chair looking into a lit mirror", objectPosition: "center 35%" },
-  n3: { src: "/images/notables/hardik-rathod.jpg", alt: "A cricketer in whites at practice nets, bat resting on his shoulder", objectPosition: "center 35%" },
-  n4: { src: "/images/notables/meera-shah.jpg", alt: "A woman in a textile showroom resting one hand on a bolt of yellow silk", objectPosition: "center 35%" },
+/** A real Instagram frame for treatments that have no object photograph. */
+const reelFrames: Record<string, string> = {
+  "kids-dentistry-surat": "young-patient",
+  "root-canal-treatment-surat": "close-work",
+  "full-mouth-rehabilitation": "in-the-chair",
+  "cosmetic-smile-dentistry": "consultation-desk",
 };
+
+/** The best real picture for a treatment: object photo, else a clinic frame, else none. */
+export function treatmentVisual(slug: string): Photo | undefined {
+  const photo = treatmentPhotos[slug];
+  if (photo) return photo;
+  const reel = instagramReels.find((r) => r.id === reelFrames[slug]);
+  if (reel?.poster) return { src: reel.poster, alt: reel.posterAlt ?? reel.title, objectPosition: reel.objectPosition };
+  return undefined;
+}
+
+/** The clinic's own frame of a doctor at the consultation desk, for the About page. */
+export const aboutPhoto: Photo | undefined = (() => {
+  const reel = instagramReels.find((r) => r.id === "consultation-desk");
+  return reel?.poster ? { src: reel.poster, alt: reel.posterAlt ?? reel.title, objectPosition: reel.objectPosition } : undefined;
+})();

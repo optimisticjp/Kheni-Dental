@@ -17,7 +17,11 @@ export type TrackingEventName =
   // Section-level engagement only. Never carries which concern or which
   // situation was chosen, because that could describe the visitor's mouth.
   | "concern_interaction"
-  | "implant_navigator_interaction";
+  | "implant_navigator_interaction"
+  // Instagram. A reel was opened (on Instagram, in a new tab) or the profile
+  // link was tapped. Carries the placement only, never which reel.
+  | "instagram_reel_open"
+  | "instagram_profile_click";
 
 export type TrackingPayload = {
   event: TrackingEventName;

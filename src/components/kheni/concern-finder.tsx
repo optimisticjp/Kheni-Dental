@@ -12,15 +12,15 @@ import { cn } from "@/lib/utils";
 /**
  * "What brings you in today?"
  *
- * Phone: a 3x3 grid of coloured concern tiles, each a real link. One tap
- * and the patient is on the right treatment page. Nothing to expand,
- * nothing that depends on hover, nine tiles in about one screen.
+ * Sits on a soft mint field. Phone: a 3x3 grid of white cards, each a real
+ * link, with a black line icon and the concern in plain words. Nothing to
+ * expand, nothing that depends on hover, nine cards in about one screen.
  *
- * Desktop: the same tiles as a rail on the left, and the selected concern's
- * treatment shown large on the right, with its illustration and one plain
- * sentence, so the page feels alive without hijacking anything.
+ * Desktop: the same cards as a two-column list on the left and the
+ * selected concern's treatment on the right, in a white panel with a gold
+ * eyebrow, so the section feels alive without hijacking anything.
  *
- * It never diagnoses. The tiles point; the dentist decides.
+ * It never diagnoses. The cards point; the dentist decides.
  *
  * Privacy: the tracking event records only that the finder was used, never
  * which concern, because a concern can describe the visitor's own mouth.
@@ -38,7 +38,7 @@ export function ConcernFinder() {
         {concerns.map((concern, index) => {
           const selected = index === active;
           return (
-            <li key={concern.id} className={`hue-${concern.hue}`}>
+            <li key={concern.id}>
               <Link
                 href={concern.href}
                 data-track="treatment_view"
@@ -48,18 +48,18 @@ export function ConcernFinder() {
                 onClick={touch}
                 aria-current={selected ? "true" : undefined}
                 className={cn(
-                  "lift group flex min-h-[6.25rem] flex-col justify-between rounded-2xl bg-h-tint p-3 text-left ring-1 ring-transparent transition-[box-shadow,transform] sm:min-h-[7rem] sm:p-4 lg:min-h-0 lg:flex-row lg:items-center lg:gap-4 lg:py-3.5",
-                  selected && "lg:bg-white lg:ring-h-fill lg:shadow-[0_18px_40px_-24px_rgba(18,34,74,.35)]",
+                  "lift group flex min-h-[6.25rem] flex-col justify-between rounded-2xl border border-ink/[.06] bg-white p-3 text-left transition-[box-shadow,transform,border-color] sm:min-h-[7rem] sm:p-4 lg:min-h-0 lg:flex-row lg:items-center lg:gap-4 lg:py-3.5",
+                  selected && "lg:border-gold lg:shadow-[0_18px_40px_-24px_rgba(13,13,12,.35)]",
                 )}
               >
-                <span className="grid size-9 place-items-center rounded-xl bg-white text-h-text sm:size-10">
-                  <ConcernGlyph icon={concern.icon} className="size-5 sm:size-6" />
+                <span className={cn("grid size-9 place-items-center rounded-full border text-ink sm:size-10", selected ? "border-gold bg-gold-tint" : "border-ink/15 bg-ivory")}>
+                  <ConcernGlyph icon={concern.icon} className="size-5" />
                 </span>
                 <span className="min-w-0 lg:flex-1">
                   <span className="block text-[.9375rem] font-semibold leading-tight sm:text-base">{concern.label}</span>
                   <span className="t-small mt-0.5 hidden text-ink-soft sm:block">{concern.sub}</span>
                 </span>
-                <ArrowRight className="cta-arrow hidden size-4 shrink-0 text-h-text lg:block" aria-hidden="true" />
+                <ArrowRight className={cn("cta-arrow hidden size-4 shrink-0 lg:block", selected ? "text-gold-text" : "text-ink/40")} aria-hidden="true" />
               </Link>
             </li>
           );
@@ -68,10 +68,10 @@ export function ConcernFinder() {
 
       {treatment && (
         <div className={cn(`hue-${treatment.hue}`, "hidden lg:block")}>
-          <div className="sticky top-24 overflow-hidden rounded-[1.75rem] bg-h-tint p-8 xl:p-10">
+          <div className="sticky top-24 overflow-hidden rounded-[1.5rem] border border-ink/[.06] bg-white p-8 xl:p-10">
             <div className="grid grid-cols-[1fr_11rem] items-center gap-6">
               <div>
-                <p className="t-eyebrow text-h-text">{current.label}</p>
+                <p className="t-eyebrow text-gold-text">{current.label}</p>
                 <p className="t-h2 mt-3">{treatment.headline}</p>
                 <p className="t-body mt-4 text-ink-soft">{treatment.short}</p>
                 <Link
@@ -79,13 +79,15 @@ export function ConcernFinder() {
                   data-track="treatment_view"
                   data-placement="concern_finder_panel"
                   onClick={touch}
-                  className="mt-6 inline-flex min-h-12 items-center gap-2 rounded-full bg-h-fill px-5 text-[.9375rem] font-semibold text-h-on-fill"
+                  className="mt-6 inline-flex min-h-12 items-center gap-2 rounded-full bg-ink px-5 text-[.9375rem] font-semibold text-ivory hover:bg-ink-3"
                 >
                   {treatment.title}
                   <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
                 </Link>
               </div>
-              <TreatmentArt slug={treatment.slug} className="w-full" />
+              <div className="rounded-2xl bg-h-tint p-3">
+                <TreatmentArt slug={treatment.slug} className="w-full" />
+              </div>
             </div>
           </div>
         </div>

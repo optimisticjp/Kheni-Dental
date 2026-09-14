@@ -12,7 +12,8 @@ const root = "public/images";
 async function* walk(dir) {
   for (const e of await readdir(dir, { withFileTypes: true })) {
     const p = path.join(dir, e.name);
-    if (e.isDirectory()) yield* walk(p);
+    // Instagram posters keep their own 360w variant (see src/content/instagram.ts).
+    if (e.isDirectory()) { if (e.name !== "instagram") yield* walk(p); }
     else if (e.name.endsWith(".jpg") && !/-\d+w\.jpg$/.test(e.name)) yield p;
   }
 }

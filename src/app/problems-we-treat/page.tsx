@@ -8,8 +8,6 @@ import { PageHero } from "@/components/kheni/page-hero";
 import { SectionIntro } from "@/components/kheni/section-intro";
 import { Container } from "@/components/ui/container";
 import { treatments } from "@/content/site";
-import { HorizontalAccordion } from "@/components/kheni/demo/horizontal-accordion";
-import { demoContentActive } from "@/content/demo";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/problems-we-treat/" },
@@ -34,13 +32,13 @@ export default function ProblemsPage() {
         hue="teal"
       />
 
-      <section className="hue-teal py-8 sm:py-12 lg:py-16">
+      <section className="bg-mint py-8 sm:py-12 lg:py-16">
         <Container width="7xl">
           <ConcernFinder />
         </Container>
       </section>
 
-      <section className="bg-porcelain py-10 sm:py-14 lg:py-18">
+      <section className="py-10 sm:py-14 lg:py-18">
         <Container width="7xl">
           <SectionIntro eyebrow="In your words" title="It usually starts with a sentence like one of these." highlight="sentence" />
           <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -52,12 +50,12 @@ export default function ProblemsPage() {
                   data-placement="problems_index"
                   className="lift flex h-full flex-col rounded-2xl border border-line bg-white p-5"
                 >
-                  <span aria-hidden="true" className="h-1.5 w-10 rounded-full bg-h-fill" />
+                  <span aria-hidden="true" className="h-1 w-10 rounded-full bg-h-fill" />
                   <h2 className="mt-3 font-serif text-[1.35rem] font-medium leading-snug tracking-[-.02em]">&ldquo;{t.concern}&rdquo;</h2>
                   <p className="t-small mt-2 flex-1 text-ink-soft">{t.short}</p>
-                  <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-h-text">
+                  <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-ink">
                     {t.title}
-                    <ArrowUpRight className="cta-arrow size-4" aria-hidden="true" />
+                    <ArrowUpRight className="cta-arrow size-4 text-gold-text" aria-hidden="true" />
                   </span>
                 </Link>
               </li>
@@ -66,14 +64,6 @@ export default function ProblemsPage() {
         </Container>
       </section>
 
-      {demoContentActive && (
-        <section className="hue-teal py-10 sm:py-14 lg:py-20">
-          <Container width="7xl">
-            <SectionIntro eyebrow="All fourteen" title="Open the one that sounds like you." highlight="sounds like you" copy="Then swipe along for the rest. Every one of them ends with what we actually do about it." />
-            <HorizontalAccordion className="mt-6 sm:mt-8" />
-          </Container>
-        </section>
-      )}
 
       <CtaBand title="Not on the list? Describe it in your own words." highlight="your own words" placement="problems_final" hue="teal" />
     </>

@@ -8,9 +8,6 @@ import { SmileNote } from "@/components/kheni/smile-note";
 import { TreatmentPoster, TreatmentRow } from "@/components/kheni/treatment-poster";
 import { Container } from "@/components/ui/container";
 import { smileNotes, treatments, type TreatmentCategory } from "@/content/site";
-import { SectionIntro } from "@/components/kheni/section-intro";
-import { IconServiceGrid } from "@/components/kheni/demo/icon-grid";
-import { demoContentActive } from "@/content/demo";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/treatments/" },
@@ -35,11 +32,11 @@ export default function TreatmentsPage() {
         title="You do not need the name of the treatment."
         highlight="name"
         copy="Have a look through if it helps you put words to the problem. If it does not, tell us what you are feeling and the examination decides where care starts."
-        hue="cobalt"
+        hue="gold"
       >
-        <Link href="/problems-we-treat/" className="mt-5 inline-flex min-h-12 items-center gap-2 rounded-full bg-white px-5 text-[.9375rem] font-semibold ring-1 ring-line">
+        <Link href="/problems-we-treat/" className="mt-5 inline-flex min-h-12 items-center gap-2 rounded-full border border-ivory/30 px-5 text-[.9375rem] font-semibold text-ivory hover:border-gold hover:text-gold">
           Start from what is bothering you
-          <ArrowRight className="cta-arrow size-4 text-cobalt-deep" aria-hidden="true" />
+          <ArrowRight className="cta-arrow size-4 text-gold" aria-hidden="true" />
         </Link>
       </PageHero>
 
@@ -52,7 +49,7 @@ export default function TreatmentsPage() {
               if (!items.length) return null;
               return (
                 <div key={group.id}>
-                  <h2 className="t-eyebrow text-ink-soft">{group.label}</h2>
+                  <h2 className="t-eyebrow text-gold-text">{group.label}</h2>
                   <div className="mt-3 grid gap-2.5">
                     {items.map((t) => (
                       <TreatmentRow key={t.slug} treatment={t} placement="treatments_index" />
@@ -72,17 +69,6 @@ export default function TreatmentsPage() {
 
       <SmileNote note={smileNotes[4]} compact className="pb-10 sm:pb-14" />
 
-      {demoContentActive && (
-        <>
-          <section className="hue-navy py-10 sm:py-14 lg:py-20">
-            <Container width="7xl">
-              <SectionIntro eyebrow="At a glance" title="Twelve things, one waiting room." highlight="one waiting room" />
-              <IconServiceGrid className="mt-6 sm:mt-8" />
-            </Container>
-          </section>
-
-        </>
-      )}
 
       <CtaBand title="Not sure which one you need? That is normal." highlight="normal" copy="Describe it in your own words. The examination sorts out the rest." placement="treatments_final" />
     </>

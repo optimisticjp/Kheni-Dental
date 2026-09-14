@@ -133,7 +133,7 @@ export type Location = {
   /** True for the branch that carries the Elite Implant Center. */
   implantCentre?: boolean;
   /** Branch accent hue, from the treatment hue set. */
-  hue: "cobalt" | "teal";
+  hue: "gold" | "teal";
 };
 
 export const locations: Location[] = [
@@ -180,7 +180,7 @@ export const locations: Location[] = [
     note: "Our Elite Implant Center on Varachha Main Road. Implants, full mouth cases and smile design are led from here.",
     landmark: "Above Shiv Plywood, opposite Surat Super Store",
     implantCentre: true,
-    hue: "cobalt",
+    hue: "gold",
   },
 ];
 
@@ -210,7 +210,7 @@ export const reviewHighlights = [
    Each treatment owns one hue. The hue drives its poster, its icon, its
    chips and the tint of its page, so a patient learns to recognise it
    without the whole site becoming a rainbow. Values live in globals.css. */
-export type Hue = "cobalt" | "navy" | "teal" | "amber" | "coral" | "violet" | "mint" | "green" | "lavender" | "sky" | "sunshine" | "gold";
+export type Hue = "gold" | "navy" | "teal" | "amber" | "coral" | "violet" | "mint" | "green" | "lavender" | "sky" | "gold" | "gold";
 
 export type Doctor = {
   slug: string;
@@ -246,7 +246,7 @@ export const doctors: Doctor[] = [
     metaDescription:
       "Dr. Mayur Kheni, B.D.S., Implantologist & Cosmetic Dental Surgeon, leads Kheni Dental & Elite Implant Center in Surat. 15 years in practice. Book an appointment.",
     relatedTreatmentSlugs: ["dental-implants-surat", "full-mouth-rehabilitation", "cosmetic-smile-dentistry"],
-    hue: "cobalt",
+    hue: "gold",
     principal: true,
   },
   {
@@ -351,7 +351,7 @@ export const treatments: Treatment[] = [
     seoTitle: "Dental Implants in Surat | Elite Implant Center",
     metaDescription:
       "Dental implants in Surat at Kheni Dental & Elite Implant Center. Single, multiple and full mouth implants planned by Dr. Mayur Kheni after examination and imaging.",
-    hue: "cobalt",
+    hue: "gold",
     category: "restorative",
     concern: "I only chew on one side now.",
     headline: "A fixed tooth for the gap you have been working around.",
@@ -1028,7 +1028,7 @@ export type Concern = {
 
 export const concerns: Concern[] = [
   { id: "pain", label: "Tooth pain", sub: "Aching, throbbing or sensitive", href: "/treatments/root-canal-treatment-surat/", hue: "teal", icon: "pain" },
-  { id: "gap", label: "Missing tooth", sub: "One gap, several, or a loose denture", href: "/treatments/dental-implants-surat/", hue: "cobalt", icon: "gap" },
+  { id: "gap", label: "Missing tooth", sub: "One gap, several, or a loose denture", href: "/treatments/dental-implants-surat/", hue: "gold", icon: "gap" },
   { id: "crooked", label: "Crooked teeth", sub: "Crowding, gaps or a bite that is off", href: "/treatments/braces-clear-aligners/", hue: "violet", icon: "crooked" },
   { id: "smile", label: "Smile appearance", sub: "Colour, shape or a chipped edge", href: "/treatments/cosmetic-smile-dentistry/", hue: "coral", icon: "smile" },
   { id: "child", label: "My child's teeth", sub: "First visit, cavity or a scared child", href: "/treatments/kids-dentistry-surat/", hue: "mint", icon: "child" },
@@ -1047,14 +1047,14 @@ export const concerns: Concern[] = [
 export type SmileNote = { line: string; highlight: string; hue: Hue };
 
 export const smileNotes: SmileNote[] = [
-  { line: "Come with a concern. Leave with a clear next step.", highlight: "clear", hue: "cobalt" },
+  { line: "Come with a concern. Leave with a clear next step.", highlight: "clear", hue: "gold" },
   { line: "Good dentistry starts with listening.", highlight: "listening", hue: "coral" },
   { line: "Two clinics. One familiar standard of care.", highlight: "familiar", hue: "teal" },
   { line: "Your smile is personal. The plan should be too.", highlight: "personal", hue: "violet" },
   { line: "No treatment begins before you understand why.", highlight: "why", hue: "green" },
-  { line: "A missing tooth changes more than your smile.", highlight: "more", hue: "cobalt" },
+  { line: "A missing tooth changes more than your smile.", highlight: "more", hue: "gold" },
   { line: "The right treatment is often the smaller one.", highlight: "smaller", hue: "amber" },
-  { line: "Chew on both sides again.", highlight: "both sides", hue: "sunshine" },
+  { line: "Chew on both sides again.", highlight: "both sides", hue: "gold" },
   { line: "Pain is information. We start there.", highlight: "information", hue: "teal" },
   { line: "A tooth saved beats a tooth replaced.", highlight: "saved", hue: "mint" },
   { line: "Ask the question you think is silly. It never is.", highlight: "never is", hue: "lavender" },

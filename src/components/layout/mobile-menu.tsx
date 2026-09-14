@@ -4,29 +4,23 @@ import { ArrowUpRight, MessageCircle, Phone, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 
+import { InstagramIcon } from "@/components/icons/instagram-icon";
 import { BrandMark } from "@/components/kheni/brand-mark";
-import { concerns, primaryNav, secondaryNav, site, treatments } from "@/content/site";
+import { instagramHandle, instagramUrl } from "@/content/instagram";
+import { googleReputation } from "@/content/google-reputation";
+import { concerns, locations, primaryNav, secondaryNav, site } from "@/content/site";
 import { bookHref, whatsappUrl } from "@/lib/links";
 import { cn } from "@/lib/utils";
 
 /**
- * Mobile navigation. A full-screen porcelain sheet with the six primary
- * destinations as large rows, each carrying the hue of what it leads to,
- * then a row of concern chips, then the quiet links. Book, Call and
- * WhatsApp sit where a thumb already is.
+ * Mobile navigation. A full-screen near-black sheet: the six primary
+ * destinations as large ivory serif rows (implants in gold), a row of
+ * concern chips, two soft-colour panels for the clinics and Instagram,
+ * the quiet links, then Book, Call and WhatsApp where a thumb already is.
  *
  * Focus moves to the close button on open, Tab is trapped, Escape closes,
  * body scroll is locked and restored, focus returns to the trigger.
  */
-const hueFor = (href: string) => {
-  if (href.includes("dental-implants")) return "hue-cobalt";
-  if (href.startsWith("/treatments")) return "hue-teal";
-  if (href.startsWith("/doctors")) return "hue-coral";
-  if (href.startsWith("/locations")) return "hue-green";
-  if (href.startsWith("/reviews")) return "hue-sunshine";
-  return "hue-violet";
-};
-
 export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
   const closeRef = useRef<HTMLButtonElement>(null);
   const previousFocus = useRef<HTMLElement | null>(null);
@@ -74,85 +68,103 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
 
   if (!open) return null;
 
-  const implants = treatments.find((t) => t.slug === "dental-implants-surat");
-
   return (
     <div
       id="mobile-menu"
       role="dialog"
       aria-modal="true"
       aria-label="Site navigation"
-      className="menu-in fixed inset-0 z-[100] flex min-h-dvh flex-col bg-porcelain text-ink xl:hidden"
+      className="menu-in on-dark fixed inset-0 z-[100] flex min-h-dvh flex-col bg-ink text-ivory xl:hidden"
     >
-      <div className="flex h-16 shrink-0 items-center justify-between border-b border-line px-4 sm:h-[72px] sm:px-6">
-        <BrandMark />
+      <div className="flex h-16 shrink-0 items-center justify-between border-b border-ivory/10 px-4 sm:h-[72px] sm:px-6">
+        <BrandMark compact />
         <button
           ref={closeRef}
           type="button"
           onClick={onClose}
           aria-label="Close menu"
-          className="grid size-11 place-items-center rounded-full border border-line-strong"
+          className="grid size-11 place-items-center rounded-full border border-ivory/20"
         >
           <X className="size-5" />
         </button>
       </div>
 
-      <nav aria-label="Mobile navigation" className="flex min-h-0 flex-1 flex-col overflow-y-auto px-4 pt-3 sm:px-6">
-        <ul className="grid gap-2">
+      <nav aria-label="Mobile navigation" className="flex min-h-0 flex-1 flex-col overflow-y-auto px-4 pt-2 sm:px-6">
+        <ul>
           {primaryNav.map((link) => (
-            <li key={link.href} className={hueFor(link.href)}>
+            <li key={link.href}>
               <Link
                 href={link.href}
                 onClick={onClose}
-                className="flex min-h-14 items-center justify-between gap-4 rounded-2xl bg-h-tint px-4 py-3 font-serif text-[1.35rem] font-medium leading-tight tracking-[-.02em] text-ink"
+                className="flex min-h-[3.25rem] items-center justify-between gap-4 border-b border-ivory/10 py-2.5 font-serif text-[1.45rem] leading-tight tracking-[-.015em]"
               >
-                <span className="flex items-center gap-3">
-                  <span aria-hidden="true" className="size-2.5 rounded-full bg-h-fill" />
-                  {link.label}
-                </span>
-                <ArrowUpRight aria-hidden="true" className="size-4 shrink-0 text-h-text" />
+                <span className={link.accent ? "text-gold" : "text-ivory"}>{link.label}</span>
+                <ArrowUpRight aria-hidden="true" className={cn("size-4 shrink-0", link.accent ? "text-gold" : "text-ivory/35")} />
               </Link>
             </li>
           ))}
         </ul>
 
-        {/* What brings you in: a quick route in for someone who knows the symptom. */}
-        <p className="t-eyebrow mt-6 text-ink-soft">What brings you in?</p>
+        {/* A quick route in for someone who knows the symptom. */}
+        <p className="t-eyebrow mt-5 text-gold">What brings you in?</p>
         <ul className="mt-2.5 flex flex-wrap gap-2">
           {concerns.slice(0, 6).map((concern) => (
-            <li key={concern.id} className={`hue-${concern.hue}`}>
+            <li key={concern.id}>
               <Link
                 href={concern.href}
                 onClick={onClose}
                 data-track="treatment_view"
                 data-placement="mobile_menu_concern"
-                className="inline-flex min-h-10 items-center gap-2 rounded-full border border-line-strong bg-white px-3.5 text-sm font-medium"
+                className="inline-flex min-h-10 items-center rounded-full border border-ivory/15 px-3.5 text-sm text-ivory/85"
               >
-                <span aria-hidden="true" className="size-2 rounded-full bg-h-fill" />
                 {concern.label}
               </Link>
             </li>
           ))}
         </ul>
 
-        <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-0.5 border-t border-line pt-4">
+        {/* Two light panels: where we are, and the living clinic on Instagram. */}
+        <div className="mt-5 grid grid-cols-2 gap-2.5 text-ink">
+          <Link href="/locations/" onClick={onClose} className="rounded-2xl bg-mint p-3.5">
+            <span className="t-eyebrow block text-gold-text">Two clinics</span>
+            <span className="mt-1.5 block font-serif text-[1.05rem] leading-snug">{locations.map((l) => l.displayArea).join(" and ")}</span>
+            <span className="t-small mt-1 block text-ink-soft">{googleReputation.sharedRating} on Google, {googleReputation.combinedShort}</span>
+          </Link>
+          <a
+            href={instagramUrl}
+            target="_blank"
+            rel="noreferrer"
+            data-track="instagram_profile_click"
+            data-placement="mobile_menu"
+            className="rounded-2xl bg-peach p-3.5"
+          >
+            <span className="t-eyebrow flex items-center gap-1.5 text-gold-text">
+              <InstagramIcon className="size-3.5" />
+              Instagram
+            </span>
+            <span className="mt-1.5 block font-serif text-[1.05rem] leading-snug">Inside Kheni</span>
+            <span className="t-small mt-1 block text-ink-soft">{instagramHandle}</span>
+          </a>
+        </div>
+
+        <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-0.5 border-t border-ivory/10 pt-3">
           {secondaryNav.map((link) => (
             <li key={link.href}>
-              <Link href={link.href} onClick={onClose} className="inline-flex min-h-10 items-center text-sm text-ink-soft hover:text-ink">
+              <Link href={link.href} onClick={onClose} className="inline-flex min-h-10 items-center text-sm text-ivory/60 hover:text-ivory">
                 {link.label}
               </Link>
             </li>
           ))}
         </ul>
 
-        <div className={cn("mt-auto grid gap-2.5 pb-[max(1rem,env(safe-area-inset-bottom))] pt-6")}>
+        <div className="mt-auto grid gap-2.5 pb-[max(1rem,env(safe-area-inset-bottom))] pt-5">
           <Link
             href={bookHref}
             data-book
             onClick={onClose}
             data-track="appointment_start"
             data-placement="mobile_menu"
-            className="inline-flex min-h-13 items-center justify-center rounded-full bg-cobalt px-5 text-base font-semibold text-white"
+            className="inline-flex min-h-13 items-center justify-center rounded-full bg-gold px-5 text-base font-semibold text-ink"
           >
             Book Appointment
           </Link>
@@ -161,13 +173,13 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
               href={`tel:${site.primaryPhoneHref}`}
               data-track="phone_click"
               data-placement="mobile_menu"
-              className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-line-strong bg-white text-sm font-semibold"
+              className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-ivory/25 text-sm font-semibold text-ivory"
             >
-              <Phone className="size-4 text-cobalt" aria-hidden="true" />
+              <Phone className="size-4 text-gold" aria-hidden="true" />
               Call
             </a>
             <a
-              href={whatsappUrl(implants ? site.consultationMessage : undefined)}
+              href={whatsappUrl()}
               target="_blank"
               rel="noreferrer"
               data-track="whatsapp_click"

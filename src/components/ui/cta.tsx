@@ -7,11 +7,13 @@ import { bookHref, branchWhatsappUrl, telHref, whatsappUrl } from "@/lib/links";
 import { cn } from "@/lib/utils";
 
 /**
- * The site's buttons. Four looks, used consistently:
+ * The site's buttons. Five looks, used consistently:
  *
- *   primary    cobalt, white text. The one action a section is built around.
- *   whatsapp   deep WhatsApp green, white text. Recognisable at a glance.
- *   secondary  white with a navy hairline. The quieter partner.
+ *   primary    warm gold fill, near-black text. The one action a section is
+ *              built around. Reads the same on ivory and on ink.
+ *   secondary  black hairline on a light surface. The quieter partner.
+ *   onDark     ivory hairline and text, for a secondary action on ink.
+ *   whatsapp   WhatsApp green, white text, only where recognition matters.
  *   ghost      text only, for "see all" links.
  *
  * All are at least 48px tall, because most of our visitors are tapping.
@@ -20,13 +22,13 @@ export type CtaVariant = "primary" | "whatsapp" | "secondary" | "ghost" | "onDar
 
 export function ctaClass(variant: CtaVariant = "primary", size: "md" | "lg" = "md", className?: string) {
   return cn(
-    "inline-flex items-center justify-center gap-2 rounded-full text-center font-semibold whitespace-nowrap transition-[transform,background-color,border-color,box-shadow] duration-300 ease-kheni focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-cobalt focus-visible:ring-offset-2",
+    "inline-flex items-center justify-center gap-2 rounded-full text-center font-semibold transition-[transform,background-color,border-color,box-shadow,color] duration-300 ease-kheni focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-transparent",
     size === "lg" ? "min-h-14 px-7 text-base" : "min-h-12 px-5 text-[.9375rem]",
-    variant === "primary" && "bg-cobalt text-white shadow-[0_10px_24px_-12px_rgba(31,91,216,.7)] hover:bg-cobalt-deep",
+    variant === "primary" && "bg-gold text-ink shadow-[0_10px_24px_-14px_rgba(202,169,104,.9)] hover:bg-gold-soft",
     variant === "whatsapp" && "bg-whatsapp text-white hover:brightness-95",
-    variant === "secondary" && "border border-line-strong bg-white text-ink hover:border-ink/40",
-    variant === "onDark" && "border border-white/30 bg-white/10 text-white hover:bg-white/15",
-    variant === "ghost" && "min-h-11 px-1 text-cobalt-deep hover:underline underline-offset-4",
+    variant === "secondary" && "border border-ink/25 bg-transparent text-ink hover:border-ink hover:bg-white",
+    variant === "onDark" && "border border-ivory/30 bg-transparent text-ivory hover:border-gold hover:text-gold",
+    variant === "ghost" && "min-h-11 px-1 text-gold-text hover:underline underline-offset-4",
     className,
   );
 }
@@ -129,7 +131,7 @@ export function CallButton({
       data-branch={location?.slug}
       className={ctaClass(variant, size, className)}
     >
-      <Phone className="size-[1.05rem]" aria-hidden="true" />
+      <Phone className={cn("size-[1.05rem]", variant === "onDark" && "text-gold")} aria-hidden="true" />
       {label ?? (location ? `Call ${location.displayArea}` : `Call ${site.primaryPhoneDisplay}`)}
     </a>
   );

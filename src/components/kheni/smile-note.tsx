@@ -1,32 +1,46 @@
-import { KheniMonogram } from "@/components/kheni/brand-mark";
 import { Container } from "@/components/ui/container";
 import { Highlighted } from "@/components/kheni/section-intro";
 import { smileNotes, type SmileNote as Note } from "@/content/site";
 import { cn } from "@/lib/utils";
 
 /**
- * A Smile Note: one short Kheni line set large between sections, with one
- * word highlighted in the note's hue. Brand voice, not a patient quote, and
- * never a claim. Use two to four on a page, never one per section.
+ * A Smile Note: one short Kheni line set in Fraunces between sections,
+ * opened by a gold hairline, one word in italic gold. Brand voice, not a
+ * patient quote, and never a claim. Two or three on a page at most.
+ * `tone="dark"` sets it on ink; `field` puts it on one of the light fields.
  */
-export function SmileNote({ index = 0, note, className, compact = false }: { index?: number; note?: Note; className?: string; compact?: boolean }) {
+export function SmileNote({
+  index = 0,
+  note,
+  className,
+  compact = false,
+  tone = "light",
+  field,
+}: {
+  index?: number;
+  note?: Note;
+  className?: string;
+  compact?: boolean;
+  tone?: "light" | "dark";
+  field?: "sky" | "mint" | "peach" | "lavender" | "butter" | "sand";
+}) {
   const n = note ?? smileNotes[index % smileNotes.length];
+  const dark = tone === "dark";
   return (
-    <section className={cn(`hue-${n.hue}`, className)} aria-label="A note from Kheni Dental">
+    <section className={cn(dark && "on-dark", className)} aria-label="A note from Kheni Dental">
       <Container width="7xl">
         <figure
           className={cn(
-            "relative isolate overflow-hidden rounded-[1.5rem] bg-h-tint",
-            compact ? "px-6 py-7 sm:px-8" : "px-6 py-9 sm:px-10 sm:py-12 lg:px-14 lg:py-14",
+            "relative isolate overflow-hidden rounded-[1.5rem] border",
+            dark ? "grain border-gold/20 bg-ink-2 text-ivory" : field ? `border-transparent bg-${field}` : "border-line bg-white",
+            compact ? "px-6 py-7 sm:px-8" : "px-6 py-9 sm:px-10 sm:py-11 lg:px-14 lg:py-12",
           )}
         >
-          <div aria-hidden="true" className="absolute -right-12 -top-16 size-48 rounded-full bg-h-soft opacity-70 sm:size-64" />
-          <div aria-hidden="true" className="absolute -bottom-20 left-1/3 size-40 rounded-full bg-h-fill opacity-[.12] sm:size-56" />
-          <KheniMonogram className="relative size-8" />
-          <blockquote className={cn("t-note relative mt-4 text-ink", compact ? "max-w-[22ch]" : "max-w-[20ch]")}>
+          <span aria-hidden="true" className="rule-gold block h-px w-14" />
+          <blockquote className={cn("t-note mt-5", compact ? "max-w-[24ch]" : "max-w-[22ch]", dark ? "text-ivory" : "text-ink")}>
             <Highlighted title={n.line} highlight={n.highlight} />
           </blockquote>
-          <figcaption className="t-eyebrow relative mt-4 text-h-text">Kheni Dental, Surat</figcaption>
+          <figcaption className={cn("t-eyebrow mt-5", dark ? "text-gold" : "text-gold-text")}>Kheni Dental, Surat</figcaption>
         </figure>
       </Container>
     </section>

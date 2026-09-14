@@ -38,16 +38,32 @@ The site helps people answer five questions:
 3. Phone call
 4. Directions to a clinic
 
-## Visual direction (V4)
+## Visual direction (V5: premium black and gold, with light, human sections)
 
-- Porcelain warm-white foundation, deep navy ink
-- Cobalt as the one action colour; aqua, coral and sunshine as accents;
-  muted gold reserved for the Elite Implant Center and star ratings
-- One hue per treatment, used on its poster, icon, chips and page tint
-- Fraunces for headings (one highlighted word per heading), Inter for body
-- Original SVG illustrations and diagrams until real photography arrives
-- Sticky frosted header; three-action mobile dock (Book, Call, WhatsApp)
-- Subtle motion only, native scrolling, reduced-motion respected
+- Foundation: near-black ink (#0D0D0C), warm ivory (#FBFAF7), white and a
+  muted sand surface (#F1EEE7). Roughly a third of the homepage is dark.
+- One accent: gold (#CAA968; #8B6428 for small text on light). Rationed to
+  the primary action, stars, hairlines, eyebrow labels, selected states,
+  proof numbers and "Elite Implant Center". Never every heading, icon,
+  border or background.
+- Supporting colour only as five soft light fields with black type: sky,
+  mint, peach, lavender, butter. Each treatment keeps its hue in site.ts and
+  lands on one of these fields. No saturated blocks, no colour as brand.
+- Rhythm: dark hero, light concern finder, white treatments, ivory Instagram,
+  dark implant centre, peach doctors, dark reviews, sky NRI, white clinics,
+  dark footer. A principle, not a mechanical alternation.
+- Fraunces for display roles at book weight (one italic gold word per
+  heading), Inter for body, buttons, navigation, labels and forms.
+- Buttons: gold fill with near-black text for the primary action; black
+  hairline on light, ivory hairline on dark for the secondary; WhatsApp
+  green only where recognition matters.
+- Dark sticky header, frosted on scroll; near-black full-screen mobile menu;
+  a floating near-black action pill (gold Book, Call, WhatsApp) instead of
+  a full-width dock.
+- Real media only: the clinic's own Instagram Reels and YouTube videos,
+  object and interior photography. No generated faces on named dentists.
+- Older refined radius discipline (1rem to 1.5rem), warm grain and a low gold
+  bloom on dark panels, subtle motion only, reduced-motion respected.
 
 ## Copy direction
 

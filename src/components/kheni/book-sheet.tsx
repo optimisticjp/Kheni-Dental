@@ -127,7 +127,7 @@ export function BookSheet() {
         <div aria-hidden="true" className="mx-auto mb-3 h-1.5 w-12 rounded-full bg-ink/15 sm:hidden" />
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="t-eyebrow text-cobalt-deep">Book an appointment</p>
+            <p className="t-eyebrow text-gold-text">Book an appointment</p>
             <h2 id="book-sheet-title" className="t-h3 mt-1.5">
               Which clinic suits you?
             </h2>
@@ -154,12 +154,12 @@ export function BookSheet() {
                 onClick={() => pick(l.slug as Choice)}
                 className={cn(
                   `hue-${l.hue} flex min-h-14 items-center gap-3 rounded-2xl border px-4 py-3 text-left transition-colors`,
-                  selected ? "border-cobalt bg-white ring-2 ring-cobalt" : "border-line bg-white",
+                  selected ? "border-gold bg-white ring-2 ring-gold" : "border-line bg-white",
                 )}
               >
                 <span
                   aria-hidden="true"
-                  className={cn("grid size-6 shrink-0 place-items-center rounded-full border", selected ? "border-cobalt bg-cobalt text-white" : "border-line-strong")}
+                  className={cn("grid size-6 shrink-0 place-items-center rounded-full border", selected ? "border-gold bg-gold text-white" : "border-line-strong")}
                 >
                   {selected && <Check className="size-3.5" />}
                 </span>
@@ -178,12 +178,12 @@ export function BookSheet() {
             onClick={() => pick("either")}
             className={cn(
               "flex min-h-12 items-center gap-3 rounded-2xl border px-4 py-2.5 text-left text-sm font-medium",
-              choice === "either" ? "border-cobalt bg-white ring-2 ring-cobalt" : "border-line bg-white",
+              choice === "either" ? "border-gold bg-white ring-2 ring-gold" : "border-line bg-white",
             )}
           >
             <span
               aria-hidden="true"
-              className={cn("grid size-6 shrink-0 place-items-center rounded-full border", choice === "either" ? "border-cobalt bg-cobalt text-white" : "border-line-strong")}
+              className={cn("grid size-6 shrink-0 place-items-center rounded-full border", choice === "either" ? "border-gold bg-gold text-white" : "border-line-strong")}
             >
               {choice === "either" && <Check className="size-3.5" />}
             </span>
@@ -218,7 +218,7 @@ export function BookSheet() {
             data-branch={location?.slug}
             className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-line-strong bg-white text-base font-semibold text-ink"
           >
-            <Phone className="size-5 text-cobalt" aria-hidden="true" />
+            <Phone className="size-5 text-gold" aria-hidden="true" />
             {telLabel}
           </a>
         </div>
@@ -226,7 +226,7 @@ export function BookSheet() {
         <Link
           href="/contact/#book"
           onClick={close}
-          className="mt-3 inline-flex min-h-10 items-center gap-1.5 text-sm font-medium text-cobalt-deep"
+          className="mt-3 inline-flex min-h-10 items-center gap-1.5 text-sm font-medium text-gold-text"
         >
           Prefer to send a request form?
           <ArrowRight className="cta-arrow size-4" aria-hidden="true" />

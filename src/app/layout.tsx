@@ -10,9 +10,6 @@ import { TrackLinks } from "@/components/tracking/track-links";
 import { StructuredData } from "@/components/tracking/structured-data";
 import { ogImage } from "@/content/photos";
 import { site } from "@/content/site";
-import { DemoNotice } from "@/components/kheni/demo/demo-notice";
-import { QuoteTab } from "@/components/kheni/demo/quote-tab";
-import { demoContentActive } from "@/content/demo";
 // Fails the build if a branch's Place ID drifts or two branches ever share
 // map, phone or listing data.
 import "@/content/__checks__/branch-data.check";
@@ -80,24 +77,22 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  themeColor: "#fffbf6",
+  themeColor: "#0d0d0c",
   colorScheme: "light",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${fraunces.variable} ${inter.variable}`}>
-      {/* Bottom padding reserves the mobile dock's height plus the phone's safe area. */}
-      <body className="flex min-h-dvh flex-col pb-[calc(4.25rem+env(safe-area-inset-bottom))] md:pb-0">
+      {/* Bottom padding reserves the floating action pill plus the phone's safe area. */}
+      <body className="flex min-h-dvh flex-col pb-[calc(5rem+env(safe-area-inset-bottom))] md:pb-0">
         <AnalyticsScripts />
         <StructuredData />
         <TrackLinks />
         <Navbar />
         <main className="flex-1">{children}</main>
-        {demoContentActive && <DemoNotice />}
         <Footer />
         <MobileDock />
-        {demoContentActive && <QuoteTab />}
         <BookSheet />
         <ConsentBanner />
       </body>

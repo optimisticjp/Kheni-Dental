@@ -42,7 +42,7 @@ function Ground({ y = 196, gum = "var(--coral-soft)", gumLine = "var(--coral)", 
   );
 }
 
-function Molar({ enamel = "var(--sky-soft)", enamelLine = "var(--sky-text)", dentin = "var(--sunshine-soft)", pulp = "var(--coral)", canals = "var(--teal)", transform }: { enamel?: string; enamelLine?: string; dentin?: string; pulp?: string; canals?: string; transform?: string }) {
+function Molar({ enamel = "var(--sky-soft)", enamelLine = "var(--sky-text)", dentin = "var(--gold-soft)", pulp = "var(--coral)", canals = "var(--teal)", transform }: { enamel?: string; enamelLine?: string; dentin?: string; pulp?: string; canals?: string; transform?: string }) {
   return (
     <g transform={transform}>
       <path d={ENAMEL} fill={enamel} stroke={enamelLine} strokeWidth="3" strokeLinejoin="round" />
@@ -82,7 +82,7 @@ function Stage({ x, y, n, label, swatch }: { x: number; y: number; n: number; la
 
 const toothParts: Part[] = [
   { n: 1, name: "Enamel", note: "The hard shell. Nothing in the body is harder", swatch: "var(--sky-soft)" },
-  { n: 2, name: "Dentin", note: "Softer, and it feels cold and sweet", swatch: "var(--sunshine-soft)" },
+  { n: 2, name: "Dentin", note: "Softer, and it feels cold and sweet", swatch: "var(--gold-soft)" },
   { n: 3, name: "Pulp", note: "Nerve and blood supply, in the centre", swatch: "var(--coral-soft)" },
   { n: 4, name: "Gum", note: "The collar of tissue around the neck of the tooth", swatch: "var(--coral-tint)" },
   { n: 5, name: "Root canal", note: "The pulp continues down each root", swatch: "var(--teal-soft)" },
@@ -101,7 +101,7 @@ export function ToothSectionDiagram({ className }: { className?: string }) {
       {/* vessels entering the root tips */}
       <path d="M138 232c-4 12-6 26-4 40M182 232c4 12 6 26 4 40" stroke="var(--violet)" strokeWidth="2.5" strokeDasharray="3 4" fill="none" strokeLinecap="round" />
       <Marker x={238} y={82} n={1} swatch="var(--sky-soft)" />
-      <Marker x={90} y={126} n={2} swatch="var(--sunshine-soft)" />
+      <Marker x={90} y={126} n={2} swatch="var(--gold-soft)" />
       <Marker x={222} y={136} n={3} swatch="var(--coral-soft)" />
       <Marker x={60} y={202} n={4} swatch="var(--coral-tint)" />
       <Marker x={224} y={228} n={5} swatch="var(--teal-soft)" />
@@ -116,7 +116,7 @@ export function ToothSectionDiagram({ className }: { className?: string }) {
 
 const cariesParts: Part[] = [
   { n: 1, name: "In the enamel", note: "No pain yet. A small filling, one visit", swatch: "var(--sky-soft)" },
-  { n: 2, name: "Into the dentin", note: "Cold and sweet start to sting. Still a filling", swatch: "var(--sunshine-soft)" },
+  { n: 2, name: "Into the dentin", note: "Cold and sweet start to sting. Still a filling", swatch: "var(--gold-soft)" },
   { n: 3, name: "Reaching the pulp", note: "Aching, often at night. Now it is a root canal", swatch: "var(--coral-soft)" },
 ];
 
@@ -142,7 +142,7 @@ export function CariesDiagram({ className }: { className?: string }) {
         </g>
       ))}
       <Stage x={80} y={288} n={1} label="Enamel only" swatch="var(--sky-soft)" />
-      <Stage x={240} y={288} n={2} label="Into dentin" swatch="var(--sunshine-soft)" />
+      <Stage x={240} y={288} n={2} label="Into dentin" swatch="var(--gold-soft)" />
       <Stage x={400} y={288} n={3} label="At the pulp" swatch="var(--coral-soft)" />
     </Figure>
   );
@@ -223,7 +223,7 @@ export function GumStagesDiagram({ className }: { className?: string }) {
         </g>
       ))}
       {/* plaque at the gumline in stage 2 */}
-      <path d="M204 184q10-6 20 0M256 184q10-6 20 0" stroke="var(--sunshine)" strokeWidth="5" strokeLinecap="round" fill="none" />
+      <path d="M204 184q10-6 20 0M256 184q10-6 20 0" stroke="var(--gold)" strokeWidth="5" strokeLinecap="round" fill="none" />
       {/* the pocket in stage 3 */}
       <path d="M372 208c-4 14-4 30 0 42M428 208c4 14 4 30 0 42" stroke="var(--coral)" strokeWidth="3" fill="none" strokeLinecap="round" />
       <Stage x={80} y={288} n={1} label="Healthy" swatch="var(--mint-soft)" />
@@ -237,7 +237,7 @@ export function GumStagesDiagram({ className }: { className?: string }) {
 
 const crownParts: Part[] = [
   { n: 1, name: "The crown", note: "A cap shaped and shaded to match the tooth beside it", swatch: "var(--sky-soft)" },
-  { n: 2, name: "The prepared tooth", note: "Trimmed to a small core so the crown can fit over it", swatch: "var(--sunshine-soft)" },
+  { n: 2, name: "The prepared tooth", note: "Trimmed to a small core so the crown can fit over it", swatch: "var(--gold-soft)" },
   { n: 3, name: "The root", note: "Left alone. The crown takes the chewing force instead", swatch: "var(--amber-soft)" },
 ];
 
@@ -246,7 +246,7 @@ export function CrownDiagram({ className }: { className?: string }) {
     <Figure id="crown" title="How a crown fits" desc="A molar trimmed to a small core below the gum line, with a crown drawn above it about to be seated." parts={crownParts} className={className}>
       <Ground boneId="bone-cr" />
       {/* prepared core and roots */}
-      <path d="M128 130c-4 0-8 4-8 10v40c6 16 12 34 14 52l6 70c1 8 12 8 13 0l9-46 9 46c1 8 12 8 13 0l6-70c2-18 8-36 14-52v-40c0-6-4-10-8-10z" fill="var(--sunshine-soft)" stroke="var(--gold)" strokeWidth="2.5" strokeLinejoin="round" />
+      <path d="M128 130c-4 0-8 4-8 10v40c6 16 12 34 14 52l6 70c1 8 12 8 13 0l9-46 9 46c1 8 12 8 13 0l6-70c2-18 8-36 14-52v-40c0-6-4-10-8-10z" fill="var(--gold-soft)" stroke="var(--gold)" strokeWidth="2.5" strokeLinejoin="round" />
       <path d={CANALS} stroke="var(--teal-soft)" strokeWidth="6" strokeLinecap="round" />
       {/* the crown, lifted */}
       <g transform="translate(0 -38)">
@@ -255,10 +255,10 @@ export function CrownDiagram({ className }: { className?: string }) {
         <path d="M138 84q22 14 44 0" stroke="var(--sky-soft)" strokeWidth="4" strokeLinecap="round" fill="none" />
       </g>
       {/* arrows showing it seating */}
-      <path d="M100 124v18M220 124v18" stroke="var(--cobalt)" strokeWidth="3" strokeLinecap="round" />
-      <path d="M94 136l6 8 6-8M214 136l6 8 6-8" stroke="var(--cobalt)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+      <path d="M100 124v18M220 124v18" stroke="var(--gold)" strokeWidth="3" strokeLinecap="round" />
+      <path d="M94 136l6 8 6-8M214 136l6 8 6-8" stroke="var(--gold)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
       <Marker x={244} y={72} n={1} swatch="var(--sky-soft)" />
-      <Marker x={232} y={166} n={2} swatch="var(--sunshine-soft)" />
+      <Marker x={232} y={166} n={2} swatch="var(--gold-soft)" />
       <Marker x={80} y={292} n={3} swatch="var(--amber-soft)" />
     </Figure>
   );
@@ -267,16 +267,16 @@ export function CrownDiagram({ className }: { className?: string }) {
 /* ── 6. A bridge ─────────────────────────────────────────────────────── */
 
 const bridgeParts: Part[] = [
-  { n: 1, name: "Supporting teeth", note: "The teeth either side, crowned to carry the bridge", swatch: "var(--sunshine-soft)" },
+  { n: 1, name: "Supporting teeth", note: "The teeth either side, crowned to carry the bridge", swatch: "var(--gold-soft)" },
   { n: 2, name: "The false tooth", note: "Fills the gap. Sits on the gum, not in the bone", swatch: "var(--sky-soft)" },
-  { n: 3, name: "One piece", note: "All three are joined and cemented in together", swatch: "var(--cobalt-soft)" },
+  { n: 3, name: "One piece", note: "All three are joined and cemented in together", swatch: "var(--gold-soft)" },
 ];
 
 export function BridgeDiagram({ className }: { className?: string }) {
   const tooth = (x: number, prepared: boolean) => (
     <g transform={`translate(${x - 160} 0) scale(.62)`}>
       {prepared ? (
-        <path d="M128 150c-4 0-8 4-8 10v30c6 16 12 34 14 52l6 70c1 8 12 8 13 0l9-46 9 46c1 8 12 8 13 0l6-70c2-18 8-36 14-52v-30c0-6-4-10-8-10z" fill="var(--sunshine-soft)" stroke="var(--gold)" strokeWidth="3" strokeLinejoin="round" />
+        <path d="M128 150c-4 0-8 4-8 10v30c6 16 12 34 14 52l6 70c1 8 12 8 13 0l9-46 9 46c1 8 12 8 13 0l6-70c2-18 8-36 14-52v-30c0-6-4-10-8-10z" fill="var(--gold-soft)" stroke="var(--gold)" strokeWidth="3" strokeLinejoin="round" />
       ) : (
         <Molar />
       )}
@@ -290,13 +290,13 @@ export function BridgeDiagram({ className }: { className?: string }) {
       {/* the bridge, one joined piece lifted above */}
       <g transform="translate(0 -46)">
         <path d="M96 118c0-30 14-46 34-46s34 16 34 46v34H96zM164 118c0-30 14-46 34-46s34 16 34 46v34h-68zM232 118c0-30 14-46 34-46s34 16 34 46v34h-68z" fill="#ffffff" stroke="var(--sky-text)" strokeWidth="3.5" strokeLinejoin="round" />
-        <path d="M96 152h204" stroke="var(--cobalt)" strokeWidth="4" strokeLinecap="round" />
+        <path d="M96 152h204" stroke="var(--gold)" strokeWidth="4" strokeLinecap="round" />
       </g>
-      <path d="M130 116v14M266 116v14" stroke="var(--cobalt)" strokeWidth="3" strokeLinecap="round" />
-      <path d="M124 124l6 8 6-8M260 124l6 8 6-8" stroke="var(--cobalt)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-      <Marker x={130} y={206} n={1} swatch="var(--sunshine-soft)" />
+      <path d="M130 116v14M266 116v14" stroke="var(--gold)" strokeWidth="3" strokeLinecap="round" />
+      <path d="M124 124l6 8 6-8M260 124l6 8 6-8" stroke="var(--gold)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+      <Marker x={130} y={206} n={1} swatch="var(--gold-soft)" />
       <Marker x={198} y={206} n={2} swatch="var(--sky-soft)" />
-      <Marker x={286} y={96} n={3} swatch="var(--cobalt-soft)" />
+      <Marker x={286} y={96} n={3} swatch="var(--gold-soft)" />
     </Figure>
   );
 }
@@ -321,7 +321,7 @@ export function WisdomImpactionDiagram({ className }: { className?: string }) {
       {/* wisdom tooth, tilted mesially (toward the front) */}
       <g transform="translate(150 60) rotate(-38 160 150) scale(.66)">
         <path d={ENAMEL} fill="var(--lavender-soft)" stroke="var(--lavender-text)" strokeWidth="3.5" strokeLinejoin="round" />
-        <path d={DENTIN} fill="var(--sunshine-soft)" />
+        <path d={DENTIN} fill="var(--gold-soft)" />
         <path d={PULP} fill="var(--coral-soft)" />
       </g>
       {/* the gum flap over it */}
@@ -366,8 +366,8 @@ export function AlignerMovementDiagram({ className }: { className?: string }) {
       {/* the aligner: a translucent tray outline over the before row */}
       <path d="M52 56c30-12 76-16 108-16s78 4 108 16v58c-30 12-76 16-108 16s-78-4-108-16z" fill="var(--violet-soft)" opacity=".35" stroke="var(--violet)" strokeWidth="2.5" strokeDasharray="5 4" />
       {/* arrow */}
-      <path d="M160 140v42" stroke="var(--cobalt)" strokeWidth="3" strokeLinecap="round" />
-      <path d="M150 172l10 12 10-12" stroke="var(--cobalt)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+      <path d="M160 140v42" stroke="var(--gold)" strokeWidth="3" strokeLinecap="round" />
+      <path d="M150 172l10 12 10-12" stroke="var(--gold)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
       {/* after */}
       <path d="M40 212h240" stroke="var(--mint-soft)" strokeWidth="14" strokeLinecap="round" />
       <ArchTeeth y={206} offsets={[0, 0, 0, 0, 0, 0]} fill="#ffffff" line="var(--mint-text)" />
@@ -382,7 +382,7 @@ export function AlignerMovementDiagram({ className }: { className?: string }) {
 
 const kidsParts: Part[] = [
   { n: 1, name: "Milk tooth", note: "Smaller, whiter, and thinner enamel that decays faster", swatch: "var(--mint-soft)" },
-  { n: 2, name: "Its root", note: "Slowly dissolves as the adult tooth pushes up", swatch: "var(--sunshine-soft)" },
+  { n: 2, name: "Its root", note: "Slowly dissolves as the adult tooth pushes up", swatch: "var(--gold-soft)" },
   { n: 3, name: "Adult tooth", note: "Already forming in the bone underneath, years early", swatch: "var(--sky-soft)" },
   { n: 4, name: "Why it matters", note: "Decay in the milk tooth can reach the one below", swatch: "var(--coral-soft)" },
 ];
@@ -394,7 +394,7 @@ export function KidsTeethDiagram({ className }: { className?: string }) {
       {/* the milk tooth, small, short roots */}
       <g transform="translate(46 -20) scale(.7)">
         <path d="M160 60c-36 0-52 22-48 58 2 16 8 34 14 48l4 30c1 10 14 10 15 0l4-22 5 22c1 10 14 10 15 0l4-30c6-14 12-32 14-48 4-36-12-58-48-58z" fill="var(--mint-soft)" stroke="var(--mint-text)" strokeWidth="3.5" strokeLinejoin="round" />
-        <path d="M160 80c-24 0-36 16-32 42 1 12 6 26 10 38h44c4-12 9-26 10-38 4-26-8-42-32-42z" fill="var(--sunshine-soft)" />
+        <path d="M160 80c-24 0-36 16-32 42 1 12 6 26 10 38h44c4-12 9-26 10-38 4-26-8-42-32-42z" fill="var(--gold-soft)" />
         <path d="M160 104c-10 0-14 8-12 18l4 18h16l4-18c2-10-2-18-12-18z" fill="var(--coral)" opacity=".8" />
         {/* dissolving root ends, dotted */}
         <path d="M144 190l-3 16M176 190l3 16" stroke="var(--gold)" strokeWidth="4" strokeDasharray="3 4" strokeLinecap="round" />
@@ -402,13 +402,13 @@ export function KidsTeethDiagram({ className }: { className?: string }) {
       {/* the adult tooth forming in the bone */}
       <g transform="translate(0 112) scale(.86)">
         <path d="M160 100c-44 0-64 26-60 70 2 18 8 34 14 48h92c6-14 12-30 14-48 4-44-16-70-60-70z" fill="var(--sky-soft)" stroke="var(--sky-text)" strokeWidth="3.5" strokeLinejoin="round" opacity=".95" />
-        <path d="M160 120c-28 0-42 18-38 50 1 12 6 26 10 38h56c4-12 9-26 10-38 4-32-10-50-38-50z" fill="var(--sunshine-soft)" />
+        <path d="M160 120c-28 0-42 18-38 50 1 12 6 26 10 38h56c4-12 9-26 10-38 4-32-10-50-38-50z" fill="var(--gold-soft)" />
       </g>
       {/* arrow: the adult tooth pushing up */}
-      <path d="M232 250v-44" stroke="var(--cobalt)" strokeWidth="3" strokeLinecap="round" />
-      <path d="M224 214l8-10 8 10" stroke="var(--cobalt)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+      <path d="M232 250v-44" stroke="var(--gold)" strokeWidth="3" strokeLinecap="round" />
+      <path d="M224 214l8-10 8 10" stroke="var(--gold)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
       <Marker x={228} y={58} n={1} swatch="var(--mint-soft)" />
-      <Marker x={88} y={150} n={2} swatch="var(--sunshine-soft)" />
+      <Marker x={88} y={150} n={2} swatch="var(--gold-soft)" />
       <Marker x={92} y={270} n={3} swatch="var(--sky-soft)" />
       <Marker x={230} y={140} n={4} swatch="var(--coral-soft)" />
     </Figure>
@@ -419,7 +419,7 @@ export function KidsTeethDiagram({ className }: { className?: string }) {
 
 const smileParts: Part[] = [
   { n: 1, name: "Central incisors", note: "The two front teeth. What everyone looks at first", swatch: "var(--sky-soft)" },
-  { n: 2, name: "Laterals", note: "Slightly smaller, slightly back. Often the odd one out", swatch: "var(--sunshine-soft)" },
+  { n: 2, name: "Laterals", note: "Slightly smaller, slightly back. Often the odd one out", swatch: "var(--gold-soft)" },
   { n: 3, name: "Canines", note: "The corners of the smile. They set its width", swatch: "var(--gold-soft)" },
   { n: 4, name: "Gum line", note: "Its evenness matters as much as the teeth", swatch: "var(--coral-soft)" },
   { n: 5, name: "Lip line", note: "How much shows when you smile decides what is worth changing", swatch: "var(--violet-soft)" },
@@ -428,10 +428,10 @@ const smileParts: Part[] = [
 export function SmileLineDiagram({ className }: { className?: string }) {
   const teeth = [
     { x: 46, w: 30, h: 44, f: "var(--gold-soft)" },
-    { x: 80, w: 28, h: 48, f: "var(--sunshine-soft)" },
+    { x: 80, w: 28, h: 48, f: "var(--gold-soft)" },
     { x: 112, w: 36, h: 56, f: "var(--sky-soft)" },
     { x: 152, w: 36, h: 56, f: "var(--sky-soft)" },
-    { x: 192, w: 28, h: 48, f: "var(--sunshine-soft)" },
+    { x: 192, w: 28, h: 48, f: "var(--gold-soft)" },
     { x: 224, w: 30, h: 44, f: "var(--gold-soft)" },
   ];
   return (
@@ -445,7 +445,7 @@ export function SmileLineDiagram({ className }: { className?: string }) {
         <rect key={t.x} x={t.x} y={104} width={t.w} height={t.h} rx="10" fill="#ffffff" stroke="var(--sky-text)" strokeWidth="2.5" />
       ))}
       <Marker x={166} y={196} n={1} swatch="var(--sky-soft)" />
-      <Marker x={94} y={196} n={2} swatch="var(--sunshine-soft)" />
+      <Marker x={94} y={196} n={2} swatch="var(--gold-soft)" />
       <Marker x={44} y={186} n={3} swatch="var(--gold-soft)" />
       <Marker x={286} y={100} n={4} swatch="var(--coral-soft)" />
       <Marker x={286} y={40} n={5} swatch="var(--violet-soft)" />

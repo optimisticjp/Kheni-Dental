@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { CalendarDays, MapPin, MessageCircle, Phone } from "lucide-react";
+import { MapPin, MessageCircle, Phone } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 import { locations, site } from "@/content/site";
@@ -10,30 +10,24 @@ import { directionsUrl } from "@/lib/maps";
 import { cn } from "@/lib/utils";
 
 /**
- * The mobile dock. Three actions, never five.
- *
- *   [ Book Appointment (wide, cobalt) ] [ Call ] [ WhatsApp ]
- *
- * On a clinic page the wide slot becomes Directions for that clinic, and
- * Call and WhatsApp follow the same branch, so a patient on the Hirabaug
- * page reaches Hirabaug and never Swastik Plaza.
- *
- * Home and Treatments are not here: the header handles navigation, and
- * the space is worth more to content and conversion than to two links.
+ * The floating action pill. One near-black pill above the phone's safe
+ * area, not a full-width bar: gold Book (or Directions on a clinic page),
+ * a white Call icon and a green WhatsApp icon. Call and WhatsApp follow
+ * the branch on a clinic page, so a patient on Hirabaug reaches Hirabaug.
  */
 export function MobileDock() {
   const pathname = usePathname();
   const active = locations.find((location) => pathname.includes(`/locations/${location.slug}`));
 
-  const side =
-    "flex min-h-[3.25rem] flex-col items-center justify-center gap-0.5 rounded-2xl px-2 text-[.7rem] font-semibold leading-none text-ink focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-cobalt";
+  const icon =
+    "grid size-12 shrink-0 place-items-center rounded-full focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-gold focus-visible:ring-inset";
 
   return (
     <nav
       aria-label="Quick actions"
-      className="glass fixed inset-x-0 bottom-0 z-40 border-t border-line px-3 pt-2 pb-[calc(.5rem+env(safe-area-inset-bottom))] md:hidden"
+      className="on-dark pointer-events-none fixed inset-x-0 bottom-0 z-40 flex justify-center px-4 pb-[calc(.75rem+env(safe-area-inset-bottom))] md:hidden"
     >
-      <div className="grid grid-cols-[1fr_4.25rem_4.25rem] gap-2">
+      <div className="pointer-events-auto grain flex w-full max-w-[26rem] items-center gap-1.5 rounded-full border border-ivory/12 bg-ink/95 p-1.5 shadow-[0_18px_40px_-16px_rgba(0,0,0,.7)] backdrop-blur-md">
         {active ? (
           <a
             href={directionsUrl(active)}
@@ -42,11 +36,9 @@ export function MobileDock() {
             data-track="directions_click"
             data-placement="mobile_dock_location"
             data-branch={active.slug}
-            className={cn(
-              "flex min-h-[3.25rem] items-center justify-center gap-2 rounded-2xl bg-cobalt text-[.9375rem] font-semibold text-white focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-white",
-            )}
+            className="flex min-h-12 flex-1 items-center justify-center gap-2 rounded-full bg-gold px-3 text-[.9375rem] font-semibold text-ink focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-ink"
           >
-            <MapPin className="size-[1.1rem]" aria-hidden="true" />
+            <MapPin className="size-[1.05rem]" aria-hidden="true" />
             Directions to {active.displayArea}
           </a>
         ) : (
@@ -55,9 +47,8 @@ export function MobileDock() {
             data-book
             data-track="appointment_start"
             data-placement="mobile_dock"
-            className="flex min-h-[3.25rem] items-center justify-center gap-2 rounded-2xl bg-cobalt text-[.9375rem] font-semibold text-white focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-white"
+            className="flex min-h-12 flex-1 items-center justify-center gap-2 rounded-full bg-gold px-3 text-[.9375rem] font-semibold text-ink focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-ink"
           >
-            <CalendarDays className="size-[1.1rem]" aria-hidden="true" />
             Book Appointment
           </Link>
         )}
@@ -67,10 +58,10 @@ export function MobileDock() {
           data-track="phone_click"
           data-placement="mobile_dock"
           data-branch={active?.slug}
-          className={cn(side, "bg-white ring-1 ring-inset ring-line-strong")}
+          aria-label={active ? `Call ${active.displayArea}` : `Call the clinic on ${site.primaryPhoneDisplay}`}
+          className={cn(icon, "border border-ivory/20 text-ivory")}
         >
-          <Phone className="size-[1.2rem] text-cobalt" aria-hidden="true" />
-          Call
+          <Phone className="size-[1.15rem]" aria-hidden="true" />
         </a>
 
         <a
@@ -80,10 +71,10 @@ export function MobileDock() {
           data-track="whatsapp_click"
           data-placement="mobile_dock"
           data-branch={active?.slug}
-          className={cn(side, "bg-whatsapp text-white")}
+          aria-label="Message us on WhatsApp"
+          className={cn(icon, "bg-whatsapp text-white")}
         >
           <MessageCircle className="size-[1.2rem]" aria-hidden="true" />
-          WhatsApp
         </a>
       </div>
     </nav>

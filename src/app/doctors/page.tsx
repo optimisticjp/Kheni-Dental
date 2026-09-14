@@ -25,7 +25,7 @@ export default function DoctorsPage() {
         title="Know who is treating you before you sit down."
         highlight="who"
         copy={`Four dentists across two clinics in Surat, led by Dr. Mayur Kheni. Consultations in ${languages.join(", ")}.`}
-        hue="cobalt"
+        hue="gold"
         compact
       />
 
@@ -35,13 +35,13 @@ export default function DoctorsPage() {
         </Container>
       </section>
 
-      <section className="bg-porcelain pb-10 sm:pb-14 lg:pb-18">
+      <section className="pb-10 sm:pb-14 lg:pb-18">
         <Container width="7xl">
           <SectionIntro eyebrow="The team" title="Three more dentists, each with their own area of work." highlight="area of work" copy="Degrees and years in practice are listed exactly as each doctor gave them." />
           <div className="mt-6">
             <DoctorRoster exclude="dr-mayur-kheni" />
           </div>
-          <div className="mt-6 grid gap-3 rounded-[1.5rem] bg-cobalt-tint p-5 sm:grid-cols-2 sm:p-6">
+          <div className="mt-6 grid gap-3 rounded-[1.5rem] bg-sand p-5 sm:grid-cols-2 sm:p-6">
             {locations.map((l) => (
               <p key={l.slug} className="t-small text-ink-soft">
                 <strong className="text-ink">{l.displayArea}:</strong> {l.note}

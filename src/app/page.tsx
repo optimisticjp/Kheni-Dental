@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, MapPin } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 
 import { Accordion } from "@/components/ui/accordion";
 import { Container } from "@/components/ui/container";
@@ -9,144 +9,148 @@ import { BranchLocator } from "@/components/kheni/branch-locator";
 import { ClinicShorts } from "@/components/kheni/clinic-shorts";
 import { ConcernFinder } from "@/components/kheni/concern-finder";
 import { CtaBand } from "@/components/kheni/cta-band";
-import { DoctorSpotlight, TeamLink } from "@/components/kheni/doctor-spotlight";
-import { MediaFrame } from "@/components/kheni/media-frame";
+import { DoctorRoster, DoctorSpotlight } from "@/components/kheni/doctor-spotlight";
+import { FollowLine, InstagramReels } from "@/components/kheni/instagram-reels";
 import { ProcessSteps } from "@/components/kheni/process-steps";
-import { GoogleQuotes, ProofCluster, Stars } from "@/components/kheni/proof";
-import { ResultsPreview } from "@/components/kheni/results-preview";
+import { GoogleQuotes, ProofChip, ProofPanel, Stars } from "@/components/kheni/proof";
 import { Highlighted, SectionIntro } from "@/components/kheni/section-intro";
-import { SmileNote } from "@/components/kheni/smile-note";
-import { TreatmentPoster, TreatmentTile } from "@/components/kheni/treatment-poster";
-import { StockHero } from "@/components/kheni/demo/stock-hero";
-import { ClaimMarquee } from "@/components/kheni/demo/marquee";
-import { StatBand } from "@/components/kheni/demo/stat-band";
-import { IconServiceGrid } from "@/components/kheni/demo/icon-grid";
-import { HorizontalAccordion } from "@/components/kheni/demo/horizontal-accordion";
-import { PromiseStrip } from "@/components/kheni/demo/promise-strip";
-import { RatingSummary, TestimonialWall } from "@/components/kheni/demo/testimonial-wall";
-import { VideoWall } from "@/components/kheni/demo/video-wall";
-import { AwardsRow, PressQuotes, PressStrip } from "@/components/kheni/demo/press-strip";
-import { CaseWall } from "@/components/kheni/demo/result-gallery";
-import { demoContentActive, demoRatingSummary } from "@/content/demo";
+import { TreatmentRail } from "@/components/kheni/treatment-rail";
+import { TreatmentTile } from "@/components/kheni/treatment-poster";
+import { photoSrcSet } from "@/components/kheni/media-frame";
 import { implantCapabilities } from "@/content/capabilities";
 import { googleReputation, verifiedBranches } from "@/content/google-reputation";
 import { implantProcess } from "@/content/implant-center";
+import { instagramHandle, instagramReels } from "@/content/instagram";
 import { homepageFaqs, locations, site, treatments } from "@/content/site";
-import { GlobeSurat } from "@/components/kheni/art/diagrams";
-import { heroPhoto } from "@/content/photos";
+import { clinicVideos } from "@/content/videos";
 import { placeUrl } from "@/lib/maps";
 
 /**
  * Homepage.
  *
- * Built for a phone first. In one screen: who we are, where, the Google
- * proof and a way to book. Then "What brings you in today?", six treatments,
- * the implant centre, the principal dentist, results, reviews, NRI, the two
- * clinics, videos, questions, and one closing action. Colour does the work
- * of section count: tinted fields, illustration and a few Smile Notes
- * between them rather than fifteen stacked cards.
+ * A premium black-and-gold clinic that has opened its windows. The rhythm:
+ *
+ *   dark    hero, with real Kheni frames and the Google proof
+ *   mint    what brings you in today
+ *   white   treatments (the rail on desktop, editorial tiles on a phone)
+ *   ivory   Inside Kheni: the clinic's own Instagram Reels
+ *   dark    the Elite Implant Center, diagram on a warm white panel
+ *   ivory   the dentists, on a soft peach spread
+ *   dark    Google reviews, the 4.9 set enormous
+ *   sky     NRI and international, with real patient videos from abroad
+ *   white   the two clinics
+ *   ivory   questions
+ *   dark    one closing action, then the footer
+ *
+ * Built for a phone first: within the first half a visitor has seen the
+ * clinic, the proof, their concern, the treatments and real people.
  */
 const featured = treatments.filter((t) => t.featured).slice(0, 7);
+const railTreatments = featured.slice(0, 6);
 const nriMessage = "Hello Kheni Dental, I live abroad and would like to plan dental treatment during a visit to Surat. Here are my dates:";
+const abroadVideos = clinicVideos.filter((v) => ["eex02jLikGk", "7n0mOTFirzI"].includes(v.id));
+const heroFrames = ["consultation-desk", "kids-camp"].map((id) => instagramReels.find((r) => r.id === id)).filter((r): r is NonNullable<typeof r> => Boolean(r));
 
 export default function Home() {
   return (
     <>
-      {/*
-        Two heroes. The verified one leads with where we are and what the
-        Google listings actually say. The demo one leads with a rating badge,
-        a "#1", a painless promise and a counter strip, which is the pattern
-        the clinic asked to see. Only one renders.
-      */}
-      {demoContentActive && <StockHero />}
-
-      {/* ── Hero ─────────────────────────────────────────────────────── */}
-      {!demoContentActive && (
-      <section
-        className="hue-cobalt field relative isolate overflow-hidden"
-        style={{ ["--f1" as string]: "var(--cobalt-tint)", ["--f2" as string]: "var(--coral-tint)", ["--f3" as string]: "var(--sunshine-tint)" }}
-      >
-        <Container width="7xl" className="relative grid gap-7 py-7 sm:py-10 lg:grid-cols-[1.05fr_.95fr] lg:items-center lg:gap-14 lg:py-16">
+      {/* ── Hero: dark, gold detail, real Kheni frames ───────────────── */}
+      <section className="on-dark grain relative isolate overflow-hidden bg-ink text-ivory">
+        <div aria-hidden="true" className="bloom-gold pointer-events-none absolute inset-0" />
+        <Container width="7xl" className="relative grid gap-8 py-9 sm:py-12 lg:grid-cols-[1.05fr_.95fr] lg:items-center lg:gap-14 lg:py-16">
           <div>
-            <p className="inline-flex items-center gap-2 rounded-full bg-white/80 px-3 py-1.5 text-[.8rem] font-semibold text-ink ring-1 ring-line">
-              <MapPin className="size-3.5 text-coral" aria-hidden="true" />
-              Two clinics in Surat · Yogi Chowk and Hirabaug
+            <p className="t-eyebrow flex items-center gap-3 text-gold">
+              Kheni Dental &amp; Elite Implant Center
+              <span aria-hidden="true" className="rule-gold h-px w-14" />
             </p>
-            <h1 className="t-display measure-display mt-4">
-              Dental care in Surat that <span className="hl">explains</span> before it treats.
+            <h1 className="t-display measure-display mt-5">
+              Good dentistry starts with <span className="hl">understanding.</span>
             </h1>
-            <p className="t-stand measure-stand mt-4 text-ink-soft">
-              {site.yearsInSurat} years, four dentists, one familiar standard. Implants, root canals, braces, kids dentistry and smile design, led by Dr. Mayur Kheni.
+            <p className="t-stand measure-stand mt-5 text-ivory/70">
+              {site.yearsInSurat} years, four dentists and two clinics at Yogi Chowk and Hirabaug. Implants, root canals, braces, kids dentistry and smile design, led by Dr. Mayur Kheni.
             </p>
-
-            <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2">
-              <Link href="/reviews/" data-track="review_click" data-placement="home_hero" className="inline-flex min-h-11 items-center gap-2 rounded-full bg-white px-3 ring-1 ring-line">
-                <span className="font-serif text-xl font-semibold leading-none">{googleReputation.sharedRating}</span>
-                <Stars />
-                <span className="t-small text-ink-soft">{googleReputation.combinedReviews} Google reviews</span>
-              </Link>
-              <span className="t-small text-ink-soft">across two clinic listings</span>
-            </div>
-
-            <div className="mt-6 grid gap-2.5 min-[360px]:grid-cols-2 sm:flex sm:flex-wrap">
+            <div className="mt-7 grid gap-2.5 sm:flex sm:flex-wrap">
               <BookButton placement="home_hero" size="lg" className="px-4 sm:px-7" />
-              <WhatsAppButton placement="home_hero" size="lg" className="px-4 sm:px-7" />
+              <WhatsAppButton placement="home_hero" size="lg" variant="onDark" className="px-4 sm:px-7 [&>svg]:text-gold" />
             </div>
+            <ProofChip placement="home_hero" tone="dark" className="mt-5" />
           </div>
 
-          {/* Right: the clinic photograph, and the two clinics as proof chips.
-              This slot held a 2x2 grid of treatment illustrations while there
-              was no photograph. The treatments section below covers that
-              ground, so the picture takes the space now. */}
-          <div className="relative">
-            <MediaFrame
-              ratio="5 / 4"
-              mobileRatio="16 / 9"
-              from="lg"
-              src={heroPhoto.src}
-              alt={heroPhoto.alt}
-              objectPosition={heroPhoto.objectPosition}
-              className="rounded-[1.75rem] bg-white ring-1 ring-line"
-              priority
-            />
-            <ul className="mt-3 grid grid-cols-2 gap-2">
-              {verifiedBranches.map((b) => (
-                <li key={b.location.slug} className={`hue-${b.location.hue}`}>
-                  <a
-                    href={placeUrl(b.location)}
-                    target="_blank"
-                    rel="noreferrer"
-                    data-track="google_reviews_click"
-                    data-placement="home_hero_branch"
-                    data-branch={b.location.slug}
-                    className="glass flex min-h-12 items-center justify-between gap-2 rounded-2xl px-3.5 ring-1 ring-line"
-                  >
-                    <span className="flex items-center gap-1.5 whitespace-nowrap text-[.85rem] font-semibold sm:text-sm">
-                      <span aria-hidden="true" className="size-2 rounded-full bg-h-fill" />
-                      {b.location.displayArea}
-                    </span>
-                    <span className="flex items-center gap-1.5 whitespace-nowrap text-[.85rem] sm:text-sm">
-                      <span className="font-serif font-semibold">{b.rating}</span>
-                      <span className="text-ink-soft">{b.reviewCount}</span>
-                    </span>
-                  </a>
-                </li>
-              ))}
-            </ul>
+          {/* Right: two frames from the clinic's own Instagram and the two
+              listings on one soft mint card. The one light accent in the
+              dark hero. */}
+          <div className="grid grid-cols-[1.1fr_.9fr] gap-3 sm:grid-cols-[1fr_.9fr_.9fr] lg:grid-cols-[1.1fr_.9fr] lg:gap-4">
+            {heroFrames.map((reel, index) => (
+              <a
+                key={reel.id}
+                href={reel.url}
+                target="_blank"
+                rel="noreferrer"
+                data-track="instagram_reel_open"
+                data-placement="home_hero_frame"
+                aria-label={`${reel.title}. Watch on Instagram`}
+                className={index === 0 ? "row-span-2 sm:row-span-1 lg:row-span-2" : "hidden sm:block"}
+              >
+                <span className="relative block overflow-hidden rounded-[1.25rem] border border-ivory/10 bg-ink-2" style={{ aspectRatio: index === 0 ? "4 / 5" : "1 / 1" }}>
+                  {reel.poster && (
+                    // eslint-disable-next-line @next/next/no-img-element -- images are unoptimized site-wide
+                    <img
+                      src={reel.poster}
+                      srcSet={photoSrcSet(reel.poster)}
+                      sizes="(min-width: 1024px) 360px, 50vw"
+                      alt={reel.posterAlt ?? ""}
+                      loading="eager"
+                      fetchPriority={index === 0 ? "high" : undefined}
+                      decoding="async"
+                      className="absolute inset-0 size-full object-cover"
+                      style={{ objectPosition: reel.objectPosition }}
+                    />
+                  )}
+                  <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
+                  <span className="absolute bottom-3 left-3 right-3 flex items-end justify-between gap-2 text-[.7rem] text-ivory/85">
+                    <span className="min-w-0 truncate">{reel.title}</span>
+                    <span className="shrink-0 text-gold">{instagramHandle}</span>
+                  </span>
+                </span>
+              </a>
+            ))}
+            <div className="flex flex-col justify-between rounded-[1.25rem] bg-mint p-4 text-ink sm:col-span-1">
+              <div className="flex items-center justify-between gap-2">
+                <span className="font-serif text-3xl leading-none">{googleReputation.sharedRating}</span>
+                <Stars size="size-3" />
+              </div>
+              <p className="t-small mt-2 text-ink-soft">
+                {googleReputation.combinedReviews} Google reviews, {googleReputation.combinedShort}.
+              </p>
+              <ul className="mt-3 divide-y divide-ink/10">
+                {verifiedBranches.map((b) => (
+                  <li key={b.location.slug}>
+                    <a
+                      href={placeUrl(b.location)}
+                      target="_blank"
+                      rel="noreferrer"
+                      data-track="google_reviews_click"
+                      data-placement="home_hero_branch"
+                      data-branch={b.location.slug}
+                      className="flex min-h-10 items-center justify-between gap-2 text-sm"
+                    >
+                      <span className="font-semibold">{b.location.displayArea}</span>
+                      <span className="flex items-center gap-1.5 text-ink-soft">
+                        <span className="font-serif text-ink">{b.rating}</span>
+                        {b.reviewCount}
+                        <ArrowUpRight className="size-3 text-gold-text" aria-hidden="true" />
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </Container>
       </section>
-      )}
 
-      {demoContentActive && (
-        <>
-          <ClaimMarquee />
-          <PressStrip />
-        </>
-      )}
-
-      {/* ── What brings you in today? ───────────────────────────────── */}
-      <section className="hue-teal py-10 sm:py-14 lg:py-20">
+      {/* ── What brings you in today? Soft mint. ─────────────────────── */}
+      <section className="bg-mint py-10 sm:py-14 lg:py-20">
         <Container width="7xl">
           <SectionIntro eyebrow="Start here" title="What brings you in today?" highlight="today" copy="Pick the one that sounds like you. You do not need to know the name of the treatment." />
           <div className="mt-6 sm:mt-8">
@@ -155,191 +159,128 @@ export default function Home() {
         </Container>
       </section>
 
-      {demoContentActive && (
-        <>
-          <PromiseStrip />
-
-          {/* ── Icon service grid ───────────────────────────────────── */}
-          <section className="hue-navy py-10 sm:py-14 lg:py-20">
-            <Container width="7xl">
-              <SectionIntro eyebrow="Everything we do" title="Twelve things, one waiting room." highlight="one waiting room" copy="Whatever brought you here, it is on this grid somewhere. Tap it and read the whole story before you book." />
-              <IconServiceGrid className="mt-6 sm:mt-8" />
-            </Container>
-          </section>
-        </>
-      )}
-
-      <SmileNote index={0} />
-
-      {/* ── Treatments ──────────────────────────────────────────────── */}
-      <section className="hue-cobalt py-10 sm:py-14 lg:py-20">
+      {/* ── Treatments: editorial tiles, the rail from lg. White. ────── */}
+      <section className="bg-white py-10 sm:py-14 lg:py-20">
         <Container width="7xl">
           <div className="flex flex-wrap items-end justify-between gap-4">
-            <SectionIntro eyebrow="Treatments" title="From a check-up to a whole new bite." highlight={["check-up", "whole new bite"]} />
-            <Link href="/treatments/" className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-cobalt-deep">
+            <SectionIntro eyebrow="Treatments" title="From a check-up to a whole new bite." highlight="whole new bite" />
+            <Link href="/treatments/" className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-ink">
               All {treatments.length} treatments
-              <ArrowUpRight className="cta-arrow size-4" aria-hidden="true" />
+              <ArrowUpRight className="cta-arrow size-4 text-gold-text" aria-hidden="true" />
             </Link>
           </div>
-          {/* Phone: seven compact tiles in two screens. Tablet and up: posters, the first across the row. */}
-          <div className="mt-6 grid grid-cols-2 gap-2.5 sm:hidden">
+          <div className="mt-6 grid grid-cols-2 gap-2.5 sm:gap-4 lg:hidden">
             {featured.map((t, index) => (
               <TreatmentTile key={t.slug} treatment={t} wide={index === 0} placement="home_treatments" />
             ))}
           </div>
-          <div className="mt-8 hidden gap-4 sm:grid sm:grid-cols-2 lg:grid-cols-3">
-            {featured.map((t, index) => (
-              <TreatmentPoster key={t.slug} treatment={t} featured={index === 0} placement="home_treatments" />
-            ))}
+          <div className="mt-8 hidden lg:block">
+            <TreatmentRail treatments={railTreatments} />
           </div>
         </Container>
       </section>
 
-      {demoContentActive && (
-        <section className="hue-teal py-10 sm:py-14 lg:py-20">
-          <Container width="7xl">
-            <SectionIntro eyebrow="Problems we treat" title="Fourteen reasons people walk through the door." highlight="Fourteen" copy="Yours is almost certainly one of them. Open the one that sounds like you and swipe for the rest." />
-            <HorizontalAccordion className="mt-6 sm:mt-8" />
-          </Container>
-        </section>
-      )}
+      {/* ── Inside Kheni: the clinic's own Instagram. Ivory. ─────────── */}
+      <section className="py-10 sm:py-14 lg:py-20">
+        <Container width="7xl">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <SectionIntro eyebrow={`Inside Kheni · ${instagramHandle}`} title="The clinic, as it is on an ordinary day." highlight="ordinary day" copy="Short clips from our own Instagram: a school camp, the consultation desk, a child settling into the chair." />
+          </div>
+          <InstagramReels className="mt-6 sm:mt-8" placement="home_instagram" />
+          <FollowLine placement="home_instagram_follow" className="mt-3" />
+        </Container>
+      </section>
 
-      {/* ── Elite Implant Center ────────────────────────────────────── */}
-      <section className="hue-cobalt relative isolate overflow-hidden bg-ink py-10 text-white sm:py-14 lg:py-20">
-        <div aria-hidden="true" className="absolute -left-24 top-0 size-80 rounded-full bg-cobalt opacity-40 blur-3xl" />
-        <div aria-hidden="true" className="absolute -right-24 bottom-0 size-80 rounded-full bg-teal opacity-25 blur-3xl" />
+      {/* ── Elite Implant Center. Dark. ───────────────────────────────── */}
+      <section className="on-dark grain relative isolate overflow-hidden bg-ink py-10 text-ivory sm:py-14 lg:py-20">
+        <div aria-hidden="true" className="bloom-gold-soft pointer-events-none absolute inset-0" />
         <Container width="7xl" className="relative">
           <div className="grid gap-8 lg:grid-cols-[1fr_1.1fr] lg:items-center lg:gap-14">
             <div>
-              <p className="t-eyebrow text-gold-soft">Elite Implant Center · Hirabaug</p>
-              <h2 className="t-h1 mt-3 [--h-text:var(--sunshine)] [--h-soft:transparent]">
+              <p className="t-eyebrow flex items-center gap-3 text-gold">
+                Elite Implant Center · Hirabaug
+                <span aria-hidden="true" className="rule-gold h-px w-12" />
+              </p>
+              <h2 className="t-h1 mt-3">
                 A fixed tooth for the gap you have been <span className="hl">working around.</span>
               </h2>
-              <p className="t-stand mt-4 max-w-xl text-white/75">
+              <p className="t-stand mt-4 max-w-xl text-ivory/70">
                 Implant work is led from Hirabaug by Dr. Mayur Kheni. Every case starts with an examination and the imaging needed to see the bone, before anything is recommended.
               </p>
               <ul className="mt-6 grid grid-cols-2 gap-2">
                 {implantCapabilities.map((item) => (
-                  <li key={item.id} className="rounded-xl bg-white/[.07] px-3.5 py-3 ring-1 ring-white/10">
-                    <p className="text-sm font-semibold">{item.title}</p>
-                    <p className="t-small mt-1 hidden text-white/65 sm:block">{item.copy}</p>
+                  <li key={item.id} className="rounded-xl border border-ivory/10 bg-ivory/[.04] px-3.5 py-3">
+                    <p className="text-sm font-semibold text-ivory">{item.title}</p>
+                    <p className="t-small mt-1 hidden text-ivory/60 sm:block">{item.copy}</p>
                   </li>
                 ))}
               </ul>
               <div className="mt-6 flex flex-col gap-2.5 sm:flex-row">
-                <Link href="/treatments/dental-implants-surat/" data-track="treatment_view" data-placement="home_implant" className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-sunshine px-6 text-[.9375rem] font-semibold text-ink">
+                <Link href="/treatments/dental-implants-surat/" data-track="treatment_view" data-placement="home_implant" className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-gold px-6 text-[.9375rem] font-semibold text-ink hover:bg-gold-soft">
                   Inside the Elite Implant Center
                   <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
                 </Link>
                 <WhatsAppButton placement="home_implant" location={locations[1]} context="implants" variant="onDark" />
               </div>
             </div>
-            <div className="rounded-[1.5rem] bg-porcelain p-4 text-ink sm:p-6">
+            <div className="rounded-[1.5rem] border border-gold/20 bg-ivory p-4 text-ink sm:p-6">
               <ImplantDiagram />
             </div>
           </div>
 
-          <div className="mt-10 border-t border-white/10 pt-8 lg:mt-12">
-            <p className="t-eyebrow text-gold-soft">{implantProcess.eyebrow}</p>
-            <h3 className="t-h2 mt-2 text-white [--h-text:var(--sunshine)] [--h-soft:transparent]">
+          <div className="mt-10 border-t border-ivory/10 pt-8 lg:mt-12">
+            <p className="t-eyebrow text-gold">{implantProcess.eyebrow}</p>
+            <h3 className="t-h2 mt-2 text-ivory">
               <Highlighted title={implantProcess.title} highlight={["first visit", "final tooth"]} />
             </h3>
-            <div className="mt-6 [--h-fill:var(--sunshine)] [--h-on-fill:var(--ink)] [--h-soft:rgba(255,255,255,.2)] [&_li]:bg-white/[.06] [&_li]:ring-white/10 [&_li]:text-white [&_p]:text-white/65">
-              <ProcessSteps steps={implantProcess.steps} columns={5} dense />
-            </div>
+            <ProcessSteps steps={implantProcess.steps} columns={5} dense tone="dark" className="mt-6" />
           </div>
         </Container>
       </section>
 
-      {demoContentActive && <StatBand />}
-
-      {/* ── Dr. Mayur ───────────────────────────────────────────────── */}
+      {/* ── The dentists. Ivory, with a peach spread. ─────────────────── */}
       <section className="py-10 sm:py-14 lg:py-20">
         <Container width="7xl">
           <DoctorSpotlight />
-          <TeamLink />
-        </Container>
-      </section>
-
-      {demoContentActive && (
-        <>
-          {/* ── Testimonial wall ────────────────────────────────────── */}
-          <section className="hue-sunshine py-10 sm:py-14 lg:py-20">
-            <Container width="7xl">
-              <div className="grid gap-8 lg:grid-cols-[.85fr_1.15fr] lg:items-start lg:gap-12">
-                <div className="lg:sticky lg:top-24">
-                  <SectionIntro eyebrow="Patient stories" title={`${demoRatingSummary.total.toLocaleString("en-IN")} people have told us how it went.`} highlight="how it went" copy="Not a curated handful. The whole wall, four stars and all." />
-                  <RatingSummary className="mt-6" />
-                  <Link href="/reviews/" data-track="review_click" data-placement="home_testimonials" className="mt-4 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-cobalt-deep">
-                    Read all {demoRatingSummary.total.toLocaleString("en-IN")} reviews
-                    <ArrowUpRight className="cta-arrow size-4" aria-hidden="true" />
-                  </Link>
-                </div>
-                <TestimonialWall limit={6} />
-              </div>
-            </Container>
-          </section>
-
-          {/* ── Video testimonials ──────────────────────────────────── */}
-          <section className="hue-violet relative isolate overflow-hidden bg-ink py-10 text-white sm:py-14 lg:py-20">
-            <div aria-hidden="true" className="absolute -right-24 top-0 size-80 rounded-full bg-violet opacity-30 blur-3xl" />
-            <Container width="7xl" className="relative">
-              <SectionIntro tone="dark" eyebrow="On camera" title="Some of them said it out loud." highlight="out loud" copy="Filmed on the day the work finished. Nothing plays until you tap it." />
-              <VideoWall className="mt-6 sm:mt-8" limit={4} />
-            </Container>
-          </section>
-
-          {/* ── Recognition ─────────────────────────────────────────── */}
-          <section className="hue-gold py-10 sm:py-14 lg:py-20">
-            <Container width="7xl">
-              <SectionIntro eyebrow="Recognition" title="What other people have said about us." highlight="other people" copy="Awards, accreditation, and a few write-ups we did not ask for." />
-              <AwardsRow className="mt-6 sm:mt-8" />
-              <PressQuotes className="mt-8" />
-            </Container>
-          </section>
-        </>
-      )}
-
-      <SmileNote index={1} />
-
-      {demoContentActive && (
-        <section className="hue-cobalt py-10 sm:py-14 lg:py-20">
-          <Container width="7xl">
-            <SectionIntro eyebrow="Smile gallery" title="Drag the handle. Watch it change." highlight="Watch it change" copy="Four cases with the treatment and the timeline named on each one, so you can see what you would actually be signing up for." />
-            <CaseWall className="mt-6 sm:mt-8" />
-            <Link href="/smile-gallery/" className="mt-6 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-h-text">
-              The full smile gallery
-              <ArrowUpRight className="cta-arrow size-4" aria-hidden="true" />
+          <div className="mt-6 flex flex-wrap items-end justify-between gap-3 sm:mt-8">
+            <SectionIntro size="h3" eyebrow="The team" title="Three more dentists across both clinics." />
+            <Link href="/doctors/" data-track="doctor_profile_view" data-placement="team_link" className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-ink">
+              All doctors
+              <ArrowUpRight className="cta-arrow size-4 text-gold-text" aria-hidden="true" />
             </Link>
-          </Container>
-        </section>
-      )}
-
-      {/* ── Results and reviews ─────────────────────────────────────── */}
-      <section className="hue-sunshine py-10 sm:py-14 lg:py-20">
-        <Container width="7xl">
-          <div className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:gap-14">
-            <div>
-              <SectionIntro eyebrow="Before and after" title="Results, shown honestly." highlight="honestly" />
-              <div className="mt-6">
-                <ResultsPreview limit={2} placement="home_results" />
-              </div>
-            </div>
-            <div>
-              <SectionIntro eyebrow="Patient reviews" title={`${googleReputation.combinedReviews} reviews on Google.`} highlight={googleReputation.combinedReviews} copy="Counted across two separate clinic listings. Read the one you plan to visit." />
-              <ProofCluster placement="home_reviews" className="mt-6" />
-            </div>
           </div>
-          <GoogleQuotes placement="home_quotes" className="mt-6" />
+          <div className="mt-4">
+            <DoctorRoster exclude="dr-mayur-kheni" compact />
+          </div>
         </Container>
       </section>
 
-      {/* ── NRI and international ───────────────────────────────────── */}
-      <section className="hue-coral py-10 sm:py-14 lg:py-20">
-        <Container width="7xl">
-          <div className="grid gap-6 overflow-hidden rounded-[1.75rem] bg-coral-tint p-5 sm:p-8 lg:grid-cols-[1.15fr_.85fr] lg:items-center lg:gap-12 lg:p-12">
+      {/* ── Google reviews. Dark, the number enormous. ────────────────── */}
+      <section className="on-dark grain relative isolate overflow-hidden bg-ink py-10 text-ivory sm:py-14 lg:py-20">
+        <Container width="7xl" className="relative">
+          <div className="grid gap-8 lg:grid-cols-[.9fr_1.1fr] lg:items-start lg:gap-14">
             <div>
-              <p className="t-eyebrow text-coral-text">NRI and international patients</p>
+              <SectionIntro tone="dark" rule eyebrow="Patient reviews" title={`${googleReputation.combinedReviews} reviews, on Google.`} highlight="on Google" copy="Counted across two separate clinic listings. Each clinic keeps its own, so you can read the one you plan to visit." />
+              <Link href="/reviews/" data-track="review_click" data-placement="home_reviews" className="mt-5 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-gold">
+                Reputation in full
+                <ArrowUpRight className="cta-arrow size-4" aria-hidden="true" />
+              </Link>
+            </div>
+            <ProofPanel placement="home_reviews" />
+          </div>
+          <GoogleQuotes placement="home_quotes" tone="dark" className="mt-8" />
+        </Container>
+      </section>
+
+      {/* ── NRI and international. Soft sky, real patients from abroad. ── */}
+      <section className="bg-sky py-10 sm:py-14 lg:py-20">
+        <Container width="7xl">
+          <div className="grid gap-8 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-14">
+            <div>
+              <p className="t-eyebrow flex items-center gap-3 text-gold-text">
+                NRI and international patients
+                <span aria-hidden="true" className="rule-gold h-px w-12" />
+              </p>
               <h2 className="t-h1 mt-3">
                 Visiting Surat? Plan your dental care <span className="hl">before you fly.</span>
               </h2>
@@ -348,25 +289,28 @@ export default function Home() {
               </p>
               <div className="mt-6 flex flex-col gap-2.5 sm:flex-row">
                 <WhatsAppButton placement="home_nri" message={nriMessage} label="Plan your visit on WhatsApp" track="international_patient_contact" />
-                <Link href="/international-patients/" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-line-strong bg-white px-5 text-[.9375rem] font-semibold">
+                <Link href="/international-patients/" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-ink/25 px-5 text-[.9375rem] font-semibold hover:border-ink">
                   How a visit works
                   <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
                 </Link>
               </div>
             </div>
-            <GlobeSurat className="mx-auto w-full max-w-[18rem] lg:max-w-none" />
+            <div className="min-w-0">
+              <p className="t-eyebrow text-gold-text">Patients who flew in</p>
+              <ClinicShorts videos={abroadVideos} limit={2} columns={2} uniform className="mt-3" />
+            </div>
           </div>
         </Container>
       </section>
 
-      {/* ── Clinics ─────────────────────────────────────────────────── */}
-      <section className="hue-green py-10 sm:py-14 lg:py-20">
+      {/* ── The two clinics. White. ───────────────────────────────────── */}
+      <section className="bg-white py-10 sm:py-14 lg:py-20">
         <Container width="7xl">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <SectionIntro eyebrow="Two clinics in Surat" title="Come to whichever is nearer." highlight="nearer" />
-            <Link href="/locations/" className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-green-text">
+            <Link href="/locations/" className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-ink">
               Both clinics in detail
-              <ArrowUpRight className="cta-arrow size-4" aria-hidden="true" />
+              <ArrowUpRight className="cta-arrow size-4 text-gold-text" aria-hidden="true" />
             </Link>
           </div>
           <div className="mt-6 sm:mt-8">
@@ -375,16 +319,8 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* ── From the clinic ─────────────────────────────────────────── */}
-      <section className="hue-violet py-10 sm:py-14 lg:py-20">
-        <Container width="7xl">
-          <SectionIntro eyebrow="From the clinic" title="Two minutes with a dentist, in Gujarati or English." highlight={["Two minutes", "Gujarati or English"]} copy="Brushing tips, kids' teeth, and patients on the day their treatment finished." />
-          <ClinicShorts limit={6} className="mt-6 sm:mt-8" />
-        </Container>
-      </section>
-
-      {/* ── Questions ───────────────────────────────────────────────── */}
-      <section className="hue-sky py-10 sm:py-14 lg:py-20">
+      {/* ── Questions. Ivory. ─────────────────────────────────────────── */}
+      <section className="py-10 sm:py-14 lg:py-20">
         <Container width="7xl">
           <div className="grid gap-6 lg:grid-cols-[.7fr_1.3fr] lg:gap-14">
             <SectionIntro eyebrow="Questions" title="Things people ask before their first visit." highlight="first visit" />

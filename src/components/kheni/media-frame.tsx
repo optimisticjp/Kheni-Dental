@@ -2,29 +2,28 @@ import { KheniMonogram } from "@/components/kheni/brand-mark";
 import { cn } from "@/lib/utils";
 
 /**
- * A photograph slot that looks finished before the photograph exists.
- *
- * With `src`, it renders the image, art-directed by `ratio` and
- * `objectPosition`. Without one, it renders a designed colour field in the
- * surrounding hue with the monogram, and never a "photo needed" note: those
- * belong in docs/CLINIC-CONTENT-NEEDED.md, not in front of a patient.
- *
- * `children` lets a poster illustration sit in the frame instead, so a real
- * photograph replaces it later without any layout change.
- */
-/**
  * The responsive set for a photograph.
  *
  * `scripts/resize-images.mjs` writes a 640w and a 1024w variant beside every
- * source, so the widths are derivable from the file name and no per-photo
- * bookkeeping is needed. A phone downloads about a sixth of what it used to.
+ * source. Instagram posters are the exception: they are 540px frames with a
+ * 360w variant beside them (see src/content/instagram.ts).
  */
 export function photoSrcSet(src?: string) {
   if (!src || !src.endsWith(".jpg")) return undefined;
   const stem = src.slice(0, -4);
+  if (src.startsWith("/images/instagram/")) return `${stem}-360w.jpg 360w, ${src} 540w`;
   return `${stem}-640w.jpg 640w, ${stem}-1024w.jpg 1024w, ${src} 1536w`;
 }
 
+/**
+ * A photograph slot that looks finished before the photograph exists.
+ *
+ * With `src`, it renders the image, art-directed by `ratio` and
+ * `objectPosition`. Without one, it renders a quiet designed field (sand
+ * on light, ink on dark) with the monogram, and never a "photo needed"
+ * note: those belong in docs/CLINIC-CONTENT-NEEDED.md, not in front of a
+ * patient. `children` lets an illustration sit in the frame instead.
+ */
 export function MediaFrame({
   src,
   alt,
@@ -36,6 +35,7 @@ export function MediaFrame({
   priority = false,
   from = "sm",
   sizes = "(min-width: 1024px) 640px, 100vw",
+  tone = "light",
 }: {
   src?: string;
   alt?: string;
@@ -50,6 +50,7 @@ export function MediaFrame({
   from?: "sm" | "lg";
   /** How wide the frame renders, so the browser can pick a variant. */
   sizes?: string;
+  tone?: "light" | "dark";
 }) {
   const style = {
     ["--ratio" as string]: ratio,
@@ -59,7 +60,8 @@ export function MediaFrame({
   return (
     <div
       className={cn(
-        "relative isolate overflow-hidden rounded-[1.25rem] bg-h-tint [aspect-ratio:var(--ratio-m)]",
+        "relative isolate overflow-hidden rounded-[1.25rem] [aspect-ratio:var(--ratio-m)]",
+        tone === "dark" ? "bg-ink-2" : "bg-sand",
         from === "sm" ? "sm:[aspect-ratio:var(--ratio)]" : "lg:[aspect-ratio:var(--ratio)]",
         className,
       )}
@@ -81,10 +83,9 @@ export function MediaFrame({
       ) : children ? (
         <div className="absolute inset-0">{children}</div>
       ) : (
-        <div className="absolute inset-0">
-          <div aria-hidden="true" className="absolute -right-10 -top-10 size-40 rounded-full bg-h-soft opacity-80" />
-          <div aria-hidden="true" className="absolute -bottom-12 -left-8 size-44 rounded-full bg-h-fill opacity-20" />
-          <KheniMonogram className="absolute bottom-4 left-4 size-9 opacity-90" />
+        <div className={cn("absolute inset-0", tone === "dark" && "grain")}>
+          <div aria-hidden="true" className={cn("absolute inset-0", tone === "dark" ? "bloom-gold-soft" : "dots opacity-60")} />
+          <KheniMonogram tone={tone === "dark" ? "dark" : "light"} className="absolute bottom-4 left-4 size-9" />
         </div>
       )}
     </div>

@@ -50,7 +50,7 @@ export function BeforeAfterSlider({
       <span aria-hidden="true" className="absolute left-3 top-3 rounded-full bg-ink/80 px-2.5 py-1 text-[.7rem] font-bold uppercase tracking-[.1em] text-white">
         Before
       </span>
-      <span aria-hidden="true" className="absolute right-3 top-3 rounded-full bg-cobalt px-2.5 py-1 text-[.7rem] font-bold uppercase tracking-[.1em] text-white">
+      <span aria-hidden="true" className="absolute right-3 top-3 rounded-full bg-gold px-2.5 py-1 text-[.7rem] font-bold uppercase tracking-[.1em] text-ink">
         After
       </span>
 
