@@ -5,10 +5,31 @@ Internal. Priority order. Every slot below already exists in the layout as a
 matters, `objectPosition` in `src/content/photos.ts`. Nothing on the site uses a
 generated face, a stock patient or a borrowed clinical image.
 
-What is on the site today and stays: five real @khenielite Instagram stills (verified
-14 September 2026), YouTube poster frames from the clinic's own channel, object and
-interior photography that does not pretend to be a person, monogram placeholders for
-the doctors, line diagrams, and the aerial map frames.
+What is on the site today and stays: the clinic's own logo (see below), five real
+@khenielite Instagram stills (verified 14 September 2026), YouTube poster frames from
+the clinic's own channel, object and interior photography that does not pretend to be
+a person, monogram placeholders for the doctors, line diagrams, and the aerial map
+frames.
+
+## Logo
+
+The clinic supplied its logo on 15 September 2026. The original is kept at
+`assets/brand/kheni-logo-original.png` and every derived asset (both tones, the mark
+on its own, the favicon and app icons) is built from it by
+`node scripts/make-brand-assets.mjs`. If the clinic ever sends revised artwork,
+re-run that rather than editing the PNGs.
+
+Still worth asking the clinic for, though nothing is blocked without them:
+
+- [ ] A vector original (SVG, AI or EPS). The site uses PNG, which is fine at the
+      sizes it renders, but a vector is what a printer or a signage company will ask
+      for, and it would let the logo be recoloured in CSS.
+- [ ] Confirmation that the rose in the mark is the intended brand colour. The site's
+      accent is gold, so the two sit side by side in the header. It reads fine, but
+      it is worth a deliberate decision rather than an accident.
+- [ ] A square or stacked version of the lockup, if one exists. The supplied artwork
+      is a wide horizontal lockup, which is why the social preview image
+      (`public/images/og-default.jpg`) does not yet carry it.
 
 ## Priority list
 
