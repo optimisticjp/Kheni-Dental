@@ -478,7 +478,7 @@ export const treatments: Treatment[] = [
     seoTitle: "Root Canal Treatment in Surat",
     metaDescription:
       "Root canal treatment in Surat at Kheni Dental. For tooth pain from an infected or inflamed tooth, aimed at settling the pain and keeping your own tooth where possible.",
-    hue: "teal",
+    hue: "sky",
     category: "restorative",
     concern: "This tooth keeps me up at night.",
     headline: "Settle the pain. Keep the tooth where we can.",
@@ -1054,7 +1054,7 @@ export const treatments: Treatment[] = [
     seoTitle: "Dental Check-up & Cleaning in Surat",
     metaDescription:
       "Dental check-up in Surat at Kheni Dental. A proper look at your teeth and gums, cleaning where needed, and a straight answer about what needs doing and what can wait.",
-    hue: "sky",
+    hue: "navy",
     category: "everyday",
     concern: "It has been longer than I would like since my last check-up.",
     headline: "Small problems are easier to keep small.",
@@ -1341,7 +1341,7 @@ export type Concern = {
 };
 
 export const concerns: Concern[] = [
-  { id: "pain", label: "Tooth pain", sub: "Aching, throbbing or sensitive", href: "/treatments/root-canal-treatment-surat/", hue: "teal", icon: "pain" },
+  { id: "pain", label: "Tooth pain", sub: "Aching, throbbing or sensitive", href: "/treatments/root-canal-treatment-surat/", hue: "sky", icon: "pain" },
   { id: "gap", label: "Missing tooth", sub: "One gap, several, or a loose denture", href: "/treatments/dental-implants-surat/", hue: "gold", icon: "gap" },
   { id: "crooked", label: "Crooked teeth", sub: "Crowding, gaps or a bite that is off", href: "/treatments/braces-clear-aligners/", hue: "violet", icon: "crooked" },
   { id: "smile", label: "Smile appearance", sub: "Colour, shape or a chipped edge", href: "/treatments/cosmetic-smile-dentistry/", hue: "coral", icon: "smile" },
@@ -1349,7 +1349,7 @@ export const concerns: Concern[] = [
   { id: "gums", label: "Bleeding gums", sub: "Blood when brushing, swelling, bad breath", href: "/treatments/gum-care-surat/", hue: "green", icon: "gums" },
   { id: "wisdom", label: "Wisdom tooth", sub: "Pain or swelling at the back", href: "/treatments/wisdom-tooth-oral-surgery/", hue: "lavender", icon: "wisdom" },
   { id: "broken", label: "Broken or chipped tooth", sub: "Cracked, worn or a lost filling", href: "/treatments/crowns-and-bridges/", hue: "amber", icon: "broken" },
-  { id: "checkup", label: "Just a check-up", sub: "Overdue, or a clean and a look", href: "/treatments/dental-check-up-surat/", hue: "sky", icon: "checkup" },
+  { id: "checkup", label: "Just a check-up", sub: "Overdue, or a clean and a look", href: "/treatments/dental-check-up-surat/", hue: "navy", icon: "checkup" },
 ];
 
 /**

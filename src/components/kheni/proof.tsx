@@ -10,6 +10,11 @@ import { cn } from "@/lib/utils";
 /**
  * Google proof, in four sizes.
  *
+ * This is one of the few places champagne survives the move to rose. Stars
+ * and the headline rating are the site's "premium detail" moments, and
+ * champagne reads as a star colour in a way rose does not. Everything else
+ * here (links, arrows, labels) is rose.
+ *
  *   ProofChip      one line: 4.9, stars, review count. For heroes and cards.
  *   ProofCluster   the rating large, both listings named, dated. Light.
  *   ProofPanel     the same on ink, with the rating set enormous. For the
@@ -22,7 +27,7 @@ import { cn } from "@/lib/utils";
 
 export function Stars({ className, size = "size-3.5" }: { className?: string; size?: string }) {
   return (
-    <span className={cn("flex gap-0.5 text-gold", className)} aria-hidden="true">
+    <span className={cn("flex gap-0.5 text-champagne", className)} aria-hidden="true">
       {Array.from({ length: 5 }).map((_, index) => (
         <Star key={index} className={cn(size, "fill-current")} />
       ))}
@@ -45,7 +50,7 @@ export function ProofChip({ placement, className, tone = "light" }: { placement:
       )}
     >
       <GoogleGlyph className="size-4 shrink-0" />
-      <strong className={cn("font-serif text-lg font-medium leading-none", tone === "dark" && "text-gold")}>{sharedRating}</strong>
+      <strong className={cn("font-serif text-lg font-medium leading-none", tone === "dark" && "text-champagne")}>{sharedRating}</strong>
       <Stars />
       <span className={cn("hidden sm:inline", tone === "dark" ? "text-ivory/70" : "text-ink-soft")}>{combinedReviews} reviews, two clinics</span>
       <span className={cn("sm:hidden", tone === "dark" ? "text-ivory/70" : "text-ink-soft")}>{combinedReviews} reviews</span>
@@ -75,9 +80,9 @@ function BranchRows({ placement, tone }: { placement: string; tone: "light" | "d
               </span>
             </span>
             <span className="flex shrink-0 items-center gap-3 text-sm">
-              <span className={cn("font-serif text-lg leading-none", dark ? "text-gold" : "text-ink")}>{branch.rating}</span>
+              <span className={cn("font-serif text-lg leading-none", dark ? "text-champagne" : "text-charcoal")}>{branch.rating}</span>
               <span className={cn("tabular-nums", dark ? "text-ivory/60" : "text-ink-soft")}>{branch.reviewCount} reviews</span>
-              <ArrowUpRight className={cn("size-3.5", dark ? "text-gold" : "text-gold-text")} aria-hidden="true" />
+              <ArrowUpRight className={cn("size-3.5", dark ? "text-rose-soft" : "text-rose-text")} aria-hidden="true" />
             </span>
           </a>
         </li>
@@ -122,7 +127,7 @@ export function ProofCluster({ placement, className }: { placement: string; clas
 export function ProofPanel({ placement, className, giant = true }: { placement: string; className?: string; giant?: boolean }) {
   const { sharedRating, combinedReviews, combinedLabel, verifiedOn } = googleReputation;
   return (
-    <div className={cn("on-dark grain relative isolate overflow-hidden rounded-[1.5rem] border border-gold/25 bg-ink-2 p-6 text-ivory sm:p-8", className)}>
+    <div className={cn("on-dark grain relative isolate overflow-hidden rounded-[1.5rem] border border-champagne/25 bg-ink-2 p-6 text-ivory sm:p-8", className)}>
       <div aria-hidden="true" className="bloom-gold-soft pointer-events-none absolute inset-0" />
       <div className="flex items-center gap-2.5">
         <GoogleGlyph className="size-5" />
@@ -136,7 +141,7 @@ export function ProofPanel({ placement, className, giant = true }: { placement: 
           </div>
         )}
         <div className="pb-1">
-          <p className="font-serif text-3xl leading-none text-gold">{combinedReviews}</p>
+          <p className="font-serif text-3xl leading-none text-champagne">{combinedReviews}</p>
           <p className="t-small mt-1.5 max-w-[22ch] text-ivory/60">{combinedLabel}</p>
         </div>
       </div>
@@ -247,7 +252,7 @@ export function MetricRow({ metrics, className, tone = "light" }: { metrics: Pro
     <dl className={cn("grid gap-2", metrics.length >= 4 ? "grid-cols-2 lg:grid-cols-4" : metrics.length === 3 ? "grid-cols-3" : "grid-cols-2", className)}>
       {metrics.map((m) => (
         <div key={m.id} className={cn("rounded-2xl border p-4", dark ? "border-ivory/10 bg-ivory/[.04]" : "border-line bg-white")}>
-          <dd className={cn("t-proof", dark ? "text-gold" : "text-gold-text")}>
+          <dd className={cn("t-proof", dark ? "text-champagne" : "text-champagne-text")}>
             {m.value}
             {m.suffix ?? ""}
           </dd>

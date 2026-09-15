@@ -5,9 +5,12 @@ import { cn } from "@/lib/utils";
 
 /**
  * A Smile Note: one short Kheni line set in Fraunces between sections,
- * opened by a gold hairline, one word in italic gold. Brand voice, not a
- * patient quote, and never a claim. Two or three on a page at most.
- * `tone="dark"` sets it on ink; `field` puts it on one of the light fields.
+ * opened by a champagne hairline, one word in italic rose. Brand voice, not
+ * a patient quote, and never a claim. Two or three on a page at most.
+ *
+ * On light it sits on blush rather than white, because an editorial line is
+ * exactly the moment the logo's rose should be in the room. `tone="dark"`
+ * sets it on ink; `field` puts it on one of the soft supporting fields.
  */
 export function SmileNote({
   index = 0,
@@ -32,7 +35,7 @@ export function SmileNote({
         <figure
           className={cn(
             "relative isolate overflow-hidden rounded-[1.5rem] border",
-            dark ? "grain border-gold/20 bg-ink-2 text-ivory" : field ? `border-transparent bg-${field}` : "border-line bg-white",
+            dark ? "grain border-rose/25 bg-ink-2 text-ivory" : field ? `border-transparent bg-${field}` : "border-transparent bg-blush",
             compact ? "px-6 py-7 sm:px-8" : "px-6 py-9 sm:px-10 sm:py-11 lg:px-14 lg:py-12",
           )}
         >

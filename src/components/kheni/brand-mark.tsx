@@ -3,19 +3,22 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 /**
- * The clinic's own logo.
+ * The clinic's own logo, in its two official website treatments.
  *
- * Supplied as a single high-resolution PNG on a transparent background, in
- * two flat colours: charcoal linework and a rose "K" swoosh. Two tones are
- * generated from it in public/images/brand/ (see the note at the bottom of
- * this file):
+ * Both are generated from the clinic's original artwork by
+ * scripts/make-brand-assets.mjs, which repaints flat colour zones and keeps
+ * the original alpha. The geometry, the tooth, the K and the wording are
+ * never touched.
  *
- *   ink     the charcoal artwork, for ivory and white surfaces
- *   ivory   the linework reversed to ivory with the rose lifted so it holds
- *           up on near-black, for the header, mobile menu and footer
+ *   light   the clinic's own colours, charcoal linework and a rose mark.
+ *           For ivory, white, blush, sand, sage and blue-grey surfaces.
+ *   dark    the reverse treatment: the K swoosh lifted to a rose that reads
+ *           on ink, the tooth linework in a held-back ivory so the rose
+ *           leads, "KHENI DENTAL &" in warm ivory and "ELITE IMPLANT
+ *           CENTER" in champagne. For the header, mobile menu and footer.
  *
- * The tooth interior is transparent rather than filled white, so the reversed
- * version is the real artwork rather than a knocked-out box.
+ * The tooth interior is transparent rather than filled white, so the reverse
+ * treatment is the real artwork rather than a knocked-out box.
  *
  * Plain <img> rather than next/image because images are unoptimized
  * site-wide; width and height are set so nothing shifts while it loads.
@@ -26,23 +29,23 @@ const LOCKUP_RATIO = 2030 / 442;
 
 const LOCKUP = {
   dark: {
-    src: "/images/brand/kheni-logo-ivory-640w.png",
-    srcSet: "/images/brand/kheni-logo-ivory-320w.png 320w, /images/brand/kheni-logo-ivory-640w.png 640w",
+    src: "/brand/kheni-logo-dark-640w.png",
+    srcSet: "/brand/kheni-logo-dark-320w.png 320w, /brand/kheni-logo-dark-640w.png 640w",
   },
   light: {
-    src: "/images/brand/kheni-logo-ink-640w.png",
-    srcSet: "/images/brand/kheni-logo-ink-320w.png 320w, /images/brand/kheni-logo-ink-640w.png 640w",
+    src: "/brand/kheni-logo-light-640w.png",
+    srcSet: "/brand/kheni-logo-light-320w.png 320w, /brand/kheni-logo-light-640w.png 640w",
   },
 } as const;
 
 const MARK = {
   dark: {
-    src: "/images/brand/kheni-mark-ivory-192w.png",
-    srcSet: "/images/brand/kheni-mark-ivory-96w.png 96w, /images/brand/kheni-mark-ivory-192w.png 192w",
+    src: "/brand/kheni-mark-dark-192w.png",
+    srcSet: "/brand/kheni-mark-dark-96w.png 96w, /brand/kheni-mark-dark-192w.png 192w",
   },
   light: {
-    src: "/images/brand/kheni-mark-ink-192w.png",
-    srcSet: "/images/brand/kheni-mark-ink-96w.png 96w, /images/brand/kheni-mark-ink-192w.png 192w",
+    src: "/brand/kheni-mark-light-192w.png",
+    srcSet: "/brand/kheni-mark-light-96w.png 96w, /brand/kheni-mark-light-192w.png 192w",
   },
 } as const;
 
@@ -82,7 +85,7 @@ export function BrandMark({ tone = "dark", className, compact = false }: { tone?
     <Link
       href="/"
       className={cn(
-        "group inline-flex shrink-0 items-center rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-4 focus-visible:ring-offset-transparent",
+        "group inline-flex shrink-0 items-center rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose focus-visible:ring-offset-4 focus-visible:ring-offset-transparent",
         className,
       )}
       aria-label="Kheni Dental and Elite Implant Center, home"
@@ -108,9 +111,9 @@ export function BrandMark({ tone = "dark", className, compact = false }: { tone?
 /*
  * Regenerating the brand assets
  * ------------------------------
- * The two tones and the app icons are derived from the clinic's original
- * artwork by scripts/make-brand-assets.mjs. Re-run it if the clinic sends a
- * revised logo, rather than editing the PNGs by hand:
+ * Both treatments and the app icons come from the clinic's original artwork
+ * at assets/brand/kheni-logo-original.png. Re-run the script if the clinic
+ * sends a revised logo, rather than editing the PNGs by hand:
  *
- *   node scripts/make-brand-assets.mjs <path-to-logo.png>
+ *   node scripts/make-brand-assets.mjs [path-to-logo.png]
  */

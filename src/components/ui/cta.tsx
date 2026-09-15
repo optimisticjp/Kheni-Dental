@@ -9,25 +9,29 @@ import { cn } from "@/lib/utils";
 /**
  * The site's buttons. Five looks, used consistently:
  *
- *   primary    warm gold fill, near-black text. The one action a section is
- *              built around. Reads the same on ivory and on ink.
- *   secondary  black hairline on a light surface. The quieter partner.
+ *   primary    the logo's rose, at the weight that carries an ink label at
+ *              5.39:1. The one action a section is built around, and the
+ *              same on ivory and on ink.
+ *   secondary  charcoal hairline on a light surface. The quieter partner.
  *   onDark     ivory hairline and text, for a secondary action on ink.
  *   whatsapp   WhatsApp green, white text, only where recognition matters.
  *   ghost      text only, for "see all" links.
  *
- * All are at least 48px tall, because most of our visitors are tapping.
+ * The primary fill is rose-strong rather than the logo's own #9B6665: that
+ * value fails AA with an ink label (4.05:1) and with an ivory one (4.35:1),
+ * so the button uses the lifted sibling and the logo rose stays for marks
+ * and fills. All are at least 48px tall, because most visitors are tapping.
  */
 export type CtaVariant = "primary" | "whatsapp" | "secondary" | "ghost" | "onDark";
 
 export function ctaClass(variant: CtaVariant = "primary", size: "md" | "lg" = "md", className?: string) {
   return cn(
-    "inline-flex items-center justify-center gap-2 rounded-full text-center font-semibold transition-[transform,background-color,border-color,box-shadow,color] duration-300 ease-kheni focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-transparent",
+    "inline-flex items-center justify-center gap-2 rounded-full text-center font-semibold transition-[transform,background-color,border-color,box-shadow,color] duration-300 ease-kheni focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-rose focus-visible:ring-offset-2 focus-visible:ring-offset-transparent",
     size === "lg" ? "min-h-14 px-7 text-base" : "min-h-12 px-5 text-[.9375rem]",
-    variant === "primary" && "bg-gold text-ink shadow-[0_10px_24px_-14px_rgba(202,169,104,.9)] hover:bg-gold-soft",
+    variant === "primary" && "bg-rose-strong text-ink shadow-[0_10px_24px_-14px_rgba(155,102,101,.85)] hover:bg-rose",
     variant === "whatsapp" && "bg-whatsapp text-white hover:brightness-95",
-    variant === "secondary" && "border border-ink/25 bg-transparent text-ink hover:border-ink hover:bg-white",
-    variant === "onDark" && "border border-ivory/30 bg-transparent text-ivory hover:border-gold hover:text-gold",
+    variant === "secondary" && "border border-charcoal/30 bg-transparent text-charcoal hover:border-charcoal hover:bg-white",
+    variant === "onDark" && "border border-ivory/30 bg-transparent text-ivory hover:border-rose-soft hover:text-rose-soft",
     variant === "ghost" && "min-h-11 px-1 text-gold-text hover:underline underline-offset-4",
     className,
   );

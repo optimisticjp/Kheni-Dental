@@ -1,54 +1,112 @@
 @import "tailwindcss";
 
-/* ── Kheni: black, ivory, gold, with daylight let in ─────────────────────
-   Foundation: near-black ink, warm ivory, white and a muted sand surface.
-   One accent: gold, rationed to the primary action, stars, hairlines,
-   eyebrow labels, selected states and the few numbers that matter.
-   Supporting colour arrives only as five soft, light fields (sky, mint,
-   peach, lavender, butter) with black type on them. They are rooms with the
-   windows open, never blocks of brand colour.
+/* ── Kheni: charcoal, ivory and the logo's own dusty rose ────────────────
+   The palette is taken from the clinic's actual logo rather than chosen
+   around it: charcoal lettering (#363435) and a dusty rose mark (#9B6665)
+   on nothing. So the site reads CHARCOAL + IVORY + ROSE, with champagne
+   kept back for the few premium details that earn it.
 
-   Contrast (checked with scratchpad/contrast.mjs):
-     ink on every light field           > 15:1
-     ink-soft on ivory / white / sand   6.1:1 or better
-     gold-text on ivory / white / sand  4.6:1 or better (small text on light)
-     gold-text on every light field     4.6:1 or better
-     gold on ink                        8.7:1 (small text on dark)
-     every field -text on its own field 5.5:1 or better                     */
+   Rose is the recognisable accent. Champagne is rationed to stars, proof
+   numerals, hairlines and small premium labels; the less it appears, the
+   more it is worth. Supporting colour arrives only as four soft, light
+   fields with charcoal type on them.
+
+   WHY THERE ARE FOUR ROSES
+   One rose cannot do every job and stay legible. The logo's own #9B6665
+   fails WCAG AA as small text on ivory (4.35:1) and as a button fill with
+   either an ink or an ivory label. So the brand rose is kept for fills and
+   graphics, and three contrast-solved siblings carry text and buttons.
+   Every value below was solved, not eyeballed; the figures are the worst
+   case measured across every surface the colour actually lands on.
+
+   Contrast, worst case across all surfaces it is used on:
+     charcoal on any light field          9.88:1
+     ink-soft on any light field          6.10:1
+     rose-text on any light field         4.58:1   AA
+     champagne-text on any light field    4.61:1   AA
+     rose-on-dark on ink / ink-2          6.46:1   AA
+     champagne on ink                     9.97:1   AAA
+     ink label on rose-strong button      5.39:1   AA
+     ivory on ink                        17.61:1   AAA                     */
 :root {
   --ease-kheni: cubic-bezier(.16, 1, .3, 1);
   --radius: 1rem;
 
-  /* Foundation */
-  --ink: #0d0d0c;
-  --ink-2: #151412;
-  --ink-3: #1d1b18;
-  --ivory: #fbfaf7;
-  --surface: #ffffff;
-  --sand: #f1eee7;
-  --sand-deep: #e6e1d6;
-  --ink-soft: #5b5852;
-  --line: rgba(13, 13, 12, 0.1);
-  --line-strong: rgba(13, 13, 12, 0.2);
+  /* ── Brand foundation, straight from the logo ─────────────────────── */
+  --brand-ink: #121011;
+  --brand-ink-2: #1b1819;
+  --brand-ink-3: #24201f;
+  --brand-charcoal: #363435;
+  --brand-ivory: #faf6f0;
+  --brand-white: #ffffff;
+  --brand-sand: #eee7dd;
+  --brand-sand-deep: #e2d8ca;
+  --brand-ink-soft: #57534e;
 
-  /* Gold, in four weights */
-  --gold: #caa968;
-  --gold-text: #8b6428;
-  --gold-soft: #ead49e;
-  --gold-tint: #f7f0df;
+  /* ── Dusty rose, the logo's own accent, in five weights ───────────── */
+  --brand-rose: #9b6665;           /* the logo mark. Fills, shapes, graphics. */
+  --brand-rose-strong: #b87872;    /* primary button fill, ink label 5.39:1 */
+  --brand-rose-text: #895a59;      /* small text on light, 4.58:1 */
+  --brand-rose-on-dark: #b88c8a;   /* small text on ink, 6.46:1 */
+  --brand-rose-soft: #d9b0aa;
+  --brand-blush: #f1e3df;
 
-  /* Five light fields. Text on them is ink; -text is a deep muted version
-     for eyebrows and icons; -fill is a quiet mid tone for a dot or a tab. */
-  --sky: #eaf2ff;        --sky-text: #2f5c8f;      --sky-soft: #d3e3fa;      --sky-fill: #7fa3d3;
-  --mint: #e7f6ef;       --mint-text: #226b4f;     --mint-soft: #cdebdc;     --mint-fill: #7dbfa0;
-  --peach: #fff0e8;      --peach-text: #9a4b2f;    --peach-soft: #fadccb;    --peach-fill: #e3a588;
-  --lavender: #f1edff;   --lavender-text: #5a4a9c; --lavender-soft: #ddd5f6; --lavender-fill: #ac9edb;
-  --butter: #fff5d6;     --butter-text: #7a5a14;   --butter-soft: #f7e6ae;   --butter-fill: #ddc272;
+  /* ── Champagne, rationed to premium detail ────────────────────────── */
+  --brand-champagne: #d3b985;      /* on dark only, 9.97:1 on ink */
+  --brand-champagne-text: #7b6235; /* small text on light, 4.61:1 */
+  --brand-champagne-soft: #ebdcbc;
+  --brand-champagne-tint: #f7f1e3;
+
+  /* ── Four soft supporting fields. Used sparingly. ─────────────────── */
+  --surface-sage: #e2eae2;     --surface-sage-text: #467157;     --surface-sage-soft: #cbdbce;     --surface-sage-fill: #8fb39c;
+  --surface-blue: #e6edf1;     --surface-blue-text: #3a6b87;     --surface-blue-soft: #d2e0e8;     --surface-blue-fill: #8fafc2;
+  --surface-butter: #f4ebcb;   --surface-butter-text: #83651d;   --surface-butter-soft: #eadcaf;   --surface-butter-fill: #d6be7e;
+  --surface-lavender: #eeeaf2; --surface-lavender-text: #5d4e96; --surface-lavender-soft: #dfd8e8; --surface-lavender-fill: #a99ecb;
+  --surface-blush-text: #895a59; --surface-blush-soft: #e3ccc6;  --surface-blush-fill: #c99c94;
+
+  /* ── Foundation names the components already use ──────────────────── */
+  --ink: var(--brand-ink);
+  --ink-2: var(--brand-ink-2);
+  --ink-3: var(--brand-ink-3);
+  --ivory: var(--brand-ivory);
+  --surface: var(--brand-white);
+  --sand: var(--brand-sand);
+  --sand-deep: var(--brand-sand-deep);
+  --ink-soft: var(--brand-ink-soft);
+  --line: rgba(54, 52, 53, 0.12);
+  --line-strong: rgba(54, 52, 53, 0.24);
+
+  /* The accent names predate this palette. They now resolve to ROSE, which
+     is what flips the site from black-and-gold to charcoal-and-rose in one
+     place rather than across two hundred call sites. Champagne is applied
+     deliberately, by name, only where it belongs. */
+  --gold: var(--brand-rose-on-dark);
+  --gold-text: var(--brand-rose-text);
+  --gold-soft: var(--brand-rose-soft);
+  --gold-tint: var(--brand-blush);
+
+  --champagne: var(--brand-champagne);
+  --champagne-text: var(--brand-champagne-text);
+  --champagne-soft: var(--brand-champagne-soft);
+  --champagne-tint: var(--brand-champagne-tint);
+
+  --rose: var(--brand-rose);
+  --rose-strong: var(--brand-rose-strong);
+  --rose-text: var(--brand-rose-text);
+  --rose-soft: var(--brand-rose-soft);
+  --blush: var(--brand-blush);
+  --charcoal: var(--brand-charcoal);
+
+  /* The soft fields, under the names the components already pass around.
+     peach is now blush, mint is sage, sky is blue-grey. */
+  --sky: var(--surface-blue);        --sky-text: var(--surface-blue-text);        --sky-soft: var(--surface-blue-soft);        --sky-fill: var(--surface-blue-fill);
+  --mint: var(--surface-sage);       --mint-text: var(--surface-sage-text);       --mint-soft: var(--surface-sage-soft);       --mint-fill: var(--surface-sage-fill);
+  --peach: var(--brand-blush);       --peach-text: var(--surface-blush-text);     --peach-soft: var(--surface-blush-soft);     --peach-fill: var(--surface-blush-fill);
+  --lavender: var(--surface-lavender); --lavender-text: var(--surface-lavender-text); --lavender-soft: var(--surface-lavender-soft); --lavender-fill: var(--surface-lavender-fill);
+  --butter: var(--surface-butter);   --butter-text: var(--surface-butter-text);   --butter-soft: var(--surface-butter-soft);   --butter-fill: var(--surface-butter-fill);
 
   --whatsapp: #128c4e;
 
-  /* Names the components already use. Each maps onto the system above so
-     a treatment keeps its hue in site.ts and lands on a soft field here. */
   --porcelain: var(--ivory);
   --navy-tint: var(--sand);
   --navy-soft: var(--sand-deep);
@@ -62,23 +120,22 @@
   --sky-tint: var(--sky);
 
   --background: var(--ivory);
-  --foreground: var(--ink);
+  --foreground: var(--charcoal);
   --card: var(--surface);
-  --card-foreground: var(--ink);
+  --card-foreground: var(--charcoal);
   --muted-foreground: var(--ink-soft);
   --border: var(--line);
   --input: var(--line-strong);
-  --ring: var(--ink);
-  --primary: var(--gold);
+  --ring: var(--charcoal);
+  --primary: var(--rose-strong);
   --primary-foreground: var(--ink);
   --secondary: var(--sand);
-  --secondary-foreground: var(--ink);
-  --accent: var(--gold-tint);
-  --accent-foreground: var(--ink);
+  --secondary-foreground: var(--charcoal);
+  --accent: var(--blush);
+  --accent-foreground: var(--charcoal);
   --destructive: #b42318;
   --destructive-foreground: #ffffff;
 }
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -113,6 +170,21 @@
   --color-gold-text: var(--gold-text);
   --color-gold-soft: var(--gold-soft);
   --color-gold-tint: var(--gold-tint);
+
+  --color-charcoal: var(--charcoal);
+  --color-rose: var(--rose);
+  --color-rose-strong: var(--rose-strong);
+  --color-rose-text: var(--rose-text);
+  --color-rose-soft: var(--rose-soft);
+  --color-blush: var(--blush);
+  --color-champagne: var(--champagne);
+  --color-champagne-text: var(--champagne-text);
+  --color-champagne-soft: var(--champagne-soft);
+  --color-champagne-tint: var(--champagne-tint);
+  --color-sage: var(--surface-sage);
+  --color-sage-text: var(--surface-sage-text);
+  --color-blue-grey: var(--surface-blue);
+  --color-blue-grey-text: var(--surface-blue-text);
 
   --color-sky: var(--sky);
   --color-sky-text: var(--sky-text);
@@ -192,7 +264,8 @@
 .hue-lavender { --h-fill: var(--lavender-fill); --h-text: var(--lavender-text); --h-tint: var(--lavender);  --h-soft: var(--lavender-soft); --h-on-fill: var(--ink); }
 .hue-amber    { --h-fill: var(--butter-fill);   --h-text: var(--butter-text);   --h-tint: var(--butter);    --h-soft: var(--butter-soft);   --h-on-fill: var(--ink); }
 .hue-sunshine { --h-fill: var(--butter-fill);   --h-text: var(--butter-text);   --h-tint: var(--butter);    --h-soft: var(--butter-soft);   --h-on-fill: var(--ink); }
-.hue-gold     { --h-fill: var(--gold);          --h-text: var(--gold-text);     --h-tint: var(--gold-tint); --h-soft: var(--gold-soft);     --h-on-fill: var(--ink); }
+.hue-gold     { --h-fill: var(--rose);          --h-text: var(--rose-text);     --h-tint: var(--blush);     --h-soft: var(--rose-soft);     --h-on-fill: var(--ivory); }
+.hue-rose     { --h-fill: var(--rose);          --h-text: var(--rose-text);     --h-tint: var(--blush);     --h-soft: var(--rose-soft);     --h-on-fill: var(--ivory); }
 .hue-navy     { --h-fill: var(--ink);           --h-text: var(--ink);           --h-tint: var(--sand);      --h-soft: var(--sand-deep);     --h-on-fill: var(--ivory); }
 
 @layer base {
@@ -252,14 +325,15 @@
 .measure-stand   { max-width: 46ch; }
 .measure-narrow  { max-width: 38ch; }
 
-/* The one highlighted word in a heading: italic Fraunces in deep gold on
-   light, gold on dark. No marker, no colour block behind it. */
+/* The one highlighted word in a heading: italic Fraunces in the logo's rose,
+   deep enough for small text on light, lifted on dark. No marker, no colour
+   block behind it. */
 .hl {
   font-style: italic;
   font-variation-settings: "SOFT" 40, "WONK" 1;
-  color: var(--hl, var(--gold-text));
+  color: var(--hl, var(--rose-text));
 }
-.on-dark { --hl: var(--gold); }
+.on-dark { --hl: var(--rose-soft); }
 
 /* ── Surfaces ─────────────────────────────────────────────────────────── */
 
@@ -270,7 +344,7 @@
   backdrop-filter: saturate(140%) blur(14px);
 }
 .glass-dark {
-  background: rgba(13, 13, 12, 0.82);
+  background: rgba(18, 16, 17, 0.84);
   -webkit-backdrop-filter: saturate(120%) blur(16px);
   backdrop-filter: saturate(120%) blur(16px);
 }
@@ -290,17 +364,22 @@
 }
 .grain > * { position: relative; z-index: 1; }
 
-/* A low gold bloom behind a focal element on dark. Never a neon halo. */
-.bloom-gold { background: radial-gradient(60% 50% at 70% 10%, rgba(202, 169, 104, .2), transparent 70%); }
-.bloom-gold-soft { background: radial-gradient(65% 55% at 20% 0%, rgba(202, 169, 104, .12), transparent 70%); }
+/* A low rose bloom behind a focal element on dark. The accent on dark is the
+   logo's rose now, so the glow is rose rather than gold. Never a neon halo. */
+.bloom-gold { background: radial-gradient(60% 50% at 70% 10%, rgba(155, 102, 101, .28), transparent 70%); }
+.bloom-gold-soft { background: radial-gradient(65% 55% at 20% 0%, rgba(155, 102, 101, .16), transparent 70%); }
+.bloom-rose { background: radial-gradient(60% 50% at 70% 10%, rgba(155, 102, 101, .28), transparent 70%); }
 
-/* Drawn gold hairline, used to open a section or underline a proof number. */
-.rule-gold { background: linear-gradient(90deg, rgba(202, 169, 104, .9), rgba(202, 169, 104, .2) 70%, transparent); }
+/* The hairline that opens a section. This is one of the few places champagne
+   is still used, and it is worth more for being rare. */
+.rule-gold { background: linear-gradient(90deg, rgba(211, 185, 133, .9), rgba(211, 185, 133, .2) 70%, transparent); }
+.rule-champagne { background: linear-gradient(90deg, rgba(211, 185, 133, .9), rgba(211, 185, 133, .2) 70%, transparent); }
+.rule-rose { background: linear-gradient(90deg, rgba(155, 102, 101, .85), rgba(155, 102, 101, .18) 70%, transparent); }
 
 /* A soft light field behind a light hero: two barely-there washes on ivory. Static. */
 .field {
   background:
-    radial-gradient(60% 55% at 12% 18%, var(--f1, var(--gold-tint)) 0, transparent 70%),
+    radial-gradient(60% 55% at 12% 18%, var(--f1, var(--blush)) 0, transparent 70%),
     radial-gradient(48% 50% at 88% 12%, var(--f2, var(--sand)) 0, transparent 68%),
     var(--f0, var(--ivory));
 }

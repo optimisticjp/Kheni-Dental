@@ -21,8 +21,8 @@ export function StructuredData() {
       email: site.email,
       telephone: site.primaryPhoneDisplay,
       // The clinic's own logo, square, for the knowledge panel.
-      logo: { "@type": "ImageObject", url: `${base}/images/brand/kheni-icon-512.png`, width: 512, height: 512 },
-      image: `${base}/images/brand/kheni-icon-512.png`,
+      logo: { "@type": "ImageObject", url: `${base}/brand/kheni-icon-512.png`, width: 512, height: 512 },
+      image: `${base}/brand/kheni-icon-512.png`,
       sameAs: [site.instagram, youtubeChannelUrl, ...locations.map((l) => l.googleShortUrl)],
     },
     ...locations.map((location) => {
