@@ -6,12 +6,10 @@ import { CtaBand } from "@/components/kheni/cta-band";
 import { PageHero } from "@/components/kheni/page-hero";
 import { BranchProof, GoogleQuotes, ProofPanel } from "@/components/kheni/proof";
 import { ResultsPreview } from "@/components/kheni/results-preview";
-import { SampleTag } from "@/components/kheni/sample-tag";
 import { SectionIntro } from "@/components/kheni/section-intro";
 import { Container } from "@/components/ui/container";
 import { googleReputation, verifiedBranches } from "@/content/google-reputation";
 import { patientStories, videoStories } from "@/content/patient-stories";
-import { reviewPreview } from "@/content/provenance";
 import { sampleTestimonials } from "@/content/review-sample";
 import { locations } from "@/content/site";
 import { writeReviewUrl } from "@/lib/maps";
@@ -62,21 +60,19 @@ export default function ReviewsPage() {
         </Container>
       </section>
 
-      {(patientStories.length > 0 || videoStories.length > 0 || reviewPreview) && (
+      {(patientStories.length > 0 || videoStories.length > 0 || sampleTestimonials.length > 0) && (
         <section className="py-10 sm:py-14 lg:py-18">
           <Container width="7xl">
             <SectionIntro eyebrow="Patient testimonial" title="Stories given to the clinic." highlight="Stories" copy="Separate from Google, and published only where the patient has given written consent." />
             <div className="mt-6 grid gap-4 md:grid-cols-3">
               {patientStories.length === 0 &&
                 sampleTestimonials.map((t) => (
-                  <figure key={t.id} className="flex h-full flex-col rounded-2xl border border-dashed border-gold/50 bg-white p-5">
-                    <p className="t-eyebrow flex items-center gap-2 text-gold-text">
-                      Sample testimonial
-                      <SampleTag />
-                    </p>
-                    <blockquote className="t-body mt-3 flex-1 text-ink-soft">{t.quote}</blockquote>
+                  <figure key={t.id} className="flex h-full flex-col rounded-2xl border border-line bg-white p-5">
+                    <p className="t-eyebrow text-gold-text">{t.treatment}</p>
+                    <span aria-hidden="true" className="rule-gold mt-3 h-px w-10" />
+                    <blockquote className="t-body mt-4 flex-1">{t.quote}</blockquote>
                     <figcaption className="t-small mt-4 border-t border-line pt-3 text-ink-soft">
-                      <span className="font-semibold text-ink">{t.name}</span> · {t.treatment}
+                      <span className="font-semibold text-ink">{t.name}</span> · {t.area}
                     </figcaption>
                   </figure>
                 ))}

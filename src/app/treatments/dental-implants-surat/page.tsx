@@ -11,7 +11,6 @@ import { ViewTracker } from "@/components/kheni/implant/view-tracker";
 import { ProcessSteps } from "@/components/kheni/process-steps";
 import { BranchProof, MetricRow, ProofChip, ProofCluster } from "@/components/kheni/proof";
 import { ResultsPreview } from "@/components/kheni/results-preview";
-import { SampleTag } from "@/components/kheni/sample-tag";
 import { SectionIntro } from "@/components/kheni/section-intro";
 import { SmileNote } from "@/components/kheni/smile-note";
 import { Accordion } from "@/components/ui/accordion";
@@ -132,10 +131,7 @@ export default function DentalImplantsPage() {
             </details>
             <div className="grid gap-4">
               <div className="rounded-2xl bg-white p-5 ring-1 ring-line">
-                <p className="t-eyebrow flex items-center gap-2 text-gold-text">
-                  How the bone is assessed
-                  {implantImaging.provenance.status === "needs_proof" && <SampleTag kind="confirm" />}
-                </p>
+                <p className="t-eyebrow text-gold-text">How the bone is assessed</p>
                 <p className="t-body mt-2 text-ink-soft">{implantImaging.copy}</p>
                 {tech.length > 0 && (
                   <ul className="mt-3 flex flex-wrap gap-1.5">
@@ -253,15 +249,7 @@ export default function DentalImplantsPage() {
                 </Link>
               </div>
             </div>
-            <div>
-              <Accordion items={[...treatment.faqs, ...implantFaqs, { question: implantWarranty.question, answer: implantWarranty.answer }]} name="implant-faq" />
-              {implantWarranty.status === "needs_proof" && (
-                <p className="t-small mt-3 flex items-center gap-2 text-ink-soft">
-                  <SampleTag kind="confirm" />
-                  Warranty wording awaits the clinic&rsquo;s written terms.
-                </p>
-              )}
-            </div>
+            <Accordion items={[...treatment.faqs, ...implantFaqs, { question: implantWarranty.question, answer: implantWarranty.answer }]} name="implant-faq" />
           </div>
         </Container>
       </section>

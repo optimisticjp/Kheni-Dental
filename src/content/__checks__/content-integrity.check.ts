@@ -5,7 +5,7 @@ import { implantFaqs, startingPoints, planFactors, comparison, implantProcess, i
 import { instagramReels } from "@/content/instagram";
 import { patientStories, videoStories } from "@/content/patient-stories";
 import { resourceCategories } from "@/content/patient-resources";
-import { editorialLines, reviewSampleCount, reviewSampleInventory, sampleTestimonials } from "@/content/review-sample";
+import { editorialLines, reviewSampleCount, reviewSampleInventory, SAMPLE, sampleTestimonials } from "@/content/review-sample";
 import { concerns, doctors, homepageFaqs, locations, site, smileNotes, treatments } from "@/content/site";
 import { technology } from "@/content/technology";
 import { clinicVideos } from "@/content/videos";
@@ -25,10 +25,18 @@ import { clinicVideos } from "@/content/videos";
  * outright, but the wording that makes them sound routine or promised still
  * is. Sedation, MDS and "all-on-4" remain unconfirmed and forbidden.
  *
- * REVIEW-SAMPLE GUARD. The preview may carry clearly marked sample content
- * and clinic figures that still need evidence. An indexable build may not.
- * If NEXT_PUBLIC_ALLOW_INDEXING is "true" (or the production flag is set)
- * while any of that exists, the build fails here.
+ * PLACEHOLDER GUARD. This is now the ONLY thing separating placeholder
+ * content from a live site. Since September 2026 the placeholder bios,
+ * testimonials, case facts, aftercare guides and clinic figures render with
+ * no visible marker, by the owner's instruction, so the page can be judged on
+ * its design. Nothing on screen says which is which any more.
+ *
+ * So: if NEXT_PUBLIC_ALLOW_INDEXING is "true" (or the production flag is
+ * set) while any placeholder content or unevidenced figure remains, the build
+ * fails here and names every offender. Do not weaken this check to get a
+ * build through. Replace the content instead, and delete its entry from
+ * src/content/review-sample.ts. docs/CLINIC-FORM-IMPLEMENTATION.md Part 5
+ * lists every item.
  *
  * Imported by `src/app/layout.tsx`, so it runs on every build.
  */
@@ -162,9 +170,11 @@ export function assertContentIntegrity(): void {
     if (r.account !== "khenielite") errors.push(`instagram reel "${r.title}" is not from @khenielite`);
   }
 
-  // Sample testimonials may never carry a plausible name.
+  // Placeholder testimonials read as real on the page by the owner's
+  // instruction, so the only thing standing between them and a live site is
+  // the status flag plus the indexing guard below. Both are checked.
   for (const t of sampleTestimonials) {
-    if (t.name !== "Sample patient") errors.push(`sample testimonial ${t.id} must be attributed to "Sample patient"`);
+    if (t.status !== SAMPLE) errors.push(`placeholder testimonial ${t.id} must carry status "${SAMPLE}"`);
   }
   // Editorial lines are not quotations: no quote marks inside them.
   for (const l of editorialLines) {

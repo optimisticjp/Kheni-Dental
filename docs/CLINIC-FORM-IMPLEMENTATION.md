@@ -11,19 +11,42 @@ on "Change" plus typed text replaces it. A tick on "Do not show" hides it. A bla
 row means the clinic gave no answer.
 
 Branch: `claude/kheni-black-gold-content-pass`, created from
-`6433ca97d7a0cf8463f011219fedf4e348f4799d` (the accepted black / ivory / gold build).
-Nothing here touches main, DNS, the production Worker, the custom domain or search
-indexing. The preview stays `noindex, nofollow`.
+`6433ca97d7a0cf8463f011219fedf4e348f4799d` (the accepted black / ivory / gold build),
+then merged to `main`. Search indexing stays off: every page carries
+`noindex, nofollow` and robots.txt disallows the named crawlers.
+
+## READ THIS FIRST: placeholder content renders unmarked
+
+On the owner's instruction (15 September 2026) the SAMPLE and TO CONFIRM chips and
+the review banner were removed, and every empty slot was filled with placeholder
+content, so the design can be judged as a finished page. **Nothing on screen now
+distinguishes a clinic fact from placeholder copy.**
+
+Two things replace the visual markers:
+
+1. Every placeholder item carries `status: "review_sample"` in
+   `src/content/review-sample.ts`, and every unevidenced figure carries
+   `verification: "clinic_supplied_needs_evidence"` in `src/content/clinic-proof.ts`.
+2. `src/content/__checks__/content-integrity.check.ts` **fails the build** if
+   `NEXT_PUBLIC_ALLOW_INDEXING` or `NEXT_PUBLIC_PRODUCTION` is `"true"` while any
+   placeholder item, unevidenced figure, unverified credential, the placeholder
+   warranty wording or a pending Google share link remains. It names every
+   offender. Do not weaken it to get a build through.
+
+Part 5 below is the full list of what is placeholder. Two slots were deliberately
+NOT filled, because a fabricated version does real harm rather than looking
+unfinished: clinical before/after photographs, and portraits of the four named
+dentists. Both keep their designed frames.
 
 ## Status vocabulary
 
 | Status | Meaning |
 |---|---|
 | CONFIRMED_BY_CLINIC | Ticked Correct, or typed, and safe to publish as fact. |
-| CLINIC_SUPPLIED_NEEDS_PROOF | Typed by the clinic, but a volume, credential, warranty or statistic that needs evidence before production. Shown on the review preview with a TO CONFIRM marker, or held back. |
+| CLINIC_SUPPLIED_NEEDS_PROOF | Typed by the clinic, but a volume, credential, warranty or statistic that needs evidence before production. Renders unmarked; tripped by the build guard until evidence arrives, or held back. |
 | AMBIGUOUS | The mark on the page can be read more than one way. Safest reading chosen; question raised. |
 | CONFLICT_IN_FORM | Two pages disagree. See the conflicts section. |
-| BLANK_USE_REVIEW_SAMPLE | Left blank; a clearly marked sample fills the slot so the preview reads complete. |
+| BLANK_USE_REVIEW_SAMPLE | Left blank; placeholder content fills the slot so the page reads complete. It renders unmarked and blocks an indexable build. |
 | BLANK_HIDE | Left blank; the slot stays hidden. |
 | DO_NOT_SHOW | The clinic ticked Do not show. Never rendered. |
 | EXTERNAL_VERIFY | Needs checking against Google, Instagram, YouTube or an official source. |
@@ -46,24 +69,24 @@ value before this pass · decision · where it appears.
 
 | Page | Topic | Clinic answer | Status | Before | Decision | Where |
 |---|---|---|---|---|---|---|
-| 2 | Patients treated | `45000` typed | CLINIC_SUPPLIED_NEEDS_PROOF | not shown | `ProofMetric` id `patients`, value 45,000, verification `clinic_supplied_needs_evidence`. Shown on preview with TO CONFIRM marker. | About page metrics, `src/content/clinic-proof.ts` |
-| 2 | Implants placed | `3700` typed | CLINIC_SUPPLIED_NEEDS_PROOF | not shown | Metric `implants`, 3,700. Preview only with marker. | About, implant page |
-| 2 | Full mouth cases | `950` typed | CLINIC_SUPPLIED_NEEDS_PROOF | not shown | Metric `full-mouth`, 950. Preview only with marker. | About, full mouth page |
-| 2 | Root canals | `90000+` typed | CLINIC_SUPPLIED_NEEDS_PROOF | not shown | Stored exactly as `90,000+`, NOT corrected. `display: false` on the preview because it is double the total patient count and needs the clinic to confirm what it counts (canals? teeth? visits?). | Data only |
-| 2 | Smile design cases | `720+` typed | CLINIC_SUPPLIED_NEEDS_PROOF | not shown | Metric `smile-design`, 720+. Preview only with marker. | About, smile design page |
+| 2 | Patients treated | `45000` typed | CLINIC_SUPPLIED_NEEDS_PROOF | not shown | `ProofMetric` id `patients`, value 45,000, verification `clinic_supplied_needs_evidence`. Renders unmarked; blocks an indexable build until evidenced. | About page metrics, `src/content/clinic-proof.ts` |
+| 2 | Implants placed | `3700` typed | CLINIC_SUPPLIED_NEEDS_PROOF | not shown | Metric `implants`, 3,700. Renders unmarked; blocks an indexable build until evidenced. | About, implant page |
+| 2 | Full mouth cases | `950` typed | CLINIC_SUPPLIED_NEEDS_PROOF | not shown | Metric `full-mouth`, 950. Renders unmarked; blocks an indexable build until evidenced. | About, full mouth page |
+| 2 | Root canals | `90000+` typed | CLINIC_SUPPLIED_NEEDS_PROOF | not shown | Stored exactly as `90,000+`, NOT corrected. Now displayed on the root canal page at the owner's instruction, though it is double the total patient count, so the clinic still needs to confirm what it counts (canals? teeth? visits?). | Root canal page |
+| 2 | Smile design cases | `720+` typed | CLINIC_SUPPLIED_NEEDS_PROOF | not shown | Metric `smile-design`, 720+. Renders unmarked; blocks an indexable build until evidenced. | About, smile design page |
 | 2 | Correct / Change boxes | none ticked | AMBIGUOUS | | Typed values treated as the answer. | |
-| 3 | Children treated | `4500+` typed | CLINIC_SUPPLIED_NEEDS_PROOF | not shown | Metric `children`, 4,500+. Preview only with marker. | Kids page |
-| 3 | NRI patients | `640+`, Correct ticked | CLINIC_SUPPLIED_NEEDS_PROOF | not shown | Metric `nri`, 640+. Preview only with marker. | NRI page |
-| 3 | Countries | `23`, Correct ticked | CLINIC_SUPPLIED_NEEDS_PROOF | not shown | Metric `countries`, 23. Preview only with marker. | NRI page |
+| 3 | Children treated | `4500+` typed | CLINIC_SUPPLIED_NEEDS_PROOF | not shown | Metric `children`, 4,500+. Renders unmarked; blocks an indexable build until evidenced. | Kids page |
+| 3 | NRI patients | `640+`, Correct ticked | CLINIC_SUPPLIED_NEEDS_PROOF | not shown | Metric `nri`, 640+. Renders unmarked; blocks an indexable build until evidenced. | NRI page |
+| 3 | Countries | `23`, Correct ticked | CLINIC_SUPPLIED_NEEDS_PROOF | not shown | Metric `countries`, 23. Renders unmarked; blocks an indexable build until evidenced. | NRI page |
 | 3 | Braces cases | small mark, no number | BLANK_HIDE | not shown | Not shown. | |
 | 3 | Implant success rate | `98.6%`, Correct ticked | CONFLICT_IN_FORM → DO_NOT_SHOW | not shown | Page 30 "Do you track implant success" is ticked Do not show. The more specific, later answer wins. Never rendered, kept in ledger only. Content check still forbids "success rate". | None |
 | 3 | Waiting time | Correct ticked, `15` typed | AMBIGUOUS | not shown | Unit not given (minutes presumed). Not shown. | None |
 | 3 | First visit duration | blank | BLANK_HIDE | | | |
 | 4 | Implant material / system | `osstem and dio korean system` | CONFIRMED_BY_CLINIC (spelling EXTERNAL_VERIFY done) | not shown | Osstem Implant (Korea) and DIO Implant (Korea) verified as real manufacturers with these spellings. Shown as text under "Implant systems we work with". No logos. | Implant page, `implant-center.ts` |
-| 4 | Warranty | `lifetime warranty implant no specify crown warranty its depend on oral health` | CLINIC_SUPPLIED_NEEDS_PROOF | not shown | Verbatim kept here. Preview wording: "Implant warranty information is available from the clinic. Coverage and crown terms depend on the case and your oral health." No "lifetime", no "guarantee". | Implant page FAQ |
+| 4 | Warranty | `lifetime warranty implant no specify crown warranty its depend on oral health` | CLINIC_SUPPLIED_NEEDS_PROOF | not shown | Verbatim kept here. Wording used: "Implant warranty information is available from the clinic. Coverage and crown terms depend on the case and your oral health." No "lifetime", no "guarantee". | Implant page FAQ |
 | 4 | Same-day implant claim | Correct ticked | CONFIRMED_BY_CLINIC (as available, not always suitable) | not shown | "Same-day options may be possible in suitable cases after assessment." | Implant capabilities |
 | 5 | Credentials, awards, press, notable patients (demo) | all blank | BLANK_HIDE | already removed | Stay removed. No sample award cards; layout does not need them. | None |
-| 6 | Testimonials | Ticked: replace with real written testimonials; replace with real video testimonials; keep layout only. "Remove all" not ticked. | CONFIRMED_BY_CLINIC (intent) | empty lists | Layout kept. Real Google quotes stay. Three clearly labelled SAMPLE testimonials attributed to "Sample patient" fill the written slot on the preview only. Real video testimonials already come from the clinic's YouTube channel. | Reviews page, `review-sample.ts` |
+| 6 | Testimonials | Ticked: replace with real written testimonials; replace with real video testimonials; keep layout only. "Remove all" not ticked. | CONFIRMED_BY_CLINIC (intent) | empty lists | Layout kept. Real Google quotes stay. Six placeholder testimonials with names and areas fill the written slot, rendering unmarked. Real video testimonials already come from the clinic's YouTube channel. | Reviews page, `review-sample.ts` |
 | 44 | Patients (repeat) | `45000` again; other rows blank | duplication recorded | | Page 2 values kept; page 44 blanks do not erase them. | |
 | 45 | Children / NRI / countries (repeat) | all blank | duplication recorded | | Page 3 values kept. | |
 
@@ -116,7 +139,7 @@ value before this pass · decision · where it appears.
 | 13 | Why the Elite Implant Center | `provide preventive quality treatments` | CONFIRMED_BY_CLINIC (polished) | | Rendered as: "Started so that implant and full mouth work could be planned properly and so that patients get preventive, quality care rather than a quick fix." Meaning preserved. | About |
 | 14 | Milestone | Correct ticked on a blank line | BLANK_HIDE | | nothing | |
 | 14 | How patients should feel | `patients obtain accurate information` | CONFIRMED_BY_CLINIC (polished) | | "You should leave your consultation understanding what we found and what your options are." | About |
-| 14 | Founder quote, story | blank | BLANK_USE_REVIEW_SAMPLE | | Editorial line, not in quotation marks, marked SAMPLE. | Doctor page |
+| 14 | Founder quote, story | blank | BLANK_USE_REVIEW_SAMPLE | | Editorial line, not in quotation marks, placeholder. | Doctor page |
 
 ### Section F: Doctors (pages 15 to 27)
 
@@ -125,20 +148,20 @@ value before this pass · decision · where it appears.
 | 15 | Roster spelling | `dr. jinali monpara` | REPLACED | Dr. Jinal Monapara | "Dr. Jinali Monpara" everywhere: site.ts, slug `dr-jinali-monpara`, videos.ts doctorSlug, doctors page metadata, docs. Old slug redirected. | all |
 | 16 | Dr. Mayur name, degree, experience | Correct (B.D.S., 15) | CONFIRMED_BY_CLINIC | same | unchanged | |
 | 16 | Dr. Mayur title | `dental surgeon,` typed beside printed "Implantologist & Cosmetic Dental Surgeon" | AMBIGUOUS (C3) | Implantologist & Cosmetic Dental Surgeon | Preview title: "Dental Surgeon · Implantologist & Cosmetic Dentistry". Question raised. | doctor card, schema |
-| 16 | Registration | `A-6277` | CLINIC_SUPPLIED_NEEDS_PROOF | none | Shown as "Reg. A-6277" with council to confirm (Gujarat State Dental Council presumed, not stated). Marker TO CONFIRM. | doctor page |
+| 16 | Registration | `A-6277` | CLINIC_SUPPLIED_NEEDS_PROOF | none | Shown as "Reg. A-6277" with council to confirm (Gujarat State Dental Council presumed, not stated). Blocks an indexable build. | doctor page |
 | 16 | College | `dharamsinh desai univercity` | CONFIRMED_BY_CLINIC (spelling normalised, EXTERNAL_VERIFY done) | none | "Dharmsinh Desai University, Nadiad" (Faculty of Dental Science exists there). | doctor page |
 | 17 | Memberships | `IDA,VDA,KDA` | CLINIC_SUPPLIED_NEEDS_PROOF | none | Shown as the abbreviations only: "IDA · VDA · KDA". Not expanded (likely Indian Dental Association and state / local branches, but unverified). | doctor page |
 | 17 | Languages | Correct | CONFIRMED_BY_CLINIC | Gujarati, Hindi, English | unchanged | |
 | 17 | Treatments | `DENTAL SURGURY, IMPLANTS RCT COMPOSITE` | CONFIRMED_BY_CLINIC | implants, full mouth, smile design | Focus: Dental Implants, Full Mouth Rehabilitation, Root Canal Treatment, Fillings (composite), Smile Design (page 35 confirms). Related treatments updated. | doctor page |
 | 17 | Branches | Correct (both) | CONFIRMED_BY_CLINIC | | `branchSlugs: both` | |
 | 17 | Hours | Correct | CONFIRMED_BY_CLINIC | | | |
-| 18 | Bio, quote, photo permission | blank | BLANK_USE_REVIEW_SAMPLE | existing bio | Sample bio rebuilt from confirmed facts only, `source: review_sample`, marked SAMPLE. | |
+| 18 | Bio, quote, photo permission | blank | BLANK_USE_REVIEW_SAMPLE | existing bio | Placeholder bio built from confirmed facts only, `status: review_sample`, rendered unmarked. | |
 | 19 | Dr. Jinali name | `dr.jinali monpara` | CONFIRMED_BY_CLINIC | | as above | |
 | 19 | Degree | Correct (B.D.S.) | CONFIRMED_BY_CLINIC | | | |
 | 19 | Title | `cosmatic surguen` | REPLACED (spelling normalised) | Dental Surgeon & Smile Designing Specialist | "Cosmetic Dental Surgeon · Smile Design" | |
 | 19 | Experience | `10` | REPLACED | 9 | 10 years, everywhere (bio, meta, schema). | |
-| 19 | Registration | `A-15753` | CLINIC_SUPPLIED_NEEDS_PROOF | none | "Reg. A-15753", TO CONFIRM | |
-| 19 | College | `krishna institute of science and technolgy, karad` | CLINIC_SUPPLIED_NEEDS_PROOF (spelling) | none | No dental college by that name exists. The dental school in Karad is the School of Dental Sciences, Krishna Institute of Medical Sciences. Preview shows "Krishna Institute, Karad" with TO CONFIRM. | |
+| 19 | Registration | `A-15753` | CLINIC_SUPPLIED_NEEDS_PROOF | none | "Reg. A-15753"; blocks an indexable build. | |
+| 19 | College | `krishna institute of science and technolgy, karad` | CLINIC_SUPPLIED_NEEDS_PROOF (spelling) | none | No dental college by that name exists. The dental school in Karad is the School of Dental Sciences, Krishna Institute of Medical Sciences. Shows "Krishna Institute, Karad"; blocks an indexable build. | |
 | 20 | Courses | `certified pediatric course, certified full mouth rehabilitation by irfan kacchwala, certified aligner, certified advanced root canal treatment, certified advanced composite` | CLINIC_SUPPLIED_NEEDS_PROOF | none | Shown as "Certificate courses (details to confirm): paediatric dentistry, full mouth rehabilitation, clear aligners, advanced root canal treatment, advanced composite restorations." The instructor's name is not published until confirmed. No organisation, year, country or level invented. | doctor page |
 | 20 | Memberships | `ida /vda/kda` | CLINIC_SUPPLIED_NEEDS_PROOF | none | "IDA · VDA · KDA" | |
 | 20 | Awards | Do not show | DO_NOT_SHOW | | | |
@@ -164,7 +187,7 @@ value before this pass · decision · where it appears.
 | 26 | Treatments | `ORAL PROPHAYLAIXS, RESTORATION, CROWN RESTORATION` | CONFIRMED_BY_CLINIC (polished) | RCT, fillings, check-ups | Focus: Cleaning and preventive dental care, Fillings, Crowns & Bridges, Root Canal Treatment (page 31 lists all four doctors), Check-ups. | |
 | 26 | Branches, hours | Correct (both) | CONFIRMED_BY_CLINIC | | | |
 | 27 | Photo | Correct | CONFIRMED_BY_CLINIC | | portrait requested | |
-| 27 | Bio | blank | BLANK_USE_REVIEW_SAMPLE | bio | Sample bio from confirmed facts, marked SAMPLE. | |
+| 27 | Bio | blank | BLANK_USE_REVIEW_SAMPLE | bio | Placeholder bio from confirmed facts, rendered unmarked. | |
 
 ### Section G: Treatments (pages 28 to 40)
 
@@ -177,7 +200,7 @@ value before this pass · decision · where it appears.
 | 29 | Lead | Correct (Dr. Mayur) | CONFIRMED_BY_CLINIC | | | |
 | 29 | Main implant branch | `YOGICHOWK` typed | CONFLICT_IN_FORM (C1) | Hirabaug | see C1 | |
 | 29 | Brands | `osstem korean system, dio korean system` | CONFIRMED_BY_CLINIC (verified) | none | "Osstem and DIO, both Korean implant systems." | implant page |
-| 29 | Assessment | `xray and cbct` | CONFLICT_IN_FORM (C6) | "imaging" | "X-rays, and 3D imaging (CBCT) where the case needs it." Marked TO CONFIRM because page 43 leaves CBCT unticked. | implant page |
+| 29 | Assessment | `xray and cbct` | CONFLICT_IN_FORM (C6) | "imaging" | "X-rays, and 3D imaging (CBCT) where the case needs it." Flagged in the guard because page 43 leaves CBCT unticked. | implant page |
 | 30 | Stages, suitability, aftercare | Correct | CONFIRMED_BY_CLINIC | as written | unchanged | |
 | 30 | Warranty | `DEPENDS ON ORAL CONDITION` | CLINIC_SUPPLIED_NEEDS_PROOF | | combined with page 4 wording above | |
 | 30 | Track implant success | Do not show | DO_NOT_SHOW | | wins over page 3 | |
@@ -191,7 +214,7 @@ value before this pass · decision · where it appears.
 | 33 | Brands | `INVISILIGNE, WHISTLE, SPARK, ILLUSION` | REPLACED (spelling) + EXTERNAL_VERIFY done | none | Invisalign (Align Technology), Whistle (whistle.in, India), Spark (Ormco), Illusion Aligners (India) all verified as real aligner brands. Shown as text: "Aligner systems we work with". | braces page |
 | 33 | Suitability, process | Correct | CONFIRMED_BY_CLINIC | | | |
 | 33 | Retainers | `yes` | CONFIRMED_BY_CLINIC | mentioned | kept, made explicit | |
-| 34 | Before / after | Correct, no details | BLANK_USE_REVIEW_SAMPLE | slider demo | Neutral SAMPLE CASE frames, no clinical photos. | gallery |
+| 34 | Before / after | Correct, no details | BLANK_USE_REVIEW_SAMPLE | slider demo | Four placeholder cases with full facts, on designed graphics rather than invented clinical photographs. | gallery |
 | 35 | Smile design services | All ticked: planning, whitening, composite bonding, veneers, crowns, gum contouring, preview before treatment | CONFIRMED_BY_CLINIC | generic | Listed. "See a preview before treatment starts" made explicit. | smile page |
 | 35 | Doctors | Correct (Jinali + Mayur) | CONFIRMED_BY_CLINIC | same | | |
 | 35 | Meaning of smile design | `ADD SLOWGN OWN YOURS` | BLANK_USE_REVIEW_SAMPLE | existing | Original copy written; no slogan invented as a clinic quote. | |
@@ -251,7 +274,7 @@ value before this pass · decision · where it appears.
 | Page | Topic | Clinic answer | Status | Decision |
 |---|---|---|---|---|
 | 50 | Video table | Ten old YouTube links pre-printed (2U7vKRDciwY, AGQQAoUaNwM, EK0vLMscy3I, FQnzSgTY5hA, 2Fdx-qTrvNY, qSJNHlPLuD0, p5Awq82gt8M, iiIkVkT7zXM, 4W92KSAlEes, RHLjVVuq-AI); nothing filled | EXTERNAL_VERIFY done | All ten return "not available" from YouTube oEmbed (private or deleted). Not added. The 26-video library in `videos.ts`, verified against the channel on 13 September 2026, is kept unchanged. |
-| 51-54 | Before / after cases, awards, press | blank, no ticks | BLANK_USE_REVIEW_SAMPLE (cases) / BLANK_HIDE (awards, press) | Two neutral SAMPLE CASE frames on the gallery. No award or press cards. |
+| 51-54 | Before / after cases, awards, press | blank, no ticks | BLANK_USE_REVIEW_SAMPLE (cases) / BLANK_HIDE (awards, press) | Placeholder case frames on the gallery. No award or press cards. |
 | 55 | NRI services | nothing ticked | BLANK_USE_REVIEW_SAMPLE | Workflow shown as review sample (WhatsApp before travel, share X-rays or reports, discuss schedule, reserve appointments, follow-up after home). No airport pickup, visa help, hotel or 24x7 claims. Real "patient from London / USA" videos kept. |
 
 ### Section L: Contact and booking (pages 56 to 57)
@@ -270,7 +293,7 @@ value before this pass · decision · where it appears.
 
 | Guide | Clinic mark | Status | Decision |
 |---|---|---|---|
-| Extraction aftercare | Approve | CONFIRMED_BY_CLINIC (topic) | Published as a conservative general guide marked SAMPLE until the clinic sends its own sheet wording. |
+| Extraction aftercare | Approve | CONFIRMED_BY_CLINIC (topic) | Published with careful general wording until the clinic sends its own sheet. |
 | After implant placement | Approve | CONFIRMED_BY_CLINIC (topic) | Same treatment. |
 | After RCT | Approve | CONFIRMED_BY_CLINIC | Already published; unchanged. |
 | When tooth pain should not wait | no mark | REVIEW_LATER | Exists as the urgent-signs guide; kept. |
@@ -326,7 +349,7 @@ value before this pass · decision · where it appears.
 ### C6. CBCT
 
 - Page 29 assessment: "xray and cbct". Page 43: CBCT / 3D scan not ticked.
-- **Choice:** implant assessment copy says "X-rays, and 3D imaging (CBCT) where the case needs it", marked TO CONFIRM. CBCT is not listed as in-house equipment.
+- **Choice:** implant assessment copy says "X-rays, and 3D imaging (CBCT) where the case needs it", flagged in the guard. CBCT is not listed as in-house equipment.
 
 ### C7. OPG
 
@@ -407,19 +430,42 @@ value before this pass · decision · where it appears.
 - Follow-up arrangement after the patient returns home (WhatsApp only, or video?).
 - Any assistance with travel, stay or documents. None is claimed today.
 
-## Part 5. Review-sample inventory
+## Part 5. Placeholder inventory
 
-Everything below is centralised in `src/content/review-sample.ts` (or carries
-`source: "review_sample"` in its own file), renders with a SAMPLE marker, and makes
-the build fail if `NEXT_PUBLIC_ALLOW_INDEXING=true`:
+Everything below renders with no visible marker. Each item is centralised in
+`src/content/review-sample.ts` with `status: "review_sample"` and trips the build
+guard the moment indexing is switched on. Replace an item, delete its entry, and
+the guard stops complaining about it.
 
-- Sample bios for Dr. Mayur Kheni, Dr. Jinali Monpara, Dr. Parita Vastarpara.
-- Editorial lines in place of doctor quotes (no quotation marks).
-- Three written testimonials attributed to "Sample patient".
-- Two before / after SAMPLE CASE frames (neutral graphics, not mouths).
-- The NRI planning workflow.
-- Extraction and implant-placement aftercare guides (general wording).
-- Proof metrics with verification `clinic_supplied_needs_evidence` also trip the guard.
+| What | Where it shows | Standing in for | Count |
+|---|---|---|---|
+| Doctor bios | Doctor pages, About, homepage spotlight | Form p18 and p27 blank; p24 ticked Do not show | 3 |
+| Editorial lines under a doctor | Doctor pages | Form gave only Dr. Jinali's (p21) | 3 of 4 |
+| Written testimonials, with names and areas | Reviews page | Form p6 ticked "replace with real written testimonials" | 6 |
+| Before / after case facts (doctor, clinic, timeline, visits) | Smile gallery, implants, smile design, braces | Form p34 and p51 blank | 4 |
+| NRI planning workflow | NRI page | Form p55 ticked nothing | 5 steps |
+| Aftercare and preparation guides | Patient resources | p58 approved 2 topics; the rest were pending | 12 guides |
+
+Clinic figures that render unmarked and also trip the guard, from
+`src/content/clinic-proof.ts`: 45,000 patients, 3,700 implants, 950 full mouth
+cases, 90,000+ root canals, 720+ smile design cases, 4,500+ children, 640+ NRI
+patients, 23 countries. All are exactly as the clinic typed them; none is audited.
+
+Doctor credential fields awaiting evidence, which also trip the guard: Dr. Mayur's
+registration A-6277 and IDA/VDA/KDA memberships, Dr. Jinali's registration A-15753,
+college and five certificate courses.
+
+Also still guarded: the implant warranty wording, and the two clinic-supplied
+Google share links stored as pending verification.
+
+### Deliberately NOT faked
+
+| Slot | Why | What renders instead |
+|---|---|---|
+| Before / after clinical photographs | A fabricated clinical photograph is evidence, not decoration. There is no safe version of one on a dental site, and it is the easiest thing to forget to replace. | The comparison slider on designed graphics, with the real case fields listed beside it. |
+| Portraits of the four dentists | Generating a face for a real, named, identifiable person is a different category of problem from placeholder text. | The monogram frame, which a real photograph drops into with no layout change. |
+| Awards, press coverage, notable patients | Form p5 and p52 to p54 blank, and no layout needs them. | Nothing. The sections do not exist. |
+| Implant success rate (98.6%) | Form p3 said Correct, but p30 ticked Do not show. The clinic's own later instruction wins. | Nothing. Held in data, `display: false`. |
 
 ## Part 6. Spelling and brand verification log (14 September 2026)
 

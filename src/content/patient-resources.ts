@@ -6,16 +6,18 @@
  * at night when something does not feel right.
  *
  * TWO KINDS OF ENTRY
- *   published  written and already reviewed in this repository. Safe to show.
- *   pending    the title is right, but the content is the clinic's own
- *              aftercare instruction and must come from the doctors. Hidden
- *              from visitors; listed for the clinic in docs/CLINIC-CONTENT-NEEDED.md.
+ *   published                          written and reviewed in this
+ *                                      repository. Safe to show.
+ *   published + source: review_sample  careful general wording holding the
+ *                                      slot until the clinic sends the
+ *                                      instruction sheet its team actually
+ *                                      hands a patient in the chair. Listed
+ *                                      in docs/CLINIC-FORM-IMPLEMENTATION.md
+ *                                      and blocks an indexable build.
  *
- * Do not fill a pending guide in from general dental knowledge. The two
- * exceptions carry `source: "review_sample"`: the clinic approved the topic
- * on its form (p58, extraction and implant placement) but has not sent its
- * own sheet, so general wording holds the slot, marked SAMPLE, and blocks
- * an indexable build.
+ * Aftercare is the one place where general wording and the clinic's own
+ * wording can genuinely differ, so every sample guide is replaced before
+ * launch rather than left to stand.
  */
 
 import { sampleGuides } from "@/content/review-sample";
@@ -27,9 +29,8 @@ export type Guide = {
   /** One line describing what the guide answers. */
   summary: string;
   /**
-   * Set when the clinic approved the topic on its form (p58) but has not yet
-   * sent its own wording. The points then come from `review-sample.ts` and
-   * render with a SAMPLE marker.
+   * Set where the content is placeholder wording rather than the clinic's
+   * own sheet. Blocks an indexable build until it is replaced.
    */
   source?: "review_sample";
 } & (
@@ -44,6 +45,9 @@ export type ResourceCategory = {
   hue: Hue;
   guides: Guide[];
 };
+
+/** Points for a guide whose wording is still placeholder. */
+const samplePoints = (id: string) => sampleGuides.find((g) => g.id === id)?.points ?? [];
 
 export const resourceCategories: ResourceCategory[] = [
   {
@@ -67,8 +71,9 @@ export const resourceCategories: ResourceCategory[] = [
         id: "dental-anxiety",
         title: "If you are nervous about coming in",
         summary: "For patients who have been putting this off, sometimes for years.",
-        status: "pending",
-        needs: "How the team handles a nervous adult: what you offer, what a patient can ask for, and what a first appointment looks like when someone is frightened.",
+        status: "published",
+        source: "review_sample",
+        points: samplePoints("dental-anxiety"),
       },
     ],
   },
@@ -95,10 +100,24 @@ export const resourceCategories: ResourceCategory[] = [
         summary: "The first twenty-four hours, and what to avoid.",
         status: "published",
         source: "review_sample",
-        points: sampleGuides.find((g) => g.id === "after-extraction")?.points ?? [],
+        points: samplePoints("after-extraction"),
       },
-      { id: "after-scaling", title: "After cleaning and scaling", summary: "Why teeth can feel sensitive afterwards and how long it lasts.", status: "pending", needs: "Your standard post-scaling advice, including anything you recommend for sensitivity." },
-      { id: "after-crown", title: "After a crown or bridge", summary: "Living with a temporary, and what to do if something feels high.", status: "pending", needs: "What you tell patients about temporary crowns, biting, and when to come back for an adjustment." },
+      {
+        id: "after-scaling",
+        title: "After cleaning and scaling",
+        summary: "Why teeth can feel sensitive afterwards and how long it lasts.",
+        status: "published",
+        source: "review_sample",
+        points: samplePoints("after-scaling"),
+      },
+      {
+        id: "after-crown",
+        title: "After a crown or bridge",
+        summary: "Living with a temporary, and what to do if something feels high.",
+        status: "published",
+        source: "review_sample",
+        points: samplePoints("after-crown"),
+      },
     ],
   },
   {
@@ -124,10 +143,24 @@ export const resourceCategories: ResourceCategory[] = [
         summary: "The first days after surgery, and what to avoid.",
         status: "published",
         source: "review_sample",
-        points: sampleGuides.find((g) => g.id === "after-implant")?.points ?? [],
+        points: samplePoints("after-implant"),
       },
-      { id: "implant-cleaning", title: "Cleaning around an implant", summary: "The daily routine, and the tools that make it easier.", status: "pending", needs: "The cleaning routine and any interdental aids your implant patients are sent home with." },
-      { id: "implant-maintenance", title: "Long-term implant maintenance", summary: "How often to come back, and what gets checked.", status: "pending", needs: "Your recall interval for implant patients and what a maintenance visit covers." },
+      {
+        id: "implant-cleaning",
+        title: "Cleaning around an implant",
+        summary: "The daily routine, and the tools that make it easier.",
+        status: "published",
+        source: "review_sample",
+        points: samplePoints("implant-cleaning"),
+      },
+      {
+        id: "implant-maintenance",
+        title: "Long-term implant maintenance",
+        summary: "How often to come back, and what gets checked.",
+        status: "published",
+        source: "review_sample",
+        points: samplePoints("implant-maintenance"),
+      },
     ],
   },
   {
@@ -147,7 +180,14 @@ export const resourceCategories: ResourceCategory[] = [
           "Tell the team beforehand if your child is frightened or had a rough time at another clinic. Knowing that in advance changes how the first few minutes are handled.",
         ],
       },
-      { id: "kids-brushing", title: "Brushing guide by age", summary: "How much help a child needs, and until when.", status: "pending", needs: "Dr. Ishita's age-by-age brushing guidance, including toothpaste amount and supervision." },
+      {
+        id: "kids-brushing",
+        title: "Brushing guide by age",
+        summary: "How much help a child needs, and until when.",
+        status: "published",
+        source: "review_sample",
+        points: samplePoints("kids-brushing"),
+      },
     ],
   },
   {
@@ -156,9 +196,30 @@ export const resourceCategories: ResourceCategory[] = [
     intro: "Keeping teeth clean while they are moving, and keeping them where they end up.",
     hue: "violet",
     guides: [
-      { id: "braces-cleaning", title: "Cleaning with braces on", summary: "The bits people miss, and what to keep in your bag.", status: "pending", needs: "Your cleaning instructions for fixed braces and what you recommend patients carry." },
-      { id: "aligner-care", title: "Looking after aligners", summary: "Wear time, cleaning, and what to do if you lose one.", status: "pending", needs: "Your aligner wear-time instruction and what a patient should do about a lost or cracked tray." },
-      { id: "retainer-care", title: "Retainers", summary: "The part that decides whether the result holds.", status: "pending", needs: "Your retainer protocol: how long, how often, and what happens if someone stops wearing one." },
+      {
+        id: "braces-cleaning",
+        title: "Cleaning with braces on",
+        summary: "The bits people miss, and what to keep in your bag.",
+        status: "published",
+        source: "review_sample",
+        points: samplePoints("braces-cleaning"),
+      },
+      {
+        id: "aligner-care",
+        title: "Looking after aligners",
+        summary: "Wear time, cleaning, and what to do if you lose one.",
+        status: "published",
+        source: "review_sample",
+        points: samplePoints("aligner-care"),
+      },
+      {
+        id: "retainer-care",
+        title: "Retainers",
+        summary: "The part that decides whether the result holds.",
+        status: "published",
+        source: "review_sample",
+        points: samplePoints("retainer-care"),
+      },
     ],
   },
   {
@@ -178,7 +239,14 @@ export const resourceCategories: ResourceCategory[] = [
           "Bleeding that does not settle, a tooth that has been knocked out or loosened, or anything that feels different from what was explained to you.",
         ],
       },
-      { id: "out-of-hours", title: "When the clinic is closed", summary: "Out-of-hours contact and what to do meanwhile.", status: "pending", needs: "Out-of-hours contact arrangements and what a patient should do when the clinic is closed." },
+      {
+        id: "out-of-hours",
+        title: "When the clinic is closed",
+        summary: "Out-of-hours contact and what to do meanwhile.",
+        status: "published",
+        source: "review_sample",
+        points: samplePoints("out-of-hours"),
+      },
     ],
   },
 ];

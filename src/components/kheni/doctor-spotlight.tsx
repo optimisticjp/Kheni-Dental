@@ -2,7 +2,6 @@ import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 
 import { MediaFrame } from "@/components/kheni/media-frame";
-import { SampleTag } from "@/components/kheni/sample-tag";
 import { BookButton, WhatsAppButton } from "@/components/ui/cta";
 import { languages } from "@/content/clinic-proof";
 import { googleReputation } from "@/content/google-reputation";
@@ -21,13 +20,14 @@ import { cn } from "@/lib/utils";
  *   DoctorCard        the rest of the team, same crop, same light.
  *
  * No portrait has arrived yet, so the frame is a designed ink panel with
- * the doctor's initials in gold. A real photograph drops into the same
- * frame with no layout change.
+ * the doctor's initials in gold. No face is generated for a named dentist.
+ * A real photograph drops into the same frame with no layout change.
  *
  * Facts come from the clinic's information form (September 2026). Where the
- * form left a bio blank, a SAMPLE bio from review-sample.ts holds the slot.
- * Registration numbers, colleges, memberships and courses carry a TO CONFIRM
- * marker until the clinic sends evidence.
+ * form left a bio blank, a placeholder bio from review-sample.ts holds the
+ * slot and renders unmarked; the build guard in
+ * src/content/__checks__/content-integrity.check.ts is what keeps it off a
+ * live site.
  */
 
 export function doctorBio(doctor: Doctor): { text: string; sample: boolean } | null {
@@ -79,9 +79,10 @@ function Blocks({ doctor }: { doctor: Doctor }) {
 }
 
 /**
- * The credential rows the clinic supplied on its form. Each row that still
- * needs evidence carries the TO CONFIRM marker. Memberships are shown as the
- * abbreviations the clinic wrote, unexpanded.
+ * The credential rows the clinic supplied on its form. Memberships are shown
+ * as the abbreviations the clinic wrote, unexpanded, because expanding them
+ * would be a guess. Rows whose status is still `needs_proof` block an
+ * indexable build.
  */
 export function Credentials({ doctor, className }: { doctor: Doctor; className?: string }) {
   const rows: { label: string; value: string; confirm: boolean }[] = [];
@@ -94,10 +95,7 @@ export function Credentials({ doctor, className }: { doctor: Doctor; className?:
     <dl className={cn("grid gap-2 sm:grid-cols-2", className)}>
       {rows.map((row) => (
         <div key={row.label} className="rounded-xl border border-ink/[.08] bg-white/70 px-3.5 py-3">
-          <dt className="flex items-center gap-2 text-[.66rem] font-semibold uppercase tracking-[.1em] text-ink-soft">
-            {row.label}
-            {row.confirm && <SampleTag kind="confirm" />}
-          </dt>
+          <dt className="text-[.66rem] font-semibold uppercase tracking-[.1em] text-ink-soft">{row.label}</dt>
           <dd className="mt-1 text-sm font-medium leading-snug text-ink">{row.value}</dd>
         </div>
       ))}
@@ -123,10 +121,7 @@ export function DoctorSpotlight({ doctor = doctors[0], className, as: Heading = 
             {doctor.credentials} · {doctor.specialty}
           </p>
           {bio && (
-            <p className="t-body mt-4 max-w-xl text-ink-soft">
-              {bio.sample && <SampleTag className="mr-2 -translate-y-px" />}
-              {bio.text}
-            </p>
+            <p className="t-body mt-4 max-w-xl text-ink-soft">{bio.text}</p>
           )}
           <div className="mt-5">
             <Blocks doctor={doctor} />

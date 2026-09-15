@@ -9,10 +9,9 @@
  *   clinic_supplied                  the clinic's own description of itself.
  *   clinic_supplied_needs_evidence   a volume or statistic typed on the
  *                                    clinic form (14 September 2026) that
- *                                    needs evidence before production.
- *                                    Rendered on the review preview with a
- *                                    TO CONFIRM marker; the build refuses
- *                                    to go indexable while any is displayed.
+ *                                    needs evidence before production. It
+ *                                    renders unmarked; the build refuses to
+ *                                    go indexable while any is displayed.
  *   review_sample                    placeholder for layout only.
  *
  * Figures the clinic typed are stored exactly as typed, never "corrected".
@@ -71,7 +70,7 @@ export const proofMetrics: ProofMetric[] = [
   { id: "patients", value: "45,000", label: "Patients treated", source: `${form}, p2 (repeated p44)`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Basis and date needed before launch.", display: true, placements: ["about"] },
   { id: "implants", value: "3,700", label: "Implants placed", source: `${form}, p2`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Basis and date needed before launch.", display: true, placements: ["about", "implants"] },
   { id: "full-mouth", value: "950", label: "Full mouth cases", source: `${form}, p2`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Basis and date needed before launch.", display: true, placements: ["about", "full-mouth"] },
-  { id: "rct", value: "90,000", suffix: "+", label: "Root canals", source: `${form}, p2`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Stored exactly as typed. Hidden because it is double the stated patient count; clinic to confirm what is counted (ledger C12).", display: false, placements: ["rct"] },
+  { id: "rct", value: "90,000", suffix: "+", label: "Root canals", source: `${form}, p2`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Stored exactly as typed. It is double the stated patient count, so the clinic still needs to confirm what is being counted (ledger C12).", display: true, placements: ["rct"] },
   { id: "smile-design", value: "720", suffix: "+", label: "Smile design cases", source: `${form}, p2`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Basis and date needed before launch.", display: true, placements: ["smile"] },
   { id: "children", value: "4,500", suffix: "+", label: "Children treated", source: `${form}, p3 (p45 blank)`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Basis and date needed before launch.", display: true, placements: ["kids"] },
   { id: "nri", value: "640", suffix: "+", label: "NRI patients", source: `${form}, p3 (Correct)`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Basis and date needed before launch.", display: true, placements: ["nri"] },
@@ -82,7 +81,7 @@ export const proofMetrics: ProofMetric[] = [
 /** Metrics for a page, displayable ones only. */
 export const metricsFor = (placement: ProofMetric["placements"][number]) => proofMetrics.filter((m) => m.display && m.placements.includes(placement));
 
-/** True when a metric must carry the TO CONFIRM marker. */
+/** True when a metric still needs evidence before the site can go live. */
 export const needsMarker = (m: ProofMetric) => m.verification === "clinic_supplied_needs_evidence" || m.verification === "review_sample";
 
 /** Metrics that block an indexable build while displayed. */

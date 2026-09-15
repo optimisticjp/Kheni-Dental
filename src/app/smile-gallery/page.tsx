@@ -6,7 +6,8 @@ import { GoogleQuotes } from "@/components/kheni/proof";
 import { ResultsPreview } from "@/components/kheni/results-preview";
 import { SectionIntro } from "@/components/kheni/section-intro";
 import { Container } from "@/components/ui/container";
-import { caseCategories, caseDisclaimer, caseResults } from "@/content/cases";
+import { caseCategories, caseResults } from "@/content/cases";
+import { sampleCases } from "@/content/review-sample";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/smile-gallery/" },
@@ -36,8 +37,7 @@ export default function SmileGalleryPage() {
 
       <section className="py-10 sm:py-14 lg:py-18">
         <Container width="7xl">
-          <ResultsPreview limit={caseResults.length || 1} placement="gallery" />
-          <p className="t-small mt-6 max-w-2xl text-ink-soft">{caseDisclaimer}</p>
+          <ResultsPreview limit={caseResults.length || sampleCases.length} placement="gallery" />
         </Container>
       </section>
 

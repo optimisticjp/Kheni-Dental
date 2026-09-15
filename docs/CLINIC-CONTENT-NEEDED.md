@@ -59,9 +59,23 @@ Already published: 15 years, 4 dentists, 2 clinics, 4.9 on Google across
 
 The figures the clinic typed on its September 2026 form (45,000 patients,
 3,700 implants, 950 full mouth cases, 90,000+ root canals, 720+ smile
-designs, 4,500+ children, 640+ NRI patients from 23 countries) are held in
-`src/content/clinic-proof.ts` as "needs evidence" and appear only on the
-review preview with a TO CONFIRM marker. See docs/CLINIC-FORM-IMPLEMENTATION.md.
+designs, 4,500+ children, 640+ NRI patients from 23 countries) now render on
+the page with no marker, and are held in `src/content/clinic-proof.ts` as
+"needs evidence". The build refuses to switch indexing on until each one is
+either evidenced or removed. Please confirm what each figure counts and as of
+when. See docs/CLINIC-FORM-IMPLEMENTATION.md.
+
+## Placeholder content currently on the page
+
+Since 15 September 2026 the site fills every empty slot with placeholder
+copy so the design can be reviewed as a finished page, and nothing on screen
+marks it. That covers doctor bios, the six written testimonials, the four
+before/after case descriptions, the NRI planning steps and twelve aftercare
+guides. All of it is listed in docs/CLINIC-FORM-IMPLEMENTATION.md, Part 5,
+and all of it blocks an indexable build until replaced.
+
+Not faked, and still needed: before/after photographs and the four doctor
+portraits. Those slots hold designed frames rather than invented images.
 
 ## 3. Before and after cases
 

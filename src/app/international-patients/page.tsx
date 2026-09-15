@@ -8,7 +8,6 @@ import { ViewTracker } from "@/components/kheni/implant/view-tracker";
 import { PageHero } from "@/components/kheni/page-hero";
 import { ProcessSteps } from "@/components/kheni/process-steps";
 import { MetricRow, ProofCluster } from "@/components/kheni/proof";
-import { SampleTag } from "@/components/kheni/sample-tag";
 import { MediaFrame } from "@/components/kheni/media-frame";
 import { SectionIntro } from "@/components/kheni/section-intro";
 import { internationalPhoto } from "@/content/photos";
@@ -97,12 +96,6 @@ export default function InternationalPage() {
           <div className="grid gap-8 lg:grid-cols-[1.15fr_.85fr] lg:items-center lg:gap-12">
             <div>
               <SectionIntro eyebrow="How a visit works" title="From your first message to your flight home." highlight={["first message", "flight home"]} />
-              {sampleNriWorkflow.status === "review_sample" && (
-                <p className="t-small mt-3 flex items-center gap-2 text-ink-soft">
-                  <SampleTag />
-                  Workflow shown for review. Each step is confirmed with the clinic before launch.
-                </p>
-              )}
               <ProcessSteps steps={journey} columns={3} className="mt-6 sm:mt-8" variant="cards" dense />
               {nriMetrics.length > 0 && <MetricRow metrics={nriMetrics} className="mt-6 max-w-md" />}
             </div>

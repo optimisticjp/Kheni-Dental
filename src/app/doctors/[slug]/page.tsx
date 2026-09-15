@@ -5,7 +5,6 @@ import { CtaBand } from "@/components/kheni/cta-band";
 import { DoctorSpotlight, doctorBranches, TeamLink } from "@/components/kheni/doctor-spotlight";
 import { ViewTracker } from "@/components/kheni/implant/view-tracker";
 import { ProofCluster } from "@/components/kheni/proof";
-import { SampleTag } from "@/components/kheni/sample-tag";
 import { SectionIntro } from "@/components/kheni/section-intro";
 import { SmileNote } from "@/components/kheni/smile-note";
 import { TreatmentRow } from "@/components/kheni/treatment-poster";
@@ -45,16 +44,7 @@ export default async function DoctorPage({ params }: { params: Promise<{ slug: s
 
       {/* An editorial line in the site's voice, not a quotation. Dr. Jinali's
           is built from her own words on the form; the others are samples. */}
-      {line && (
-        <div className="relative">
-          <SmileNote note={{ line: line.line, highlight: line.highlight, hue: doctor.hue }} compact tone="dark" className="pb-8 sm:pb-12" />
-          {line.status === "review_sample" && (
-            <div className="pointer-events-none absolute inset-x-0 top-3 flex justify-center">
-              <SampleTag tone="dark" />
-            </div>
-          )}
-        </div>
-      )}
+      {line && <SmileNote note={{ line: line.line, highlight: line.highlight, hue: doctor.hue }} compact tone="dark" className="pb-8 sm:pb-12" />}
 
       <section className={`hue-${doctor.hue} pb-10 sm:pb-14 lg:pb-18`}>
         <Container width="7xl">

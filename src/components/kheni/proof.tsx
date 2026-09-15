@@ -1,8 +1,7 @@
 import { ArrowUpRight, Star } from "lucide-react";
 
 import { GoogleGlyph } from "@/components/icons/google-glyph";
-import { SampleTag } from "@/components/kheni/sample-tag";
-import { needsMarker, type ProofMetric } from "@/content/clinic-proof";
+import type { ProofMetric } from "@/content/clinic-proof";
 import { googleReputation, verifiedBranches } from "@/content/google-reputation";
 import { reviewHighlights, type Location } from "@/content/site";
 import { placeUrl, writeReviewUrl } from "@/lib/maps";
@@ -252,10 +251,7 @@ export function MetricRow({ metrics, className, tone = "light" }: { metrics: Pro
             {m.value}
             {m.suffix ?? ""}
           </dd>
-          <dt className={cn("mt-1.5 flex flex-wrap items-center gap-2 text-sm font-semibold", dark ? "text-ivory" : "text-ink")}>
-            {m.label}
-            {needsMarker(m) && <SampleTag kind="confirm" tone={tone} />}
-          </dt>
+          <dt className={cn("mt-1.5 text-sm font-semibold", dark ? "text-ivory" : "text-ink")}>{m.label}</dt>
           {m.detail && <p className={cn("t-small mt-0.5", dark ? "text-ivory/60" : "text-ink-soft")}>{m.detail}</p>}
         </div>
       ))}
