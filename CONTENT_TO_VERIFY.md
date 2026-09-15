@@ -18,7 +18,7 @@
 ## Assets still needed
 
 - Professional portrait of Dr. Mayur Kheni
-- Professional portrait of Dr. Jinal Monapara
+- Professional portrait of Dr. Jinali Monpara
 - Professional portrait of Dr. Ishita Dobariya
 - Professional portrait of Dr. Parita Vastarpara
 - Yogi Chowk exterior, reception and treatment-room photos

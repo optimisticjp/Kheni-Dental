@@ -86,7 +86,7 @@ export const treatmentPhotos: Record<string, Photo> = {
 /** Clinic interiors, keyed by branch slug. Three each, all square frames. */
 export const locationPhotos: Record<string, Photo[]> = {
   hirabaug: [
-    { src: "/images/locations/hirabaug-1.jpg", alt: "The implant treatment room at Hirabaug: a blue and white chair, a wall screen and a tall window" },
+    { src: "/images/locations/hirabaug-1.jpg", alt: "A treatment room at Hirabaug: a blue and white chair, a wall screen and a tall window" },
     { src: "/images/locations/hirabaug-2.jpg", alt: "Sterilised instrument pouches lined up in a cabinet" },
     { src: "/images/locations/hirabaug-3.jpg", alt: "The reception counter with a small vase of marigolds" },
   ],

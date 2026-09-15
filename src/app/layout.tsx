@@ -4,6 +4,7 @@ import { Footer } from "@/components/layout/footer";
 import { Navbar } from "@/components/layout/navbar";
 import { BookSheet } from "@/components/kheni/book-sheet";
 import { MobileDock } from "@/components/kheni/mobile-dock";
+import { ReviewBanner } from "@/components/kheni/sample-tag";
 import { AnalyticsScripts } from "@/components/tracking/analytics";
 import { ConsentBanner } from "@/components/tracking/consent-banner";
 import { TrackLinks } from "@/components/tracking/track-links";
@@ -90,6 +91,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <StructuredData />
         <TrackLinks />
         <Navbar />
+        <ReviewBanner />
         <main className="flex-1">{children}</main>
         <Footer />
         <MobileDock />

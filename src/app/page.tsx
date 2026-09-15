@@ -17,11 +17,11 @@ import { Highlighted, SectionIntro } from "@/components/kheni/section-intro";
 import { TreatmentRail } from "@/components/kheni/treatment-rail";
 import { TreatmentTile } from "@/components/kheni/treatment-poster";
 import { photoSrcSet } from "@/components/kheni/media-frame";
-import { implantCapabilities } from "@/content/capabilities";
+import { headlineCapabilities } from "@/content/capabilities";
 import { googleReputation, verifiedBranches } from "@/content/google-reputation";
-import { implantProcess } from "@/content/implant-center";
+import { implantHero, implantProcess } from "@/content/implant-center";
 import { instagramHandle, instagramReels } from "@/content/instagram";
-import { homepageFaqs, locations, site, treatments } from "@/content/site";
+import { homepageFaqs, site, treatments } from "@/content/site";
 import { clinicVideos } from "@/content/videos";
 import { placeUrl } from "@/lib/maps";
 
@@ -67,7 +67,7 @@ export default function Home() {
               Good dentistry starts with <span className="hl">understanding.</span>
             </h1>
             <p className="t-stand measure-stand mt-5 text-ivory/70">
-              {site.yearsInSurat} years, four dentists and two clinics at Yogi Chowk and Hirabaug. Implants, root canals, braces, kids dentistry and smile design, led by Dr. Mayur Kheni.
+              {site.yearsInSurat} years, four dentists and two clinics at Yogi Chowk and Hirabaug. Implants, root canals, braces, kids dentistry and smile design, founded and led by Dr. Mayur Kheni.
             </p>
             <div className="mt-7 grid gap-2.5 sm:flex sm:flex-wrap">
               <BookButton placement="home_hero" size="lg" className="px-4 sm:px-7" />
@@ -198,17 +198,17 @@ export default function Home() {
           <div className="grid gap-8 lg:grid-cols-[1fr_1.1fr] lg:items-center lg:gap-14">
             <div>
               <p className="t-eyebrow flex items-center gap-3 text-gold">
-                Elite Implant Center · Hirabaug
+                Elite Implant Center · Surat
                 <span aria-hidden="true" className="rule-gold h-px w-12" />
               </p>
               <h2 className="t-h1 mt-3">
                 A fixed tooth for the gap you have been <span className="hl">working around.</span>
               </h2>
               <p className="t-stand mt-4 max-w-xl text-ivory/70">
-                Implant work is led from Hirabaug by Dr. Mayur Kheni. Every case starts with an examination and the imaging needed to see the bone, before anything is recommended.
+                Implant work is led by Dr. Mayur Kheni, with consultations at both our clinics. Every case starts with an examination and the imaging needed to see the bone, before anything is recommended.
               </p>
               <ul className="mt-6 grid grid-cols-2 gap-2">
-                {implantCapabilities.map((item) => (
+                {headlineCapabilities.map((item) => (
                   <li key={item.id} className="rounded-xl border border-ivory/10 bg-ivory/[.04] px-3.5 py-3">
                     <p className="text-sm font-semibold text-ivory">{item.title}</p>
                     <p className="t-small mt-1 hidden text-ivory/60 sm:block">{item.copy}</p>
@@ -220,7 +220,7 @@ export default function Home() {
                   Inside the Elite Implant Center
                   <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
                 </Link>
-                <WhatsAppButton placement="home_implant" location={locations[1]} context="implants" variant="onDark" />
+                <WhatsAppButton placement="home_implant" message={implantHero.whatsappMessage} variant="onDark" />
               </div>
             </div>
             <div className="rounded-[1.5rem] border border-gold/20 bg-ivory p-4 text-ink sm:p-6">

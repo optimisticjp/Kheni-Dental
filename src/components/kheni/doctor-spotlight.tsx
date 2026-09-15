@@ -2,11 +2,13 @@ import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 
 import { MediaFrame } from "@/components/kheni/media-frame";
+import { SampleTag } from "@/components/kheni/sample-tag";
 import { BookButton, WhatsAppButton } from "@/components/ui/cta";
 import { languages } from "@/content/clinic-proof";
 import { googleReputation } from "@/content/google-reputation";
 import { doctorPhotos } from "@/content/photos";
-import { doctors, treatments, type Doctor } from "@/content/site";
+import { sampleBios } from "@/content/review-sample";
+import { doctors, locations, treatments, type Doctor } from "@/content/site";
 import { cn } from "@/lib/utils";
 
 /**
@@ -20,8 +22,23 @@ import { cn } from "@/lib/utils";
  *
  * No portrait has arrived yet, so the frame is a designed ink panel with
  * the doctor's initials in gold. A real photograph drops into the same
- * frame with no layout change. Every fact here is confirmed by the clinic.
+ * frame with no layout change.
+ *
+ * Facts come from the clinic's information form (September 2026). Where the
+ * form left a bio blank, a SAMPLE bio from review-sample.ts holds the slot.
+ * Registration numbers, colleges, memberships and courses carry a TO CONFIRM
+ * marker until the clinic sends evidence.
  */
+
+export function doctorBio(doctor: Doctor): { text: string; sample: boolean } | null {
+  if (doctor.bio) return { text: doctor.bio, sample: false };
+  const sample = sampleBios.find((b) => b.doctorSlug === doctor.slug);
+  return sample ? { text: sample.bio, sample: true } : null;
+}
+
+export function doctorBranches(doctor: Doctor) {
+  return locations.filter((l) => doctor.branchSlugs.includes(l.slug as Doctor["branchSlugs"][number]));
+}
 
 export function Portrait({ doctor, className, ratio = "4 / 5", mobileRatio, from = "sm", tone = "dark" }: { doctor: Doctor; className?: string; ratio?: string; mobileRatio?: string; from?: "sm" | "lg"; tone?: "dark" | "light" }) {
   const initials = doctor.name.replace(/^Dr\.?\s*/i, "").split(/\s+/).slice(0, 2).map((p) => p[0]).join("");
@@ -61,8 +78,37 @@ function Blocks({ doctor }: { doctor: Doctor }) {
   );
 }
 
-export function DoctorSpotlight({ doctor = doctors[0], className, as: Heading = "h2" }: { doctor?: Doctor; className?: string; as?: "h1" | "h2" }) {
+/**
+ * The credential rows the clinic supplied on its form. Each row that still
+ * needs evidence carries the TO CONFIRM marker. Memberships are shown as the
+ * abbreviations the clinic wrote, unexpanded.
+ */
+export function Credentials({ doctor, className }: { doctor: Doctor; className?: string }) {
+  const rows: { label: string; value: string; confirm: boolean }[] = [];
+  if (doctor.college) rows.push({ label: "Dental college", value: doctor.college.name, confirm: doctor.college.status === "needs_proof" });
+  if (doctor.registration) rows.push({ label: "Registration", value: doctor.registration.number, confirm: doctor.registration.status === "needs_proof" });
+  if (doctor.memberships) rows.push({ label: "Memberships", value: doctor.memberships.items.join(" · "), confirm: doctor.memberships.status === "needs_proof" });
+  if (doctor.courses) rows.push({ label: "Certificate courses", value: doctor.courses.items.join(", "), confirm: doctor.courses.status === "needs_proof" });
+  if (!rows.length) return null;
+  return (
+    <dl className={cn("grid gap-2 sm:grid-cols-2", className)}>
+      {rows.map((row) => (
+        <div key={row.label} className="rounded-xl border border-ink/[.08] bg-white/70 px-3.5 py-3">
+          <dt className="flex items-center gap-2 text-[.66rem] font-semibold uppercase tracking-[.1em] text-ink-soft">
+            {row.label}
+            {row.confirm && <SampleTag kind="confirm" />}
+          </dt>
+          <dd className="mt-1 text-sm font-medium leading-snug text-ink">{row.value}</dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
+
+export function DoctorSpotlight({ doctor = doctors[0], className, as: Heading = "h2", credentials = false }: { doctor?: Doctor; className?: string; as?: "h1" | "h2"; credentials?: boolean }) {
   const related = treatments.filter((t) => doctor.relatedTreatmentSlugs.includes(t.slug));
+  const bio = doctorBio(doctor);
+  const branches = doctorBranches(doctor);
   return (
     <div className={cn("relative isolate overflow-hidden rounded-[1.75rem] bg-peach", className)}>
       <div className="grid gap-6 p-5 sm:p-7 lg:grid-cols-[.8fr_1.2fr] lg:items-center lg:gap-12 lg:p-10">
@@ -76,10 +122,16 @@ export function DoctorSpotlight({ doctor = doctors[0], className, as: Heading = 
           <p className="mt-2 font-serif text-xl leading-snug text-gold-text">
             {doctor.credentials} · {doctor.specialty}
           </p>
-          <p className="t-body mt-4 max-w-xl text-ink-soft">{doctor.bio}</p>
+          {bio && (
+            <p className="t-body mt-4 max-w-xl text-ink-soft">
+              {bio.sample && <SampleTag className="mr-2 -translate-y-px" />}
+              {bio.text}
+            </p>
+          )}
           <div className="mt-5">
             <Blocks doctor={doctor} />
           </div>
+          {credentials && <Credentials doctor={doctor} className="mt-3" />}
           <ul className="mt-4 flex flex-wrap gap-2">
             {related.map((t) => (
               <li key={t.slug}>
@@ -89,9 +141,11 @@ export function DoctorSpotlight({ doctor = doctors[0], className, as: Heading = 
               </li>
             ))}
           </ul>
-          <p className="t-small mt-3 text-ink-soft">Consults in {languages.join(", ")}.</p>
+          <p className="t-small mt-3 text-ink-soft">
+            Consults in {languages.join(", ")}. Sees patients at {branches.map((b) => b.displayArea).join(" and ")}.{doctor.availabilityNote ? ` ${doctor.availabilityNote}` : ""}
+          </p>
           <div className="mt-5 flex flex-col gap-2.5 sm:flex-row">
-            <BookButton placement="doctor_spotlight" label={`Book with ${doctor.shortName}`} />
+            <BookButton placement="doctor_spotlight" label={`Book with ${doctor.shortName}`} branch={branches.length === 1 ? branches[0].slug : undefined} />
             <WhatsAppButton
               placement="doctor_spotlight"
               message={`Hello Kheni Dental, I would like to book an appointment with ${doctor.name}. Thank you.`}
@@ -105,6 +159,7 @@ export function DoctorSpotlight({ doctor = doctors[0], className, as: Heading = 
 }
 
 export function DoctorCard({ doctor, compact = false }: { doctor: Doctor; compact?: boolean }) {
+  const branches = doctorBranches(doctor);
   return (
     <article className={cn("lift flex h-full overflow-hidden rounded-[1.5rem] border border-line bg-white", compact ? "flex-row min-[420px]:flex-col" : "flex-col")}>
       <Portrait doctor={doctor} ratio={compact ? "4 / 5" : "4 / 3"} tone="light" className={cn("rounded-none", compact && "w-[38%] shrink-0 self-stretch [aspect-ratio:auto] min-[420px]:w-auto min-[420px]:[aspect-ratio:4/5]")} />
@@ -113,7 +168,9 @@ export function DoctorCard({ doctor, compact = false }: { doctor: Doctor; compac
         <p className="mt-1 text-sm font-medium text-gold-text">
           {doctor.credentials} · {doctor.specialty}
         </p>
-        <p className="t-small mt-2 text-ink-soft">{doctor.yearsExperience} years in practice</p>
+        <p className="t-small mt-2 text-ink-soft">
+          {doctor.yearsExperience} years in practice · {branches.map((b) => b.displayArea).join(" and ")}
+        </p>
         {!compact && (
           <ul className="mt-3 flex flex-wrap gap-1.5">
             {doctor.focus.map((item) => (

@@ -22,7 +22,7 @@ phone and a desktop.
 
 ### Doctor photos
 - [ ] **Dr. Mayur Kheni**: portrait (4:5) and a wider working shot (16:10)
-- [ ] Dr. Jinal Monapara: portrait and working shot
+- [ ] Dr. Jinali Monpara: portrait and working shot
 - [ ] Dr. Ishita Dobariya: portrait, ideally with a child patient (with consent)
 - [ ] Dr. Parita Vastarpara: portrait and working shot
 
@@ -53,10 +53,15 @@ these and looks finished without them.
 - [ ] Children treated
 - [ ] NRI and international patients, and which countries they come from
 
-Already published and verified: 15 years, 4 dentists, 2 clinics, 4.9 on
-Google across 1,963 reviews on two listings (Yogi Chowk 1,753, Hirabaug
-210, checked 29 August 2026). Please re-check both listings before launch
-and note the date.
+Already published: 15 years, 4 dentists, 2 clinics, 4.9 on Google across
+1,971 reviews on two listings (Yogi Chowk 1,761 from the clinic form of
+14 September 2026, Hirabaug 210). Recheck monthly; next due 14 October 2026.
+
+The figures the clinic typed on its September 2026 form (45,000 patients,
+3,700 implants, 950 full mouth cases, 90,000+ root canals, 720+ smile
+designs, 4,500+ children, 640+ NRI patients from 23 countries) are held in
+`src/content/clinic-proof.ts` as "needs evidence" and appear only on the
+review preview with a TO CONFIRM marker. See docs/CLINIC-FORM-IMPLEMENTATION.md.
 
 ## 3. Before and after cases
 

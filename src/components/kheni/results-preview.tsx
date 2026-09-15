@@ -3,7 +3,10 @@ import { ArrowRight } from "lucide-react";
 
 import { BeforeAfterSlider } from "@/components/kheni/before-after-slider";
 import { GoogleQuotes } from "@/components/kheni/proof";
+import { SampleTag } from "@/components/kheni/sample-tag";
 import { caseCategories, caseDisclaimer, caseResults } from "@/content/cases";
+import { reviewPreview } from "@/content/provenance";
+import { sampleCases } from "@/content/review-sample";
 import { doctors, locations } from "@/content/site";
 import { cn } from "@/lib/utils";
 
@@ -13,10 +16,11 @@ import { cn } from "@/lib/utils";
  * With real, consented cases: an editorial spread, one slider per case, each
  * with the treatment, the doctor, the clinic and when the "after" was taken.
  *
- * Without them, the section is honest: it shows the slider working on a
- * clearly non-clinical illustration (a plain drawing, not a mouth), explains
- * that results are published only with written consent, and points at the
- * independent proof that exists today. No synthetic patients, ever.
+ * Without them, on the review preview: neutral SAMPLE CASE frames (plain
+ * graphics, never a mouth) laid out exactly as real cases will be, so the
+ * clinic can see the shape of the section. On an indexable build the section
+ * falls back to a plain explanation and the Google proof. No synthetic
+ * patients, ever.
  */
 
 /** Two abstract frames drawn as data-URI SVGs, so the slider can be demonstrated without a photograph. */
@@ -47,6 +51,49 @@ export function ResultsPreview({ limit = 2, className, placement = "results" }: 
           </article>
         ))}
         <p className="t-small text-ink-soft lg:col-span-2">{caseDisclaimer}</p>
+      </div>
+    );
+  }
+
+  if (reviewPreview) {
+    return (
+      <div className={cn("grid gap-5 lg:grid-cols-2", className)}>
+        {sampleCases.slice(0, limit).map((c) => (
+          <article key={c.id} className={`hue-${c.hue} overflow-hidden rounded-[1.5rem] border border-line bg-white`}>
+            <BeforeAfterSlider
+              before={demoFrame("Before", "#f1eee7", "#e6e1d6")}
+              after={demoFrame("After", "#fbfaf7", "#ead49e")}
+              beforeAlt="Sample frame only: a plain 'before' graphic, not a patient"
+              afterAlt="Sample frame only: a plain 'after' graphic, not a patient"
+              className="rounded-none"
+              caption="Sample case frame. A real, consented photograph pair goes here."
+            />
+            <div className="p-5">
+              <p className="t-eyebrow flex items-center gap-2 text-h-text">
+                {c.category}
+                <SampleTag />
+              </p>
+              <p className="t-card mt-2">{c.treatment}</p>
+              <dl className="t-small mt-3 grid grid-cols-2 gap-x-4 gap-y-1.5 text-ink-soft">
+                <dt className="font-semibold text-ink">Came in with</dt>
+                <dd>{c.concern}</dd>
+                <dt className="font-semibold text-ink">Treatment</dt>
+                <dd>{c.result}</dd>
+                <dt className="font-semibold text-ink">{c.doctorLabel}</dt>
+                <dd>Sample: name to follow</dd>
+                <dt className="font-semibold text-ink">{c.branchLabel}</dt>
+                <dd>Sample: clinic to follow</dd>
+                <dt className="font-semibold text-ink">Timeline</dt>
+                <dd>{c.timeline}</dd>
+                <dt className="font-semibold text-ink">Visits</dt>
+                <dd>{c.visits}</dd>
+              </dl>
+            </div>
+          </article>
+        ))}
+        <p className="t-small text-ink-soft lg:col-span-2">
+          Sample frames for layout review. Real cases are published only with the patient&rsquo;s written permission, across {caseCategories.length} treatment areas. {caseDisclaimer}
+        </p>
       </div>
     );
   }

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/locations/" },
   title: "Our Two Clinics in Surat",
   description:
-    "Kheni Dental at Swastik Plaza, Yogi Chowk and the Elite Implant Center at Hirabaug, Varachha Main Road, Surat. Addresses, hours, phone numbers, WhatsApp and directions.",
+    "Kheni Dental at Swastik Plaza, Yogi Chowk and at Hirabaug on Varachha Main Road, Surat. Addresses, hours, facilities, phone numbers, WhatsApp and directions.",
 };
 
 export default function LocationsPage() {
@@ -21,7 +21,7 @@ export default function LocationsPage() {
         eyebrow="Two clinics in Surat"
         title="Come to whichever is nearer."
         highlight="nearer"
-        copy={`Swastik Plaza at Yogi Chowk, and the Elite Implant Center at Hirabaug on Varachha Main Road. ${clinicHours.compact}.`}
+        copy={`Swastik Plaza at Yogi Chowk since 2012, and Hirabaug on Varachha Main Road since 2020. Same team, same hours. ${clinicHours.compact}.`}
         hue="green"
         compact
       />

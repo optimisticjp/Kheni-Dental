@@ -69,4 +69,16 @@ export const googleReputation = {
   combinedShort: "across two clinic profiles",
   verifiedOn: verifiedBranches[0]?.verifiedOn,
   allVerified: verifiedBranches.length === locations.length,
+  /** The clinic asked for a monthly recheck (form p46). */
+  recheckCadence: "monthly",
+  lastChecked: locations[0].google.lastChecked,
+  nextRecheckDue: nextMonth(locations[0].google.lastChecked),
 } as const;
+
+/** ISO date one month after the given ISO date, for the recheck reminder. */
+function nextMonth(iso?: string): string | undefined {
+  if (!iso) return undefined;
+  const d = new Date(`${iso}T00:00:00Z`);
+  d.setUTCMonth(d.getUTCMonth() + 1);
+  return d.toISOString().slice(0, 10);
+}

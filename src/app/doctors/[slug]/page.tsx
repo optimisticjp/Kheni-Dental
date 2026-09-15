@@ -2,14 +2,16 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { CtaBand } from "@/components/kheni/cta-band";
-import { DoctorSpotlight, TeamLink } from "@/components/kheni/doctor-spotlight";
+import { DoctorSpotlight, doctorBranches, TeamLink } from "@/components/kheni/doctor-spotlight";
 import { ViewTracker } from "@/components/kheni/implant/view-tracker";
 import { ProofCluster } from "@/components/kheni/proof";
+import { SampleTag } from "@/components/kheni/sample-tag";
 import { SectionIntro } from "@/components/kheni/section-intro";
 import { SmileNote } from "@/components/kheni/smile-note";
 import { TreatmentRow } from "@/components/kheni/treatment-poster";
 import { Container } from "@/components/ui/container";
-import { doctors, locations, treatments } from "@/content/site";
+import { editorialLines } from "@/content/review-sample";
+import { doctors, treatments } from "@/content/site";
 
 export function generateStaticParams() {
   return doctors.map((doctor) => ({ slug: doctor.slug }));
@@ -28,6 +30,8 @@ export default async function DoctorPage({ params }: { params: Promise<{ slug: s
   if (!doctor) notFound();
 
   const related = treatments.filter((t) => doctor.relatedTreatmentSlugs.includes(t.slug));
+  const branches = doctorBranches(doctor);
+  const line = editorialLines.find((l) => l.doctorSlug === doctor.slug);
   const message = `Hello Kheni Dental, I would like to book an appointment with ${doctor.name}. Thank you.`;
 
   return (
@@ -35,11 +39,22 @@ export default async function DoctorPage({ params }: { params: Promise<{ slug: s
       <ViewTracker event="doctor_profile_view" placement={`doctor_${doctor.slug}`} />
       <section className="py-6 sm:py-10 lg:py-14">
         <Container width="7xl">
-          <DoctorSpotlight doctor={doctor} as="h1" />
+          <DoctorSpotlight doctor={doctor} as="h1" credentials />
         </Container>
       </section>
 
-      <SmileNote note={{ line: doctor.philosophy, highlight: "", hue: doctor.hue }} compact tone="dark" className="pb-8 sm:pb-12" />
+      {/* An editorial line in the site's voice, not a quotation. Dr. Jinali's
+          is built from her own words on the form; the others are samples. */}
+      {line && (
+        <div className="relative">
+          <SmileNote note={{ line: line.line, highlight: line.highlight, hue: doctor.hue }} compact tone="dark" className="pb-8 sm:pb-12" />
+          {line.status === "review_sample" && (
+            <div className="pointer-events-none absolute inset-x-0 top-3 flex justify-center">
+              <SampleTag tone="dark" />
+            </div>
+          )}
+        </div>
+      )}
 
       <section className={`hue-${doctor.hue} pb-10 sm:pb-14 lg:pb-18`}>
         <Container width="7xl">
@@ -53,13 +68,19 @@ export default async function DoctorPage({ params }: { params: Promise<{ slug: s
               </div>
             </div>
             <div>
-              <SectionIntro eyebrow="Where" title="Two clinics in Surat." highlight="Two clinics" copy="Call the clinic you plan to visit to check which days this dentist is there." />
+              <SectionIntro
+                eyebrow="Where"
+                title={branches.length === 1 ? `At our ${branches[0].displayArea} clinic.` : "At both clinics in Surat."}
+                highlight={branches.length === 1 ? branches[0].displayArea : "both clinics"}
+                copy={branches.length === 1 ? undefined : "Call the clinic you plan to visit to check which days this dentist is there."}
+              />
               <ul className="mt-5 grid gap-3">
-                {locations.map((l) => (
+                {branches.map((l) => (
                   <li key={l.slug} className={`hue-${l.hue} rounded-2xl bg-h-tint p-4`}>
                     <p className="font-semibold">{l.displayArea}</p>
                     <p className="t-small mt-0.5 text-ink-soft">{l.landmark}</p>
                     <p className="t-small mt-1 text-ink-soft">{l.hours}</p>
+                    {doctor.availabilityNote && l.slug === "swastik-plaza" && <p className="t-small mt-1 text-ink-soft">{doctor.availabilityNote}</p>}
                   </li>
                 ))}
               </ul>
@@ -70,8 +91,7 @@ export default async function DoctorPage({ params }: { params: Promise<{ slug: s
         </Container>
       </section>
 
-
-      <CtaBand title={`Book an appointment with ${doctor.name}.`} highlight={doctor.name} placement={`doctor_final_${doctor.slug}`} hue={doctor.hue} whatsappMessage={message} />
+      <CtaBand title={`Book an appointment with ${doctor.name}.`} highlight={doctor.name} placement={`doctor_final_${doctor.slug}`} hue={doctor.hue} whatsappMessage={message} location={branches.length === 1 ? branches[0] : undefined} />
     </>
   );
 }

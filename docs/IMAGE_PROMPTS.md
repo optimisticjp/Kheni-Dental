@@ -89,8 +89,8 @@ Portrait 1024×1536, shown 4:5. Placeholders only, see above.
 > standing in a bright treatment room. Direct, warm, slight smile with lips
 > together. Cobalt tinted wall out of focus behind.
 
-### 4. Dr. Jinal Monapara
-`public/images/doctors/dr-jinal-monapara.jpg`
+### 4. Dr. Jinali Monpara
+`public/images/doctors/dr-jinali-monpara.jpg`
 
 > Head and shoulders portrait of an Indian woman in her mid thirties, hair
 > tied back, white clinical coat, standing near a window in a light room.

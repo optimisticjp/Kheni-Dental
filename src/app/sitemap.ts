@@ -15,6 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/smile-gallery",
     "/reviews",
     "/patient-resources",
+    "/technology",
     "/international-patients",
     "/contact",
     "/privacy",

@@ -4,7 +4,8 @@
  * Every entry is a real, public video on "Kheni Dental & Elite Implant
  * Center" (https://www.youtube.com/channel/UCA4ralOJwb8mrttegjyZcEQ),
  * checked against the channel's Shorts and Videos tabs on 13 September
- * 2026. Titles are the clinic's own, trimmed of emoji and hashtags, or a
+ * 2026. The ten older links printed on page 50 of the clinic form were all
+ * unavailable on 14 September 2026 and are not listed. Titles are the clinic's own, trimmed of emoji and hashtags, or a
  * plain description of the topic where the clinic's title was only tags.
  *
  * Nothing is rehosted. The site shows YouTube's own poster frame and only
@@ -51,9 +52,9 @@ export const clinicVideos: ClinicVideo[] = [
   { id: "cq-X6tNSLqs", title: "Brush before or after breakfast?", kind: "education", language: "English", format: "short" },
   // Longer videos
   { id: "YWrQsR2XtQA", title: "Inside Kheni Dental & Elite Implant Center", kind: "clinic", language: "English", format: "video" },
-  { id: "HtryMP7Kpc8", title: "Tooth structure and types, with Dr. Jinal (દાંતની રચના અને તેના પ્રકાર)", kind: "education", language: "Gujarati", format: "video", doctorSlug: "dr-jinal-monapara" },
-  { id: "8AO6uXi_kFQ", title: "Dental bridge or implant, with Dr. Jinal", kind: "education", language: "Gujarati", format: "video", doctorSlug: "dr-jinal-monapara", treatmentSlug: "dental-implants-surat" },
-  { id: "7HeQlhNlrIQ", title: "Stains and home remedies, with Dr. Jinal", kind: "education", language: "Gujarati", format: "video", doctorSlug: "dr-jinal-monapara", treatmentSlug: "cosmetic-smile-dentistry" },
+  { id: "HtryMP7Kpc8", title: "Tooth structure and types, with Dr. Jinali (દાંતની રચના અને તેના પ્રકાર)", kind: "education", language: "Gujarati", format: "video", doctorSlug: "dr-jinali-monpara" },
+  { id: "8AO6uXi_kFQ", title: "Dental bridge or implant, with Dr. Jinali", kind: "education", language: "Gujarati", format: "video", doctorSlug: "dr-jinali-monpara", treatmentSlug: "dental-implants-surat" },
+  { id: "7HeQlhNlrIQ", title: "Stains and home remedies, with Dr. Jinali", kind: "education", language: "Gujarati", format: "video", doctorSlug: "dr-jinali-monpara", treatmentSlug: "cosmetic-smile-dentistry" },
   { id: "yqLP35_2eBM", title: "દાંતના ડોક્ટરની મુલાકાત ક્યારે લેવી?", kind: "education", language: "Gujarati", format: "video", treatmentSlug: "dental-check-up-surat" },
   { id: "-TQkU4fT6yo", title: "દાંત સાફ કરાવવા જોઈએ કે ના જોઈએ?", kind: "education", language: "Gujarati", format: "video", treatmentSlug: "gum-care-surat" },
   { id: "rDWbpPf3tvU", title: "ફ્લોસિંગ શું છે? ફ્લોસિંગ કેવી રીતે કરવું?", kind: "education", language: "Gujarati", format: "video", treatmentSlug: "gum-care-surat" },

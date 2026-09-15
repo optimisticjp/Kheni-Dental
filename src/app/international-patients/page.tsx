@@ -7,7 +7,8 @@ import { CtaBand } from "@/components/kheni/cta-band";
 import { ViewTracker } from "@/components/kheni/implant/view-tracker";
 import { PageHero } from "@/components/kheni/page-hero";
 import { ProcessSteps } from "@/components/kheni/process-steps";
-import { ProofCluster } from "@/components/kheni/proof";
+import { MetricRow, ProofCluster } from "@/components/kheni/proof";
+import { SampleTag } from "@/components/kheni/sample-tag";
 import { MediaFrame } from "@/components/kheni/media-frame";
 import { SectionIntro } from "@/components/kheni/section-intro";
 import { internationalPhoto } from "@/content/photos";
@@ -16,7 +17,8 @@ import { TreatmentRow } from "@/components/kheni/treatment-poster";
 import { Accordion } from "@/components/ui/accordion";
 import { Container } from "@/components/ui/container";
 import { WhatsAppButton } from "@/components/ui/cta";
-import { languages } from "@/content/clinic-proof";
+import { languages, metricsFor } from "@/content/clinic-proof";
+import { sampleNriWorkflow } from "@/content/review-sample";
 import { locations, treatments } from "@/content/site";
 
 export const metadata: Metadata = {
@@ -31,14 +33,13 @@ const NRI_MESSAGE = "Hello Kheni Dental, I live abroad and would like to plan de
 /** Treatments patients most often plan a trip around. */
 const popularSlugs = ["dental-implants-surat", "full-mouth-rehabilitation", "cosmetic-smile-dentistry", "crowns-and-bridges"];
 
-/** Five stages of a visit. Only what the clinic actually does. */
-const journey = [
-  { title: "Before you travel", copy: "Message us your dates and what you would like looked at. If you have recent X-rays or reports, share them if asked. We reply with what is realistic in that window." },
-  { title: "Plan the clinic visit", copy: "We suggest which clinic suits your case and pencil in the first appointment around your arrival." },
-  { title: "Examination confirms the plan", copy: "Nothing is fixed until a dentist has examined you here. If what we find changes the plan, you hear it before anything starts." },
-  { title: "Treatment", copy: "Appointments are grouped so you are not travelling back and forth. Some cases finish on one trip; implants and full mouth work need healing time between stages." },
-  { title: "Follow-up", copy: "You leave with written instructions and a way to reach the clinic. Questions after you are home can come by WhatsApp." },
-];
+/**
+ * The planning workflow. Page 55 of the clinic form ticked nothing, so the
+ * steps are the review sample from review-sample.ts, marked SAMPLE until the
+ * clinic confirms each one. Nothing about airports, hotels or visas.
+ */
+const journey = sampleNriWorkflow.steps;
+const nriMetrics = metricsFor("nri");
 
 /** Plain facts, none of them a travel-agency promise. */
 const whatToExpect = [
@@ -61,7 +62,7 @@ const faqs = [
   },
   {
     question: "Which clinic should I come to?",
-    answer: "Implant, full mouth and smile design work is led from the Elite Implant Center at Hirabaug. Everyday dentistry is available at both clinics. Tell us your case and we will suggest one.",
+    answer: "Both clinics offer everyday dentistry and implant consultations. Tell us your case and where you will be staying, and we will suggest the one that is easier for you.",
   },
   {
     question: "How is the cost decided?",
@@ -96,7 +97,14 @@ export default function InternationalPage() {
           <div className="grid gap-8 lg:grid-cols-[1.15fr_.85fr] lg:items-center lg:gap-12">
             <div>
               <SectionIntro eyebrow="How a visit works" title="From your first message to your flight home." highlight={["first message", "flight home"]} />
-              <ProcessSteps steps={journey} columns={5} className="mt-6 sm:mt-8" variant="cards" dense />
+              {sampleNriWorkflow.status === "review_sample" && (
+                <p className="t-small mt-3 flex items-center gap-2 text-ink-soft">
+                  <SampleTag />
+                  Workflow shown for review. Each step is confirmed with the clinic before launch.
+                </p>
+              )}
+              <ProcessSteps steps={journey} columns={3} className="mt-6 sm:mt-8" variant="cards" dense />
+              {nriMetrics.length > 0 && <MetricRow metrics={nriMetrics} className="mt-6 max-w-md" />}
             </div>
             <MediaFrame
               ratio="4 / 3"

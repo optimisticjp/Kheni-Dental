@@ -2,8 +2,9 @@
  * Content for the Elite Implant Center page at /treatments/dental-implants-surat/.
  *
  * Facts about the clinic live in `site.ts`; this is the implant-specific
- * editorial layer. Nothing here names a technique, a brand, a scan, a
- * timeline in days, a warranty or a price. None is confirmed.
+ * editorial layer. Capabilities, systems and the warranty wording the clinic
+ * confirmed on its form live in `capabilities.ts`. Nothing here gives a
+ * timeline in days or a price.
  */
 
 export type StartingPoint = {
@@ -18,7 +19,8 @@ export type StartingPoint = {
 };
 
 export const implantHero = {
-  eyebrow: "Elite Implant Center · Hirabaug, Surat",
+  /** No single branch named: see docs/CLINIC-FORM-IMPLEMENTATION.md, conflict C1. */
+  eyebrow: "Elite Implant Center · Surat",
   headline: "A fixed tooth for the gap you have been working around.",
   standfirst:
     "An implant is a small post placed in the jawbone that holds a replacement tooth. It is anchored in bone rather than resting on the gum or clipping onto the teeth beside it. Single tooth, several teeth, a full arch, or support for a loose denture.",
@@ -33,7 +35,7 @@ export const implantProcess = {
   copy: "Five stages. You know what each one involves before it starts, and you can stop and think between any two.",
   steps: [
     { title: "Consultation", copy: "You tell us which side you chew on and what you have stopped eating. The dentist examines the gap, the gums and the teeth on either side." },
-    { title: "Examination and imaging", copy: "Bone cannot be judged by looking, so implant planning usually needs imaging. The dentist decides what is appropriate for your case." },
+    { title: "Examination and imaging", copy: "Bone cannot be judged by looking, so implant planning starts with X-rays and, where the case needs it, 3D imaging. The dentist decides what is appropriate for your case." },
     { title: "Your treatment plan", copy: "Implant, bridge or denture, explained plainly with the stages, the visits and the time between them." },
     { title: "Implant treatment", copy: "The implant is placed under local anaesthesia and given time to bond with the bone." },
     { title: "Final tooth and follow-up", copy: "The final crown or set of teeth is fitted once the implant has settled, and you are shown how to clean around it." },
@@ -140,6 +142,16 @@ export const implantFaqs = [
     question: "How do I clean around an implant?",
     answer:
       "Much like a natural tooth, with brushing and cleaning between, though the technique around the implant matters. The gum around an implant can become inflamed if plaque builds up, which is why the cleaning routine and review visits are part of the treatment.",
+  },
+  {
+    question: "Can an implant be done in one day?",
+    answer:
+      "Sometimes a temporary tooth can be fitted on the implant at the same visit. That depends on the bone, the position and how firmly the implant sits when it is placed, so it is decided at assessment rather than promised in advance. The final tooth still follows after healing.",
+  },
+  {
+    question: "Which implant system do you use?",
+    answer:
+      "We work with Osstem and DIO, both established Korean implant systems. Which one suits your case, and why, is part of the planning conversation.",
   },
   {
     question: "Can I travel during implant treatment?",

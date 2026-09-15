@@ -1,6 +1,8 @@
 import { ArrowUpRight, Star } from "lucide-react";
 
 import { GoogleGlyph } from "@/components/icons/google-glyph";
+import { SampleTag } from "@/components/kheni/sample-tag";
+import { needsMarker, type ProofMetric } from "@/content/clinic-proof";
 import { googleReputation, verifiedBranches } from "@/content/google-reputation";
 import { reviewHighlights, type Location } from "@/content/site";
 import { placeUrl, writeReviewUrl } from "@/lib/maps";
@@ -168,7 +170,13 @@ export function BranchProof({ location, placement, className }: { location: Loca
       {verified ? (
         <p className="t-body mt-4 text-ink-soft">
           <strong className="font-serif text-xl font-medium text-ink">{location.google.reviewCount}</strong> reviews on this clinic&rsquo;s own listing.
-          {location.google.verifiedOn && <span className="block text-[.72rem] text-ink-soft/80">Checked {location.google.verifiedOn}</span>}
+          {location.google.verifiedOn && (
+            <span className="block text-[.72rem] text-ink-soft/80">
+              {location.google.source === "clinic_form" ? "Count supplied by the clinic, " : "Checked "}
+              {location.google.verifiedOn}
+              {location.google.recheckCadence ? `, rechecked ${location.google.recheckCadence}` : ""}
+            </span>
+          )}
         </p>
       ) : (
         <p className="t-body mt-4 text-ink-soft">This clinic keeps its own Google listing.</p>
@@ -225,5 +233,32 @@ export function GoogleQuotes({ className, placement, tone = "light" }: { classNa
         </figure>
       ))}
     </div>
+  );
+}
+
+/**
+ * Clinic figures from `clinic-proof.ts`, rendered as a compact row. A metric
+ * that still needs evidence carries the TO CONFIRM marker. Numbers never
+ * appear in JSX; only the metric objects do.
+ */
+export function MetricRow({ metrics, className, tone = "light" }: { metrics: ProofMetric[]; className?: string; tone?: "light" | "dark" }) {
+  if (!metrics.length) return null;
+  const dark = tone === "dark";
+  return (
+    <dl className={cn("grid gap-2", metrics.length >= 4 ? "grid-cols-2 lg:grid-cols-4" : metrics.length === 3 ? "grid-cols-3" : "grid-cols-2", className)}>
+      {metrics.map((m) => (
+        <div key={m.id} className={cn("rounded-2xl border p-4", dark ? "border-ivory/10 bg-ivory/[.04]" : "border-line bg-white")}>
+          <dd className={cn("t-proof", dark ? "text-gold" : "text-gold-text")}>
+            {m.value}
+            {m.suffix ?? ""}
+          </dd>
+          <dt className={cn("mt-1.5 flex flex-wrap items-center gap-2 text-sm font-semibold", dark ? "text-ivory" : "text-ink")}>
+            {m.label}
+            {needsMarker(m) && <SampleTag kind="confirm" tone={tone} />}
+          </dt>
+          {m.detail && <p className={cn("t-small mt-0.5", dark ? "text-ivory/60" : "text-ink-soft")}>{m.detail}</p>}
+        </div>
+      ))}
+    </dl>
   );
 }

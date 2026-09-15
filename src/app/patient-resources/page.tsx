@@ -3,6 +3,7 @@ import { AlertTriangle } from "lucide-react";
 
 import { CtaBand } from "@/components/kheni/cta-band";
 import { PageHero } from "@/components/kheni/page-hero";
+import { SampleTag } from "@/components/kheni/sample-tag";
 import { SectionIntro } from "@/components/kheni/section-intro";
 import { Container } from "@/components/ui/container";
 import { CallButton, WhatsAppButton } from "@/components/ui/cta";
@@ -17,7 +18,8 @@ export const metadata: Metadata = {
 
 /**
  * Patient help, not an article library. Only guides reviewed in this
- * repository are shown; the clinic's own aftercare sheets are listed in
+ * repository are shown. Two topics the clinic approved on its form (p58)
+ * carry SAMPLE wording until its own sheets arrive; the rest are listed in
  * docs/CLINIC-CONTENT-NEEDED.md and appear here when they arrive.
  */
 export default function ResourcesPage() {
@@ -80,8 +82,12 @@ export default function ResourcesPage() {
               <div className="grid gap-4">
                 {category.guides.map((guide) => (
                   <article key={guide.id} id={guide.id} className="anchor rounded-[1.5rem] bg-white p-5 ring-1 ring-line sm:p-6">
-                    <h3 className="t-h3">{guide.title}</h3>
+                    <h3 className="t-h3 flex flex-wrap items-center gap-2">
+                      {guide.title}
+                      {guide.source === "review_sample" && <SampleTag />}
+                    </h3>
                     <p className="t-small mt-1.5 text-ink-soft">{guide.summary}</p>
+                    {guide.source === "review_sample" && <p className="t-small mt-1 text-ink-soft/80">General wording, shown for review. The clinic&rsquo;s own instruction sheet replaces it before launch.</p>}
                     {guide.status === "published" && (
                       <ol className="mt-4 grid gap-2.5">
                         {guide.points.map((point, i) => (

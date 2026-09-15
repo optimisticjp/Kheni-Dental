@@ -9,8 +9,11 @@ const nextConfig: NextConfig = {
   // somewhere useful rather than on a 404.
   async redirects() {
     return [
-      { source: "/clinic-technology", destination: "/treatments/dental-implants-surat/", permanent: true },
-      { source: "/clinic-technology/", destination: "/treatments/dental-implants-surat/", permanent: true },
+      { source: "/clinic-technology", destination: "/technology/", permanent: true },
+      { source: "/clinic-technology/", destination: "/technology/", permanent: true },
+      // Spelling corrected by the clinic on its information form (September 2026).
+      { source: "/doctors/dr-jinal-monapara", destination: "/doctors/dr-jinali-monpara/", permanent: true },
+      { source: "/doctors/dr-jinal-monapara/", destination: "/doctors/dr-jinali-monpara/", permanent: true },
       { source: "/treatments/general-family-dentistry", destination: "/treatments/dental-check-up-surat/", permanent: true },
       { source: "/treatments/general-family-dentistry/", destination: "/treatments/dental-check-up-surat/", permanent: true },
     ];

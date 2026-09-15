@@ -11,9 +11,14 @@
  *              aftercare instruction and must come from the doctors. Hidden
  *              from visitors; listed for the clinic in docs/CLINIC-CONTENT-NEEDED.md.
  *
- * Do not fill a pending guide in from general dental knowledge.
+ * Do not fill a pending guide in from general dental knowledge. The two
+ * exceptions carry `source: "review_sample"`: the clinic approved the topic
+ * on its form (p58, extraction and implant placement) but has not sent its
+ * own sheet, so general wording holds the slot, marked SAMPLE, and blocks
+ * an indexable build.
  */
 
+import { sampleGuides } from "@/content/review-sample";
 import type { Hue } from "@/content/site";
 
 export type Guide = {
@@ -21,6 +26,12 @@ export type Guide = {
   title: string;
   /** One line describing what the guide answers. */
   summary: string;
+  /**
+   * Set when the clinic approved the topic on its form (p58) but has not yet
+   * sent its own wording. The points then come from `review-sample.ts` and
+   * render with a SAMPLE marker.
+   */
+  source?: "review_sample";
 } & (
   | { status: "published"; points: string[] }
   | { status: "pending"; needs: string }
@@ -78,7 +89,14 @@ export const resourceCategories: ResourceCategory[] = [
           "Call the clinic if the pain is getting worse instead of easing, if the gum or face swells, or if anything feels different from what was explained to you.",
         ],
       },
-      { id: "after-extraction", title: "After a tooth is removed", summary: "The first twenty-four hours, and what to avoid.", status: "pending", needs: "Your own post-extraction instruction sheet, exactly as the team gives it in the chair." },
+      {
+        id: "after-extraction",
+        title: "After a tooth is removed",
+        summary: "The first twenty-four hours, and what to avoid.",
+        status: "published",
+        source: "review_sample",
+        points: sampleGuides.find((g) => g.id === "after-extraction")?.points ?? [],
+      },
       { id: "after-scaling", title: "After cleaning and scaling", summary: "Why teeth can feel sensitive afterwards and how long it lasts.", status: "pending", needs: "Your standard post-scaling advice, including anything you recommend for sensitivity." },
       { id: "after-crown", title: "After a crown or bridge", summary: "Living with a temporary, and what to do if something feels high.", status: "pending", needs: "What you tell patients about temporary crowns, biting, and when to come back for an adjustment." },
     ],
@@ -99,6 +117,14 @@ export const resourceCategories: ResourceCategory[] = [
           "Ask how much time is expected between stages and what you will be wearing while you wait. That is the part most people want to know and least often think to ask.",
           "Ask what affects how long an implant lasts in your case. Bone, gum health, bite, smoking and grinding all play a part, and so does the cleaning routine you keep up at home.",
         ],
+      },
+      {
+        id: "after-implant",
+        title: "After implant placement",
+        summary: "The first days after surgery, and what to avoid.",
+        status: "published",
+        source: "review_sample",
+        points: sampleGuides.find((g) => g.id === "after-implant")?.points ?? [],
       },
       { id: "implant-cleaning", title: "Cleaning around an implant", summary: "The daily routine, and the tools that make it easier.", status: "pending", needs: "The cleaning routine and any interdental aids your implant patients are sent home with." },
       { id: "implant-maintenance", title: "Long-term implant maintenance", summary: "How often to come back, and what gets checked.", status: "pending", needs: "Your recall interval for implant patients and what a maintenance visit covers." },

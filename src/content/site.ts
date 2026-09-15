@@ -10,6 +10,8 @@
  *   - The current doctor roster only. Old flyers are not a source.
  */
 
+import type { ContentStatus } from "@/content/provenance";
+
 export const site = {
   name: "Kheni Dental & Elite Implant Center",
   shortName: "Kheni Dental",
@@ -28,6 +30,9 @@ export const site = {
   primaryPhoneHref: "+919510112354",
   whatsappNumber: "919510112354",
   yearsInSurat: 15,
+  /** Form p13: first clinic (Yogi Chowk) 2012, Hirabaug 2020. See ledger conflict C9 on "15 years". */
+  founded: 2012,
+  hirabaugOpened: 2020,
   doctorCount: 4,
   clinicCount: 2,
   consultationMessage:
@@ -60,6 +65,7 @@ export const secondaryNav: NavItem[] = [
   { href: "/problems-we-treat/", label: "What brings you in?" },
   { href: "/smile-gallery/", label: "Before & after" },
   { href: "/patient-resources/", label: "Patient resources" },
+  { href: "/technology/", label: "Clinic technology" },
   { href: "/about/", label: "About Kheni Dental" },
   { href: "/contact/", label: "Contact" },
 ];
@@ -109,8 +115,14 @@ export type Location = {
    * branch cannot inherit another branch's map.
    */
   googlePlaceId: string;
-  /** The exact short link the clinic supplied, resolved against the Place ID. */
+  /** The exact short link the clinic supplied on 29 August 2026, resolved against the Place ID. */
   googleShortUrl: string;
+  /**
+   * A newer share link from the clinic form (p46). From this environment it
+   * resolves only to a Google Search knowledge panel with no address, phone
+   * or Place ID, so it cannot yet be tied to a branch. Stored, not linked.
+   */
+  googleShareUrl?: { url: string; status: "pending-verification" | "verified"; note: string };
   /**
    * The listing's own pin. This is what the aerial map is centred on and
    * where its marker is drawn. Verified per branch in
@@ -122,7 +134,14 @@ export type Location = {
     status: "verified" | "pending-verification";
     rating?: string;
     reviewCount?: string;
+    /** Date the figures were last confirmed, in the form used on the page. */
     verifiedOn?: string;
+    /** Who supplied the current figure. */
+    source?: "google_listing" | "clinic_form";
+    /** How often the clinic wants the count rechecked (form p46: monthly). */
+    recheckCadence?: "monthly";
+    /** ISO date of the last check, for the recheck reminder. */
+    lastChecked?: string;
   };
   hours: string;
   hoursNote?: string;
@@ -130,6 +149,8 @@ export type Location = {
   note: string;
   /** Landmark a rickshaw driver would know. */
   landmark: string;
+  /** Facilities the clinic ticked on the form (p10, p12). Nothing else. */
+  facilities: string[];
   /** True for the branch that carries the Elite Implant Center. */
   implantCentre?: boolean;
   /** Branch accent hue, from the treatment hue set. */
@@ -139,7 +160,7 @@ export type Location = {
 export const locations: Location[] = [
   {
     slug: "swastik-plaza",
-    name: "Kheni Dental, Swastik Plaza",
+    name: "Kheni Dental, Yogi Chowk",
     shortName: "Swastik Plaza",
     areaLabel: "Yogi Chowk, Surat",
     displayArea: "Yogi Chowk",
@@ -151,12 +172,14 @@ export const locations: Location[] = [
     whatsappNumber: "919510112354",
     googlePlaceId: "ChIJddZdiXpP4DsRvtrOvXjbQqA",
     googleShortUrl: "https://maps.app.goo.gl/WN2nDHXVK8RajDvE6",
+    googleShareUrl: { url: "https://share.google/VCStYdDSW14U7yNSx", status: "pending-verification", note: "Form p46. Resolves to Google Search kgmid /g/1q62dz8k9; branch not provable from here." },
     coords: { lat: 21.2147921, lng: 72.8881639 },
-    google: { status: "verified", rating: "4.9", reviewCount: "1,753", verifiedOn: "29 August 2026" },
+    google: { status: "verified", rating: "4.9", reviewCount: "1,761", verifiedOn: "14 September 2026", source: "clinic_form", recheckCadence: "monthly", lastChecked: "2026-09-14" },
     hours: "Mon to Sat, 9:30 AM to 1:00 PM and 4:00 PM to 8:00 PM",
     hoursNote: "Clinic-provided hours. Call before travelling if your visit is time-sensitive.",
-    note: "Our original clinic at Yogi Chowk. Family dentistry, root canals, braces and kids treatment, with implant care too.",
+    note: "Our first clinic, open since 2012. Family dentistry, root canals, braces, children's dentistry and implant consultations.",
     landmark: "Yogi Chowk Ground, next to Apple Square",
+    facilities: ["Parking nearby", "Lift", "Waiting area", "Digital payment", "Emergency same-day slots"],
     hue: "teal",
   },
   {
@@ -173,12 +196,14 @@ export const locations: Location[] = [
     whatsappNumber: "919737997543",
     googlePlaceId: "ChIJ89yBAKVP4DsR3TYY_211oRg",
     googleShortUrl: "https://maps.app.goo.gl/7TipkWprNZv2qEQk9",
+    googleShareUrl: { url: "https://share.google/PS6JNyt10N2UJKRo8", status: "pending-verification", note: "Form p46. Resolves to Google Search kgmid /g/11rg336jy3; branch not provable from here." },
     coords: { lat: 21.2127579, lng: 72.8584163 },
-    google: { status: "verified", rating: "4.9", reviewCount: "210", verifiedOn: "29 August 2026" },
+    google: { status: "verified", rating: "4.9", reviewCount: "210", verifiedOn: "14 September 2026", source: "clinic_form", recheckCadence: "monthly", lastChecked: "2026-09-14" },
     hours: "Mon to Sat, 9:30 AM to 1:00 PM and 4:00 PM to 8:00 PM",
     hoursNote: "Clinic-provided hours. Call before travelling if your visit is time-sensitive.",
-    note: "Our Elite Implant Center on Varachha Main Road. Implants, full mouth cases and smile design are led from here.",
+    note: "Our Varachha Main Road clinic, open since 2020, which carries the Elite Implant Center name. Everyday dentistry and implant consultations.",
     landmark: "Above Shiv Plywood, opposite Surat Super Store",
+    facilities: ["Waiting area", "Emergency same-day slots"],
     implantCentre: true,
     hue: "gold",
   },
@@ -212,18 +237,36 @@ export const reviewHighlights = [
    without the whole site becoming a rainbow. Values live in globals.css. */
 export type Hue = "gold" | "navy" | "teal" | "amber" | "coral" | "violet" | "mint" | "green" | "lavender" | "sky" | "gold" | "gold";
 
+export type DoctorBranch = "swastik-plaza" | "hirabaug";
+
 export type Doctor = {
   slug: string;
   name: string;
   /** "Dr. Mayur", for buttons and headings that need a short form. */
   shortName: string;
   credentials: string;
+  /** Patient-facing title, as the clinic gave it (see the ledger for wording decisions). */
   specialty: string;
   yearsExperience: number;
   /** What patients most often come to this doctor for. Confirmed areas only. */
   focus: string[];
-  bio: string;
-  philosophy: string;
+  /**
+   * A bio the clinic wrote, or a factual one-liner. A doctor whose form page
+   * left the bio blank gets a SAMPLE bio from `review-sample.ts` instead.
+   */
+  bio?: string;
+  /** Where this doctor sees patients. From the form; "both" unless the clinic said otherwise. */
+  branchSlugs: DoctorBranch[];
+  /** e.g. "by appointment" at a branch. */
+  availabilityNote?: string;
+  /** Dental college, spelling normalised against the institution's own name. */
+  college?: { name: string; status: ContentStatus };
+  /** Council registration number. Council itself not yet stated by the clinic. */
+  registration?: { number: string; status: ContentStatus };
+  /** Professional memberships, abbreviations exactly as given. Not expanded. */
+  memberships?: { items: string[]; status: ContentStatus };
+  /** Certificate courses, topics only. No issuing body, year or level invented. */
+  courses?: { items: string[]; status: ContentStatus };
   metaDescription: string;
   relatedTreatmentSlugs: string[];
   hue: Hue;
@@ -237,32 +280,39 @@ export const doctors: Doctor[] = [
     name: "Dr. Mayur Kheni",
     shortName: "Dr. Mayur",
     credentials: "B.D.S.",
-    specialty: "Implantologist & Cosmetic Dental Surgeon",
+    specialty: "Dental Surgeon · Implantologist & Cosmetic Dentistry",
     yearsExperience: 15,
-    focus: ["Dental Implants", "Full Mouth Rehabilitation", "Smile Design"],
-    bio:
-      "Dr. Mayur Kheni founded Kheni Dental and leads the Elite Implant Center at Hirabaug. Most people reach him about a gap they have stopped chewing on, a denture that keeps moving, or older dental work that no longer holds up. He has been in practice for 15 years.",
-    philosophy: "You should be able to explain your own treatment plan to someone at home. If you cannot, we have not finished talking.",
+    focus: ["Dental Implants", "Full Mouth Rehabilitation", "Root Canal Treatment", "Smile Design"],
+    branchSlugs: ["swastik-plaza", "hirabaug"],
+    availabilityNote: "At Yogi Chowk by appointment.",
+    college: { name: "Dharmsinh Desai University, Nadiad", status: "clinic_supplied" },
+    registration: { number: "A-6277", status: "needs_proof" },
+    memberships: { items: ["IDA", "VDA", "KDA"], status: "needs_proof" },
     metaDescription:
-      "Dr. Mayur Kheni, B.D.S., Implantologist & Cosmetic Dental Surgeon, leads Kheni Dental & Elite Implant Center in Surat. 15 years in practice. Book an appointment.",
-    relatedTreatmentSlugs: ["dental-implants-surat", "full-mouth-rehabilitation", "cosmetic-smile-dentistry"],
+      "Dr. Mayur Kheni, B.D.S., Dental Surgeon, Implantologist and Cosmetic Dentistry, founder of Kheni Dental & Elite Implant Center in Surat. 15 years in practice. Book an appointment.",
+    relatedTreatmentSlugs: ["dental-implants-surat", "full-mouth-rehabilitation", "root-canal-treatment-surat", "cosmetic-smile-dentistry"],
     hue: "gold",
     principal: true,
   },
   {
-    slug: "dr-jinal-monapara",
-    name: "Dr. Jinal Monapara",
-    shortName: "Dr. Jinal",
+    slug: "dr-jinali-monpara",
+    name: "Dr. Jinali Monpara",
+    shortName: "Dr. Jinali",
     credentials: "B.D.S.",
-    specialty: "Dental Surgeon & Smile Designing Specialist",
-    yearsExperience: 9,
-    focus: ["Smile Design", "Crowns & Bridges", "Everyday Dentistry"],
-    bio:
-      "Dr. Jinal Monapara is a dental surgeon and smile designing specialist. Patients usually come to her about one thing they keep noticing in photos: a chipped edge, a gap, a shade that no longer matches. She talks through what can change and what is better left alone. Nine years in practice.",
-    philosophy: "The right result is usually the smallest change that gets you what you came for.",
+    specialty: "Cosmetic Dental Surgeon · Smile Design",
+    yearsExperience: 10,
+    focus: ["Smile Design", "Teeth Whitening", "Full Mouth Rehabilitation", "Kids Dentistry"],
+    branchSlugs: ["swastik-plaza", "hirabaug"],
+    college: { name: "Krishna Institute, Karad", status: "needs_proof" },
+    registration: { number: "A-15753", status: "needs_proof" },
+    memberships: { items: ["IDA", "VDA", "KDA"], status: "needs_proof" },
+    courses: {
+      items: ["Paediatric dentistry", "Full mouth rehabilitation", "Clear aligners", "Advanced root canal treatment", "Advanced composite restorations"],
+      status: "needs_proof",
+    },
     metaDescription:
-      "Dr. Jinal Monapara, B.D.S., Dental Surgeon & Smile Designing Specialist at Kheni Dental, Surat. Nine years in practice. Book an appointment.",
-    relatedTreatmentSlugs: ["cosmetic-smile-dentistry", "crowns-and-bridges", "dental-check-up-surat", "tooth-fillings-surat"],
+      "Dr. Jinali Monpara, B.D.S., Cosmetic Dental Surgeon at Kheni Dental, Surat. Ten years in practice across smile design, whitening, full mouth rehabilitation and children's dentistry. Book an appointment.",
+    relatedTreatmentSlugs: ["cosmetic-smile-dentistry", "teeth-whitening-surat", "full-mouth-rehabilitation", "crowns-and-bridges", "kids-dentistry-surat", "root-canal-treatment-surat"],
     hue: "coral",
   },
   {
@@ -272,13 +322,15 @@ export const doctors: Doctor[] = [
     credentials: "B.D.S.",
     specialty: "Dental Surgeon & Kids Specialist",
     yearsExperience: 4,
-    focus: ["Kids Dentistry", "First Dental Visits", "Family Check-ups"],
-    bio:
-      "Dr. Ishita Dobariya is a dental surgeon and the Kids Specialist at Kheni Dental. Most of her day is spent with children, including first visits and the child who has already decided not to open their mouth. She works at the pace the child can manage and tells the parent what she is seeing as she goes. Four years in practice.",
-    philosophy: "A child who is not frightened this time will sit down more easily next time. That matters more than finishing everything in one visit.",
+    focus: ["Kids Dentistry", "Fillings", "Cleaning and preventive care", "Fluoride application"],
+    // The clinic ticked "Do not show" for a bio (form p24). This is a
+    // description of her work from confirmed answers, not a biography.
+    bio: "Dr. Ishita Dobariya sees children and families at our Yogi Chowk clinic: first visits, fillings, cleaning and preventive dental care, fluoride application, and treating a baby tooth's nerve when it is needed. Four years in practice.",
+    branchSlugs: ["swastik-plaza"],
+    college: { name: "AMC Dental College, Ahmedabad", status: "clinic_supplied" },
     metaDescription:
-      "Dr. Ishita Dobariya, B.D.S., Dental Surgeon & Kids Specialist at Kheni Dental, Surat. Four years in practice, working mostly with children.",
-    relatedTreatmentSlugs: ["kids-dentistry-surat", "dental-check-up-surat", "tooth-fillings-surat"],
+      "Dr. Ishita Dobariya, B.D.S., Dental Surgeon & Kids Specialist at Kheni Dental, Yogi Chowk, Surat. Four years in practice, working mostly with children.",
+    relatedTreatmentSlugs: ["kids-dentistry-surat", "tooth-fillings-surat", "dental-check-up-surat", "crowns-and-bridges"],
     hue: "mint",
   },
   {
@@ -288,13 +340,12 @@ export const doctors: Doctor[] = [
     credentials: "B.D.S.",
     specialty: "Dental Surgeon",
     yearsExperience: 4,
-    focus: ["Root Canal Treatment", "Fillings", "Check-ups"],
-    bio:
-      "Dr. Parita Vastarpara is a dental surgeon at Kheni Dental. She sees people for everyday dental needs: the check-up that is overdue, a filling, a tooth that has started aching at night. Most of it is work that is easier done now than later. Four years in practice.",
-    philosophy: "Most people are not avoiding the dentist. They are avoiding not knowing what is wrong. Plain words fix that.",
+    focus: ["Cleaning and preventive care", "Fillings", "Crowns & Bridges", "Root Canal Treatment"],
+    branchSlugs: ["swastik-plaza", "hirabaug"],
+    college: { name: "Ahmedabad Dental College & Hospital", status: "clinic_supplied" },
     metaDescription:
-      "Dr. Parita Vastarpara, B.D.S., Dental Surgeon at Kheni Dental in Surat. Four years in practice covering root canals, fillings and check-ups.",
-    relatedTreatmentSlugs: ["root-canal-treatment-surat", "tooth-fillings-surat", "dental-check-up-surat", "crowns-and-bridges"],
+      "Dr. Parita Vastarpara, B.D.S., Dental Surgeon at Kheni Dental in Surat. Four years in practice covering cleaning, fillings, crowns and root canal treatment at both clinics.",
+    relatedTreatmentSlugs: ["dental-check-up-surat", "tooth-fillings-surat", "crowns-and-bridges", "root-canal-treatment-surat"],
     hue: "teal",
   },
 ];
@@ -336,6 +387,15 @@ export type Treatment = {
   /** One Kheni line set large on the page. Brand voice, never a claim. */
   note: { line: string; highlight: string };
   doctorSlugs: string[];
+  /**
+   * What the team does not have a named doctor for (form p33: braces doctor
+   * "Do not show"). Shown instead of the doctor cards. Never a made-up name.
+   */
+  teamLabel?: string;
+  /** Services the clinic ticked on the form, in patient language. */
+  offer?: { title: string; items: string[]; note?: string };
+  /** Brands or systems the clinic named and whose spelling was verified. Text only. */
+  brands?: { title: string; items: string[]; note?: string };
   ctaTitle: string;
   whatsappMessage: string;
   faqs: { question: string; answer: string }[];
@@ -350,7 +410,7 @@ export const treatments: Treatment[] = [
     shortTitle: "Implants",
     seoTitle: "Dental Implants in Surat | Elite Implant Center",
     metaDescription:
-      "Dental implants in Surat at Kheni Dental & Elite Implant Center. Single, multiple and full mouth implants planned by Dr. Mayur Kheni after examination and imaging.",
+      "Dental implants in Surat at Kheni Dental & Elite Implant Center. Single, multiple and full-arch implants, bone grafting and implant-supported dentures, planned by Dr. Mayur Kheni after examination and imaging.",
     hue: "gold",
     category: "restorative",
     concern: "I only chew on one side now.",
@@ -366,7 +426,7 @@ export const treatments: Treatment[] = [
     ],
     visit: [
       { title: "Consultation", copy: "You tell us which side you chew on and what you have stopped eating. The dentist examines the gap, the gums and the teeth on either side." },
-      { title: "Examination and imaging", copy: "Bone cannot be judged by looking, so implant planning usually needs imaging. The dentist decides what is appropriate for you." },
+      { title: "Examination and imaging", copy: "Bone cannot be judged by looking, so implant planning starts with X-rays and, where the case needs it, 3D imaging. The dentist decides what is appropriate for you." },
       { title: "Your treatment plan", copy: "Implant, bridge or denture, explained plainly with the stages, the visits and the time between them. Waiting is discussed too, if waiting is sensible." },
       { title: "Implant treatment", copy: "The implant is placed under local anaesthesia and given time to bond with the bone." },
       { title: "Final tooth and follow-up", copy: "The final crown or set of teeth is fitted once the implant has settled, and you are shown how to clean around it." },
@@ -432,10 +492,12 @@ export const treatments: Treatment[] = [
       "Swelling or a small bump on the gum near a tooth",
     ],
     visit: [
-      { title: "Find the cause", copy: "You tell us when it hurts and what sets it off. The dentist examines the tooth and takes any imaging needed to see the roots." },
-      { title: "Get you comfortable", copy: "Local anaesthesia is planned before treatment starts. You are told what you are likely to feel during and after." },
-      { title: "Clean and seal", copy: "The space inside the tooth is cleaned, disinfected and sealed. This is often done over more than one visit." },
-      { title: "Protect the tooth", copy: "A treated tooth usually needs a filling or a crown so it can take chewing pressure again." },
+      { title: "Examination and X-ray", copy: "You tell us when it hurts and what sets it off. The dentist examines the tooth and takes an X-ray to see the roots." },
+      { title: "Numb the tooth", copy: "Local anaesthesia before anything starts. You are told what you are likely to feel during and after." },
+      { title: "Keep it clean and dry", copy: "A small rubber sheet isolates the tooth so saliva stays out while the inside is worked on." },
+      { title: "Open, clean and shape", copy: "A small opening is made, the infected tissue removed and each canal cleaned and shaped, usually with a rotary system and an electronic length measurement." },
+      { title: "Fill the canals", copy: "The cleaned canals are sealed so bacteria cannot get back in." },
+      { title: "Rebuild and follow up", copy: "A temporary or permanent filling closes the tooth, a crown is planned where it is needed, and you are reviewed." },
     ],
     expect: [
       "Tenderness when biting for some days",
@@ -449,8 +511,21 @@ export const treatments: Treatment[] = [
     },
     plainTitle: { title: "The tooth stays. The ache does not.", highlight: "The ache does not" },
     visitTitle: { title: "Numb first. Then the actual work.", highlight: "Numb first" },
+    offer: {
+      title: "How we work",
+      items: [
+        "Single-sitting root canal when the tooth is suitable",
+        "Treatment over more than one visit when it is not",
+        "Re-treatment of a root canal done earlier",
+        "Rotary instruments and an electronic apex locator",
+        "Magnification with a dental microscope",
+        "A rubber sheet to keep the tooth dry while it is worked on",
+        "A crown planned after treatment where the tooth needs it",
+        "Emergency appointments for tooth pain",
+      ],
+    },
     note: { line: "Nobody remembers the root canal. They remember the night before it.", highlight: "the night before" },
-    doctorSlugs: ["dr-parita-vastarpara"],
+    doctorSlugs: ["dr-mayur-kheni", "dr-jinali-monpara", "dr-ishita-dobariya", "dr-parita-vastarpara"],
     ctaTitle: "Call us before the next bad night.",
     whatsappMessage: "Hello Kheni Dental, I have tooth pain and would like to book an appointment. Thank you.",
     featured: true,
@@ -513,6 +588,24 @@ export const treatments: Treatment[] = [
     visitTitle: { title: "Measure first. Choose second.", highlight: "Choose second" },
     note: { line: "Teeth move a millimetre at a time. That is why it works.", highlight: "a millimetre at a time" },
     doctorSlugs: [],
+    teamLabel: "Our orthodontic care team",
+    offer: {
+      title: "Options we offer",
+      items: [
+        "Metal braces",
+        "Ceramic (tooth-coloured) braces",
+        "Self-ligating braces",
+        "Lingual braces, fitted behind the teeth",
+        "Clear aligners",
+        "Early treatment for growing children, where it helps",
+        "Retainers after treatment, so the result holds",
+      ],
+    },
+    brands: {
+      title: "Aligner systems we work with",
+      items: ["Invisalign", "Spark", "Illusion Aligners", "Whistle"],
+      note: "Which system suits you depends on the movement your teeth need, not on the name.",
+    },
     ctaTitle: "Find out which option your case needs.",
     whatsappMessage: "Hello Kheni Dental, I would like to ask about braces or clear aligners and book a consultation. Thank you.",
     featured: true,
@@ -574,7 +667,24 @@ export const treatments: Treatment[] = [
     plainTitle: { title: "Usually it is one tooth. Sometimes two.", highlight: "one tooth" },
     visitTitle: { title: "See it before you agree to it.", highlight: "before you agree" },
     note: { line: "A good smile design is the one nobody can point to.", highlight: "nobody can point to" },
-    doctorSlugs: ["dr-jinal-monapara", "dr-mayur-kheni"],
+    offer: {
+      title: "What smile design can include",
+      items: [
+        "A plan for the whole smile before any single tooth is touched",
+        "A preview of the planned result before treatment starts",
+        "Teeth whitening",
+        "Composite bonding for chips, edges and small gaps",
+        "Veneers",
+        "Crowns where a tooth is too damaged for anything lighter",
+        "Gum contouring where the gum line is uneven",
+      ],
+    },
+    brands: {
+      title: "Restorative materials we use",
+      items: ["3M", "GC"],
+      note: "Named on request. The material for your tooth is chosen with you at the planning visit.",
+    },
+    doctorSlugs: ["dr-jinali-monpara", "dr-mayur-kheni"],
     ctaTitle: "Start with a conversation, not a procedure.",
     whatsappMessage: "Hello Kheni Dental, I would like to ask about smile design and book a consultation. Thank you.",
     featured: true,
@@ -603,7 +713,7 @@ export const treatments: Treatment[] = [
     shortTitle: "Full Mouth",
     seoTitle: "Full Mouth Rehabilitation in Surat",
     metaDescription:
-      "Full mouth rehabilitation in Surat at Kheni Dental & Elite Implant Center. When several teeth need work, the order matters. Planned in stages by Dr. Mayur Kheni.",
+      "Full mouth rehabilitation in Surat at Kheni Dental & Elite Implant Center. When several teeth need work, the order matters. Planned in stages by Dr. Mayur Kheni and Dr. Jinali Monpara.",
     hue: "navy",
     category: "restorative",
     concern: "Too many teeth need work and I do not know where to start.",
@@ -613,6 +723,7 @@ export const treatments: Treatment[] = [
       "Rarely is it just one thing. A tooth broke, another was taken out years ago, an old crown has come loose and the bite has quietly changed with all of it. Full mouth rehabilitation treats that as one connected problem instead of a queue of unrelated appointments. After an examination, your dentist works out what has to happen first, what can wait, and how the stages fit together.",
     signs: [
       "Several missing, broken or worn teeth",
+      "A grinding habit that has worn the teeth down",
       "Old dental work failing in more than one place",
       "A bite that has changed or collapsed",
       "Dentures you no longer trust",
@@ -636,7 +747,7 @@ export const treatments: Treatment[] = [
     plainTitle: { title: "One plan instead of a queue of appointments.", highlight: "One plan" },
     visitTitle: { title: "Urgent first. The rest in order.", highlight: "in order" },
     note: { line: "Bring the whole list. We will put it in order.", highlight: "in order" },
-    doctorSlugs: ["dr-mayur-kheni"],
+    doctorSlugs: ["dr-mayur-kheni", "dr-jinali-monpara"],
     ctaTitle: "Bring the whole list to one appointment.",
     whatsappMessage: "Hello Kheni Dental, several of my teeth need work and I would like to book a consultation to plan it. Thank you.",
     featured: true,
@@ -698,7 +809,20 @@ export const treatments: Treatment[] = [
     plainTitle: { title: "A cap for a tooth that has had enough.", highlight: "had enough" },
     visitTitle: { title: "Two visits, and a tooth you can trust again.", highlight: "trust again" },
     note: { line: "You already know which tooth it is.", highlight: "which tooth" },
-    doctorSlugs: ["dr-jinal-monapara", "dr-parita-vastarpara"],
+    offer: {
+      title: "Crown and bridge options",
+      items: [
+        "Zirconia crowns",
+        "E.max (lithium disilicate) crowns",
+        "Porcelain fused to metal crowns",
+        "Metal crowns for back teeth",
+        "Temporary crowns while the final one is made",
+        "Bridges supported by your own teeth",
+        "Bridges supported by implants",
+      ],
+      note: "Which material suits a tooth depends on where it is, how hard you bite on it and how visible it is.",
+    },
+    doctorSlugs: ["dr-jinali-monpara", "dr-mayur-kheni", "dr-ishita-dobariya", "dr-parita-vastarpara"],
     featured: true,
     ctaTitle: "Let us look at the tooth you do not trust.",
     whatsappMessage: "Hello Kheni Dental, I would like to ask about a crown or bridge and book an appointment. Thank you.",
@@ -756,6 +880,20 @@ export const treatments: Treatment[] = [
     plainTitle: { title: "The first visit is mostly looking around.", highlight: "looking around" },
     visitTitle: { title: "At the child's pace, not the clock's.", highlight: "the child's pace" },
     note: { line: "First we make friends with the chair.", highlight: "make friends" },
+    offer: {
+      title: "What we do for children",
+      items: [
+        "First dental visits",
+        "Fillings in baby and adult teeth",
+        "Fluoride application to strengthen enamel",
+        "Sealants on the grooves of back teeth",
+        "Treating a baby tooth's nerve (pulpotomy or pulpectomy) so the tooth can stay until it is ready to fall out",
+        "Stainless steel crowns for badly decayed baby teeth",
+        "Space maintainers when a baby tooth is lost early",
+        "Advice on thumb sucking and other habits",
+        "Emergency visits for a knocked or aching tooth",
+      ],
+    },
     doctorSlugs: ["dr-ishita-dobariya"],
     ctaTitle: "Tell us about your child before the visit.",
     whatsappMessage: "Hello Kheni Dental, I would like to book a visit for my child. Thank you.",
@@ -814,6 +952,16 @@ export const treatments: Treatment[] = [
     plainTitle: { title: "It starts where the gum meets the tooth.", highlight: "where the gum meets the tooth" },
     visitTitle: { title: "Clean below the gumline, where a brush cannot reach.", highlight: "below the gumline" },
     note: { line: "Pink in the sink is common. It is not normal.", highlight: "not normal" },
+    offer: {
+      title: "Gum care we offer",
+      items: [
+        "Scaling to remove hardened deposits",
+        "Polishing",
+        "Deep cleaning below the gum line",
+        "Gum surgery where cleaning alone is not enough",
+        "Regular maintenance visits once the gums have settled",
+      ],
+    },
     doctorSlugs: [],
     ctaTitle: "Tell us what your gums are doing.",
     whatsappMessage: "Hello Kheni Dental, my gums have been bleeding and I would like to book a check. Thank you.",
@@ -871,6 +1019,16 @@ export const treatments: Treatment[] = [
     plainTitle: { title: "A tooth that arrived late and out of room.", highlight: "out of room" },
     visitTitle: { title: "An answer first. Removal only if it is the answer.", highlight: "An answer first" },
     note: { line: "Not every wisdom tooth needs to leave. Some only need watching.", highlight: "watching" },
+    offer: {
+      title: "What we do",
+      items: [
+        "Consultation and X-ray to see how the tooth sits",
+        "Simple removal of a tooth that has come through",
+        "Surgical removal where the tooth is partly covered",
+        "Removal of impacted wisdom teeth",
+        "Local anaesthesia for all of the above",
+      ],
+    },
     doctorSlugs: [],
     ctaTitle: "Get an answer before it flares up again.",
     whatsappMessage: "Hello Kheni Dental, my wisdom tooth is troubling me and I would like to book an appointment. Thank you.",
@@ -928,7 +1086,17 @@ export const treatments: Treatment[] = [
     plainTitle: { title: "A proper look, and a plain list.", highlight: "plain list" },
     visitTitle: { title: "Say how long it has been. Then we start.", highlight: "Then we start" },
     note: { line: "Nobody here counts the years since your last visit.", highlight: "counts the years" },
-    doctorSlugs: ["dr-parita-vastarpara", "dr-ishita-dobariya", "dr-jinal-monapara"],
+    offer: {
+      title: "A check-up can include",
+      items: [
+        "Examination of teeth, gums and soft tissues",
+        "Digital X-rays where something needs to be seen",
+        "Scaling and polishing (teeth cleaning)",
+        "A written note of what needs doing and what can wait",
+        "Advice on brushing, cleaning between teeth and diet",
+      ],
+    },
+    doctorSlugs: ["dr-mayur-kheni", "dr-jinali-monpara", "dr-ishita-dobariya", "dr-parita-vastarpara"],
     ctaTitle: "Book the check-up you keep putting off.",
     whatsappMessage: "Hello Kheni Dental, I would like to book a dental check-up. Thank you.",
     faqs: [
@@ -985,7 +1153,16 @@ export const treatments: Treatment[] = [
     plainTitle: { title: "Decay goes deeper than it looks.", highlight: "deeper than it looks" },
     visitTitle: { title: "One visit, if we catch it in time.", highlight: "in time" },
     note: { line: "Cold water found the tooth before you did.", highlight: "before you did" },
-    doctorSlugs: ["dr-parita-vastarpara", "dr-jinal-monapara", "dr-ishita-dobariya"],
+    offer: {
+      title: "Fillings we place",
+      items: [
+        "Tooth-coloured composite fillings",
+        "Glass ionomer fillings where they suit the tooth",
+        "Replacing an old filling that has cracked or fallen out",
+        "Repairing a small chip on a front tooth",
+      ],
+    },
+    doctorSlugs: ["dr-mayur-kheni", "dr-jinali-monpara", "dr-ishita-dobariya", "dr-parita-vastarpara"],
     ctaTitle: "Get the small hole looked at this week.",
     whatsappMessage: "Hello Kheni Dental, I think I need a filling and would like to book an appointment. Thank you.",
     faqs: [
@@ -1003,9 +1180,146 @@ export const treatments: Treatment[] = [
       },
     ],
   },
+  {
+    slug: "teeth-whitening-surat",
+    title: "Teeth Whitening",
+    shortTitle: "Whitening",
+    seoTitle: "Teeth Whitening in Surat",
+    metaDescription:
+      "Teeth whitening in Surat at Kheni Dental. The cause of the colour is checked first, because staining from tea and tobacco behaves differently from colour that comes from inside the tooth.",
+    hue: "amber",
+    category: "cosmetic",
+    concern: "My teeth look yellow in every photo.",
+    headline: "Brighter teeth, once we know why they are not.",
+    short: "Lightens teeth that have darkened or stained, after checking that whitening is the right answer for the colour you have.",
+    intro:
+      "Tea, coffee, tobacco and paan leave one kind of stain. Age, an old injury or a root canal leave another. Whitening works well on the first kind and hardly at all on the second, and it does nothing to crowns, veneers or white fillings, which stay the shade they were made. So the visit starts with the question of why the teeth look the way they do. If whitening is the answer, it is a short and reversible treatment.",
+    signs: [
+      "Teeth that look yellow or dull in photographs",
+      "Staining from tea, coffee, tobacco or paan",
+      "A wedding or an occasion coming up",
+      "One tooth darker than the rest",
+    ],
+    visit: [
+      { title: "Find the cause", copy: "The dentist looks at the colour, checks for decay and old fillings, and notes anything that whitening would not change." },
+      { title: "Clean first", copy: "Surface deposits come off with a cleaning so the whitening reaches the enamel." },
+      { title: "Whiten", copy: "A whitening gel is applied to the teeth in the clinic, or you are given a home kit with custom trays, depending on what suits you." },
+      { title: "Check the shade", copy: "The new shade is compared with the starting one, and you hear how to keep it." },
+    ],
+    expect: [
+      "Some sensitivity to cold for a day or two",
+      "Crowns, veneers and fillings stay their original shade",
+      "Colour that settles slightly in the first week",
+      "Touch-ups later if tea, coffee or tobacco bring the stain back",
+    ],
+    worthKnowing: {
+      title: "A darker single tooth is a different question",
+      copy: "One tooth that has gone dark on its own often has a reason inside it, such as an old injury or a root canal. That needs an examination before any whitening, and may need a different treatment.",
+    },
+    plainTitle: { title: "Stain on the surface, or colour from inside?", highlight: "from inside" },
+    visitTitle: { title: "Cause first. Then the gel.", highlight: "Cause first" },
+    note: { line: "White is not one colour. It is the one that suits your face.", highlight: "suits your face" },
+    doctorSlugs: ["dr-jinali-monpara"],
+    offer: {
+      title: "Whitening we offer",
+      items: ["In-clinic whitening", "Take-home whitening with custom trays", "Cleaning and polishing beforehand", "Advice on what will and will not change colour"],
+    },
+    ctaTitle: "Ask whether whitening will work on your teeth.",
+    whatsappMessage: "Hello Kheni Dental, I would like to ask about teeth whitening and book an appointment. Thank you.",
+    faqs: [
+      {
+        question: "How white will my teeth get?",
+        answer: "It depends on the starting colour and the cause. Surface staining usually lightens well. Colour from inside the tooth changes less. The dentist will tell you what is realistic after looking, and will not promise a shade.",
+      },
+      {
+        question: "Is whitening safe for the enamel?",
+        answer: "Done under a dentist's supervision with the right concentration and time, whitening is a routine treatment. Sensitivity for a day or two is the common side effect. Whitening on top of untreated decay or gum disease is not, which is why the examination comes first.",
+      },
+      {
+        question: "How long does it last?",
+        answer: "Months to a couple of years, depending on how much tea, coffee, tobacco or paan comes into contact with the teeth afterwards. Touch-ups are simpler than the first treatment.",
+      },
+      {
+        question: "How is the cost decided?",
+        answer: "By whether the whitening is done in the clinic, at home, or both, and whether a cleaning is needed first. The dentist explains the plan and the estimate after the examination.",
+      },
+    ],
+  },
+  {
+    slug: "dentures-surat",
+    title: "Dentures",
+    shortTitle: "Dentures",
+    seoTitle: "Dentures & Implant-Supported Dentures in Surat",
+    metaDescription:
+      "Full dentures and implant-supported dentures in Surat at Kheni Dental & Elite Implant Center. For people who have lost most or all of their teeth, or whose denture no longer stays put.",
+    hue: "navy",
+    category: "restorative",
+    concern: "My denture moves when I eat.",
+    headline: "Teeth you can trust at the dinner table.",
+    short: "Replaces a full set of teeth with a removable denture, or one held steady by implants so it stops moving when you eat.",
+    intro:
+      "A denture that slips changes what you order, how you laugh and who you eat with. Some people have worn one for years and stopped expecting better. A well-made full denture fits the shape of your gums today, not the shape they had a decade ago. Where the bone allows, a few implants can hold a denture in place so it clicks on and stays put, which is a different experience altogether.",
+    signs: [
+      "Most or all teeth missing in one jaw or both",
+      "A denture that slips when you eat or talk",
+      "Sore spots under an old denture",
+      "You avoid eating in company",
+    ],
+    visit: [
+      { title: "Look at what is there", copy: "The gums, the ridge of bone, any remaining teeth and your existing denture, with an X-ray where the bone needs to be seen." },
+      { title: "Choose the type", copy: "A conventional full denture, or one supported by implants. The bone, your health and what you want from it decide, and both are explained." },
+      { title: "Make it fit", copy: "Impressions or a scan, a trial fitting to check the bite and the look, then the final denture." },
+      { title: "Adjust and review", copy: "New dentures need small adjustments in the first weeks. Sore spots are eased at a review, not put up with." },
+    ],
+    expect: [
+      "A few weeks to get used to speaking and eating",
+      "Small adjustments in the early visits",
+      "Cleaning the denture and the gums every day",
+      "For implant-supported dentures, healing time before the denture is fixed to the implants",
+    ],
+    worthKnowing: {
+      title: "The ridge keeps changing",
+      copy: "Bone under a denture slowly reduces over the years, which is why an old denture loosens. Implants can slow that change where they are placed. Either way, a denture needs checking, and sometimes relining, every few years.",
+    },
+    plainTitle: { title: "A full set, made for the mouth you have now.", highlight: "have now" },
+    visitTitle: { title: "Fit it. Try it. Then fix it in.", highlight: "Try it" },
+    note: { line: "Nobody should have to choose their food by what will not move a denture.", highlight: "will not move" },
+    doctorSlugs: ["dr-mayur-kheni", "dr-jinali-monpara"],
+    offer: {
+      title: "Denture options",
+      items: [
+        "Full dentures for the upper jaw, the lower jaw, or both",
+        "Implant-supported dentures that clip onto implants",
+        "Fixed full-arch teeth on implants, where the bone allows",
+        "Relining or remaking an existing denture",
+      ],
+      note: "Implant-supported options are planned with our implant team after an examination and imaging.",
+    },
+    ctaTitle: "Ask about a denture that stays put.",
+    whatsappMessage: "Hello Kheni Dental, my denture moves when I eat and I would like to ask about my options. Thank you.",
+    faqs: [
+      {
+        question: "Can my old denture be made to fit better?",
+        answer: "Sometimes, by relining it to the current shape of the gums. Often, when the denture is worn or the ridge has changed a lot, a new one fits better. The dentist will say which after looking at it in your mouth.",
+      },
+      {
+        question: "How many implants does a denture need?",
+        answer: "Fewer than people expect. A lower denture is often held by two implants, an upper one by more, and a fixed full-arch replacement by more again. The number depends on the bone and what the denture has to do. It is decided after imaging.",
+      },
+      {
+        question: "Do I take an implant-supported denture out?",
+        answer: "A denture that clips onto implants comes out for cleaning and goes back in. A fixed full-arch replacement stays in and is cleaned in the mouth like teeth. Which suits you is part of the planning conversation.",
+      },
+      {
+        question: "How is the cost decided?",
+        answer: "By the type of denture, whether implants are involved and how many, and whether any teeth need removing first. You get the plan and the estimate for each stage before treatment starts.",
+      },
+    ],
+  },
 ];
 
 export const treatmentBySlug = (slug: string) => treatments.find((t) => t.slug === slug);
+
 export const doctorBySlug = (slug: string) => doctors.find((d) => d.slug === slug);
 
 /**
@@ -1093,7 +1407,7 @@ export const homepageFaqs = [
   {
     question: "Which Kheni clinic should I visit?",
     answer:
-      "Whichever is easier to reach. Swastik Plaza is at Yogi Chowk and the Elite Implant Center is at Hirabaug on Varachha Main Road. Implant and full mouth cases are led from Hirabaug. If you are not sure, message us and we will suggest one.",
+      "Whichever is easier to reach. Our first clinic is at Swastik Plaza, Yogi Chowk, and the second is at Hirabaug on Varachha Main Road. Implant consultations are available at both. If you are not sure, message us and we will suggest one.",
   },
   {
     question: "Do you treat children?",

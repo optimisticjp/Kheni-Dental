@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/doctors/" },
   title: "Our Dentists in Surat",
   description:
-    "Dr. Mayur Kheni, Dr. Jinal Monapara, Dr. Ishita Dobariya and Dr. Parita Vastarpara. Degrees, years of experience and areas of work at both Kheni Dental clinics in Surat.",
+    "Dr. Mayur Kheni, Dr. Jinali Monpara, Dr. Ishita Dobariya and Dr. Parita Vastarpara. Degrees, years of experience, colleges and areas of work at both Kheni Dental clinics in Surat.",
 };
 
 export default function DoctorsPage() {
@@ -37,7 +37,7 @@ export default function DoctorsPage() {
 
       <section className="pb-10 sm:pb-14 lg:pb-18">
         <Container width="7xl">
-          <SectionIntro eyebrow="The team" title="Three more dentists, each with their own area of work." highlight="area of work" copy="Degrees and years in practice are listed exactly as each doctor gave them." />
+          <SectionIntro eyebrow="The team" title="Three more dentists, each with their own area of work." highlight="area of work" copy="Degrees, years in practice and clinics are listed exactly as each doctor gave them on the clinic's information form." />
           <div className="mt-6">
             <DoctorRoster exclude="dr-mayur-kheni" />
           </div>
