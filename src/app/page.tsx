@@ -59,8 +59,10 @@ export default function Home() {
         <div aria-hidden="true" className="bloom-gold pointer-events-none absolute inset-0" />
         <Container width="7xl" className="relative grid gap-8 py-9 sm:py-12 lg:grid-cols-[1.05fr_.95fr] lg:items-center lg:gap-14 lg:py-16">
           <div>
+            {/* The logo directly above already says the clinic's name, so the
+                eyebrow names the two clinics instead of repeating it. */}
             <p className="t-eyebrow flex items-center gap-3 text-gold">
-              Kheni Dental &amp; Elite Implant Center
+              Yogi Chowk &middot; Hirabaug &middot; Surat
               <span aria-hidden="true" className="rule-gold h-px w-14" />
             </p>
             <h1 className="t-display measure-display mt-5">
