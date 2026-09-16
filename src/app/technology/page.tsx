@@ -94,7 +94,7 @@ export default function TechnologyPage() {
         </Container>
       </section>
 
-      <CtaBand title="Ask us what any of it is for." highlight="what any of it is for" copy="Book a time at either clinic, or message us with the question." placement="technology_final" />
+      <CtaBand title="Ask us what any of it is for." highlight="what any of it is for" copy="Point at anything on the tray and ask what it does. Nobody here minds the question." placement="technology_final" />
     </>
   );
 }

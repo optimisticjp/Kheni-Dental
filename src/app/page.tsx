@@ -70,10 +70,10 @@ export default function Home() {
               <span aria-hidden="true" className="rule-gold h-px w-14" />
             </p>
             <h1 className="t-display measure-display mt-5">
-              Good dentistry starts with <span className="hl">understanding.</span>
+              Smile like you <span className="hl">mean it</span> again.
             </h1>
             <p className="t-stand measure-stand mt-5 text-ivory/70">
-              {site.yearsInSurat} years, four dentists and two clinics at Yogi Chowk and Hirabaug. Implants, root canals, braces, kids dentistry and smile design, founded and led by Dr. Mayur Kheni.
+              {site.yearsInSurat} years in Surat. Four dentists, two clinics, and one habit we have never dropped: you hear what we found, in words you can repeat at home, before anyone picks up an instrument.
             </p>
             <div className="mt-7 grid gap-2.5 sm:flex sm:flex-wrap">
               <BookButton placement="home_hero" size="lg" className="px-4 sm:px-7" />
@@ -158,7 +158,7 @@ export default function Home() {
       {/* ── What brings you in today? Soft mint. ─────────────────────── */}
       <section className="bg-mint py-10 sm:py-14 lg:py-20">
         <Container width="7xl">
-          <SectionIntro eyebrow="Start here" title="What brings you in today?" highlight="today" copy="Pick the one that sounds like you. You do not need to know the name of the treatment." />
+          <SectionIntro eyebrow="Start here" title="What brings you in today?" highlight="today" copy="Pick whichever sounds like you. You do not need the name of the treatment, and you do not need to have worked out how bad it is. That is our job." />
           <div className="mt-6 sm:mt-8">
             <ConcernFinder />
           </div>
@@ -211,7 +211,7 @@ export default function Home() {
                 A fixed tooth for the gap you have been <span className="hl">working around.</span>
               </h2>
               <p className="t-stand mt-4 max-w-xl text-ivory/70">
-                Implant work is led by Dr. Mayur Kheni, with consultations at both our clinics. Every case starts with an examination and the imaging needed to see the bone, before anything is recommended.
+                Implants are led by Dr. Mayur Kheni, and planned and placed at Yogi Chowk. Bone cannot be judged by looking at it, so every case starts with an examination and imaging. You will know whether an implant suits you before anyone suggests one.
               </p>
               <ul className="mt-6 grid grid-cols-2 gap-2">
                 {headlineCapabilities.map((item) => (
@@ -269,7 +269,7 @@ export default function Home() {
               eyebrow="Kheni Dental in numbers"
               title="Fifteen years of work, counted."
               highlight="counted"
-              copy="These are the clinic's own figures for the treatments it has carried out since 2012, across both Surat clinics."
+              copy="The clinic's own figures for what it has treated since 2012, across both Surat clinics. Numbers do not tell you whether a dentist is right for you, but they do tell you this is not anyone's first week."
             />
             {/* Two-up until 1360. Four across is too tight for "90,000+" while
                 the intro still takes a column: it overflowed at 1024 and again
@@ -309,7 +309,7 @@ export default function Home() {
                 Visiting Surat? Plan your dental care <span className="hl">before you fly.</span>
               </h2>
               <p className="t-stand mt-4 max-w-xl text-ink-soft">
-                Send your travel dates and what you would like looked at. We will tell you what realistically fits into your trip, what would need a second visit, and what to expect once you are home.
+                Send your dates and what you would like looked at before you book flights. We will tell you honestly what fits into the trip and what would need a second one. Better to hear that now than from a chair in Surat with a flight on Tuesday.
               </p>
               <div className="mt-6 flex flex-col gap-2.5 sm:flex-row">
                 <WhatsAppButton placement="home_nri" message={nriMessage} label="Plan your visit on WhatsApp" track="international_patient_contact" />

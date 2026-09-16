@@ -90,7 +90,7 @@ export default function ContactPage() {
 
       <section className="bg-mint py-10 sm:py-14 lg:py-18">
         <Container width="7xl">
-          <SectionIntro eyebrow="Two clinics" title="Which clinic suits you?" highlight="suits you" copy="Both belong to the same practice. Each keeps its own number and its own Google listing." />
+          <SectionIntro eyebrow="Two clinics" title="Which clinic is easier for you?" highlight="suits you" copy="Both belong to the same practice. Each keeps its own number and its own Google listing." />
           <div className="mt-6">
             <BranchLocator placement="contact" />
           </div>

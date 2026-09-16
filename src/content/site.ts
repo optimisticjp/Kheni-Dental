@@ -21,9 +21,9 @@ export const site = {
   city: "Surat",
   region: "Gujarat",
   country: "India",
-  tagline: "Dentistry you understand before it starts.",
+  tagline: "Every smile starts with a straight answer.",
   description:
-    "Kheni Dental & Elite Implant Center: 15 years of dental care in Surat, led by Dr. Mayur Kheni. Implants, root canals, braces, kids dentistry and smile design at two clinics, Yogi Chowk and Hirabaug.",
+    "Dentist in Surat since 2012. Implants, root canals, braces, kids dentistry and smile design at Yogi Chowk and Hirabaug, led by Dr. Mayur Kheni. You get the findings, the options and the estimate before anything starts.",
   instagram: "https://www.instagram.com/khenielite",
   instagramHandle: "@khenielite",
   primaryPhoneDisplay: "+91 95101 12354",
@@ -460,7 +460,7 @@ export const treatments: Treatment[] = [
     visitTitle: { title: "Five stages, with a pause between each one.", highlight: "a pause" },
     note: { line: "The gap you stopped noticing is the one your other teeth noticed.", highlight: "other teeth" },
     doctorSlugs: ["dr-mayur-kheni"],
-    ctaTitle: "Find out whether an implant suits your case.",
+    ctaTitle: "Find out if an implant suits your case.",
     whatsappMessage: "Hello Kheni Dental, I would like to ask about dental implants and book a consultation. Thank you.",
     featured: true,
     faqs: [
@@ -573,7 +573,7 @@ export const treatments: Treatment[] = [
     hue: "violet",
     category: "cosmetic",
     concern: "My teeth are crowded and I do not want visible braces at work.",
-    headline: "Straighter teeth, and a say in how visible the work is.",
+    headline: "Straighter teeth, and a say in who notices.",
     short: "Moves crowded, gapped or uneven teeth into place with braces or clear aligners, depending on the movement your teeth need.",
     intro:
       "Adults who ask about aligners are rarely chasing a picture. They are tired of one tooth sitting in front of another, or a bite that keeps wearing the same edges. Braces and clear aligners both move teeth, but they do not suit every case equally. Which one fits yours depends on how far the teeth have to move, not on which you would rather wear.",
@@ -621,7 +621,7 @@ export const treatments: Treatment[] = [
       items: ["Invisalign", "Spark", "Illusion Aligners", "Whistle"],
       note: "Which system suits you depends on the movement your teeth need, not on the name.",
     },
-    ctaTitle: "Find out which option your case needs.",
+    ctaTitle: "See which one your teeth actually need.",
     whatsappMessage: "Hello Kheni Dental, I would like to ask about braces or clear aligners and book a consultation. Thank you.",
     featured: true,
     faqs: [
@@ -885,7 +885,7 @@ export const treatments: Treatment[] = [
     hue: "mint",
     category: "kids",
     concern: "My child is scared and I do not want to make it worse.",
-    headline: "A first visit your child does not dread.",
+    headline: "A first visit your child will not dread.",
     short: "Children's check-ups and treatment paced around what your child can manage, with straight answers for parents.",
     intro:
       "Most parents walk in a little tense, worried the visit will end in tears and put their child off dentists for years. That worry changes how we run children's appointments. Dr. Ishita Dobariya, our Kids Specialist, lets a child look around, ask what the little mirror is for and decide they are safe before anything is checked. Whatever needs attention is explained to you in plain words first.",
@@ -1226,7 +1226,7 @@ export const treatments: Treatment[] = [
     hue: "amber",
     category: "cosmetic",
     concern: "My teeth look yellow in every photo.",
-    headline: "Brighter teeth, once we know why they are not.",
+    headline: "A brighter smile, once we know what dimmed it.",
     short: "Lightens teeth that have darkened or stained, after checking that whitening is the right answer for the colour you have.",
     intro:
       "Tea, coffee, tobacco and paan leave one kind of stain. Age, an old injury or a root canal leave another. Whitening works well on the first kind and hardly at all on the second, and it does nothing to crowns, veneers or white fillings, which stay the shade they were made. So the visit starts with the question of why the teeth look the way they do. If whitening is the answer, it is a short and reversible treatment.",
@@ -1260,7 +1260,7 @@ export const treatments: Treatment[] = [
       title: "Whitening we offer",
       items: ["In-clinic whitening", "Take-home whitening with custom trays", "Cleaning and polishing beforehand", "Advice on what will and will not change colour"],
     },
-    ctaTitle: "Ask whether whitening will work on your teeth.",
+    ctaTitle: "Find out if whitening will work on your teeth.",
     whatsappMessage: "Hello Kheni Dental, I would like to ask about teeth whitening and book an appointment. Thank you.",
     faqs: [
       {
@@ -1377,15 +1377,15 @@ export type Concern = {
 };
 
 export const concerns: Concern[] = [
-  { id: "pain", label: "Tooth pain", sub: "Aching, throbbing or sensitive", href: "/treatments/root-canal-treatment-surat/", hue: "sky", icon: "pain" },
-  { id: "gap", label: "Missing tooth", sub: "One gap, several, or a loose denture", href: "/treatments/dental-implants-surat/", hue: "gold", icon: "gap" },
-  { id: "crooked", label: "Crooked teeth", sub: "Crowding, gaps or a bite that is off", href: "/treatments/braces-clear-aligners/", hue: "violet", icon: "crooked" },
-  { id: "smile", label: "Smile appearance", sub: "Colour, shape or a chipped edge", href: "/treatments/cosmetic-smile-dentistry/", hue: "coral", icon: "smile" },
-  { id: "child", label: "My child's teeth", sub: "First visit, cavity or a scared child", href: "/treatments/kids-dentistry-surat/", hue: "mint", icon: "child" },
-  { id: "gums", label: "Bleeding gums", sub: "Blood when brushing, swelling, bad breath", href: "/treatments/gum-care-surat/", hue: "green", icon: "gums" },
-  { id: "wisdom", label: "Wisdom tooth", sub: "Pain or swelling at the back", href: "/treatments/wisdom-tooth-oral-surgery/", hue: "lavender", icon: "wisdom" },
-  { id: "broken", label: "Broken or chipped tooth", sub: "Cracked, worn or a lost filling", href: "/treatments/crowns-and-bridges/", hue: "amber", icon: "broken" },
-  { id: "checkup", label: "Just a check-up", sub: "Overdue, or a clean and a look", href: "/treatments/dental-check-up-surat/", hue: "navy", icon: "checkup" },
+  { id: "pain", label: "Tooth pain", sub: "It throbs at night, or catches on anything cold", href: "/treatments/root-canal-treatment-surat/", hue: "sky", icon: "pain" },
+  { id: "gap", label: "A missing tooth", sub: "A gap you have learned to chew around", href: "/treatments/dental-implants-surat/", hue: "gold", icon: "gap" },
+  { id: "crooked", label: "Crooked teeth", sub: "Crowded, gappy, or a bite that never sat right", href: "/treatments/braces-clear-aligners/", hue: "violet", icon: "crooked" },
+  { id: "smile", label: "How my smile looks", sub: "You have started smiling with your mouth closed", href: "/treatments/cosmetic-smile-dentistry/", hue: "coral", icon: "smile" },
+  { id: "child", label: "My child's teeth", sub: "A first visit, a cavity, or a child who is frightened", href: "/treatments/kids-dentistry-surat/", hue: "mint", icon: "child" },
+  { id: "gums", label: "Bleeding gums", sub: "Pink in the sink every time you brush", href: "/treatments/gum-care-surat/", hue: "green", icon: "gums" },
+  { id: "wisdom", label: "Wisdom tooth", sub: "That ache right at the back that will not settle", href: "/treatments/wisdom-tooth-oral-surgery/", hue: "lavender", icon: "wisdom" },
+  { id: "broken", label: "A broken tooth", sub: "A chip, a crack, or a filling that fell out", href: "/treatments/crowns-and-bridges/", hue: "amber", icon: "broken" },
+  { id: "checkup", label: "Just a check-up", sub: "It has been a while. You will not get a lecture", href: "/treatments/dental-check-up-surat/", hue: "navy", icon: "checkup" },
 ];
 
 /**
@@ -1397,9 +1397,9 @@ export const concerns: Concern[] = [
 export type SmileNote = { line: string; highlight: string; hue: Hue };
 
 export const smileNotes: SmileNote[] = [
-  { line: "Come with a concern. Leave with a clear next step.", highlight: "clear", hue: "gold" },
-  { line: "Good dentistry starts with listening.", highlight: "listening", hue: "coral" },
-  { line: "Two clinics. One familiar standard of care.", highlight: "familiar", hue: "teal" },
+  { line: "Come in with a worry. Leave with a plan.", highlight: "a plan", hue: "gold" },
+  { line: "We ask more questions than you are expecting.", highlight: "more questions", hue: "coral" },
+  { line: "Two clinics in Surat. The same care at both.", highlight: "the same care", hue: "teal" },
   { line: "Your smile is personal. The plan should be too.", highlight: "personal", hue: "violet" },
   { line: "No treatment begins before you understand why.", highlight: "why", hue: "green" },
   { line: "A missing tooth changes more than your smile.", highlight: "more", hue: "gold" },
@@ -1408,71 +1408,81 @@ export const smileNotes: SmileNote[] = [
   { line: "Pain is information. We start there.", highlight: "information", hue: "teal" },
   { line: "A tooth saved beats a tooth replaced.", highlight: "saved", hue: "mint" },
   { line: "Ask the question you think is silly. It never is.", highlight: "never is", hue: "lavender" },
-  { line: "Fifteen years in, and we still explain every step.", highlight: "every step", hue: "sky" },
+  { line: "Smile in photos again. That is the whole point.", highlight: "in photos", hue: "sky" },
 ];
 
 export const resources = [
   {
     title: "Your first visit",
-    description: "What to bring, how much time to allow and the questions worth asking while you are still in the chair.",
+    description: "What to bring, how long to allow, and the questions worth asking while you are still in the chair.",
     href: "/patient-resources/#first-visit",
   },
   {
     title: "Thinking about implants",
-    description: "A plain walk through assessment, planning, the stages of treatment and what looking after an implant involves.",
+    description: "What gets checked, what the stages actually involve, and how long the waiting between them really is.",
     href: "/patient-resources/#implant-care",
   },
   {
     title: "After a root canal",
-    description: "How the tooth may feel over the next few days, what helps, and the signs that mean you should call.",
+    description: "How the tooth will feel over the next few days, what helps, and the signs that mean you should ring us.",
     href: "/patient-resources/#aftercare",
   },
   {
     title: "Bringing a child in",
-    description: "Small things parents can do at home so the appointment feels less strange to a young child.",
+    description: "What to say at home beforehand, and the words to avoid, so the chair feels less strange when they get here.",
     href: "/patient-resources/#kids",
   },
 ] as const;
 
 export const homepageFaqs = [
   {
+    question: "It has been years since I saw a dentist. Will I get a lecture?",
+    answer:
+      "No. People put off the dentist for all sorts of reasons and we have heard most of them. You will get an examination, a plain account of what we found, and a plan that starts with whatever matters most. Where the news is not good, we will say so kindly and then tell you what can be done.",
+  },
+  {
+    question: "Is it going to hurt?",
+    answer:
+      "Anything uncomfortable is done under local anaesthesia, so the tooth and the area around it are numb while we work. We will tell you what you are likely to feel before it happens rather than after. Say at the start that you are nervous and the pace changes: more breaks, more warning, more explaining.",
+  },
+  {
     question: "Do I need to know which treatment I need?",
     answer:
-      "No. Most people arrive with a symptom, not a diagnosis. Tell us what you have noticed and where, and the examination sorts out the rest.",
+      "No. Most people arrive with a symptom, not a diagnosis. Tell us what you noticed and where, and the examination sorts out the rest. You do not need the right word for it.",
   },
   {
-    question: "Which Kheni clinic should I visit?",
+    question: "How is the cost worked out?",
     answer:
-      "Whichever is easier to reach. Our first clinic is at Swastik Plaza, Yogi Chowk, and the second is at Hirabaug on Varachha Main Road. Implant consultations are available at both. If you are not sure, message us and we will suggest one.",
-  },
-  {
-    question: "Do you treat children?",
-    answer:
-      "Yes. Dr. Ishita Dobariya is our Kids Specialist and children's visits are paced around what the child can manage. Tell us on the phone if your child is anxious.",
-  },
-  {
-    question: "How do I book?",
-    answer:
-      "Tap Book Appointment and choose WhatsApp or a call, or simply call the clinic you want to visit. You do not need to fill in a long form.",
-  },
-  {
-    question: "How is treatment cost decided?",
-    answer:
-      "Cost depends on the treatment needed after examination. The dentist explains the plan and the estimate before treatment, and for staged work you can agree to one stage at a time.",
+      "By what the examination finds, which is why there are no prices on this site. Once the dentist has looked, you get the plan and the estimate for each stage before anything starts. For longer treatments you agree to one stage, see how it goes, and decide the next.",
   },
   {
     question: "How long will my treatment take?",
     answer:
-      "It depends on the treatment. A check-up or a filling is usually one visit. Root canals often take more than one. Braces, implants and full mouth work run over months because teeth and bone need time. You get a realistic timeline after the examination.",
+      "A check-up or a filling is usually one visit. Root canals often take more than one. Braces, implants and full mouth work run over months, because bone and gums heal on their own schedule and no dentist can hurry them. You get a realistic timeline after the examination, not before it.",
+  },
+  {
+    question: "Which Kheni clinic should I visit?",
+    answer:
+      "Whichever is easier to reach. Our first clinic is at Swastik Plaza, Yogi Chowk, and the second is at Hirabaug on Varachha Main Road. Implant treatment is planned and placed at Yogi Chowk. If you are not sure, message us and we will pick one for you.",
+  },
+  {
+    question: "Do you treat children?",
+    answer:
+      "Yes. Dr. Ishita Dobariya sees our youngest patients and paces a visit around what the child can actually manage that day. Tell us on the phone if your child is frightened, and we will plan the appointment around that rather than around the clock.",
   },
   {
     question: "What should I bring to my first visit?",
     answer:
-      "The names of any medicines you take, any old X-rays or reports you still have, and a rough idea of when the problem started. That is enough.",
+      "The names of any medicines you take, any old X-rays or reports you still have, and a rough idea of when the problem started. That is enough. If you have none of it, come anyway.",
+  },
+  {
+    question: "How do I book?",
+    answer:
+      "Tap Book Appointment and choose WhatsApp or a call, or ring the clinic you want to visit. There is no long form to fill in. A one line message with what is bothering you is plenty to start.",
   },
   {
     question: "Can NRIs and international patients plan before travelling?",
     answer:
-      "Yes. Send your travel dates and what you would like looked at on WhatsApp before you book flights. We will tell you what realistically fits into your trip and what would need a second visit.",
+      "Yes, and it is worth doing. Send your travel dates and what you would like looked at before you book flights. We will tell you honestly what fits into the trip and what would need a second one, so you are not booking a return ticket you did not plan for.",
   },
 ] as const;

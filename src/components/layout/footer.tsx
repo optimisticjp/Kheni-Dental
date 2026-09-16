@@ -74,8 +74,8 @@ export function Footer() {
           <div>
             <BrandMark />
             <p className="t-small measure-narrow mt-4 text-ivory/65">
-              {site.yearsInSurat} years of dental care in Surat. Two clinics, four dentists, {googleReputation.sharedRating} on Google across{" "}
-              {googleReputation.combinedReviews} reviews on two listings.
+              Looking after Surat smiles since 2012. Two clinics, four dentists, and {googleReputation.sharedRating} on Google across{" "}
+              {googleReputation.combinedReviews} reviews on two separate listings.
             </p>
             <p className="t-small mt-3 text-ivory/60">{clinicHours.compact}</p>
             <a href={`mailto:${site.email}`} className="mt-3 inline-flex min-h-10 items-center gap-2 text-sm text-gold hover:text-gold-soft">

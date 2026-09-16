@@ -59,7 +59,7 @@ export default function DoctorsPage() {
         </Container>
       </section>
 
-      <CtaBand title="Book with the dentist who fits your problem." highlight="fits" copy="Or tell us what is troubling you and we will suggest who to see and where." placement="doctors_final" />
+      <CtaBand title="Book with the dentist who fits your problem." highlight="fits" copy="Or just tell us what is bothering you. We will work out who you should see, and at which clinic." placement="doctors_final" />
     </>
   );
 }

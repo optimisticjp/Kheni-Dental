@@ -49,7 +49,7 @@ export default function SmileGalleryPage() {
       </section>
 
 
-      <CtaBand title="Want to know what is possible in your case?" highlight="your case" copy="The honest answer comes after looking. Book a consultation at either clinic." placement="gallery_final" hue="gold" />
+      <CtaBand title="Wondering what is possible for your smile?" highlight="your case" copy="The honest answer comes after somebody looks in your mouth. Book a consultation at either clinic and you will get one." placement="gallery_final" hue="gold" />
     </>
   );
 }

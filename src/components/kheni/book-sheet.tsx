@@ -129,7 +129,7 @@ export function BookSheet() {
           <div>
             <p className="t-eyebrow text-gold-text">Book an appointment</p>
             <h2 id="book-sheet-title" className="t-h3 mt-1.5">
-              Which clinic suits you?
+              Which clinic is easier for you?
             </h2>
           </div>
           <button

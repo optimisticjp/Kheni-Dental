@@ -32,7 +32,7 @@ export default function ResourcesPage() {
         eyebrow="Patient resources"
         title="The part that happens after you leave the chair."
         highlight="after"
-        copy="Short guides for the day before an appointment and the days after one. Written to help you prepare and to tell you when something is worth a phone call."
+        copy="Short guides for the day before an appointment and the days after one. Written so you know what is normal, what helps, and when something is worth a phone call."
         hue="sky"
         tone="light"
         field="sky"
