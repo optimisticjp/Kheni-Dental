@@ -4,6 +4,8 @@ import { ArrowRight } from "lucide-react";
 
 import { CtaBand } from "@/components/kheni/cta-band";
 import { PageHero } from "@/components/kheni/page-hero";
+import { SectionIntro } from "@/components/kheni/section-intro";
+import { ServiceDirectory } from "@/components/kheni/service-directory";
 import { SmileNote } from "@/components/kheni/smile-note";
 import { TreatmentPoster, TreatmentRow } from "@/components/kheni/treatment-poster";
 import { Container } from "@/components/ui/container";
@@ -69,6 +71,18 @@ export default function TreatmentsPage() {
 
       <SmileNote note={smileNotes[4]} compact className="pb-10 sm:pb-14" />
 
+      {/* The full inventory, from form sections 11 to 17. */}
+      <section className="bg-ivory py-10 sm:py-14 lg:py-18">
+        <Container width="7xl">
+          <SectionIntro
+            eyebrow="The full list"
+            title="Everything we do, without the hunting."
+            highlight="without the hunting"
+            copy="Each treatment page explains its own work properly. This is the same information in one place, for when you just want to know whether we do a particular thing."
+          />
+          <ServiceDirectory className="mt-6 sm:mt-8" />
+        </Container>
+      </section>
 
       <CtaBand title="Not sure which one you need? That is normal." highlight="normal" copy="Describe it in your own words. The examination sorts out the rest." placement="treatments_final" />
     </>

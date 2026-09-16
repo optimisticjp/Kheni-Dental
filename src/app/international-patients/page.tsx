@@ -11,12 +11,14 @@ import { MetricRow, ProofCluster } from "@/components/kheni/proof";
 import { MediaFrame } from "@/components/kheni/media-frame";
 import { SectionIntro } from "@/components/kheni/section-intro";
 import { internationalPhoto } from "@/content/photos";
+import { ServiceConfirmList } from "@/components/kheni/service-confirm-list";
 import { SmileNote } from "@/components/kheni/smile-note";
 import { TreatmentRow } from "@/components/kheni/treatment-poster";
 import { Accordion } from "@/components/ui/accordion";
 import { Container } from "@/components/ui/container";
 import { WhatsAppButton } from "@/components/ui/cta";
 import { languages, metricsFor } from "@/content/clinic-proof";
+import { awaitingNriServices, confirmedNriServices, nriAwaitingNote } from "@/content/nri";
 import { sampleNriWorkflow } from "@/content/review-sample";
 import { locations, treatments } from "@/content/site";
 
@@ -137,6 +139,25 @@ export default function InternationalPage() {
               </div>
             </div>
           </div>
+        </Container>
+      </section>
+
+      <section className="py-10 sm:py-14 lg:py-18">
+        <Container width="7xl">
+          <SectionIntro
+            eyebrow="Planning help"
+            title="What we arrange, and what we have not promised."
+            highlight="not promised"
+            copy="Travel dentistry is where websites overpromise most, so this page separates the two. The first group is confirmed. The second is on the clinic's list to decide, and until it does, none of it is on offer."
+          />
+          <ServiceConfirmList
+            className="mt-6 sm:mt-8"
+            confirmed={confirmedNriServices}
+            awaiting={awaitingNriServices}
+            confirmedTitle="Available now"
+            awaitingTitle="Awaiting clinic confirmation"
+            awaitingNote={nriAwaitingNote}
+          />
         </Container>
       </section>
 

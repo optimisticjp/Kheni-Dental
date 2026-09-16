@@ -18,7 +18,7 @@ import { Container } from "@/components/ui/container";
 import { BookButton, CallButton, WhatsAppButton } from "@/components/ui/cta";
 import { headlineCapabilities, implantCapabilities, implantSystems, implantWarranty } from "@/content/capabilities";
 import { metricsFor } from "@/content/clinic-proof";
-import { comparison, implantFaqs, implantHero, implantProcess, planFactors } from "@/content/implant-center";
+import { comparison, eliteImplantCenter, implantFaqs, implantHero, implantProcess, planFactors } from "@/content/implant-center";
 import { doctors, locations, smileNotes, treatments } from "@/content/site";
 import { implantImaging, technologyFor } from "@/content/technology";
 
@@ -154,6 +154,32 @@ export default function DentalImplantsPage() {
                 </ul>
                 <p className="t-small mt-3 text-ink-soft">{implantSystems.note}</p>
               </div>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* ── What the Elite Implant Center is ─────────────────────────── */}
+      <section className="grain bg-ink py-10 text-ivory sm:py-14 lg:py-18">
+        <Container width="7xl">
+          <div className="grid gap-8 lg:grid-cols-[1.05fr_.95fr] lg:gap-14">
+            <div>
+              <span className="block h-px w-16 bg-champagne/50" aria-hidden="true" />
+              <p className="t-eyebrow mt-4 text-champagne">{eliteImplantCenter.eyebrow}</p>
+              <h2 className="t-h2 mt-2 text-ivory">{eliteImplantCenter.title}</h2>
+              <p className="t-body mt-4 max-w-xl text-ivory/75">{eliteImplantCenter.meaning}</p>
+              <p className="t-body mt-4 max-w-xl text-rose-soft">{eliteImplantCenter.purpose}</p>
+            </div>
+            <div className="lg:pt-10">
+              <dl className="grid gap-px overflow-hidden rounded-[1.5rem] bg-ivory/10 sm:grid-cols-2">
+                {eliteImplantCenter.facts.map((fact) => (
+                  <div key={fact.label} className="bg-ink-2 px-5 py-4">
+                    <dt className="t-small text-ivory/55">{fact.label}</dt>
+                    <dd className="mt-1 font-serif text-xl text-champagne">{fact.value}</dd>
+                  </div>
+                ))}
+              </dl>
+              <p className="t-small mt-4 rounded-2xl border border-rose/25 bg-ink-2 px-5 py-4 text-ivory/75">{eliteImplantCenter.whereNote}</p>
             </div>
           </div>
         </Container>

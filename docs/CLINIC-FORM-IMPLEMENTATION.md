@@ -322,14 +322,23 @@ value before this pass · decision · where it appears.
 - Public record: the Hirabaug Google and Justdial listings carry the name "Kheni Dental Clinic & Elite Implant Center".
 - Current website: Hirabaug carries the Elite Implant Center name and every page says implant, full mouth and smile design work is "led from Hirabaug".
 
-**Choice for the preview.** The Hirabaug listing keeps its confirmed name (page 11 and the public listing agree on that). The claim that implant work is *led from* Hirabaug is removed everywhere: homepage, implant page, locations, FAQ, NRI FAQ, doctor bio, metadata. Implant consultations are described as available at both clinics, led by Dr. Mayur Kheni, and implant CTAs no longer pre-select Hirabaug; they use the main WhatsApp number (page 8) and let the patient pick. Hirabaug's `implantCentre` flag stays so the brand label renders, but no structured data claims that implant procedures happen at one address. Status: NEEDS_CLINIC_CONFIRMATION.
+**Choice for the preview (superseded 16 September 2026, see below).** The Hirabaug listing keeps its confirmed name (page 11 and the public listing agree on that). The claim that implant work is *led from* Hirabaug is removed everywhere: homepage, implant page, locations, FAQ, NRI FAQ, doctor bio, metadata. Implant consultations are described as available at both clinics, led by Dr. Mayur Kheni, and implant CTAs no longer pre-select Hirabaug; they use the main WhatsApp number (page 8) and let the patient pick. Hirabaug's `implantCentre` flag stays so the brand label renders, but no structured data claims that implant procedures happen at one address. Status: NEEDS_CLINIC_CONFIRMATION.
 
 **Why.** Two typed answers on later, more specific pages both name Yogi Chowk. One tick on an earlier printed sentence names Hirabaug. Publishing either as the single implant location risks sending a patient to the wrong clinic, so the preview commits to neither.
+
+**Revised choice, 16 September 2026.** Committing to neither meant the clinic's own answer never appeared on the site, and the clinic asked to see everything it had filled in. So both facts are now stated side by side rather than one being suppressed:
+
+- `implantCentre` stays on Hirabaug. It means only "this branch's public name carries Elite Implant Center", which page 11 and the public listing both confirm.
+- A new `implantLed` flag sits on Yogi Chowk, carrying the two typed answers from pages 29 and 41.
+- `eliteImplantCenter` in `src/content/implant-center.ts` renders a section on the implant page that says, in as many words, that the Hirabaug clinic carries the name and that implant planning and treatment happen at Yogi Chowk with Dr. Mayur Kheni.
+
+This is still NEEDS_CLINIC_CONFIRMATION, and it is now impossible to miss: if the clinic reads that section and it is wrong, the error is on the screen rather than hidden in an omission. **This is the single most important thing for the clinic to check.** Getting it wrong sends implant patients to the wrong address.
 
 ### C2. Elite Implant Center start year
 
 - Page 13: blank. Page 41: `2012` typed, with a partial mark across Do not show. 2012 is also the year the first clinic opened.
-- **Choice:** no Elite Implant Center start year shown. The About timeline says the practice began in 2012 and Hirabaug opened in 2020.
+- **Choice, superseded 16 September 2026:** no Elite Implant Center start year shown. The About timeline says the practice began in 2012 and Hirabaug opened in 2020.
+- **Revised choice:** `2012` is shown, in the Elite Implant Center fact panel on the implant page, labelled "Running since". The clinic typed it, and it is consistent with the practice starting that year: the reading is that implants were part of the practice from the beginning rather than a later addition. The stray mark near Do not show is noted but not treated as a tick, because the same field carries a typed answer. Still NEEDS_CLINIC_CONFIRMATION.
 
 ### C3. Dr. Mayur Kheni's title
 
@@ -478,9 +487,95 @@ Google share links stored as pending verification.
 | SPARK | Spark Clear Aligners (Ormco) | ormco.com |
 | ILLUSION | Illusion Aligners (Illusion Dental Lab, India) | illusionaligners.com |
 | 3M, GC | 3M Oral Care, GC Corporation | known manufacturers |
-| WISDENT RESTORATIVE | no exact match; Pidilite's dental brand is "Wizdent" | excluded, question 14 |
+| WISDENT RESTORATIVE | no exact match; Pidilite's dental brand is "Wizdent" | **now shown as "Wisdent"**, spelling unverified, question 14 |
 | dharamsinh desai univercity | Dharmsinh Desai University, Nadiad (Faculty of Dental Science) | collegedunia, university pages |
 | krishna institute of science and technolgy, karad | closest: School of Dental Sciences, Krishna Institute of Medical Sciences, Karad | wikipedia, college directories; question 5 |
 | AMC DENTAL COLLEGE | AMC Dental College, Ahmedabad (AMC MET) | wikipedia |
 | AHEMDABAD DENTAL COLLEGE &HOSPITAL | Ahmedabad Dental College & Hospital, Gandhinagar (adch.ac.in) | adch.ac.in |
 | IDA / VDA / KDA | not expanded; abbreviations only | question 7 |
+
+---
+
+## Part 7. Second pass, 16 September 2026
+
+The clinic asked for everything it filled in to be visible on the site, and for
+anything it left blank to be shown as a placeholder rather than deleted, so
+that it can look at the site and say where each thing belongs. The first pass
+had captured most of the form into the data layer, but several answers were
+either stored and never rendered, or held back deliberately. This pass closes
+that gap.
+
+### Answers that now appear on the site for the first time
+
+| Form | Answer | Where it now shows |
+| --- | --- | --- |
+| p29, p41 | Main implant branch is **Yogi Chowk** | Elite Implant Center section on the implant page, plus `implantLed` on the branch record |
+| p41 | Elite Implant Center **running since 2012** | Same section, "Running since" |
+| p41 | "all dental solution in one roof" | Rendered as "comprehensive dental care in one place" (the literal phrase is on the banned-wording list) |
+| p13 | "provide preventive quality treatments" | The purpose line in the same section |
+| p14 | "patients obtain accurate information" | About page, "How a visit feels" |
+| p37 | Six full-mouth options, all ticked | New `offer` block on the full mouth page |
+| p37 | Five crown materials, all ticked | New `brands` block on the full mouth page |
+| p35 | "WISDENT RESTORATIVE" | Added to the restorative materials list as "Wisdent" |
+| p39 | Temporary filling, child filling | Added to the fillings page list |
+| p55 | Thirteen NRI services, none ticked | New confirm list on the NRI page: two confirmed elsewhere, eleven shown as awaiting |
+| s11-s17 | The whole service inventory | New service directory on the treatments index |
+
+### Design decisions in this pass
+
+**The service directory.** Sections 11 to 17 of the form are a long inventory
+of individual services, ticked treatment by treatment. Each one already
+appeared on its own treatment page, but a patient asking "do they do X" had to
+open eleven pages to find out. The treatments index now carries the whole list
+in one place, linked back to the page that explains each treatment.
+
+**The NRI confirm list.** Page 55 asks the clinic to tick the services it
+really provides and warns that "unticked items will not be promised". The
+clinic ticked none of them and left every write-in blank. Deleting the section
+would have left the clinic nothing to react to; inventing an offer would have
+been a lie. So all thirteen are listed, with the two that are confirmed
+elsewhere on the form marked as available and the other eleven visibly held
+back behind a dashed border and a "to confirm" label. The distinction is
+carried by border style and weight as well as colour, so it survives a phone
+screen and greyscale.
+
+**The Elite Implant Center section.** Written to hold two facts at once
+without hiding either: the name sits on Hirabaug, the treatment happens at
+Yogi Chowk. See conflict C1, which this pass revised.
+
+### What is still blank on the form
+
+Nothing below has been invented. Each one either renders a marked placeholder
+or does not render at all.
+
+- Awards, accreditation, press and notable visitors (p5, p53, p54): all blank,
+  and the "remove" boxes were not ticked either. Nothing is shown.
+- Written and video patient testimonials (p47 to p49): blank. Page 6 asks for
+  real testimonials to replace the samples and for the layout to be kept until
+  they arrive, which is what happens.
+- Before and after cases (p51, p52): blank. The gallery shows neutral sample
+  frames and never a real mouth.
+- Every photograph (p60 to p62): nothing ticked, nothing supplied.
+- Top five treatments, treatments not to promote (p28): blank.
+- Clinic tagline, other social links, words to avoid (p8): blank.
+- Short clinic story, clinic quote, milestone detail (p14): blank.
+- Doctor bios, quotes and photo permissions (p18, p24, p27): blank, except
+  Dr. Jinali's quote (p21) and photo permission, which are filled.
+- Response time, emergency wording, booking form fields (p57): blank.
+- Reviewing dentist for the patient guides (p58): blank. Three of the five
+  guides are approved; two are unmarked.
+- Launch checklist (p67): nothing ticked, which is why indexing stays off.
+
+### Contradictions the clinic still needs to settle
+
+1. **Root canals, 90,000+, against 45,000 patients treated** (p2). Twice the
+   patient count. Stored exactly as typed and displayed, but it cannot both be
+   right and it is the kind of number a visitor will notice.
+2. **The implant branch** (p11 against p29 and p41). See C1. Most important.
+3. **CBCT** (p29 names it, p43 does not tick it). The implant page says
+   "where the case needs it" and the item is flagged.
+4. **Implant success, 98.6%** (p3 ticked Correct, p30 ticked Do not show).
+   Never rendered. The later, more specific answer wins.
+5. **Free first consultation** (p3 blank, p56 ticked Do not show). Removed.
+6. **Digital Smile Design** (p35 ticks the service, p43 does not tick the
+   software). The service is listed, the software is not.

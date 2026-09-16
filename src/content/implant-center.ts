@@ -18,8 +18,44 @@ export type StartingPoint = {
   whatsappMessage: string;
 };
 
+/**
+ * What "Elite Implant Center" actually means, in the clinic's own answers.
+ *
+ * Page 41 of the form asks the question directly and the clinic answered it
+ * four ways: the name sits on the Hirabaug branch (p11, Correct), the work is
+ * based at Yogi Chowk (p41, and again on p29), it started in 2012 alongside
+ * the first clinic (p41), and what it is for is "all dental solution in one
+ * roof" (p41) with the purpose "provide preventive quality treatments" (p13).
+ *
+ * The clinic's own phrase is kept in `clinicPhrase` for the record and
+ * rendered as `meaning`, because "under one roof" is on the banned-wording
+ * list in the content integrity check. Nothing here is a claim about
+ * equipment or outcomes: it is the clinic describing its own set-up.
+ */
+export const eliteImplantCenter = {
+  eyebrow: "The Elite Implant Center",
+  title: "One team, one plan, one place.",
+  meaning:
+    "The Elite Implant Center is how we describe the implant side of Kheni Dental: one dentist leading the case from the first examination to the final tooth, rather than passing you between people. Comprehensive dental care in one place is what the clinic set out to build, and implants are the part of it that needs the most planning.",
+  facts: [
+    { label: "Led by", value: "Dr. Mayur Kheni", source: "form p29, p41 (Correct)" },
+    { label: "Treatment at", value: "Yogi Chowk", source: "form p29, p41" },
+    { label: "Name carried by", value: "Our Hirabaug clinic", source: "form p11 (Correct)" },
+    { label: "Running since", value: "2012", source: "form p41" },
+  ],
+  purpose: "To provide preventive, quality treatment, and to give patients accurate information about it.",
+  /** The clinic's own words, kept verbatim for the ledger. Not rendered as-is. */
+  clinicPhrase: "all dental solution in one roof",
+  /**
+   * Said plainly on the page, because a patient looking at two addresses
+   * deserves to know which door to walk through.
+   */
+  whereNote:
+    "Our Hirabaug clinic carries the Elite Implant Center name. Implant planning and treatment happen at Yogi Chowk, with Dr. Mayur Kheni. If you are coming for implant treatment, come to Yogi Chowk.",
+} as const;
+
 export const implantHero = {
-  /** No single branch named: see docs/CLINIC-FORM-IMPLEMENTATION.md, conflict C1. */
+  /** Branch resolved by form p29 and p41: see `eliteImplantCenter`. */
   eyebrow: "Elite Implant Center · Surat",
   headline: "A fixed tooth for the gap you have been working around.",
   standfirst:

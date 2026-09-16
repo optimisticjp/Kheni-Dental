@@ -58,7 +58,15 @@ export default function AboutPage() {
 
       <section className="bg-butter py-8 sm:py-12 lg:py-16">
         <Container width="7xl">
-          <SectionIntro eyebrow="How a visit feels" title="You should leave understanding what we found and what your options are." highlight="what your options are" />
+          {/* Asked on form p14, "what should patients feel when visiting?". The
+              clinic's answer was "patients obtain accurate information", which
+              is the whole section in four words. */}
+          <SectionIntro
+            eyebrow="How a visit feels"
+            title="You should leave understanding what we found and what your options are."
+            highlight="what your options are"
+            copy="When the clinic was asked what a patient should feel here, the answer was that patients get accurate information. Not reassurance, not a sales pitch. The facts about your own mouth, in words you can use."
+          />
           <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {expect.map((item, i) => (
               <li key={item.title} className="rounded-2xl border border-line bg-white p-5">

@@ -151,8 +151,21 @@ export type Location = {
   landmark: string;
   /** Facilities the clinic ticked on the form (p10, p12). Nothing else. */
   facilities: string[];
-  /** True for the branch that carries the Elite Implant Center. */
+  /**
+   * True for the branch whose public NAME carries "Elite Implant Center".
+   * Confirmed Correct on form p11. This is a name, not a claim about where
+   * implant treatment happens: see `implantLed`.
+   */
   implantCentre?: boolean;
+  /**
+   * True for the branch where implant work is actually led. The clinic
+   * answered "YOGICHOWK" twice, on p29 ("which branch is the main implant
+   * branch") and again on p41 ("which branch is it based at"), while keeping
+   * the Hirabaug branch name. Both answers are kept rather than one being
+   * quietly dropped, and the site says where treatment happens rather than
+   * letting the signage imply it. Ledger conflict C1.
+   */
+  implantLed?: boolean;
   /** Branch accent hue, from the treatment hue set. */
   hue: "gold" | "teal";
 };
@@ -177,9 +190,10 @@ export const locations: Location[] = [
     google: { status: "verified", rating: "4.9", reviewCount: "1,761", verifiedOn: "14 September 2026", source: "clinic_form", recheckCadence: "monthly", lastChecked: "2026-09-14" },
     hours: "Mon to Sat, 9:30 AM to 1:00 PM and 4:00 PM to 8:00 PM",
     hoursNote: "Clinic-provided hours. Call before travelling if your visit is time-sensitive.",
-    note: "Our first clinic, open since 2012. Family dentistry, root canals, braces, children's dentistry and implant consultations.",
+    note: "Our first clinic, open since 2012. Family dentistry, root canals, braces, children's dentistry, and where implant treatment is planned and placed.",
     landmark: "Yogi Chowk Ground, next to Apple Square",
     facilities: ["Parking nearby", "Lift", "Waiting area", "Digital payment", "Emergency same-day slots"],
+    implantLed: true,
     hue: "teal",
   },
   {
@@ -206,6 +220,7 @@ export const locations: Location[] = [
     facilities: ["Waiting area", "Emergency same-day slots"],
     implantCentre: true,
     hue: "gold",
+    // Implant treatment itself is led from Yogi Chowk (form p29, p41).
   },
 ];
 
@@ -681,7 +696,7 @@ export const treatments: Treatment[] = [
     },
     brands: {
       title: "Restorative materials we use",
-      items: ["3M", "GC"],
+      items: ["3M", "GC", "Wisdent"],
       note: "Named on request. The material for your tooth is chosen with you at the planning visit.",
     },
     doctorSlugs: ["dr-jinali-monpara", "dr-mayur-kheni"],
@@ -748,6 +763,25 @@ export const treatments: Treatment[] = [
     visitTitle: { title: "Urgent first. The rest in order.", highlight: "in order" },
     note: { line: "Bring the whole list. We will put it in order.", highlight: "in order" },
     doctorSlugs: ["dr-mayur-kheni", "dr-jinali-monpara"],
+    /** Every option ticked on form p37. Patient wording, no promises. */
+    offer: {
+      title: "Ways a full mouth is rebuilt",
+      items: [
+        "Full mouth rehabilitation planned as one sequence",
+        "Bridges carried by your own teeth",
+        "Bridges carried by implants",
+        "A fixed set of teeth for a whole jaw",
+        "A removable denture",
+        "A denture that clips onto implants",
+      ],
+      note: "Most plans use more than one of these. Which combination suits you is worked out from your bite, your gums and the bone underneath.",
+    },
+    /** Crown materials ticked on form p37. Names only, no grading. */
+    brands: {
+      title: "Crown materials we work with",
+      items: ["Zirconia", "E.max (lithium disilicate)", "Porcelain fused to metal", "Metal", "Temporary"],
+      note: "Each material suits a different job. Where the tooth sits, how hard you bite on it and how visible it is decide which one is used.",
+    },
     ctaTitle: "Bring the whole list to one appointment.",
     whatsappMessage: "Hello Kheni Dental, several of my teeth need work and I would like to book a consultation to plan it. Thank you.",
     featured: true,
@@ -1158,6 +1192,8 @@ export const treatments: Treatment[] = [
       items: [
         "Tooth-coloured composite fillings",
         "Glass ionomer fillings where they suit the tooth",
+        "Temporary fillings, where a tooth needs settling first",
+        "Fillings in children's teeth",
         "Replacing an old filling that has cracked or fallen out",
         "Repairing a small chip on a front tooth",
       ],
