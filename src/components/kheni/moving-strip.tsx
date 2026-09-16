@@ -54,7 +54,11 @@ export function MovingStrip({ className, tone = "gold" }: { className?: string; 
   return (
     <div
       className={cn(
-        "strip relative isolate overflow-hidden py-2.5 sm:py-3",
+        // Pinned above the sticky header, so it is the first thing on every
+        // page and never scrolls away. The header sits directly beneath it at
+        // `top: var(--strip-h)`, which is why the height is fixed rather than
+        // left to the content.
+        "strip sticky top-0 z-50 isolate flex h-[var(--strip-h)] items-center overflow-hidden",
         tone === "gold" ? "bg-gold text-ink" : "bg-ink-2 text-gold",
         className,
       )}

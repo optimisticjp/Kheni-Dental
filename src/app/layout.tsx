@@ -90,11 +90,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <AnalyticsScripts />
         <StructuredData />
         <TrackLinks />
-        <Navbar />
-        {/* The moving strip sits directly under the sticky header on every
-            page, so it reads as part of the masthead rather than a homepage
-            banner. It scrolls facts, never claims. */}
+        {/* The strip sits above the header and stays there. Both are pinned:
+            the strip at the top of the viewport, the header directly beneath
+            it. It scrolls facts, never claims. */}
         <MovingStrip />
+        <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />
         <MobileDock />

@@ -506,6 +506,13 @@ a:focus-visible .cta-arrow, button:focus-visible .cta-arrow { transform: transla
    The rail is twice the content width, so translating it by half seams
    invisibly. It pauses on hover and on keyboard focus, and it stops dead
    under prefers-reduced-motion, where it becomes a static row. */
+/* The strip's height is a token because the sticky header offsets against it
+   (`top: var(--strip-h)`). If the two ever disagree the header either floats
+   over the strip or leaves a gap under it, so the height is declared once
+   here and never inferred from the content. */
+:root { --strip-h: 2.25rem; }
+@media (min-width: 640px) { :root { --strip-h: 2.5rem; } }
+
 .strip-rail { width: max-content; animation: strip-scroll 46s linear infinite; }
 .strip:hover .strip-rail,
 .strip:focus-within .strip-rail { animation-play-state: paused; }
