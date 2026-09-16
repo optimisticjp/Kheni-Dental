@@ -1,68 +1,65 @@
 @import "tailwindcss";
 
-/* ── Kheni: charcoal, ivory and the logo's own dusty rose ────────────────
-   The palette is taken from the clinic's actual logo rather than chosen
-   around it: charcoal lettering (#363435) and a dusty rose mark (#9B6665)
-   on nothing. So the site reads CHARCOAL + IVORY + ROSE, with champagne
-   kept back for the few premium details that earn it.
+/* ── Kheni: black, gold, and daylight let in between ─────────────────────
+   Restored at the doctor's request, September 2026. He liked the black and
+   gold with the soft light fields between the dark sections, so that is what
+   this is, with the gold warmed and brightened.
 
-   Rose is the recognisable accent. Champagne is rationed to stars, proof
-   numerals, hairlines and small premium labels; the less it appears, the
-   more it is worth. Supporting colour arrives only as four soft, light
-   fields with charcoal type on them.
+   The gold is #E1AF4A. It is a real, saturated gold rather than the antique
+   #CAA968 this site carried before, and it comes from the reference the
+   doctor pointed at. It sits on a warm near-black (#0B0908 has a brown cast,
+   not a blue one) so the two read as one family instead of metal on slate.
 
-   WHY THERE ARE FOUR ROSES
-   One rose cannot do every job and stay legible. The logo's own #9B6665
-   fails WCAG AA as small text on ivory (4.35:1) and as a button fill with
-   either an ink or an ivory label. So the brand rose is kept for fills and
-   graphics, and three contrast-solved siblings carry text and buttons.
-   Every value below was solved, not eyeballed; the figures are the worst
-   case measured across every surface the colour actually lands on.
+   WHY GOLD NEEDS FOUR WEIGHTS
+   #E1AF4A is superb on near-black at 9.87:1 and hopeless on ivory at 1.90:1,
+   so one gold cannot do every job. The bright gold is kept for dark surfaces
+   and for fills; a deepened bronze carries small text on light. Both were
+   solved against every surface they actually land on, not picked by eye.
 
-   Contrast, worst case across all surfaces it is used on:
-     charcoal on any light field          9.88:1
-     ink-soft on any light field          6.10:1
-     rose-text on any light field         4.58:1   AA
-     champagne-text on any light field    4.61:1   AA
-     rose-on-dark on ink / ink-2          6.46:1   AA
-     champagne on ink                     9.97:1   AAA
-     ink label on rose-strong button      5.39:1   AA
-     ivory on ink                        17.61:1   AAA                     */
+   The five light fields are the part the doctor singled out. They are rooms
+   with the windows open between the dark sections, never blocks of brand
+   colour, and the type on them is always ink.
+
+   Contrast, worst case across every surface each colour is used on:
+     ink on any light field              18.2:1   AAA
+     ink-soft on ivory / white / sand     6.4:1   AA
+     gold-text on any light field         4.5:1   AA
+     gold on ink / ink-2                  9.5:1   AAA
+     ink label on a gold button           9.9:1   AAA
+     ivory on ink                        18.6:1   AAA                       */
 :root {
   --ease-kheni: cubic-bezier(.16, 1, .3, 1);
   --radius: 1rem;
 
-  /* ── Brand foundation, straight from the logo ─────────────────────── */
-  --brand-ink: #121011;
-  --brand-ink-2: #1b1819;
-  --brand-ink-3: #24201f;
-  --brand-charcoal: #363435;
-  --brand-ivory: #faf6f0;
+  /* ── Foundation. Warm near-black, warm ivory. ─────────────────────── */
+  --brand-ink: #0b0908;
+  --brand-ink-2: #14100d;
+  --brand-ink-3: #1d1813;
+  --brand-charcoal: #1a1512;
+  --brand-ivory: #faf8f5;
   --brand-white: #ffffff;
-  --brand-sand: #eee7dd;
-  --brand-sand-deep: #e2d8ca;
-  --brand-ink-soft: #57534e;
+  --brand-sand: #f1ede6;
+  --brand-sand-deep: #e4ded2;
+  --brand-ink-soft: #5a544e;
 
-  /* ── Dusty rose, the logo's own accent, in five weights ───────────── */
-  --brand-rose: #9b6665;           /* the logo mark. Fills, shapes, graphics. */
-  --brand-rose-strong: #b87872;    /* primary button fill, ink label 5.39:1 */
-  --brand-rose-text: #895a59;      /* small text on light, 4.58:1 */
-  --brand-rose-on-dark: #b88c8a;   /* small text on ink, 6.46:1 */
-  --brand-rose-soft: #d9b0aa;
-  --brand-blush: #f1e3df;
+  /* ── Gold, in four weights ────────────────────────────────────────── */
+  --brand-gold: #e1af4a;           /* on dark, and fills. 9.87:1 on ink */
+  --brand-gold-text: #886627;      /* small text on light. 4.53:1 on sand */
+  --brand-gold-soft: #eace8c;      /* hover on dark, hairlines */
+  --brand-gold-tint: #f8f1df;      /* the lightest gold field */
+  --brand-gold-deep: #b47825;      /* bronze. RULES AND UNDERLINES ONLY:
+                                      3.50:1 on ivory, so it must never carry text. */
 
-  /* ── Champagne, rationed to premium detail ────────────────────────── */
-  --brand-champagne: #d3b985;      /* on dark only, 9.97:1 on ink */
-  --brand-champagne-text: #7b6235; /* small text on light, 4.61:1 */
-  --brand-champagne-soft: #ebdcbc;
-  --brand-champagne-tint: #f7f1e3;
+  /* The logo's own rose. It survives in exactly one place, the K in the
+     mark, because that is the clinic's artwork and not ours to repaint. */
+  --brand-rose-mark: #9b6665;
 
-  /* ── Four soft supporting fields. Used sparingly. ─────────────────── */
-  --surface-sage: #e2eae2;     --surface-sage-text: #467157;     --surface-sage-soft: #cbdbce;     --surface-sage-fill: #8fb39c;
-  --surface-blue: #e6edf1;     --surface-blue-text: #3a6b87;     --surface-blue-soft: #d2e0e8;     --surface-blue-fill: #8fafc2;
-  --surface-butter: #f4ebcb;   --surface-butter-text: #83651d;   --surface-butter-soft: #eadcaf;   --surface-butter-fill: #d6be7e;
-  --surface-lavender: #eeeaf2; --surface-lavender-text: #5d4e96; --surface-lavender-soft: #dfd8e8; --surface-lavender-fill: #a99ecb;
-  --surface-blush-text: #895a59; --surface-blush-soft: #e3ccc6;  --surface-blush-fill: #c99c94;
+  /* ── Five soft light fields. The daylight between the dark. ───────── */
+  --surface-sky: #eaf2ff;      --surface-sky-text: #2f5c8f;      --surface-sky-soft: #d3e3fa;      --surface-sky-fill: #7fa3d3;
+  --surface-mint: #e7f6ef;     --surface-mint-text: #226b4f;     --surface-mint-soft: #cdebdc;     --surface-mint-fill: #7dbfa0;
+  --surface-peach: #fff0e8;    --surface-peach-text: #9a4b2f;    --surface-peach-soft: #fadccb;    --surface-peach-fill: #e3a588;
+  --surface-lavender: #f1edff; --surface-lavender-text: #5a4a9c; --surface-lavender-soft: #ddd5f6; --surface-lavender-fill: #ac9edb;
+  --surface-butter: #fff5d6;   --surface-butter-text: #7a5a14;   --surface-butter-soft: #f7e6ae;   --surface-butter-fill: #ddc272;
 
   /* ── Foundation names the components already use ──────────────────── */
   --ink: var(--brand-ink);
@@ -73,37 +70,45 @@
   --sand: var(--brand-sand);
   --sand-deep: var(--brand-sand-deep);
   --ink-soft: var(--brand-ink-soft);
-  --line: rgba(54, 52, 53, 0.12);
-  --line-strong: rgba(54, 52, 53, 0.24);
+  --line: rgba(11, 9, 8, 0.12);
+  --line-strong: rgba(11, 9, 8, 0.22);
 
-  /* The accent names predate this palette. They now resolve to ROSE, which
-     is what flips the site from black-and-gold to charcoal-and-rose in one
-     place rather than across two hundred call sites. Champagne is applied
-     deliberately, by name, only where it belongs. */
-  --gold: var(--brand-rose-on-dark);
-  --gold-text: var(--brand-rose-text);
-  --gold-soft: var(--brand-rose-soft);
-  --gold-tint: var(--brand-blush);
+  /* THE ONE-PLACE FLIP, BACK AGAIN.
+     The accent names are used a couple of hundred times across the
+     components. Pointing them at gold here turns the whole site from
+     charcoal-and-rose to black-and-gold without touching a single call site,
+     which is the same lever that turned it the other way in September and
+     the reason that change was reversible at all.
 
-  --champagne: var(--brand-champagne);
-  --champagne-text: var(--brand-champagne-text);
-  --champagne-soft: var(--brand-champagne-soft);
-  --champagne-tint: var(--brand-champagne-tint);
+     The rose and champagne names stay defined and resolve onto the gold
+     family, so every component written during the rose period still renders
+     correctly and simply comes out gold. */
+  --gold: var(--brand-gold);
+  --gold-text: var(--brand-gold-text);
+  --gold-soft: var(--brand-gold-soft);
+  --gold-tint: var(--brand-gold-tint);
+  --gold-deep: var(--brand-gold-deep);
 
-  --rose: var(--brand-rose);
-  --rose-strong: var(--brand-rose-strong);
-  --rose-text: var(--brand-rose-text);
-  --rose-soft: var(--brand-rose-soft);
-  --blush: var(--brand-blush);
+  --champagne: var(--brand-gold);
+  --champagne-text: var(--brand-gold-text);
+  --champagne-soft: var(--brand-gold-soft);
+  --champagne-tint: var(--brand-gold-tint);
+
+  --rose: var(--brand-gold);
+  --rose-strong: var(--brand-gold);
+  --rose-text: var(--brand-gold-text);
+  --rose-soft: var(--brand-gold-soft);
+  --blush: var(--surface-peach);
   --charcoal: var(--brand-charcoal);
 
-  /* The soft fields, under the names the components already pass around.
-     peach is now blush, mint is sage, sky is blue-grey. */
-  --sky: var(--surface-blue);        --sky-text: var(--surface-blue-text);        --sky-soft: var(--surface-blue-soft);        --sky-fill: var(--surface-blue-fill);
-  --mint: var(--surface-sage);       --mint-text: var(--surface-sage-text);       --mint-soft: var(--surface-sage-soft);       --mint-fill: var(--surface-sage-fill);
-  --peach: var(--brand-blush);       --peach-text: var(--surface-blush-text);     --peach-soft: var(--surface-blush-soft);     --peach-fill: var(--surface-blush-fill);
+  /* The five light fields, under the names the components pass around. */
+  --sky: var(--surface-sky);         --sky-text: var(--surface-sky-text);         --sky-soft: var(--surface-sky-soft);         --sky-fill: var(--surface-sky-fill);
+  --mint: var(--surface-mint);       --mint-text: var(--surface-mint-text);       --mint-soft: var(--surface-mint-soft);       --mint-fill: var(--surface-mint-fill);
+  --peach: var(--surface-peach);     --peach-text: var(--surface-peach-text);     --peach-soft: var(--surface-peach-soft);     --peach-fill: var(--surface-peach-fill);
   --lavender: var(--surface-lavender); --lavender-text: var(--surface-lavender-text); --lavender-soft: var(--surface-lavender-soft); --lavender-fill: var(--surface-lavender-fill);
   --butter: var(--surface-butter);   --butter-text: var(--surface-butter-text);   --butter-soft: var(--surface-butter-soft);   --butter-fill: var(--surface-butter-fill);
+  --sage: var(--surface-mint);       --sage-text: var(--surface-mint-text);
+  --blue-grey: var(--surface-sky);   --blue-grey-text: var(--surface-sky-text);
 
   --whatsapp: #128c4e;
 
@@ -126,12 +131,12 @@
   --muted-foreground: var(--ink-soft);
   --border: var(--line);
   --input: var(--line-strong);
-  --ring: var(--charcoal);
-  --primary: var(--rose-strong);
+  --ring: var(--gold);
+  --primary: var(--gold);
   --primary-foreground: var(--ink);
   --secondary: var(--sand);
   --secondary-foreground: var(--charcoal);
-  --accent: var(--blush);
+  --accent: var(--gold-tint);
   --accent-foreground: var(--charcoal);
   --destructive: #b42318;
   --destructive-foreground: #ffffff;
@@ -181,10 +186,10 @@
   --color-champagne-text: var(--champagne-text);
   --color-champagne-soft: var(--champagne-soft);
   --color-champagne-tint: var(--champagne-tint);
-  --color-sage: var(--surface-sage);
-  --color-sage-text: var(--surface-sage-text);
-  --color-blue-grey: var(--surface-blue);
-  --color-blue-grey-text: var(--surface-blue-text);
+  --color-sage: var(--surface-mint);
+  --color-sage-text: var(--surface-mint-text);
+  --color-blue-grey: var(--surface-sky);
+  --color-blue-grey-text: var(--surface-sky-text);
 
   --color-sky: var(--sky);
   --color-sky-text: var(--sky-text);
@@ -265,7 +270,7 @@
 .hue-amber    { --h-fill: var(--butter-fill);   --h-text: var(--butter-text);   --h-tint: var(--butter);    --h-soft: var(--butter-soft);   --h-on-fill: var(--ink); }
 .hue-sunshine { --h-fill: var(--butter-fill);   --h-text: var(--butter-text);   --h-tint: var(--butter);    --h-soft: var(--butter-soft);   --h-on-fill: var(--ink); }
 .hue-gold     { --h-fill: var(--rose);          --h-text: var(--rose-text);     --h-tint: var(--blush);     --h-soft: var(--rose-soft);     --h-on-fill: var(--ivory); }
-.hue-rose     { --h-fill: var(--rose);          --h-text: var(--rose-text);     --h-tint: var(--blush);     --h-soft: var(--rose-soft);     --h-on-fill: var(--ivory); }
+.hue-rose     { --h-fill: var(--gold);          --h-text: var(--gold-text);     --h-tint: var(--gold-tint); --h-soft: var(--gold-soft);     --h-on-fill: var(--ink); }
 .hue-navy     { --h-fill: var(--ink);           --h-text: var(--ink);           --h-tint: var(--sand);      --h-soft: var(--sand-deep);     --h-on-fill: var(--ivory); }
 
 @layer base {
@@ -373,7 +378,7 @@
   backdrop-filter: saturate(140%) blur(14px);
 }
 .glass-dark {
-  background: rgba(18, 16, 17, 0.84);
+  background: rgba(11, 9, 8, 0.86);
   -webkit-backdrop-filter: saturate(120%) blur(16px);
   backdrop-filter: saturate(120%) blur(16px);
 }
@@ -395,15 +400,15 @@
 
 /* A low rose bloom behind a focal element on dark. The accent on dark is the
    logo's rose now, so the glow is rose rather than gold. Never a neon halo. */
-.bloom-gold { background: radial-gradient(60% 50% at 70% 10%, rgba(155, 102, 101, .28), transparent 70%); }
-.bloom-gold-soft { background: radial-gradient(65% 55% at 20% 0%, rgba(155, 102, 101, .16), transparent 70%); }
-.bloom-rose { background: radial-gradient(60% 50% at 70% 10%, rgba(155, 102, 101, .28), transparent 70%); }
+.bloom-gold { background: radial-gradient(60% 50% at 70% 10%, rgba(225, 175, 74, .20), transparent 70%); }
+.bloom-gold-soft { background: radial-gradient(65% 55% at 20% 0%, rgba(225, 175, 74, .12), transparent 70%); }
+.bloom-rose { background: radial-gradient(60% 50% at 70% 10%, rgba(225, 175, 74, .20), transparent 70%); }
 
 /* The hairline that opens a section. This is one of the few places champagne
    is still used, and it is worth more for being rare. */
-.rule-gold { background: linear-gradient(90deg, rgba(211, 185, 133, .9), rgba(211, 185, 133, .2) 70%, transparent); }
-.rule-champagne { background: linear-gradient(90deg, rgba(211, 185, 133, .9), rgba(211, 185, 133, .2) 70%, transparent); }
-.rule-rose { background: linear-gradient(90deg, rgba(155, 102, 101, .85), rgba(155, 102, 101, .18) 70%, transparent); }
+.rule-gold { background: linear-gradient(90deg, rgba(225, 175, 74, .95), rgba(225, 175, 74, .22) 70%, transparent); }
+.rule-champagne { background: linear-gradient(90deg, rgba(225, 175, 74, .95), rgba(225, 175, 74, .22) 70%, transparent); }
+.rule-rose { background: linear-gradient(90deg, rgba(180, 120, 37, .85), rgba(180, 120, 37, .18) 70%, transparent); }
 
 /* A soft light field behind a light hero: two barely-there washes on ivory. Static. */
 .field {
@@ -486,4 +491,27 @@ a:focus-visible .cta-arrow, button:focus-visible .cta-arrow { transform: transla
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
   html { scroll-behavior: auto; }
+}
+
+/* ── The moving strip ──────────────────────────────────────────────────
+   Brought back at the doctor's request, September 2026.
+
+   It existed once before, in a demo marketing layer, where it carried lines
+   like "Rated #1 in Surat" and "98.6% still holding". Every one of those was
+   invented, and the content integrity check now fails the build on exactly
+   that kind of wording. So the strip returns and the claims do not: what
+   runs through it is the clinic's own verified facts.
+
+   One CSS animation on a duplicated track, so it loops with no JavaScript.
+   The rail is twice the content width, so translating it by half seams
+   invisibly. It pauses on hover and on keyboard focus, and it stops dead
+   under prefers-reduced-motion, where it becomes a static row. */
+.strip-rail { width: max-content; animation: strip-scroll 46s linear infinite; }
+.strip:hover .strip-rail,
+.strip:focus-within .strip-rail { animation-play-state: paused; }
+.strip-track { display: flex; align-items: center; }
+@keyframes strip-scroll { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-50%, 0, 0); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .strip-rail { animation: none; }
 }

@@ -18,7 +18,7 @@ export default function GlobalError({ reset }: { error: Error & { digest?: strin
           display: "grid",
           placeItems: "center",
           padding: "2rem 1.25rem",
-          background: "#121011",
+          background: "#0b0908",
           color: "#fff",
           fontFamily: "system-ui, -apple-system, Segoe UI, Roboto, sans-serif",
           textAlign: "center",
@@ -45,7 +45,7 @@ export default function GlobalError({ reset }: { error: Error & { digest?: strin
               padding: "0 1.75rem",
               borderRadius: "999px",
               background: "#c9a227",
-              color: "#121011",
+              color: "#0b0908",
               fontWeight: 600,
               textDecoration: "none",
             }}

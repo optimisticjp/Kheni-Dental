@@ -28,7 +28,7 @@ export function ctaClass(variant: CtaVariant = "primary", size: "md" | "lg" = "m
   return cn(
     "inline-flex items-center justify-center gap-2 rounded-full text-center font-semibold transition-[transform,background-color,border-color,box-shadow,color] duration-300 ease-kheni focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-rose focus-visible:ring-offset-2 focus-visible:ring-offset-transparent",
     size === "lg" ? "min-h-14 px-7 text-base" : "min-h-12 px-5 text-[.9375rem]",
-    variant === "primary" && "bg-rose-strong text-ink shadow-[0_10px_24px_-14px_rgba(155,102,101,.85)] hover:bg-rose",
+    variant === "primary" && "bg-gold text-ink shadow-[0_10px_24px_-14px_rgba(225,175,74,.9)] hover:bg-gold-soft",
     variant === "whatsapp" && "bg-whatsapp text-white hover:brightness-95",
     variant === "secondary" && "border border-charcoal/30 bg-transparent text-charcoal hover:border-charcoal hover:bg-white",
     variant === "onDark" && "border border-ivory/30 bg-transparent text-ivory hover:border-rose-soft hover:text-rose-soft",

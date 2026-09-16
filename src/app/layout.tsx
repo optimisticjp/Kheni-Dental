@@ -4,6 +4,7 @@ import { Footer } from "@/components/layout/footer";
 import { Navbar } from "@/components/layout/navbar";
 import { BookSheet } from "@/components/kheni/book-sheet";
 import { MobileDock } from "@/components/kheni/mobile-dock";
+import { MovingStrip } from "@/components/kheni/moving-strip";
 import { AnalyticsScripts } from "@/components/tracking/analytics";
 import { ConsentBanner } from "@/components/tracking/consent-banner";
 import { TrackLinks } from "@/components/tracking/track-links";
@@ -77,7 +78,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  themeColor: "#121011",
+  themeColor: "#0b0908",
   colorScheme: "light",
 };
 
@@ -90,6 +91,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <StructuredData />
         <TrackLinks />
         <Navbar />
+        {/* The moving strip sits directly under the sticky header on every
+            page, so it reads as part of the masthead rather than a homepage
+            banner. It scrolls facts, never claims. */}
+        <MovingStrip />
         <main className="flex-1">{children}</main>
         <Footer />
         <MobileDock />

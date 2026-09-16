@@ -94,7 +94,7 @@ not, before they book flights.
 - Use the ordinary detail. "Pink in the sink" is how people actually describe
   bleeding gums.
 - Answer the objection in the headline, not in a footnote.
-- One highlighted phrase per line, set in rose by `hl` or the `highlight` prop.
+- One highlighted phrase per line, set in gold by `hl` or the `highlight` prop.
   It should land on the emotional word, not the clinical one.
 - Punchy does not mean superlative. "Chew on both sides again" is punchier than
   anything with "best" in it, and it is also true.

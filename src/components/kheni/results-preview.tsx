@@ -24,11 +24,11 @@ import { cn } from "@/lib/utils";
 /** Two abstract frames drawn as data-URI SVGs, so the slider can be shown without a photograph. */
 const demoFrame = (label: string, a: string, b: string) =>
   `data:image/svg+xml;utf8,${encodeURIComponent(
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"><rect width="800" height="600" fill="${a}"/><circle cx="560" cy="180" r="170" fill="${b}" opacity=".7"/><circle cx="190" cy="470" r="150" fill="${b}" opacity=".45"/><text x="400" y="318" text-anchor="middle" font-family="Georgia, serif" font-size="46" fill="#363435" opacity=".5">${label}</text></svg>`,
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"><rect width="800" height="600" fill="${a}"/><circle cx="560" cy="180" r="170" fill="${b}" opacity=".7"/><circle cx="190" cy="470" r="150" fill="${b}" opacity=".45"/><text x="400" y="318" text-anchor="middle" font-family="Georgia, serif" font-size="46" fill="#1a1512" opacity=".5">${label}</text></svg>`,
   )}`;
 
-const BEFORE = demoFrame("Before", "#eee7dd", "#e2d8ca");
-const AFTER = demoFrame("After", "#faf6f0", "#e3ccc6");
+const BEFORE = demoFrame("Before", "#f1ede6", "#e4ded2");
+const AFTER = demoFrame("After", "#faf8f5", "#f7e6ae");
 
 export function ResultsPreview({ limit = 2, className, placement = "results" }: { limit?: number; className?: string; placement?: string }) {
   const cases = caseResults.slice(0, limit);

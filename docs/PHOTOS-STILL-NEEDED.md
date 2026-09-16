@@ -24,10 +24,11 @@ Still worth asking the clinic for, though nothing is blocked without them:
 - [ ] A vector original (SVG, AI or EPS). The site uses PNG, which is fine at the
       sizes it renders, but a vector is what a printer or a signage company will ask
       for, and it would let the logo be recoloured in CSS.
-- [ ] Confirmation that the rose in the mark is the intended brand colour. Since the
-      September 2026 colour pass the whole site is built on it, so this is now a
-      settled decision rather than an accident, but the clinic should still say so
-      out loud.
+- [ ] Confirmation that the rose in the mark is the intended brand colour. The site
+      itself runs on black and gold at the doctor's request, and the rose now appears
+      only in the K of the logo, which is the clinic's own artwork. Worth confirming
+      that is what he wants rather than leaving it as the last survivor of an earlier
+      palette.
 - [ ] A square or stacked version of the lockup, if one exists. The supplied artwork
       is a wide horizontal lockup, which is why the social preview image
       (`public/images/og-default.jpg`) does not yet carry it.

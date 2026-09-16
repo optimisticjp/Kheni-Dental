@@ -20,15 +20,15 @@
  *   y 910..1035         wordmark line 2, "ELITE IMPLANT CENTER"
  *   r - (g+b)/2 > 22    a rose pixel rather than a charcoal one
  *
- * LIGHT TREATMENT, for ivory, white, blush, sand, sage and blue-grey
+ * LIGHT TREATMENT, for ivory, white, sand and the five light fields
  *   charcoal linework, rose mark. The clinic's own artwork, untouched.
  *
- * DARK TREATMENT, for the header, mobile menu and footer
- *   the K swoosh lifts to a rose that reads on ink, the tooth linework goes
- *   to a slightly held-back ivory so the rose leads the mark, "KHENI DENTAL
- *   &" is warm ivory, and "ELITE IMPLANT CENTER" is champagne. The mark
- *   therefore reads as rose, which is what makes the logo look native to the
- *   site rather than pasted onto it.
+ * DARK TREATMENT, for the black header, mobile menu and footer
+ *   a straight reverse. The linework lifts to ivory so it reads on
+ *   near-black, and the K keeps the clinic's own rose, lifted just enough to
+ *   hold up against the dark. The wordmark is one colour throughout and no
+ *   gold enters the mark: gold is the site's accent, and the logo stays the
+ *   logo.
  *
  * Re-run this if the clinic sends revised artwork. Do not hand-edit the
  * PNGs: the coordinates below are measured against this exact source file,
@@ -60,18 +60,29 @@ const ROSE_EDGE = 22;
 
 const hex = (h) => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
 
-/** The clinic's own colours, for light surfaces. */
+/**
+ * The clinic's own colours, unchanged. This is the supplied artwork.
+ */
 const LIGHT = {
-  line: hex("#363435"),      // logo charcoal
-  rose: hex("#9b6665"),      // logo rose
-  line2: hex("#363435"),
+  line: hex("#2a2320"),      // logo charcoal, warmed a touch to sit on ivory
+  rose: hex("#9b6665"),      // the logo's own rose. Never repainted.
+  line2: hex("#2a2320"),
 };
-/** The reverse treatment, contrast-solved against #121011. */
+/**
+ * The reverse treatment, for the black header, menu and footer.
+ *
+ * The doctor asked for the original logo back, so this is a straight reverse
+ * rather than a re-colour: the linework lifts to ivory so it reads on
+ * near-black, and the K keeps the clinic's own rose, lifted just enough to
+ * hold up against the dark. The wordmark is not split into two colours and
+ * no gold is introduced into the mark. Gold is the site's accent; the logo
+ * stays the logo.
+ */
 const DARK = {
-  line: hex("#ede6dd"),      // tooth linework, held back so the rose leads
-  rose: hex("#c08a84"),      // the K swoosh, lifted to read on ink
-  word1: hex("#faf6f0"),     // KHENI DENTAL &, warm ivory
-  word2: hex("#d3b985"),     // ELITE IMPLANT CENTER, champagne
+  line: hex("#faf8f5"),      // ivory linework
+  rose: hex("#bc8384"),      // the logo's rose, lifted to read on near-black
+  word1: hex("#faf8f5"),     // KHENI DENTAL &
+  word2: hex("#faf8f5"),     // ELITE IMPLANT CENTER, one colour with line 1
 };
 
 /**
@@ -133,7 +144,7 @@ async function appIcon(size, scale, file) {
   const inner = Math.round(size * scale);
   const mark = await (await recolour(MARK, "dark")).resize({ width: inner, kernel: "lanczos3" }).png().toBuffer();
   const h = Math.round(inner / (MARK.width / MARK.height));
-  return sharp({ create: { width: size, height: size, channels: 4, background: { r: 18, g: 16, b: 17, alpha: 1 } } })
+  return sharp({ create: { width: size, height: size, channels: 4, background: { r: 11, g: 9, b: 8, alpha: 1 } } })
     .composite([{ input: mark, left: Math.round((size - inner) / 2), top: Math.round((size - h) / 2) }])
     .png(pngOpts)
     .toFile(file);
@@ -151,7 +162,7 @@ for (const s of sizes) {
   const mark = await (await recolour(MARK, "dark")).resize({ width: inner, kernel: "lanczos3" }).png().toBuffer();
   const h = Math.round(inner / (MARK.width / MARK.height));
   buffers.push(
-    await sharp({ create: { width: s, height: s, channels: 4, background: { r: 18, g: 16, b: 17, alpha: 1 } } })
+    await sharp({ create: { width: s, height: s, channels: 4, background: { r: 11, g: 9, b: 8, alpha: 1 } } })
       .composite([{ input: mark, left: Math.round((s - inner) / 2), top: Math.round((s - h) / 2) }])
       .png()
       .toBuffer(),
