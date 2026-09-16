@@ -12,12 +12,13 @@ import { CtaBand } from "@/components/kheni/cta-band";
 import { DoctorRoster, DoctorSpotlight } from "@/components/kheni/doctor-spotlight";
 import { FollowLine, InstagramReels } from "@/components/kheni/instagram-reels";
 import { ProcessSteps } from "@/components/kheni/process-steps";
-import { GoogleQuotes, ProofChip, ProofPanel, Stars } from "@/components/kheni/proof";
+import { GoogleQuotes, MetricRow, ProofChip, ProofPanel, Stars } from "@/components/kheni/proof";
 import { Highlighted, SectionIntro } from "@/components/kheni/section-intro";
 import { TreatmentRail } from "@/components/kheni/treatment-rail";
 import { TreatmentTile } from "@/components/kheni/treatment-poster";
 import { photoSrcSet } from "@/components/kheni/media-frame";
 import { headlineCapabilities } from "@/content/capabilities";
+import { metricsFor } from "@/content/clinic-proof";
 import { googleReputation, verifiedBranches } from "@/content/google-reputation";
 import { implantHero, implantProcess } from "@/content/implant-center";
 import { instagramHandle, instagramReels } from "@/content/instagram";
@@ -49,6 +50,9 @@ const featured = treatments.filter((t) => t.featured).slice(0, 7);
 const railTreatments = featured.slice(0, 6);
 const nriMessage = "Hello Kheni Dental, I live abroad and would like to plan dental treatment during a visit to Surat. Here are my dates:";
 const abroadVideos = clinicVideos.filter((v) => ["eex02jLikGk", "7n0mOTFirzI"].includes(v.id));
+
+/** Every volume the clinic gave on its form. Eight, so they sit 2 x 4. */
+const homeMetrics = metricsFor("home");
 const heroFrames = ["consultation-desk", "kids-camp"].map((id) => instagramReels.find((r) => r.id === id)).filter((r): r is NonNullable<typeof r> => Boolean(r));
 
 export default function Home() {
@@ -253,6 +257,24 @@ export default function Home() {
           </div>
           <div className="mt-4">
             <DoctorRoster exclude="dr-mayur-kheni" compact />
+          </div>
+        </Container>
+      </section>
+
+      {/* ── The clinic's own numbers. Every volume it gave us, in one place. ── */}
+      <section className="bg-sand py-10 sm:py-14 lg:py-18">
+        <Container width="7xl">
+          <div className="grid gap-8 lg:grid-cols-[.85fr_1.15fr] lg:items-center lg:gap-14">
+            <SectionIntro
+              eyebrow="Kheni Dental in numbers"
+              title="Fifteen years of work, counted."
+              highlight="counted"
+              copy="These are the clinic's own figures for the treatments it has carried out since 2012, across both Surat clinics."
+            />
+            {/* Two-up until 1360. Four across is too tight for "90,000+" while
+                the intro still takes a column: it overflowed at 1024 and again
+                at exactly 1280, so the switch sits above xl rather than on it. */}
+            <MetricRow metrics={homeMetrics} className="lg:grid-cols-2 min-[1360px]:grid-cols-4" />
           </div>
         </Container>
       </section>

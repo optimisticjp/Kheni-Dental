@@ -41,8 +41,13 @@ export type ProofMetric = {
   evidenceNote?: string;
   /** False keeps the figure in data for the ledger but off every page. */
   display: boolean;
-  /** Pages this metric belongs to. */
-  placements: ("about" | "implants" | "kids" | "nri" | "full-mouth" | "smile" | "rct")[];
+  /**
+   * Pages this metric belongs to. "home" is the headline band on the
+   * homepage: every volume the clinic gave, in one place, because scattering
+   * them one per inner page meant a visitor who never left the homepage saw
+   * none of them.
+   */
+  placements: ("home" | "about" | "implants" | "kids" | "nri" | "full-mouth" | "smile" | "rct")[];
 };
 
 const form = "Clinic information form, 14 September 2026";
@@ -67,14 +72,14 @@ export const proofMetrics: ProofMetric[] = [
         },
       ]
     : []),
-  { id: "patients", value: "45,000", label: "Patients treated", source: `${form}, p2 (repeated p44)`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Basis and date needed before launch.", display: true, placements: ["about"] },
-  { id: "implants", value: "3,700", label: "Implants placed", source: `${form}, p2`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Basis and date needed before launch.", display: true, placements: ["about", "implants"] },
-  { id: "full-mouth", value: "950", label: "Full mouth cases", source: `${form}, p2`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Basis and date needed before launch.", display: true, placements: ["about", "full-mouth"] },
-  { id: "rct", value: "90,000", suffix: "+", label: "Root canals", source: `${form}, p2`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Stored exactly as typed. It is double the stated patient count, so the clinic still needs to confirm what is being counted (ledger C12).", display: true, placements: ["rct"] },
-  { id: "smile-design", value: "720", suffix: "+", label: "Smile design cases", source: `${form}, p2`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Basis and date needed before launch.", display: true, placements: ["smile"] },
-  { id: "children", value: "4,500", suffix: "+", label: "Children treated", source: `${form}, p3 (p45 blank)`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Basis and date needed before launch.", display: true, placements: ["kids"] },
-  { id: "nri", value: "640", suffix: "+", label: "NRI patients", source: `${form}, p3 (Correct)`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Basis and date needed before launch.", display: true, placements: ["nri"] },
-  { id: "countries", value: "23", label: "Countries", source: `${form}, p3 (Correct)`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "A list of countries would let the site name a few.", display: true, placements: ["nri"] },
+  { id: "patients", value: "45,000", label: "Patients treated", source: `${form}, p2 (repeated p44)`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Basis and date needed before launch.", display: true, placements: ["home", "about"] },
+  { id: "implants", value: "3,700", label: "Implants placed", source: `${form}, p2`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Basis and date needed before launch.", display: true, placements: ["home", "about", "implants"] },
+  { id: "full-mouth", value: "950", label: "Full mouth cases", source: `${form}, p2`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Basis and date needed before launch.", display: true, placements: ["home", "about", "full-mouth"] },
+  { id: "rct", value: "90,000", suffix: "+", label: "Root canals", source: `${form}, p2`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Stored exactly as typed. It is double the stated patient count, so the clinic still needs to confirm what is being counted (ledger C12).", display: true, placements: ["home", "rct"] },
+  { id: "smile-design", value: "720", suffix: "+", label: "Smile design cases", source: `${form}, p2`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Basis and date needed before launch.", display: true, placements: ["home", "smile"] },
+  { id: "children", value: "4,500", suffix: "+", label: "Children treated", source: `${form}, p3 (p45 blank)`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Basis and date needed before launch.", display: true, placements: ["home", "kids"] },
+  { id: "nri", value: "640", suffix: "+", label: "NRI patients", source: `${form}, p3 (Correct)`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Basis and date needed before launch.", display: true, placements: ["home", "nri"] },
+  { id: "countries", value: "23", label: "Countries", source: `${form}, p3 (Correct)`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "A list of countries would let the site name a few.", display: true, placements: ["home", "nri"] },
   { id: "implant-success", value: "98.6", suffix: "%", label: "Implant success", source: `${form}, p3`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Never rendered: p30 'track implant success' is ticked Do not show (ledger C10).", display: false, placements: ["implants"] },
 ];
 
