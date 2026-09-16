@@ -93,7 +93,7 @@ export default function InternationalPage() {
         </div>
       </PageHero>
 
-      <section className="py-10 sm:py-14 lg:py-18">
+      <section className="sec">
         <Container width="7xl">
           <div className="grid gap-8 lg:grid-cols-[1.15fr_.85fr] lg:items-center lg:gap-12">
             <div>
@@ -113,7 +113,7 @@ export default function InternationalPage() {
         </Container>
       </section>
 
-      <section className="bg-sky py-10 sm:py-14 lg:py-18">
+      <section className="bg-sky sec">
         <Container width="7xl">
           <div className="grid gap-8 lg:grid-cols-[1fr_1fr] lg:gap-14">
             <div>
@@ -142,7 +142,7 @@ export default function InternationalPage() {
         </Container>
       </section>
 
-      <section className="py-10 sm:py-14 lg:py-18">
+      <section className="sec">
         <Container width="7xl">
           <SectionIntro
             eyebrow="Planning help"
@@ -161,9 +161,9 @@ export default function InternationalPage() {
         </Container>
       </section>
 
-      <SmileNote index={2} compact tone="dark" className="py-10 sm:py-14" />
+      <SmileNote index={2} compact tone="dark" className="sec" />
 
-      <section className="pb-10 sm:pb-14 lg:pb-18">
+      <section className="sec-b">
         <Container width="7xl">
           <div className="grid gap-8 lg:grid-cols-[.9fr_1.1fr] lg:gap-14">
             <div>

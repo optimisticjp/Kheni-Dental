@@ -19,8 +19,15 @@ const widthMap: Record<NonNullable<ContainerProps["width"]>, string> = {
 
 /**
  * Responsive, centered content container with fluid horizontal padding.
- * Server Component. The padding scale (16px -> 24px -> 32px) keeps content
- * comfortably inset at 360px while widening on larger screens.
+ * Server Component. The padding scale (16px -> 24px -> 32px -> 40px) keeps
+ * content comfortably inset at 320px while widening on larger screens.
+ *
+ * The `7xl` width earns a little more room above 1600px. Capping every page
+ * at 1280px left a 1728px display showing a narrow column between two wide
+ * empty margins, which reads as a site that was never looked at on a big
+ * screen. 88rem is enough to fill the space without letting text lines run
+ * past a comfortable measure, because the long-form columns inside are
+ * constrained separately by `measure-*`.
  */
 export function Container({
   className,
@@ -30,8 +37,9 @@ export function Container({
   return (
     <div
       className={cn(
-        "mx-auto w-full px-4 sm:px-6 lg:px-8",
+        "mx-auto w-full px-4 sm:px-6 lg:px-8 min-[1600px]:px-10",
         widthMap[width],
+        width === "7xl" && "min-[1600px]:max-w-[88rem]",
         className,
       )}
       {...props}

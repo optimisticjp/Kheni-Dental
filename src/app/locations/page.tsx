@@ -25,12 +25,12 @@ export default function LocationsPage() {
         hue="green"
         compact
       />
-      <section className="bg-white py-8 sm:py-12 lg:py-16">
+      <section className="bg-white sec">
         <Container width="7xl">
           <BranchLocator placement="locations" />
         </Container>
       </section>
-      <SmileNote note={smileNotes[2]} compact className="pb-10 sm:pb-14" />
+      <SmileNote note={smileNotes[2]} compact className="sec-b" />
       <CtaBand title="Not sure which clinic? Ask us." highlight="Ask us" copy="Message with your area and we will suggest the easier one to reach." placement="locations_final" hue="green" />
     </>
   );

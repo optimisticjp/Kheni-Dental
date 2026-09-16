@@ -29,13 +29,13 @@ export default function DoctorsPage() {
         compact
       />
 
-      <section className="py-8 sm:py-12 lg:py-16">
+      <section className="sec">
         <Container width="7xl">
           <DoctorSpotlight />
         </Container>
       </section>
 
-      <section className="pb-10 sm:pb-14 lg:pb-18">
+      <section className="sec-b">
         <Container width="7xl">
           <SectionIntro eyebrow="The team" title="Three more dentists, each with their own area of work." highlight="area of work" copy="Degrees, years in practice and clinics are listed exactly as each doctor gave them on the clinic's information form." />
           <div className="mt-6">
@@ -51,9 +51,9 @@ export default function DoctorsPage() {
         </Container>
       </section>
 
-      <SmileNote note={smileNotes[1]} compact className="pb-10 sm:pb-14" />
+      <SmileNote note={smileNotes[1]} compact className="sec-b" />
 
-      <section className="pb-10 sm:pb-14 lg:pb-18">
+      <section className="sec-b">
         <Container width="7xl">
           <ProofCluster placement="doctors_proof" />
         </Container>

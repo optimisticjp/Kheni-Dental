@@ -43,7 +43,7 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
     <>
       <section className={`hue-${location.hue} on-dark grain relative isolate overflow-hidden bg-ink text-ivory`}>
         <div aria-hidden="true" className="bloom-gold pointer-events-none absolute inset-0" />
-        <Container width="7xl" className="relative grid gap-6 py-7 sm:py-10 lg:grid-cols-[1fr_.95fr] lg:items-center lg:gap-12 lg:py-14">
+        <Container width="7xl" className="relative grid gap-6 sec-hero lg:grid-cols-[1fr_.95fr] lg:items-center lg:gap-12">
           <div>
             <p className="t-eyebrow flex items-center gap-3 text-gold">
               {location.implantCentre ? "Kheni Dental & Elite Implant Center" : "Kheni Dental"}
@@ -90,7 +90,7 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
         </Container>
       </section>
 
-      <section className="py-10 sm:py-14 lg:py-18">
+      <section className="sec">
         <Container width="7xl">
           <div className="grid gap-5 lg:grid-cols-[1fr_1fr]">
             <BranchProof location={location} placement={`location_google_${location.slug}`} />
@@ -130,7 +130,7 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
         </Container>
       </section>
 
-      <section className={`hue-${location.hue} bg-h-tint py-10 sm:py-14 lg:py-18`}>
+      <section className={`hue-${location.hue} bg-h-tint sec`}>
         <Container width="7xl">
           <div className="grid gap-8 lg:grid-cols-[1fr_1fr] lg:gap-12">
             <div>

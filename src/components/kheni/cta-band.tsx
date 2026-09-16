@@ -29,7 +29,7 @@ export function CtaBand({
   return (
     <section className={cn("on-dark grain relative isolate overflow-hidden border-t border-ivory/10 bg-ink text-ivory", className)}>
       <div aria-hidden="true" className="bloom-gold pointer-events-none absolute inset-0" />
-      <Container width="7xl" className="relative grid gap-6 py-12 sm:py-14 lg:grid-cols-[1fr_auto] lg:items-center lg:py-16">
+      <Container width="7xl" className="relative grid gap-6 sec lg:grid-cols-[1fr_auto] lg:items-center">
         <div>
           <span aria-hidden="true" className="rule-gold mb-5 block h-px w-14" />
           <h2 className="t-h1 measure-head">

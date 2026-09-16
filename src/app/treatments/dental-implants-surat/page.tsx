@@ -52,7 +52,7 @@ export default function DentalImplantsPage() {
       {/* ── Hero ─────────────────────────────────────────────────────── */}
       <section className="on-dark grain relative isolate overflow-hidden bg-ink text-ivory">
         <div aria-hidden="true" className="bloom-gold pointer-events-none absolute inset-0" />
-        <Container width="7xl" className="relative grid gap-8 py-9 sm:py-12 lg:grid-cols-[1.05fr_.95fr] lg:items-center lg:gap-14 lg:py-16">
+        <Container width="7xl" className="relative grid gap-8 sec-hero lg:grid-cols-[1.05fr_.95fr] lg:items-center lg:gap-14">
           <div>
             <p className="t-eyebrow flex items-center gap-3 text-gold">
               {implantHero.eyebrow}
@@ -76,7 +76,7 @@ export default function DentalImplantsPage() {
       </section>
 
       {/* ── Kinds of case ────────────────────────────────────────────── */}
-      <section className="bg-white py-10 sm:py-14 lg:py-18">
+      <section className="bg-white sec">
         <Container width="7xl">
           <SectionIntro eyebrow="What we plan" title="Single tooth to full mouth." highlight="full mouth" copy="Every case is planned by Dr. Mayur Kheni after an examination and imaging. Consultations at both our clinics." />
           <ul className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
@@ -107,7 +107,7 @@ export default function DentalImplantsPage() {
       </section>
 
       {/* ── Process ──────────────────────────────────────────────────── */}
-      <section className="bg-sand py-10 sm:py-14 lg:py-18">
+      <section className="bg-sand sec">
         <Container width="7xl">
           <SectionIntro eyebrow={implantProcess.eyebrow} title={implantProcess.title} highlight={["first visit", "final tooth"]} copy={implantProcess.copy} />
           <ProcessSteps steps={implantProcess.steps} columns={5} className="mt-6 sm:mt-8" variant="cards" />
@@ -186,7 +186,7 @@ export default function DentalImplantsPage() {
       </section>
 
       {/* ── Your situation ───────────────────────────────────────────── */}
-      <section className="py-10 sm:py-14 lg:py-18">
+      <section className="sec">
         <Container width="7xl">
           <SectionIntro eyebrow="Your situation" title="Which of these is closest to you?" highlight="closest" />
           <div className="mt-6 sm:mt-8">
@@ -196,7 +196,7 @@ export default function DentalImplantsPage() {
       </section>
 
       {/* ── Compare ──────────────────────────────────────────────────── */}
-      <section className="hue-sky bg-sky py-10 sm:py-14 lg:py-18">
+      <section className="hue-sky bg-sky sec">
         <Container width="7xl">
           <SectionIntro eyebrow="Know the words" title={comparison.title} highlight="bridge or denture" copy={comparison.copy} />
           <details className="group mt-6 overflow-hidden rounded-[1.5rem] bg-white ring-1 ring-line">
@@ -229,7 +229,7 @@ export default function DentalImplantsPage() {
       </section>
 
       {/* ── Dr. Mayur ────────────────────────────────────────────────── */}
-      <section className="py-10 sm:py-14 lg:py-18">
+      <section className="sec">
         <Container width="7xl">
           <DoctorSpotlight doctor={drMayur} />
         </Container>
@@ -238,14 +238,14 @@ export default function DentalImplantsPage() {
       <SmileNote note={smileNotes[5]} compact tone="dark" />
 
       {/* ── Results and proof ────────────────────────────────────────── */}
-      <section className="bg-sand py-10 sm:py-14 lg:py-18">
+      <section className="bg-sand sec">
         <Container width="7xl">
           <SectionIntro eyebrow="Results" title="Implant results, shown honestly." highlight="honestly" />
           <ResultsPreview limit={2} placement="implant_results" className="mt-6" />
         </Container>
       </section>
 
-      <section className="py-10 sm:py-14 lg:py-18">
+      <section className="sec">
         <Container width="7xl">
           <div className="grid gap-5 lg:grid-cols-3">
             {locations.map((l) => (
@@ -261,7 +261,7 @@ export default function DentalImplantsPage() {
       </section>
 
       {/* ── Questions ────────────────────────────────────────────────── */}
-      <section className="bg-sand py-10 sm:py-14 lg:py-18">
+      <section className="bg-sand sec">
         <Container width="7xl">
           <div className="grid gap-6 lg:grid-cols-[.7fr_1.3fr] lg:gap-14">
             <div>

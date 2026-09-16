@@ -46,7 +46,7 @@ export function PageHero({
       )}
     >
       {dark && <div aria-hidden="true" className="bloom-gold pointer-events-none absolute inset-0" />}
-      <Container width="7xl" className={cn("relative", compact ? "py-8 sm:py-10 lg:py-14" : "py-9 sm:py-12 lg:py-16", aside && "grid gap-8 lg:grid-cols-[1.1fr_.9fr] lg:items-center lg:gap-14")}>
+      <Container width="7xl" className={cn("relative", compact ? "sec-tight" : "sec", aside && "grid gap-8 lg:grid-cols-[1.1fr_.9fr] lg:items-center lg:gap-14")}>
         <div>
           <p className={cn("t-eyebrow flex items-center gap-3", dark ? "text-gold" : "text-gold-text")}>
             {eyebrow}

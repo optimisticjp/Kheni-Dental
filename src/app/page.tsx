@@ -61,7 +61,7 @@ export default function Home() {
       {/* ── Hero: dark, gold detail, real Kheni frames ───────────────── */}
       <section className="on-dark grain relative isolate overflow-hidden bg-ink text-ivory">
         <div aria-hidden="true" className="bloom-gold pointer-events-none absolute inset-0" />
-        <Container width="7xl" className="relative grid gap-8 py-9 sm:py-12 lg:grid-cols-[1.05fr_.95fr] lg:items-center lg:gap-14 lg:py-16">
+        <Container width="7xl" className="relative grid gap-8 sec-hero lg:grid-cols-[1.05fr_.95fr] lg:items-center lg:gap-14">
           <div>
             {/* The logo directly above already says the clinic's name, so the
                 eyebrow names the two clinics instead of repeating it. */}
@@ -85,7 +85,13 @@ export default function Home() {
           {/* Right: two frames from the clinic's own Instagram and the two
               listings on one soft mint card. The one light accent in the
               dark hero. */}
-          <div className="grid grid-cols-[1.1fr_.9fr] gap-3 sm:grid-cols-[1fr_.9fr_.9fr] lg:grid-cols-[1.1fr_.9fr] lg:gap-4">
+          {/* 640 to 767 is the one width where three across still reads, because
+              the hero is stacked and the row has the full container. From 768
+              it goes back to the two-column composition used on desktop: the
+              tall frame beside a stacked square and proof card. Three across at
+              768 was the single worst thing on the tablet layout, a cramped row
+              with mismatched heights and a hole in the middle. */}
+          <div className="grid grid-cols-[1.1fr_.9fr] gap-3 sm:grid-cols-[1fr_.9fr_.9fr] md:grid-cols-[1.1fr_.9fr] md:gap-4">
             {heroFrames.map((reel, index) => (
               <a
                 key={reel.id}
@@ -95,7 +101,7 @@ export default function Home() {
                 data-track="instagram_reel_open"
                 data-placement="home_hero_frame"
                 aria-label={`${reel.title}. Watch on Instagram`}
-                className={index === 0 ? "row-span-2 sm:row-span-1 lg:row-span-2" : "hidden sm:block"}
+                className={index === 0 ? "row-span-2 sm:row-span-1 md:row-span-2" : "hidden sm:block"}
               >
                 <span className="relative block overflow-hidden rounded-[1.25rem] border border-ivory/10 bg-ink-2" style={{ aspectRatio: index === 0 ? "4 / 5" : "1 / 1" }}>
                   {reel.poster && (
@@ -156,7 +162,7 @@ export default function Home() {
       </section>
 
       {/* ── What brings you in today? Soft mint. ─────────────────────── */}
-      <section className="bg-mint py-10 sm:py-14 lg:py-20">
+      <section className="bg-mint sec-loose">
         <Container width="7xl">
           <SectionIntro eyebrow="Start here" title="What brings you in today?" highlight="today" copy="Pick whichever sounds like you. You do not need the name of the treatment, and you do not need to have worked out how bad it is. That is our job." />
           <div className="mt-6 sm:mt-8">
@@ -166,7 +172,7 @@ export default function Home() {
       </section>
 
       {/* ── Treatments: editorial tiles, the rail from lg. White. ────── */}
-      <section className="bg-white py-10 sm:py-14 lg:py-20">
+      <section className="bg-white sec-loose">
         <Container width="7xl">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <SectionIntro eyebrow="Treatments" title="From a check-up to a whole new bite." highlight="whole new bite" />
@@ -187,7 +193,7 @@ export default function Home() {
       </section>
 
       {/* ── Inside Kheni: the clinic's own Instagram. Ivory. ─────────── */}
-      <section className="py-10 sm:py-14 lg:py-20">
+      <section className="sec-loose">
         <Container width="7xl">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <SectionIntro eyebrow={`Inside Kheni · ${instagramHandle}`} title="The clinic, as it is on an ordinary day." highlight="ordinary day" copy="Short clips from our own Instagram: a school camp, the consultation desk, a child settling into the chair." />
@@ -245,7 +251,7 @@ export default function Home() {
       </section>
 
       {/* ── The dentists. Ivory, with a peach spread. ─────────────────── */}
-      <section className="py-10 sm:py-14 lg:py-20">
+      <section className="sec-loose">
         <Container width="7xl">
           <DoctorSpotlight />
           <div className="mt-6 flex flex-wrap items-end justify-between gap-3 sm:mt-8">
@@ -262,7 +268,7 @@ export default function Home() {
       </section>
 
       {/* ── The clinic's own numbers. Every volume it gave us, in one place. ── */}
-      <section className="bg-sand py-10 sm:py-14 lg:py-18">
+      <section className="bg-sand sec">
         <Container width="7xl">
           <div className="grid gap-8 lg:grid-cols-[.85fr_1.15fr] lg:items-center lg:gap-14">
             <SectionIntro
@@ -297,7 +303,7 @@ export default function Home() {
       </section>
 
       {/* ── NRI and international. Soft sky, real patients from abroad. ── */}
-      <section className="bg-sky py-10 sm:py-14 lg:py-20">
+      <section className="bg-sky sec-loose">
         <Container width="7xl">
           <div className="grid gap-8 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-14">
             <div>
@@ -328,7 +334,7 @@ export default function Home() {
       </section>
 
       {/* ── The two clinics. White. ───────────────────────────────────── */}
-      <section className="bg-white py-10 sm:py-14 lg:py-20">
+      <section className="bg-white sec-loose">
         <Container width="7xl">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <SectionIntro eyebrow="Two clinics in Surat" title="Come to whichever is nearer." highlight="nearer" />
@@ -344,7 +350,7 @@ export default function Home() {
       </section>
 
       {/* ── Questions. Ivory. ─────────────────────────────────────────── */}
-      <section className="py-10 sm:py-14 lg:py-20">
+      <section className="sec-loose">
         <Container width="7xl">
           <div className="grid gap-6 lg:grid-cols-[.7fr_1.3fr] lg:gap-14">
             <SectionIntro eyebrow="Questions" title="Things people ask before their first visit." highlight="first visit" />

@@ -46,13 +46,17 @@ export function Navbar() {
           <div className="flex h-16 items-center justify-between gap-4 sm:h-[72px]">
             <BrandMark compact />
 
-            <nav aria-label="Primary" className="hidden items-center gap-0.5 xl:flex">
+            {/* The nav used to appear only at 1280, so a 1024 laptop hid six
+                destinations behind a hamburger while roughly 500px of header
+                sat empty. It now appears at 1024 with tighter item padding,
+                and the phone pill stands down until 1280 to make room. */}
+            <nav aria-label="Primary" className="hidden items-center gap-0.5 lg:flex">
               {primaryNav.map((link) =>
                 link.hasMenu ? (
                   <div key={link.href} className="group relative">
                     <Link
                       href={link.href}
-                      className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-2 text-[.9375rem] text-ivory/75 transition-colors hover:text-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+                      className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-2 text-[.9375rem] text-ivory/75 xl:px-3 transition-colors hover:text-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
                     >
                       {link.label}
                       <ChevronDown className="size-3.5 transition-transform group-hover:rotate-180" aria-hidden="true" />
@@ -85,8 +89,12 @@ export function Navbar() {
                     key={link.href}
                     href={link.href}
                     className={cn(
-                      "whitespace-nowrap rounded-full px-3 py-2 text-[.9375rem] transition-colors hover:text-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold",
-                      link.accent ? "text-gold" : "text-ivory/75",
+                      "whitespace-nowrap rounded-full px-2.5 py-2 text-[.9375rem] transition-colors hover:text-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold xl:px-3",
+                      // Between 1024 and 1279 the full set overflows the header
+                      // and clips the Book button. The accented implants link is
+                      // the one item that duplicates a destination already in the
+                      // Treatments dropdown, so it is the honest one to drop.
+                      link.accent ? "hidden text-gold xl:inline-flex" : "text-ivory/75",
                     )}
                   >
                     {link.label}
@@ -101,7 +109,7 @@ export function Navbar() {
                 data-track="phone_click"
                 data-placement="header"
                 aria-label={`Call the clinic on ${site.primaryPhoneDisplay}`}
-                className="hidden size-11 items-center justify-center gap-2 whitespace-nowrap rounded-full border border-ivory/20 text-sm text-ivory/90 hover:border-gold/60 hover:text-gold md:inline-flex min-[1400px]:size-auto min-[1400px]:px-4"
+                className="hidden size-11 items-center justify-center gap-2 whitespace-nowrap rounded-full border border-ivory/20 text-sm text-ivory/90 hover:border-gold/60 hover:text-gold md:inline-flex lg:hidden xl:inline-flex min-[1400px]:size-auto min-[1400px]:px-4"
               >
                 <Phone className="size-4 text-gold" aria-hidden="true" />
                 <span className="hidden min-[1400px]:inline">{site.primaryPhoneDisplay}</span>
@@ -113,7 +121,7 @@ export function Navbar() {
                 aria-label="Open menu"
                 aria-expanded={open}
                 aria-controls={open ? "mobile-menu" : undefined}
-                className="grid size-11 place-items-center rounded-full border border-ivory/20 text-ivory xl:hidden"
+                className="grid size-11 place-items-center rounded-full border border-ivory/20 text-ivory lg:hidden"
               >
                 <Menu className="size-5" />
               </button>

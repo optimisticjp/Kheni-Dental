@@ -31,7 +31,7 @@ export default function ContactPage() {
     <>
       <section className="on-dark grain relative isolate overflow-hidden bg-ink text-ivory">
         <div aria-hidden="true" className="bloom-gold pointer-events-none absolute inset-0" />
-        <Container width="7xl" className="relative py-7 sm:py-10 lg:py-14">
+        <Container width="7xl" className="relative sec-tight">
           <p className="t-eyebrow flex items-center gap-3 text-gold">
             Contact and booking
             <span aria-hidden="true" className="rule-gold h-px w-12" />
@@ -76,7 +76,7 @@ export default function ContactPage() {
         </Container>
       </section>
 
-      <section id="book" className="anchor py-10 sm:py-14 lg:py-18">
+      <section id="book" className="anchor sec">
         <Container width="7xl">
           <div className="grid gap-8 lg:grid-cols-[.8fr_1.2fr] lg:gap-14">
             <div>
@@ -88,7 +88,7 @@ export default function ContactPage() {
         </Container>
       </section>
 
-      <section className="bg-mint py-10 sm:py-14 lg:py-18">
+      <section className="bg-mint sec">
         <Container width="7xl">
           <SectionIntro eyebrow="Two clinics" title="Which clinic is easier for you?" highlight="suits you" copy="Both belong to the same practice. Each keeps its own number and its own Google listing." />
           <div className="mt-6">

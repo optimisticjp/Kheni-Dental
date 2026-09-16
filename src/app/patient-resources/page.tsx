@@ -48,7 +48,7 @@ export default function ResourcesPage() {
         </nav>
       </PageHero>
 
-      <section className="hue-coral py-8 sm:py-10">
+      <section className="hue-coral sec-tight">
         <Container width="7xl">
           <div className="grid gap-5 rounded-[1.5rem] border border-peach-fill/50 bg-peach p-5 sm:p-7 lg:grid-cols-[1fr_auto] lg:items-center">
             <div>
@@ -74,7 +74,7 @@ export default function ResourcesPage() {
       </section>
 
       {categories.map((category, index) => (
-        <section key={category.id} id={category.id} className={`hue-${category.hue} anchor py-10 sm:py-14 ${index % 2 === 1 ? "bg-h-tint" : ""}`}>
+        <section key={category.id} id={category.id} className={`hue-${category.hue} anchor sec ${index % 2 === 1 ? "bg-h-tint" : ""}`}>
           <Container width="7xl">
             <div className="grid gap-6 lg:grid-cols-[.7fr_1.3fr] lg:gap-14">
               <SectionIntro eyebrow={`0${index + 1}`} title={category.label} copy={category.intro} className="lg:sticky lg:top-24 lg:self-start" />
@@ -101,7 +101,7 @@ export default function ResourcesPage() {
         </section>
       ))}
 
-      <section className="py-8 sm:py-10">
+      <section className="sec-tight">
         <Container width="7xl">
           <p className="t-small max-w-3xl text-ink-soft">
             These guides are general information, written to help you prepare and ask better questions. They cannot tell you what is happening in your own mouth. If anything here does not match what you were told at the clinic, go with what the doctor treating you said and ask them about the difference.

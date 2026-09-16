@@ -69,7 +69,7 @@ export function Footer() {
 
   return (
     <footer className="on-dark grain bg-ink text-ivory">
-      <Container width="7xl" className="py-10 sm:py-12 lg:py-16">
+      <Container width="7xl" className="sec">
         <div className="grid gap-8 lg:grid-cols-[1.2fr_.8fr_.8fr_1.2fr] lg:gap-10">
           <div>
             <BrandMark />

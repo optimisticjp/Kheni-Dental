@@ -50,13 +50,13 @@ export default function AboutPage() {
         aside={aboutPhoto ? <MediaFrame ratio="4 / 5" mobileRatio="4 / 3" from="lg" src={aboutPhoto.src} alt={aboutPhoto.alt} objectPosition={aboutPhoto.objectPosition} tone="dark" className="max-w-md rounded-[1.5rem] border border-ivory/10 lg:ml-auto" /> : undefined}
       />
 
-      <section className="py-8 sm:py-12">
+      <section className="sec-tight">
         <Container width="7xl">
           <MetricRow metrics={metrics} />
         </Container>
       </section>
 
-      <section className="bg-butter py-8 sm:py-12 lg:py-16">
+      <section className="bg-butter sec">
         <Container width="7xl">
           {/* Asked on form p14, "what should patients feel when visiting?". The
               clinic's answer was "patients obtain accurate information", which
@@ -79,7 +79,7 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      <section className="py-10 sm:py-14 lg:py-18">
+      <section className="sec">
         <Container width="7xl">
           <div className="grid gap-8 lg:grid-cols-[.8fr_1.2fr] lg:gap-14">
             <SectionIntro eyebrow="Since 2012" title="Two clinics, one way of working." highlight="one way" copy="The Elite Implant Center name was added so that implant and full mouth cases could be planned as carefully as they deserve. The everyday dentistry never stopped." className="lg:sticky lg:top-24 lg:self-start" />
@@ -98,9 +98,9 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      <SmileNote note={smileNotes[0]} compact className="pb-8 sm:pb-12" />
+      <SmileNote note={smileNotes[0]} compact className="sec-b" />
 
-      <section className="pb-10 sm:pb-14 lg:pb-18">
+      <section className="sec-b">
         <Container width="7xl">
           <SectionIntro eyebrow="Who will see you" title="Four dentists, and what each one handles." highlight="Four dentists" />
           <div className="mt-6">
@@ -112,7 +112,7 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      <section className="bg-sand py-10 sm:py-14 lg:py-18">
+      <section className="bg-sand sec">
         <Container width="7xl">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <SectionIntro eyebrow="Inside the clinic" title="Equipment you can see working." highlight="see working" copy="Digital X-rays on screen while you wait, a camera that shows you the tooth, a microscope for root canal work. Listed by category; ask for makes and models at the clinic." />
@@ -143,7 +143,7 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      <section className="bg-white py-10 sm:py-14 lg:py-18">
+      <section className="bg-white sec">
         <Container width="7xl">
           <SectionIntro eyebrow="Two clinics" title="Come to whichever is nearer." highlight="nearer" />
           <div className="mt-6">

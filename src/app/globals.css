@@ -335,6 +335,35 @@
 }
 .on-dark { --hl: var(--rose-soft); }
 
+/* ── Section rhythm ────────────────────────────────────────────────────
+   Before this, 63 sections carried 15 different padding combinations, most
+   of them one-offs that drifted in over successive passes. Nobody reading
+   the page could have told you the system, because there was not one.
+
+   There are now three densities on a single fluid scale. They scale with
+   the viewport rather than stepping at breakpoints, so a tablet gets a
+   tablet-sized space instead of a phone's, which is most of what made the
+   768 to 1023 band feel undesigned.
+
+   The ratio between them is deliberate: `loose` is roughly 1.5x `normal`,
+   which is far enough apart to read as intent rather than inconsistency.
+   Generous vertical space is the cheapest premium signal there is, and the
+   most commonly skipped. */
+.sec       { padding-block: clamp(2.75rem, 1.9rem + 4.2vw, 6rem); }
+.sec-tight { padding-block: clamp(2rem, 1.5rem + 2.5vw, 3.75rem); }
+.sec-loose { padding-block: clamp(4rem, 2.6rem + 6.5vw, 9rem); }
+/* One-sided variants, for sections that butt against a coloured field. */
+.sec-t     { padding-block-start: clamp(2.75rem, 1.9rem + 4.2vw, 6rem); }
+.sec-b     { padding-block-end: clamp(2.75rem, 1.9rem + 4.2vw, 6rem); }
+/* Heroes sit tighter under the header on a phone and open up on a desktop,
+   so the first headline is above the fold on a small screen without the
+   desktop hero feeling cramped. */
+.sec-hero  { padding-block: clamp(2.25rem, 1.2rem + 4.6vw, 5rem); }
+
+/* The gap between a section's heading block and its content. One value,
+   used everywhere, so the eye learns the interval. */
+.sec-gap   { margin-top: clamp(1.5rem, 1.1rem + 1.8vw, 2.75rem); }
+
 /* ── Surfaces ─────────────────────────────────────────────────────────── */
 
 /* Frosted header and sheets. Light and dark versions. */

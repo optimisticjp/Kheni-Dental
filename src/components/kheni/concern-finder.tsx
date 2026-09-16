@@ -34,7 +34,12 @@ export function ConcernFinder() {
 
   return (
     <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-8 xl:gap-12">
-      <ul className="grid grid-cols-3 gap-2 sm:gap-3 lg:grid-cols-2 lg:content-start">
+      {/* Three across held at every width below lg, which squeezed "A broken
+          tooth" and its subtitle into roughly 100px on a small phone. The
+          count now follows the space: one column on the narrowest phones,
+          two once there is room for the subtitle to breathe, three on a
+          tablet, and back to two inside the narrower column at lg. */}
+      <ul className="grid grid-cols-1 gap-2 min-[400px]:grid-cols-2 sm:grid-cols-3 sm:gap-3 lg:grid-cols-2 lg:content-start">
         {concerns.map((concern, index) => {
           const selected = index === active;
           return (

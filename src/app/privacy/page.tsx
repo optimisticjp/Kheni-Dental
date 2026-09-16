@@ -14,7 +14,7 @@ export default function PrivacyPage() {
   return (
     <>
       <PageHero eyebrow="Privacy" title="Privacy should be easy to understand too." highlight="easy" copy="A short note on what happens to the details you send us, and what this website itself collects." hue="sky" proof={false} compact />
-      <section className="py-10 sm:py-14">
+      <section className="sec">
         <Container width="4xl" className="prose-kheni">
           <h2>Information you choose to share</h2>
           <p>This site may ask for basic contact details, such as your name, phone number, country and the clinic you prefer, so the team can reply to your enquiry. Please do not use a general enquiry form to send medical history, diagnosis details or other sensitive health information.</p>

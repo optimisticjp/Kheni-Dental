@@ -40,7 +40,7 @@ export default function ReviewsPage() {
         aside={<ProofPanel placement="reviews_hero" className="border-gold/30" />}
       />
 
-      <section className="py-10 sm:py-14 lg:py-18">
+      <section className="sec">
         <Container width="7xl">
           <SectionIntro eyebrow="Google review" title="Reviews by clinic." highlight="by clinic" />
           <div className="mt-6 grid gap-4 md:grid-cols-2">
@@ -53,7 +53,7 @@ export default function ReviewsPage() {
         </Container>
       </section>
 
-      <section className="bg-sand py-10 sm:py-14 lg:py-18">
+      <section className="bg-sand sec">
         <Container width="7xl">
           <SectionIntro eyebrow="Video from the clinic" title="Patients on the day their treatment finished." highlight="finished" copy="Videos the clinic published on its own YouTube channel, including patients who flew in from abroad. Nothing plays until you tap it." />
           <ClinicShorts limit={6} kind="patient" className="mt-6" />
@@ -61,7 +61,7 @@ export default function ReviewsPage() {
       </section>
 
       {(patientStories.length > 0 || videoStories.length > 0 || sampleTestimonials.length > 0) && (
-        <section className="py-10 sm:py-14 lg:py-18">
+        <section className="sec">
           <Container width="7xl">
             <SectionIntro eyebrow="Patient testimonial" title="Stories given to the clinic." highlight="Stories" copy="Separate from Google, and published only where the patient has given written consent." />
             <div className="mt-6 grid gap-4 md:grid-cols-3">
@@ -90,14 +90,14 @@ export default function ReviewsPage() {
         </section>
       )}
 
-      <section className="py-10 sm:py-14 lg:py-18">
+      <section className="sec">
         <Container width="7xl">
           <SectionIntro eyebrow="Before and after" title="Results, shown honestly." highlight="honestly" />
           <ResultsPreview limit={2} placement="reviews_results" className="mt-6" />
         </Container>
       </section>
 
-      <section className="bg-mint py-10 sm:py-14 lg:py-18">
+      <section className="bg-mint sec">
         <Container width="7xl">
           <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
             <SectionIntro eyebrow="Been treated with us?" title="Say so where it helps someone else." highlight="helps someone else" copy="Pick the clinic you were seen at, so your review lands on the right listing." />

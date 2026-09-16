@@ -36,7 +36,7 @@ export default async function DoctorPage({ params }: { params: Promise<{ slug: s
   return (
     <>
       <ViewTracker event="doctor_profile_view" placement={`doctor_${doctor.slug}`} />
-      <section className="py-6 sm:py-10 lg:py-14">
+      <section className="sec-tight">
         <Container width="7xl">
           <DoctorSpotlight doctor={doctor} as="h1" credentials />
         </Container>
@@ -44,9 +44,9 @@ export default async function DoctorPage({ params }: { params: Promise<{ slug: s
 
       {/* An editorial line in the site's voice, not a quotation. Dr. Jinali's
           is built from her own words on the form; the others are samples. */}
-      {line && <SmileNote note={{ line: line.line, highlight: line.highlight, hue: doctor.hue }} compact tone="dark" className="pb-8 sm:pb-12" />}
+      {line && <SmileNote note={{ line: line.line, highlight: line.highlight, hue: doctor.hue }} compact tone="dark" className="sec-b" />}
 
-      <section className={`hue-${doctor.hue} pb-10 sm:pb-14 lg:pb-18`}>
+      <section className={`hue-${doctor.hue} sec-b`}>
         <Container width="7xl">
           <div className="grid gap-8 lg:grid-cols-[1.1fr_.9fr] lg:gap-14">
             <div>

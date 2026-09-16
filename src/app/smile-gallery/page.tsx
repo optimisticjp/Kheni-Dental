@@ -35,13 +35,13 @@ export default function SmileGalleryPage() {
         </ul>
       </PageHero>
 
-      <section className="py-10 sm:py-14 lg:py-18">
+      <section className="sec">
         <Container width="7xl">
           <ResultsPreview limit={caseResults.length || sampleCases.length} placement="gallery" />
         </Container>
       </section>
 
-      <section className="bg-sand py-10 sm:py-14 lg:py-18">
+      <section className="bg-sand sec">
         <Container width="7xl">
           <SectionIntro eyebrow="Meanwhile" title="What patients already say on Google." highlight="already say" />
           <GoogleQuotes placement="gallery_quotes" className="mt-6" />

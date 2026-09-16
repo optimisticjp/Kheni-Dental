@@ -40,7 +40,7 @@ export function doctorBranches(doctor: Doctor) {
   return locations.filter((l) => doctor.branchSlugs.includes(l.slug as Doctor["branchSlugs"][number]));
 }
 
-export function Portrait({ doctor, className, ratio = "4 / 5", mobileRatio, from = "sm", tone = "dark" }: { doctor: Doctor; className?: string; ratio?: string; mobileRatio?: string; from?: "sm" | "lg"; tone?: "dark" | "light" }) {
+export function Portrait({ doctor, className, ratio = "4 / 5", mobileRatio, from = "sm", tone = "dark" }: { doctor: Doctor; className?: string; ratio?: string; mobileRatio?: string; from?: "sm" | "md" | "lg"; tone?: "dark" | "light" }) {
   const initials = doctor.name.replace(/^Dr\.?\s*/i, "").split(/\s+/).slice(0, 2).map((p) => p[0]).join("");
   const photo = doctorPhotos[doctor.slug];
   return (
@@ -109,8 +109,16 @@ export function DoctorSpotlight({ doctor = doctors[0], className, as: Heading = 
   const branches = doctorBranches(doctor);
   return (
     <div className={cn("relative isolate overflow-hidden rounded-[1.75rem] bg-peach", className)}>
-      <div className="grid gap-6 p-5 sm:p-7 lg:grid-cols-[.8fr_1.2fr] lg:items-center lg:gap-12 lg:p-10">
-        <Portrait doctor={doctor} ratio="4 / 5" mobileRatio="16 / 10" from="lg" />
+      {/* The two-column split used to start at lg, so a tablet got the full
+          width 16:10 frame. With a monogram in it rather than a photograph
+          that is roughly 440px of empty field before the doctor's name. The
+          split now starts at md, which puts the frame in a narrow column
+          where a monogram looks deliberate instead of missing. */}
+      {/* Top-aligned rather than centred: the text column is much taller than
+          the portrait, so centring left a gap above the frame that read as a
+          mistake. Aligning to the top lines the frame up with the eyebrow. */}
+      <div className="grid gap-6 p-5 sm:p-7 md:grid-cols-[.8fr_1.2fr] md:items-start md:gap-8 lg:gap-12 lg:p-10">
+        <Portrait doctor={doctor} ratio="4 / 5" mobileRatio="16 / 10" from="md" />
         <div>
           <p className="t-eyebrow flex items-center gap-3 text-gold-text">
             {doctor.principal ? "Principal dentist" : "Our dentist"}

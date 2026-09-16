@@ -21,9 +21,9 @@ type SectionProps = React.ComponentProps<"section"> & {
  */
 const spacingMap: Record<NonNullable<SectionProps["spacing"]>, string> = {
   none: "",
-  sm: "py-8 sm:py-10 lg:py-12",
-  md: "py-11 sm:py-14 lg:py-20",
-  lg: "py-14 sm:py-18 lg:py-26",
+  sm: "sec-tight",
+  md: "sec",
+  lg: "sec-loose",
 };
 
 /**

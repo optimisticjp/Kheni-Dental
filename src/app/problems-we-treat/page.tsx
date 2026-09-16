@@ -32,13 +32,13 @@ export default function ProblemsPage() {
         hue="teal"
       />
 
-      <section className="bg-mint py-8 sm:py-12 lg:py-16">
+      <section className="bg-mint sec">
         <Container width="7xl">
           <ConcernFinder />
         </Container>
       </section>
 
-      <section className="py-10 sm:py-14 lg:py-18">
+      <section className="sec">
         <Container width="7xl">
           <SectionIntro eyebrow="In your words" title="It usually starts with a sentence like one of these." highlight="sentence" />
           <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">

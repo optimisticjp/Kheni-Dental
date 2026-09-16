@@ -36,7 +36,7 @@ export default function TechnologyPage() {
         compact
       />
 
-      <section className="py-10 sm:py-14 lg:py-18">
+      <section className="sec">
         <Container width="7xl">
           <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {technology.map((item, i) => (
@@ -67,7 +67,7 @@ export default function TechnologyPage() {
         </Container>
       </section>
 
-      <section className="bg-sand py-10 sm:py-14 lg:py-18">
+      <section className="bg-sand sec">
         <Container width="7xl">
           <div className="grid gap-6 lg:grid-cols-[1fr_1fr] lg:gap-12">
             <div>

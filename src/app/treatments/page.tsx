@@ -43,7 +43,7 @@ export default function TreatmentsPage() {
       </PageHero>
 
       {/* Phone: compact rows grouped by need. Tablet and up: posters. */}
-      <section className="py-8 sm:py-12 lg:py-16">
+      <section className="sec">
         <Container width="7xl">
           <div className="space-y-8 sm:hidden">
             {groups.map((group) => {
@@ -69,10 +69,10 @@ export default function TreatmentsPage() {
         </Container>
       </section>
 
-      <SmileNote note={smileNotes[4]} compact className="pb-10 sm:pb-14" />
+      <SmileNote note={smileNotes[4]} compact className="sec-b" />
 
       {/* The full inventory, from form sections 11 to 17. */}
-      <section className="bg-ivory py-10 sm:py-14 lg:py-18">
+      <section className="bg-ivory sec">
         <Container width="7xl">
           <SectionIntro
             eyebrow="The full list"

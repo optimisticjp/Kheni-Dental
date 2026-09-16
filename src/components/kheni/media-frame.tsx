@@ -46,8 +46,8 @@ export function MediaFrame({
   className?: string;
   children?: React.ReactNode;
   priority?: boolean;
-  /** The breakpoint at which `ratio` replaces `mobileRatio`. Tablets keep the wide crop with "lg". */
-  from?: "sm" | "lg";
+  /** The breakpoint at which `ratio` replaces `mobileRatio`. "md" switches on a tablet, "lg" keeps the wide crop until a laptop. */
+  from?: "sm" | "md" | "lg";
   /** How wide the frame renders, so the browser can pick a variant. */
   sizes?: string;
   tone?: "light" | "dark";
@@ -62,7 +62,7 @@ export function MediaFrame({
       className={cn(
         "relative isolate overflow-hidden rounded-[1.25rem] [aspect-ratio:var(--ratio-m)]",
         tone === "dark" ? "bg-ink-2" : "bg-sand",
-        from === "sm" ? "sm:[aspect-ratio:var(--ratio)]" : "lg:[aspect-ratio:var(--ratio)]",
+        from === "sm" ? "sm:[aspect-ratio:var(--ratio)]" : from === "md" ? "md:[aspect-ratio:var(--ratio)]" : "lg:[aspect-ratio:var(--ratio)]",
         className,
       )}
       style={style}

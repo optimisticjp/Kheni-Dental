@@ -74,7 +74,7 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
       role="dialog"
       aria-modal="true"
       aria-label="Site navigation"
-      className="menu-in on-dark fixed inset-0 z-[100] flex min-h-dvh flex-col bg-ink text-ivory xl:hidden"
+      className="menu-in on-dark fixed inset-0 z-[100] flex min-h-dvh flex-col bg-ink text-ivory lg:hidden"
     >
       <div className="flex h-16 shrink-0 items-center justify-between border-b border-ivory/10 px-4 sm:h-[72px] sm:px-6">
         <BrandMark compact />

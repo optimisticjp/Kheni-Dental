@@ -7,7 +7,7 @@ import { BookButton, WhatsAppButton } from "@/components/ui/cta";
 export default function NotFound() {
   return (
     <section className="hue-coral field relative isolate overflow-hidden" style={{ ["--f1" as string]: "var(--coral-tint)", ["--f2" as string]: "var(--gold-tint)", ["--f3" as string]: "var(--sky-tint)" }}>
-      <Container width="4xl" className="relative py-16 sm:py-24">
+      <Container width="4xl" className="relative sec-loose">
         <p className="t-eyebrow text-coral-text">404</p>
         <h1 className="t-h1 mt-3">
           We cannot find <span className="hl">that page.</span>

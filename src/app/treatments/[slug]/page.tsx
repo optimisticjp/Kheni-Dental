@@ -134,7 +134,7 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
       </PageHero>
 
       {/* ── What it is, and when ─────────────────────────────────────── */}
-      <section className={`hue-${treatment.hue} py-10 sm:py-14 lg:py-18`}>
+      <section className={`hue-${treatment.hue} sec`}>
         <Container width="7xl">
           <div className="grid gap-8 lg:grid-cols-[1.15fr_.85fr] lg:gap-14">
             <div>
@@ -172,7 +172,7 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
 
       {/* ── What the clinic offers, from its own form ────────────────── */}
       {(treatment.offer || treatment.brands) && (
-        <section className="bg-white py-10 sm:py-14 lg:py-18">
+        <section className="bg-white sec">
           <Container width="7xl">
             <div className={`hue-${treatment.hue} grid gap-6 lg:grid-cols-[1.2fr_.8fr] lg:gap-12`}>
               {treatment.offer && (
@@ -226,7 +226,7 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
       )}
 
       {/* ── At a visit ───────────────────────────────────────────────── */}
-      <section className={`hue-${treatment.hue} bg-h-tint py-10 sm:py-14 lg:py-18`}>
+      <section className={`hue-${treatment.hue} bg-h-tint sec`}>
         <Container width="7xl">
           <SectionIntro eyebrow="At your visit" title={treatment.visitTitle.title} highlight={treatment.visitTitle.highlight} />
           <ProcessSteps steps={treatment.visit} columns={stepColumns} className="mt-6 sm:mt-8" variant="cards" />
@@ -252,7 +252,7 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
       </section>
 
       {/* ── Who handles it ───────────────────────────────────────────── */}
-      <section className="py-10 sm:py-14 lg:py-18">
+      <section className="sec">
         <Container width="7xl">
           <SectionIntro
             eyebrow="Who you will see"
@@ -285,7 +285,7 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
       </section>
 
       {showResults && (
-        <section className="bg-sand py-10 sm:py-14 lg:py-18">
+        <section className="bg-sand sec">
           <Container width="7xl">
             <SectionIntro eyebrow="Results" title="Before and after, shown honestly." highlight="honestly" />
             <ResultsPreview limit={2} placement={`treatment_results_${treatment.slug}`} className="mt-6" />
@@ -296,7 +296,7 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
       <SmileNote note={{ line: treatment.note.line, highlight: treatment.note.highlight, hue: treatment.hue }} tone={kids ? "light" : "dark"} field={kids ? "mint" : undefined} />
 
       {/* ── Proof and questions ──────────────────────────────────────── */}
-      <section className={`hue-${treatment.hue} py-10 sm:py-14 lg:py-18`}>
+      <section className={`hue-${treatment.hue} sec`}>
         <Container width="7xl">
           <div className="grid gap-8 lg:grid-cols-[.85fr_1.15fr] lg:gap-14">
             <div>
@@ -309,7 +309,7 @@ export default async function TreatmentPage({ params }: { params: Promise<{ slug
       </section>
 
       {/* ── Related ──────────────────────────────────────────────────── */}
-      <section className="pb-10 sm:pb-14">
+      <section className="sec-b">
         <Container width="7xl">
           <div className="flex flex-wrap items-end justify-between gap-3">
             <h2 className="t-h3">Related treatments</h2>
