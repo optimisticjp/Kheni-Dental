@@ -5,17 +5,23 @@ import { cn } from "@/lib/utils";
 /**
  * The clinic's own logo, in its two official website treatments.
  *
- * Both are generated from the clinic's original artwork by
- * scripts/make-brand-assets.mjs, which repaints flat colour zones and keeps
- * the original alpha. The geometry, the tooth, the K and the wording are
- * never touched.
+ * Both are generated from the clinic's artwork by
+ * scripts/make-brand-assets.mjs, which repaints colour zones and keeps the
+ * original alpha. The geometry, the tooth, the K and the wording are never
+ * touched.
  *
- *   light   the clinic's own colours, charcoal linework and a rose mark.
- *           For ivory, white, blush, sand, sage and blue-grey surfaces.
- *   dark    the reverse treatment: the K swoosh lifted to a rose that reads
- *           on ink, the tooth linework in a held-back ivory so the rose
- *           leads, "KHENI DENTAL &" in warm ivory and "ELITE IMPLANT
- *           CENTER" in champagne. For the header, mobile menu and footer.
+ * The clinic revised the artwork on 18 September 2026. It is the same
+ * drawing; the accent through the tooth and the K went from a dusty rose to
+ * gold, which is the site's own accent, so the logo and the palette now
+ * agree instead of sitting a semitone apart.
+ *
+ *   light   charcoal linework and a gold accent, stepped deep enough to
+ *           hold 3:1 on ivory, sand and the five light fields.
+ *   dark    the reverse treatment: the artwork's own gold ramp, which was
+ *           drawn for black, with the linework lifted so it reads on ink.
+ *           The tooth sits a step back from the wordmark so the gold leads,
+ *           the way it does in the artwork. For the header, mobile menu and
+ *           footer.
  *
  * The tooth interior is transparent rather than filled white, so the reverse
  * treatment is the real artwork rather than a knocked-out box.
@@ -50,7 +56,7 @@ const MARK = {
 } as const;
 
 /**
- * The mark on its own: the tooth with the implant post and the rose K. Used
+ * The mark on its own: the tooth with the implant post and the gold K. Used
  * as a quiet watermark in empty photo frames, where the full lockup would be
  * too wide and too loud.
  */
@@ -85,7 +91,7 @@ export function BrandMark({ tone = "dark", className, compact = false }: { tone?
     <Link
       href="/"
       className={cn(
-        "group inline-flex shrink-0 items-center rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose focus-visible:ring-offset-4 focus-visible:ring-offset-transparent",
+        "group inline-flex shrink-0 items-center rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-4 focus-visible:ring-offset-transparent",
         className,
       )}
       aria-label="Kheni Dental and Elite Implant Center, home"
@@ -111,9 +117,11 @@ export function BrandMark({ tone = "dark", className, compact = false }: { tone?
 /*
  * Regenerating the brand assets
  * ------------------------------
- * Both treatments and the app icons come from the clinic's original artwork
- * at assets/brand/kheni-logo-original.png. Re-run the script if the clinic
- * sends a revised logo, rather than editing the PNGs by hand:
+ * Both treatments, the app icons, the favicon and the social card come from
+ * the two files in assets/brand/: kheni-logo-original.png carries the
+ * geometry and the alpha, kheni-logo-gold-original.png carries the clinic's
+ * current colours. Re-run the script if the clinic sends revised artwork,
+ * rather than editing the PNGs by hand:
  *
- *   node scripts/make-brand-assets.mjs [path-to-logo.png]
+ *   node scripts/make-brand-assets.mjs
  */

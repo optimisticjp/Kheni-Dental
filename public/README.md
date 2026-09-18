@@ -12,7 +12,9 @@ Live photography sits under `images/`, organised by where it appears:
 - `images/international/` the NRI page
 - `images/doctors/`, `images/home/`, `images/about/` empty until the clinic
   sends real photographs. No generated face is ever placed here.
-- `images/og-default.jpg` the picture shown when the site is shared
+- `brand/og-card.jpg` the picture shown when the site is shared. Generated with
+  the rest of the brand assets, which is why it sits under `brand/` and not
+  `images/`: `scripts/resize-images.mjs` walks `images/` and would re-encode it.
 
 Every slot resolves through `src/content/photos.ts`, so replacing a picture is
 one line there plus the file. Alt text and the crop position live in that file

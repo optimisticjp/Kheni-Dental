@@ -31,7 +31,7 @@ export type Photo = {
   objectPosition?: string;
 };
 
-export const ogImage = "/images/og-default.jpg";
+export const ogImage = "/brand/og-card.jpg";
 
 /**
  * Doctor portraits, keyed by slug. Empty until the clinic sends real

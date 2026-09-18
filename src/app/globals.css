@@ -50,9 +50,20 @@
   --brand-gold-deep: #b47825;      /* bronze. RULES AND UNDERLINES ONLY:
                                       3.50:1 on ivory, so it must never carry text. */
 
-  /* The logo's own rose. It survives in exactly one place, the K in the
-     mark, because that is the clinic's artwork and not ours to repaint. */
-  --brand-rose-mark: #9b6665;
+  /* The logo's accent, for its light-background treatment.
+     ------------------------------------------------------
+     No rule in this stylesheet paints with these. They live here so the
+     logo's colours sit with the rest of the palette rather than buried in a
+     build script, and so `scripts/contrast-report.mjs` holds them to the
+     same 3:1 graphics threshold as everything else.
+     `scripts/make-brand-assets.mjs` reads them from here when it renders the
+     light lockup, so there is one source of truth and not two.
+
+     The clinic's own artwork is gold on black. Its lightest gold is 1.32:1
+     on ivory and would vanish, so the light treatment runs this deeper ramp
+     instead, keeping the direction and the spread of the original sheen. */
+  --brand-logo-gold-light: #b47825;  /* 3.50:1 on ivory, 3.18:1 on sand */
+  --brand-logo-gold-deep: #8f5d1c;   /* 5.28:1 on ivory */
 
   /* ── Five soft light fields. The daylight between the dark. ───────── */
   --surface-sky: #eaf2ff;      --surface-sky-text: #2f5c8f;      --surface-sky-soft: #d3e3fa;      --surface-sky-fill: #7fa3d3;
@@ -398,8 +409,10 @@
 }
 .grain > * { position: relative; z-index: 1; }
 
-/* A low rose bloom behind a focal element on dark. The accent on dark is the
-   logo's rose now, so the glow is rose rather than gold. Never a neon halo. */
+/* A low gold bloom behind a focal element on dark. The logo's accent is gold
+   too now, so the glow and the mark agree. Never a neon halo. `.bloom-rose`
+   is kept as an alias of `.bloom-gold` so the call sites left over from the
+   rose palette keep working; it does not paint anything rose. */
 .bloom-gold { background: radial-gradient(60% 50% at 70% 10%, rgba(225, 175, 74, .20), transparent 70%); }
 .bloom-gold-soft { background: radial-gradient(65% 55% at 20% 0%, rgba(225, 175, 74, .12), transparent 70%); }
 .bloom-rose { background: radial-gradient(60% 50% at 70% 10%, rgba(225, 175, 74, .20), transparent 70%); }

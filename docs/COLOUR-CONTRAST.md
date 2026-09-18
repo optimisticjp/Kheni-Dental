@@ -52,9 +52,18 @@ Re-generate after any palette change:
 | `peachText on peach` | eyebrow on the peach field | 5.52:1 | 4.5:1 | AA |
 | `lavenderText on lavender` | eyebrow on the lavender field | 6.32:1 | 4.5:1 | AA |
 | `butterText on butter` | eyebrow on the butter field | 5.84:1 | 4.5:1 | AA |
-| `roseMark on ivory` | the logo's rose K on light, graphics threshold | 4.42:1 | 3:1 | AA |
+| `logoGoldLight on ivory` | the logo's gold on ivory, graphics threshold | 3.50:1 | 3:1 | AA |
+| `logoGoldLight on white` | the logo's gold on white, graphics threshold | 3.71:1 | 3:1 | AA |
+| `logoGoldLight on sand` | the logo's gold on sand, graphics threshold | 3.18:1 | 3:1 | AA |
+| `logoGoldLight on goldTint` | the logo's gold on goldTint, graphics threshold | 3.30:1 | 3:1 | AA |
+| `logoGoldLight on sky` | the logo's gold on sky, graphics threshold | 3.30:1 | 3:1 | AA |
+| `logoGoldLight on mint` | the logo's gold on mint, graphics threshold | 3.33:1 | 3:1 | AA |
+| `logoGoldLight on peach` | the logo's gold on peach, graphics threshold | 3.34:1 | 3:1 | AA |
+| `logoGoldLight on lavender` | the logo's gold on lavender, graphics threshold | 3.24:1 | 3:1 | AA |
+| `logoGoldLight on butter` | the logo's gold on butter, graphics threshold | 3.41:1 | 3:1 | AA |
+| `logoGoldDeep on ivory` | the deep end of the logo's gold on light, graphics threshold | 5.28:1 | 3:1 | AA |
 
-**42 pairs checked, 0 failing.**
+**51 pairs checked, 0 failing.**
 
 ## Why gold needs four weights
 
@@ -70,5 +79,9 @@ both jobs, so the work is split:
 | `--brand-gold-tint` | #f8f1df | the lightest gold field |
 | `--brand-gold-deep` | #b47825 | bronze, for a rule or an underline |
 
-The logo's rose (`#9b6665`) is not part of this system. It appears only in
-the K of the mark, where it is artwork rather than text.
+The logo's gold ramp for light backgrounds runs `#b47825` to
+`#8f5d1c`. The clinic's artwork is gold on black, and its own gold is
+far too light for ivory, so the light lockup uses this deeper ramp instead.
+It is artwork rather than text, so it is held to 3:1 and checked against every
+light surface above. On dark the artwork's own ramp is used untouched, and its
+deepest point sits at 5.97:1 on ink.

@@ -13,25 +13,42 @@ frames.
 
 ## Logo
 
-The clinic supplied its logo on 15 September 2026. The original is kept at
-`assets/brand/kheni-logo-original.png` and every derived asset (both tones, the mark
-on its own, the favicon and app icons) is built from it by
-`node scripts/make-brand-assets.mjs`. If the clinic ever sends revised artwork,
-re-run that rather than editing the PNGs.
+The clinic supplied its logo twice, and both files are kept:
+
+| File | Supplied | What it is |
+| --- | --- | --- |
+| `assets/brand/kheni-logo-original.png` | 15 Sep 2026 | 2304 x 1629, transparent. The **geometry master**: high resolution with a real alpha channel. Accent is a dusty rose. |
+| `assets/brand/kheni-logo-gold-original.png` | 18 Sep 2026 | 1491 x 1055, flattened on black. The **colour master**: gold accent with a gradient. |
+
+They are the same drawing. Scaled and overlaid, the ink masks agree to within a
+third of a percent on aspect ratio, and the gold occupies exactly the zone the rose
+occupied. So the September 18 revision is a recolour, not a redraw, and the build
+takes geometry and alpha from the first file and colour from the second. That is
+also why the low-resolution second file costs nothing: it never carries an edge.
+
+Every derived asset (both treatments, the mark on its own, the favicon, the app
+icons and the social card) is built by `node scripts/make-brand-assets.mjs`.
+If the clinic sends revised artwork, re-run that rather than editing the PNGs.
 
 Still worth asking the clinic for, though nothing is blocked without them:
 
 - [ ] A vector original (SVG, AI or EPS). The site uses PNG, which is fine at the
       sizes it renders, but a vector is what a printer or a signage company will ask
       for, and it would let the logo be recoloured in CSS.
-- [ ] Confirmation that the rose in the mark is the intended brand colour. The site
-      itself runs on black and gold at the doctor's request, and the rose now appears
-      only in the K of the logo, which is the clinic's own artwork. Worth confirming
-      that is what he wants rather than leaving it as the last survivor of an earlier
-      palette.
 - [ ] A square or stacked version of the lockup, if one exists. The supplied artwork
-      is a wide horizontal lockup, which is why the social preview image
-      (`public/images/og-default.jpg`) does not yet carry it.
+      is a wide horizontal lockup. One could be arranged here from the mark and the
+      two lines of the wordmark, but rearranging a client's lockup without asking is
+      not something to do quietly, so it has not been.
+- [ ] Sign-off on the two website treatments. The clinic's artwork is gold on black
+      and works as supplied on the dark header, menu and footer. On ivory it cannot
+      be used as drawn: its lightest gold is 1.32:1 against ivory and disappears, and
+      its charcoal wordmark reads 1.64:1 on the site's near-black. So the light
+      lockup uses a deeper gold ramp and the dark one lifts the linework. Both are
+      recorded in `docs/COLOUR-CONTRAST.md`. Worth showing the doctor side by side.
+
+**Answered.** The earlier question about whether the rose in the mark was the
+intended brand colour is settled: it is not. The 18 September artwork replaced it
+with gold, which is the site's own accent, so the logo and the palette now agree.
 
 ## Priority list
 
@@ -143,10 +160,19 @@ was taken, and written consent on file. The `CaseResult` type refuses a case wit
 
 ### Social preview image. 1200 x 630 (1.91:1)
 
-`og-default.jpg`. **There is a live mismatch here:** the file on disk is
-1536 x 1024 (3:2) but `src/app/layout.tsx` declares 1200 x 630, so WhatsApp and
-Twitter crop or letterbox it. Worth fixing with a proper card once a vector or
-stacked lockup exists.
+**Fixed, and nothing is needed for now.** This used to be `og-default.jpg`, a stock
+interior render with a blue chair in it, at 1536 x 1024 while `src/app/layout.tsx`
+declared 1200 x 630, so WhatsApp and Twitter cropped or letterboxed it.
+
+It is now `public/brand/og-card.jpg`, generated at the right size by
+`scripts/make-brand-assets.mjs`: the dark lockup on the site's ink under the same
+gold bloom the dark sections use. It lives under `brand/` rather than `images/`
+because `scripts/resize-images.mjs` walks `images/` and would re-encode it.
+
+This is the surface most patients meet first, because the site gets forwarded on
+WhatsApp far more often than it gets found on Google. A card built on a real
+photograph of a real reception would beat a logo on black, so it is worth
+revisiting once the clinic's own photography arrives.
 
 ### Already covered, nothing needed
 

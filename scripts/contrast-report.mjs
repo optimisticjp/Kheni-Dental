@@ -12,21 +12,14 @@
  * Threshold is WCAG AA for normal text, 4.5:1. Marks, fills and decorative
  * shapes are held to 3:1 and are marked as such.
  */
-import { readFileSync, writeFileSync } from "node:fs";
+import { writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { readPalette } from "./lib/read-palette.mjs";
+
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const css = readFileSync(`${ROOT}/src/app/globals.css`, "utf8");
-
-/** Pull every `--name: #rrggbb;` declaration out of the stylesheet. */
-const TOKENS = Object.fromEntries([...css.matchAll(/(--[a-z0-9-]+)\s*:\s*(#[0-9a-fA-F]{6})\s*;/g)].map((m) => [m[1], m[2].toLowerCase()]));
-
-const need = (name) => {
-  const v = TOKENS[name];
-  if (!v) throw new Error(`Token ${name} not found in globals.css. Update this script alongside the palette.`);
-  return v;
-};
+const { need } = readPalette();
 
 const hex = (h) => [0, 2, 4].map((i) => parseInt(h.slice(1).slice(i, i + 2), 16));
 const lin = (c) => { c /= 255; return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); };
@@ -37,7 +30,8 @@ const C = {
   ink: need("--brand-ink"), ink2: need("--brand-ink-2"), charcoal: need("--brand-charcoal"),
   ivory: need("--brand-ivory"), white: need("--brand-white"), sand: need("--brand-sand"), inkSoft: need("--brand-ink-soft"),
   gold: need("--brand-gold"), goldText: need("--brand-gold-text"), goldSoft: need("--brand-gold-soft"),
-  goldTint: need("--brand-gold-tint"), goldDeep: need("--brand-gold-deep"), roseMark: need("--brand-rose-mark"),
+  goldTint: need("--brand-gold-tint"), goldDeep: need("--brand-gold-deep"),
+  logoGoldLight: need("--brand-logo-gold-light"), logoGoldDeep: need("--brand-logo-gold-deep"),
   sky: need("--surface-sky"), skyText: need("--surface-sky-text"),
   mint: need("--surface-mint"), mintText: need("--surface-mint-text"),
   peach: need("--surface-peach"), peachText: need("--surface-peach-text"),
@@ -70,8 +64,11 @@ add("mintText", "mint", "eyebrow on the mint field");
 add("peachText", "peach", "eyebrow on the peach field");
 add("lavenderText", "lavender", "eyebrow on the lavender field");
 add("butterText", "butter", "eyebrow on the butter field");
-/* The logo mark is artwork, not text, so it is held to the 3:1 graphics rule. */
-add("roseMark", "ivory", "the logo's rose K on light, graphics threshold", 3);
+/* The logo mark is artwork, not text, so it is held to the 3:1 graphics rule.
+   Only the light treatment is checked. The dark one uses the clinic's own
+   gold ramp untouched, and its deepest point is 5.97:1 on ink. */
+for (const bg of LIGHT) add("logoGoldLight", bg, `the logo's gold on ${bg}, graphics threshold`, 3);
+add("logoGoldDeep", "ivory", "the deep end of the logo's gold on light, graphics threshold", 3);
 
 const fails = rows.filter((r) => !r.pass);
 
@@ -106,8 +103,12 @@ both jobs, so the work is split:
 | \`--brand-gold-tint\` | ${C.goldTint} | the lightest gold field |
 | \`--brand-gold-deep\` | ${C.goldDeep} | bronze, for a rule or an underline |
 
-The logo's rose (\`${C.roseMark}\`) is not part of this system. It appears only in
-the K of the mark, where it is artwork rather than text.
+The logo's gold ramp for light backgrounds runs \`${C.logoGoldLight}\` to
+\`${C.logoGoldDeep}\`. The clinic's artwork is gold on black, and its own gold is
+far too light for ivory, so the light lockup uses this deeper ramp instead.
+It is artwork rather than text, so it is held to 3:1 and checked against every
+light surface above. On dark the artwork's own ramp is used untouched, and its
+deepest point sits at 5.97:1 on ink.
 `;
 writeFileSync(`${ROOT}/docs/COLOUR-CONTRAST.md`, md);
 console.log(`${rows.length} pairs, ${fails.length} failing`);
