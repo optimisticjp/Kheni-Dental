@@ -72,7 +72,36 @@ export const videosFor = (filter: Partial<Pick<ClinicVideo, "kind" | "treatmentS
     .filter((v) => (filter.doctorSlug ? v.doctorSlug === filter.doctorSlug : true))
     .slice(0, limit);
 
-export const posterUrl = (v: ClinicVideo) => (v.format === "short" ? `https://i.ytimg.com/vi/${v.id}/oardefault.jpg` : `https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`);
-export const posterFallbackUrl = (v: ClinicVideo) => `https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`;
+/**
+ * Poster candidates for one video, best first. The card walks down this list
+ * as each one fails to load.
+ *
+ * YouTube names its thumbnails, and not every name exists for every video:
+ *
+ *   oardefault     the tall 9:16 crop, made only for Shorts, and only for
+ *                  some of them. Ten of our sixteen Shorts return 404 for
+ *                  it. When it does exist it is 1080 x 1920 and it is the
+ *                  right shape for a 9:16 card, so it is worth asking for.
+ *   maxresdefault  1280 x 720, generated when the source was 720p or above.
+ *                  Present for all twenty-six of ours, checked one by one.
+ *   hqdefault      480 x 360. YouTube makes this for everything, so it is
+ *                  the floor. Soft at card size, which is why it is last.
+ *
+ * A Short's 16:9 thumbnail is the vertical frame pillarboxed, so `object-cover`
+ * in a 9:16 card crops the bars off and lands on the right picture. The
+ * fallback is a real fallback, not a compromise.
+ *
+ * This used to be two functions feeding a `<picture>` with one `<source>`.
+ * That does not work: `<picture>` picks a source by `type` and `media`, and
+ * once it has picked one a 404 is just a broken image. The `<img>` inside is
+ * the final candidate, not an error handler. So ten Shorts rendered as broken
+ * image boxes. Walking this list on the img's `error` event is the fix.
+ */
+export const posterCandidates = (v: ClinicVideo): string[] => {
+  const thumb = (name: string) => `https://i.ytimg.com/vi/${v.id}/${name}.jpg`;
+  return v.format === "short"
+    ? [thumb("oardefault"), thumb("maxresdefault"), thumb("hqdefault")]
+    : [thumb("maxresdefault"), thumb("hqdefault")];
+};
 export const embedUrl = (id: string) => `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&playsinline=1&rel=0`;
 export const watchUrl = (v: ClinicVideo) => (v.format === "short" ? `https://www.youtube.com/shorts/${v.id}` : `https://www.youtube.com/watch?v=${v.id}`);

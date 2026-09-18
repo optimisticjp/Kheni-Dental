@@ -1,9 +1,9 @@
 "use client";
 
 import { ArrowUpRight, Play } from "lucide-react";
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
-import { clinicVideos, embedUrl, posterFallbackUrl, posterUrl, watchUrl, youtubeChannelUrl, type ClinicVideo } from "@/content/videos";
+import { clinicVideos, embedUrl, posterCandidates, watchUrl, youtubeChannelUrl, type ClinicVideo } from "@/content/videos";
 import { pushTrackingEvent } from "@/lib/tracking";
 import { cn } from "@/lib/utils";
 
@@ -20,6 +20,44 @@ import { cn } from "@/lib/utils";
 function VideoCard({ video, playing, onPlay, tone, uniform }: { video: ClinicVideo; playing: boolean; onPlay: () => void; tone: "light" | "dark"; uniform?: boolean }) {
   const kindLabel = video.kind === "patient" ? "Patient story" : video.kind === "education" ? "Dentist explains" : "Clinic";
   const wide = video.format === "video" && !uniform;
+  /**
+   * Step down the poster list as each candidate fails to load.
+   *
+   * Two things have to be caught, and only one of them is an event.
+   *
+   * These pages are prerendered, so the HTML ships with the first candidate
+   * already in `src`. The browser starts fetching it immediately and can have
+   * the 404 back long before React hydrates, which means the `error` event
+   * fires with no handler attached and is gone. React then hydrates, writes
+   * the same `src`, the browser does not re-request, and the card sits on a
+   * broken image forever. That is why the ref below checks the image's state
+   * the moment React gets hold of it: `complete` with a zero `naturalWidth`
+   * is an image that already failed.
+   *
+   * `onError` covers the other half, the candidates that fail after hydration.
+   *
+   * Advancing is by index rather than by increment so it is idempotent. The
+   * same failure reported twice lands on the same step, which matters because
+   * a ref can be attached more than once.
+   */
+  // Memoised so the ref callback below keeps a stable identity. Without it
+  // React would detach and reattach the ref on every render.
+  const posters = useMemo(() => posterCandidates(video), [video]);
+  const [posterStep, setPosterStep] = useState(0);
+  const poster = posters[Math.min(posterStep, posters.length - 1)];
+  const failed = useCallback(
+    (src: string) => setPosterStep((step) => {
+      const i = posters.indexOf(src);
+      return i < 0 ? step : Math.max(step, i + 1);
+    }),
+    [posters],
+  );
+  const checkAlreadyFailed = useCallback(
+    (node: HTMLImageElement | null) => {
+      if (node && node.complete && node.naturalWidth === 0) failed(node.src);
+    },
+    [failed],
+  );
   return (
     <article
       className={cn(
@@ -45,10 +83,16 @@ function VideoCard({ video, playing, onPlay, tone, uniform }: { video: ClinicVid
           aria-label={`Play video: ${video.title}`}
           className="group absolute inset-0 block text-left focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-inset focus-visible:ring-gold"
         >
-          <picture>
-            <source srcSet={posterUrl(video)} />
-            <img src={posterFallbackUrl(video)} alt="" loading="lazy" decoding="async" className="absolute inset-0 size-full object-cover transition-transform duration-500 ease-kheni group-hover:scale-[1.03]" />
-          </picture>
+          {/* eslint-disable-next-line @next/next/no-img-element -- images are unoptimized site-wide */}
+          <img
+            ref={checkAlreadyFailed}
+            src={poster}
+            onError={(e) => failed(e.currentTarget.src)}
+            alt=""
+            loading="lazy"
+            decoding="async"
+            className="absolute inset-0 size-full object-cover transition-transform duration-500 ease-kheni group-hover:scale-[1.03]"
+          />
           <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/20 to-ink/10" />
           <span aria-hidden="true" className="absolute left-3 top-3 rounded-full bg-ink/70 px-2.5 py-1 text-[.62rem] font-semibold uppercase tracking-[.14em] text-gold backdrop-blur-sm">
             {kindLabel}
