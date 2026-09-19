@@ -14,7 +14,6 @@ import {
   type ConsentState,
 } from "@/lib/consent";
 
-
 function updateConsent(analytics: boolean, marketing: boolean) {
   window.gtag?.("consent", "update", {
     analytics_storage: analytics ? "granted" : "denied",
@@ -39,10 +38,6 @@ export function ConsentBanner() {
     getServerConsentSnapshot,
   );
 
-  // Any one of the three tags being configured means a banner is owed.
-  // Tags are always installed now, so the banner is always owed. It is
-  // still suppressed off the production host, where nothing fires anyway
-  // and a cookie banner would only get in the doctor's way on a preview.
   const trackingEnabled = trackingAllowedHere();
 
   useEffect(() => {
@@ -67,32 +62,45 @@ export function ConsentBanner() {
   };
 
   return (
-    <div className="fixed inset-x-3 bottom-[calc(5rem+env(safe-area-inset-bottom)+0.75rem)] z-[70] mx-auto max-w-3xl rounded-2xl border border-gold/25 bg-ink/95 p-4 text-sm text-white shadow-2xl backdrop-blur md:bottom-5 md:p-5">
-      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <p className="max-w-2xl leading-6 text-white/75">
-          We use optional analytics and marketing technologies to understand how
-          this website is used. Everything on the site works if you decline them.
-          Please do not send sensitive medical details through website forms. Read
-          our{" "}
-          <Link
-            href="/privacy/"
-            className="text-gold underline underline-offset-4"
-          >
-            privacy notice
-          </Link>
-          .
-        </p>
+    <div
+      role="dialog"
+      aria-label="Privacy choices"
+      aria-modal="false"
+      className="fixed inset-x-2 bottom-[calc(4.75rem+env(safe-area-inset-bottom))] z-[70] mx-auto w-auto max-w-[34rem] rounded-2xl border border-white/10 bg-ink/96 p-3 text-white shadow-[0_18px_44px_-20px_rgba(0,0,0,.72)] backdrop-blur-xl md:inset-x-auto md:bottom-4 md:right-4 md:w-[34rem] md:max-w-[calc(100vw-2rem)] md:p-3.5"
+    >
+      <div className="flex flex-col gap-3 md:flex-row md:items-center md:gap-4">
+        <div className="min-w-0 flex-1">
+          <div className="flex items-center gap-2">
+            <p className="text-[.78rem] font-semibold tracking-[.02em] text-white">
+              Your privacy
+            </p>
+            <Link
+              href="/privacy/"
+              className="text-[.68rem] text-gold/85 underline decoration-gold/35 underline-offset-4 transition hover:text-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/70"
+            >
+              Privacy
+            </Link>
+          </div>
+          <p className="mt-1 text-[.72rem] leading-[1.45] text-white/68 md:text-[.74rem]">
+            We use optional analytics to improve our website and ads.
+          </p>
+        </div>
 
-        <div className="flex shrink-0 gap-2">
+        <div className="grid grid-cols-2 gap-2 md:flex md:shrink-0">
           <Button
             variant="outline"
-            className="border-white/20 bg-transparent text-white hover:bg-white/10"
+            className="min-h-11 border-white/15 bg-white/[.03] px-3 text-[.72rem] text-white hover:bg-white/[.07] md:min-h-10 md:px-3.5"
             onClick={() => choose("essential")}
           >
             Essential only
           </Button>
 
-          <Button onClick={() => choose("accepted")}>Accept all</Button>
+          <Button
+            className="min-h-11 px-4 text-[.74rem] md:min-h-10 md:px-4"
+            onClick={() => choose("accepted")}
+          >
+            Accept
+          </Button>
         </div>
       </div>
     </div>
