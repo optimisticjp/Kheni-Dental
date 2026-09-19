@@ -1,42 +1,18 @@
 "use client";
 
-import { useEffect, useSyncExternalStore } from "react";
 import Link from "next/link";
+import { useEffect, useSyncExternalStore } from "react";
+
 import { Button } from "@/components/ui/button";
-
-type ConsentState = "unset" | "essential" | "accepted";
-
-const STORAGE_KEY = "kheni_consent_v1";
-const CONSENT_EVENT = "kheni-consent-change";
-
-function getConsentSnapshot(): ConsentState {
-  if (typeof window === "undefined") return "unset";
-
-  const saved = localStorage.getItem(STORAGE_KEY);
-
-  if (saved === "accepted" || saved === "essential") {
-    return saved;
-  }
-
-  return "unset";
-}
-
-function getServerSnapshot(): ConsentState {
-  return "unset";
-}
-
-function subscribe(callback: () => void) {
-  const handleStorage = () => callback();
-  const handleConsentChange = () => callback();
-
-  window.addEventListener("storage", handleStorage);
-  window.addEventListener(CONSENT_EVENT, handleConsentChange);
-
-  return () => {
-    window.removeEventListener("storage", handleStorage);
-    window.removeEventListener(CONSENT_EVENT, handleConsentChange);
-  };
-}
+import {
+  CONSENT_EVENT,
+  CONSENT_STORAGE_KEY,
+  getConsentSnapshot,
+  getServerConsentSnapshot,
+  subscribeConsent,
+  type ConsentState,
+} from "@/lib/consent";
+import { META_PIXEL_ID } from "@/lib/meta";
 
 function updateConsent(analytics: boolean, marketing: boolean) {
   window.gtag?.("consent", "update", {
@@ -57,12 +33,12 @@ function updateConsent(analytics: boolean, marketing: boolean) {
 
 export function ConsentBanner() {
   const state = useSyncExternalStore(
-    subscribe,
+    subscribeConsent,
     getConsentSnapshot,
-    getServerSnapshot
+    getServerConsentSnapshot,
   );
 
-  const trackingEnabled = Boolean(process.env.NEXT_PUBLIC_GTM_ID);
+  const trackingEnabled = Boolean(process.env.NEXT_PUBLIC_GTM_ID || META_PIXEL_ID);
 
   useEffect(() => {
     if (!trackingEnabled) return;
@@ -76,14 +52,12 @@ export function ConsentBanner() {
     }
   }, [state, trackingEnabled]);
 
-  // Tracking is not configured yet, so don't show a cookie banner
-  // to the doctor during design/development previews.
   if (!trackingEnabled || state !== "unset") {
     return null;
   }
 
   const choose = (value: Exclude<ConsentState, "unset">) => {
-    localStorage.setItem(STORAGE_KEY, value);
+    localStorage.setItem(CONSENT_STORAGE_KEY, value);
     window.dispatchEvent(new Event(CONSENT_EVENT));
   };
 
@@ -113,9 +87,7 @@ export function ConsentBanner() {
             Essential only
           </Button>
 
-          <Button onClick={() => choose("accepted")}>
-            Accept all
-          </Button>
+          <Button onClick={() => choose("accepted")}>Accept all</Button>
         </div>
       </div>
     </div>
