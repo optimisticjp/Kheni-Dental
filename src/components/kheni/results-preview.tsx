@@ -11,8 +11,12 @@ import { cn } from "@/lib/utils";
 /**
  * Before and after.
  *
- * With real, consented cases: an editorial spread, one slider per case, each
- * with the treatment, the doctor, the clinic and when the "after" was taken.
+ * With real, consented cases: an editorial spread, one slider per case, with
+ * the treatment and whatever of the doctor, the clinic and the "after" date
+ * the clinic has attributed. Those three are optional and the meta line
+ * filters out what is missing, because the clinic shows that the work was
+ * done rather than who did it, and a case with no line under it is better
+ * than a case with a guessed one.
  *
  * Until those arrive, the same layout runs on placeholder case facts from
  * `review-sample.ts`. The IMAGES are not faked: the slider carries designed
@@ -32,8 +36,8 @@ const AFTER = demoFrame("After", "#faf8f5", "#f7e6ae");
 
 export function ResultsPreview({ limit = 2, className, placement = "results" }: { limit?: number; className?: string; placement?: string }) {
   const cases = caseResults.slice(0, limit);
-  const doctorName = (slug: string) => doctors.find((d) => d.slug === slug)?.name;
-  const branchName = (slug: string) => locations.find((l) => l.slug === slug)?.displayArea;
+  const doctorName = (slug?: string) => (slug ? doctors.find((d) => d.slug === slug)?.name : undefined);
+  const branchName = (slug?: string) => (slug ? locations.find((l) => l.slug === slug)?.displayArea : undefined);
 
   if (cases.length > 0) {
     return (
@@ -43,7 +47,10 @@ export function ResultsPreview({ limit = 2, className, placement = "results" }: 
             <BeforeAfterSlider before={c.beforeImage} after={c.afterImage} beforeAlt={c.beforeAlt} afterAlt={c.afterAlt} className="rounded-none" caption={`${c.category}: ${c.result}`} />
             <div className="p-5">
               <p className="t-eyebrow text-h-text">{c.category}</p>
-              <p className="t-card mt-2">&ldquo;{c.concern}&rdquo;</p>
+              {/* No quote marks. `concern` is a description of what the
+                  patient came in with, written here; wrapped in quotes it
+                  reads as a sentence the patient said, which it is not. */}
+              <p className="t-card mt-2">{c.concern}</p>
               <p className="t-small mt-2 text-ink-soft">{c.result}</p>
               <p className="t-small mt-3 text-ink-soft/80">
                 {[doctorName(c.doctorSlug), branchName(c.branchSlug), c.afterTakenAt, c.timeline].filter(Boolean).join(" · ")}
