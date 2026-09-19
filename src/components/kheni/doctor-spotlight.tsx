@@ -7,7 +7,7 @@ import { languages } from "@/content/clinic-proof";
 import { googleReputation } from "@/content/google-reputation";
 import { doctorPhotos } from "@/content/photos";
 import { sampleBios } from "@/content/review-sample";
-import { doctors, locations, treatments, type Doctor } from "@/content/site";
+import { availabilityNote, doctors, locations, treatments, type Doctor } from "@/content/site";
 import { cn } from "@/lib/utils";
 
 /**
@@ -145,7 +145,7 @@ export function DoctorSpotlight({ doctor = doctors[0], className, as: Heading = 
             ))}
           </ul>
           <p className="t-small mt-3 text-ink-soft">
-            Consults in {languages.join(", ")}. Sees patients at {branches.map((b) => b.displayArea).join(" and ")}.{doctor.availabilityNote ? ` ${doctor.availabilityNote}` : ""}
+            Consults in {languages.join(", ")}. Sees patients at {branches.map((b) => b.displayArea).join(" and ")}.{availabilityNote(doctor) ? ` ${availabilityNote(doctor)}` : ""}
           </p>
           <div className="mt-5 flex flex-col gap-2.5 sm:flex-row">
             <BookButton placement="doctor_spotlight" label={`Book with ${doctor.shortName}`} branch={branches.length === 1 ? branches[0].slug : undefined} />

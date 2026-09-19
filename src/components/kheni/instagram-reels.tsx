@@ -11,9 +11,18 @@ import { cn } from "@/lib/utils";
  * poster in a near-black frame with a small gold label and a quiet play
  * mark, and opens that exact Reel on Instagram in a new tab. Nothing from
  * Instagram loads on this page: no script, no iframe, no cookies. On a
- * phone about 1.4 cards show so the next one invites a swipe; the first
- * card is a little larger, the way a magazine leads with one picture.
+ * phone about 1.4 cards show, so the next one invites a swipe.
+ *
+ * Every card in the rail is the same size. It used to lead with a larger
+ * first card, the way a magazine leads with one picture, and sit the rest on
+ * a baseline. On a phone that produced three widths, three heights and tops
+ * 127px apart, which reads as a mistake rather than as art direction. The
+ * "more reels" card is built on the same frame as the others, outer border
+ * and 1.5 of padding around an inner 9:16 span, so it comes out at exactly
+ * the same height instead of nine pixels taller.
  */
+/** One width for every card in the rail, so the row cannot go ragged. */
+const RAIL_CARD = "w-[68vw] max-w-[17rem] shrink-0 sm:w-[38vw] lg:w-auto lg:max-w-none";
 const CATEGORY: Record<Reel["category"], string> = {
   doctor: "Doctor",
   kids: "Kids",
@@ -28,13 +37,11 @@ export function ReelCard({
   reel,
   placement,
   className,
-  lead = false,
   sizes = "(min-width: 1024px) 240px, 68vw",
 }: {
   reel: Reel;
   placement: string;
   className?: string;
-  lead?: boolean;
   sizes?: string;
 }) {
   return (
@@ -78,7 +85,7 @@ export function ReelCard({
           <Play className="ml-0.5 size-5 fill-current" />
         </span>
         <span className="absolute inset-x-0 bottom-0 p-4">
-          <span className={cn("block font-serif leading-tight tracking-[-.015em] text-ivory", lead ? "text-[1.25rem]" : "text-[1.05rem]")}>{reel.title}</span>
+          <span className="block font-serif text-[1.05rem] leading-tight tracking-[-.015em] text-ivory">{reel.title}</span>
           <span className="mt-1.5 flex items-center gap-1 text-[.72rem] font-medium text-ivory/70">
             {reel.posted}
             <span aria-hidden="true">·</span>
@@ -97,9 +104,9 @@ export function InstagramReels({ placement = "home_instagram", limit = 5, classN
   return (
     <div className={className}>
       <div className="edge-fade -mx-4 px-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0 lg:[mask-image:none]">
-        <div className="rail-snap flex items-end gap-3 overflow-x-auto pb-2 lg:grid lg:grid-cols-6 lg:items-end lg:gap-4 lg:overflow-visible">
-          {list.map((reel, index) => (
-            <ReelCard key={reel.id} reel={reel} placement={placement} lead={index === 0} className={cn("shrink-0", index === 0 ? "w-[72vw] max-w-[18rem] sm:w-[40vw] lg:w-auto lg:max-w-none" : "w-[64vw] max-w-[16rem] sm:w-[36vw] lg:w-auto lg:max-w-none lg:pb-4")} />
+        <div className="rail-snap flex items-start gap-3 overflow-x-auto pb-2 lg:grid lg:grid-cols-6 lg:gap-4 lg:overflow-visible">
+          {list.map((reel) => (
+            <ReelCard key={reel.id} reel={reel} placement={placement} className={RAIL_CARD} />
           ))}
           <a
             href={instagramReelsUrl}
@@ -107,17 +114,18 @@ export function InstagramReels({ placement = "home_instagram", limit = 5, classN
             rel="noreferrer"
             data-track="instagram_profile_click"
             data-placement={`${placement}_more`}
-            className="flex w-[52vw] max-w-[14rem] shrink-0 flex-col justify-end rounded-[1.25rem] border border-line bg-white p-4 text-ink sm:w-[30vw] lg:w-auto lg:max-w-none lg:pb-4"
-            style={{ aspectRatio: "9 / 16" }}
+            className={cn("block rounded-[1.25rem] border border-line bg-white p-1.5 text-ink", RAIL_CARD)}
           >
-            <span className="mb-auto grid size-11 place-items-center rounded-full border border-gold/50 text-gold-text">
-              <InstagramIcon className="size-5" />
-            </span>
-            <span className="t-eyebrow block text-gold-text">More reels</span>
-            <span className="mt-2 block font-serif text-[1.35rem] leading-tight tracking-[-.015em]">{instagramHandle}</span>
-            <span className="mt-2 inline-flex items-center gap-1 text-sm font-semibold">
-              Open Instagram
-              <ArrowUpRight className="size-4" aria-hidden="true" />
+            <span className="flex size-full flex-col justify-end rounded-[.9rem] p-3" style={{ aspectRatio: "9 / 16" }}>
+              <span className="mb-auto grid size-11 place-items-center rounded-full border border-gold/50 text-gold-text">
+                <InstagramIcon className="size-5" />
+              </span>
+              <span className="t-eyebrow block text-gold-text">More reels</span>
+              <span className="mt-2 block font-serif text-[1.35rem] leading-tight tracking-[-.015em]">{instagramHandle}</span>
+              <span className="mt-2 inline-flex items-center gap-1 text-sm font-semibold">
+                Open Instagram
+                <ArrowUpRight className="size-4" aria-hidden="true" />
+              </span>
             </span>
           </a>
         </div>

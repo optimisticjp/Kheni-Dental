@@ -115,7 +115,7 @@ value before this pass · decision · where it appears.
 | 9 | Google review count | `1761` | REPLACED, EXTERNAL_VERIFY | 1,753 (29 Aug 2026) | 1,761, source clinic form 14 Sept 2026, recheck monthly. | proof, schema |
 | 10 | Description | not ticked | REVIEW_LATER | "Our original clinic…" | Rewritten only to remove "with implant care too" ambiguity: implants are available at both clinics. | |
 | 10 | Facilities | Parking nearby, Lift, Waiting area, Digital payment, Emergency same-day slots. "Other" ticked with no text. | CONFIRMED_BY_CLINIC | none | New `facilities` field rendered on the clinic page. "Other" ignored. | locations/[slug] |
-| 10 | Doctors here | `dr. mayur kheni, according to the appointments` | CONFIRMED_BY_CLINIC | none | Dr. Mayur listed for Yogi Chowk "by appointment". Other doctors derived from their own pages (Jinali both, Ishita Yogi Chowk, Parita both). | clinic page |
+| 10 | Doctors here | `dr. mayur kheni, according to the appointments` | CONFIRMED_BY_CLINIC | none | Originally read as Dr. Mayur being at Yogi Chowk "by appointment". **Corrected by the clinic on 19 September 2026: it is the other way round.** Yogi Chowk is his regular clinic; Hirabaug is where he is seen by appointment. Other doctors derived from their own pages (Jinali both, Ishita Yogi Chowk, Parita both). | clinic page |
 
 ### Section D: Hirabaug clinic (pages 11 to 12)
 
@@ -383,7 +383,9 @@ This is still NEEDS_CLINIC_CONFIRMATION, and it is now impossible to miss: if th
 ### C11. Doctors at each clinic
 
 - Page 10 lists only Dr. Mayur for Yogi Chowk; pages 17, 20, 26 say Mayur, Jinali and Parita work at both clinics; page 23 moves Dr. Ishita to Yogi Chowk only; page 12 leaves Hirabaug blank.
-- **Choice:** Yogi Chowk: all four (Dr. Mayur by appointment). Hirabaug: Dr. Mayur, Dr. Jinali, Dr. Parita. Each clinic page says "call to check which days".
+- **Choice:** Yogi Chowk: all four. Hirabaug: Dr. Mayur, Dr. Jinali, Dr. Parita, with **Dr. Mayur by appointment**. Each clinic page says "call to check which days".
+- **Corrected 19 September 2026.** This first read page 10's `according to the appointments` as Dr. Mayur being at Yogi Chowk by appointment. The clinic says it is the reverse: Yogi Chowk is his regular clinic and Hirabaug is the by-appointment one. That also squares with the Elite Implant Center facts, which put implant planning and treatment at Yogi Chowk with him.
+- The branch is now a single field on the doctor, `byAppointmentAt`, rather than a free-text note sitting beside three separate slug checks in the pages that render it. The old shape let the sentence and the badge point at different clinics, which is how this survived as long as it did.
 
 ### C12. Root canal count versus patient count
 

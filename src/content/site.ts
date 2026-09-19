@@ -272,8 +272,19 @@ export type Doctor = {
   bio?: string;
   /** Where this doctor sees patients. From the form; "both" unless the clinic said otherwise. */
   branchSlugs: DoctorBranch[];
-  /** e.g. "by appointment" at a branch. */
-  availabilityNote?: string;
+  /**
+   * The branch where this doctor is seen by appointment rather than on a
+   * regular rota. The wording and the badge on the locations page are both
+   * derived from this, by `availabilityNote()` below.
+   *
+   * This used to be a free-text note beside three separate `slug ===
+   * "swastik-plaza"` checks in the pages that render it. The note said one
+   * branch and the checks pointed at another the moment either changed, which
+   * is exactly what went wrong: the note read "At Yogi Chowk by appointment"
+   * when Dr. Mayur is the one seen by appointment at Hirabaug. One field now,
+   * so the sentence and the badge cannot disagree.
+   */
+  byAppointmentAt?: DoctorBranch;
   /** Dental college, spelling normalised against the institution's own name. */
   college?: { name: string; status: ContentStatus };
   /** Council registration number. Council itself not yet stated by the clinic. */
@@ -299,7 +310,7 @@ export const doctors: Doctor[] = [
     yearsExperience: 15,
     focus: ["Dental Implants", "Full Mouth Rehabilitation", "Root Canal Treatment", "Smile Design"],
     branchSlugs: ["swastik-plaza", "hirabaug"],
-    availabilityNote: "At Yogi Chowk by appointment.",
+    byAppointmentAt: "hirabaug",
     college: { name: "Dharmsinh Desai University, Nadiad", status: "clinic_supplied" },
     registration: { number: "A-6277", status: "needs_proof" },
     memberships: { items: ["IDA", "VDA", "KDA"], status: "needs_proof" },
@@ -1357,6 +1368,22 @@ export const treatments: Treatment[] = [
 export const treatmentBySlug = (slug: string) => treatments.find((t) => t.slug === slug);
 
 export const doctorBySlug = (slug: string) => doctors.find((d) => d.slug === slug);
+
+/**
+ * "At Hirabaug by appointment." for a doctor who has a by-appointment branch,
+ * and nothing at all for one who does not.
+ *
+ * The branch name comes from `locations`, so it cannot be spelled one way
+ * here and another way on the clinic's own page.
+ */
+export const availabilityNote = (doctor: Doctor): string | undefined => {
+  if (!doctor.byAppointmentAt) return undefined;
+  const branch = locations.find((l) => l.slug === doctor.byAppointmentAt);
+  return branch ? `At ${branch.displayArea} by appointment.` : undefined;
+};
+
+/** True when this doctor is seen at this branch by appointment rather than on a rota. */
+export const isByAppointmentAt = (doctor: Doctor, branchSlug: string) => doctor.byAppointmentAt === branchSlug;
 
 /**
  * "What brings you in today?"

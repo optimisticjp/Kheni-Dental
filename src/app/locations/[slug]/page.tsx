@@ -12,7 +12,7 @@ import { TreatmentRow } from "@/components/kheni/treatment-poster";
 import { Container } from "@/components/ui/container";
 import { BookButton, CallButton, WhatsAppButton } from "@/components/ui/cta";
 import { locationPhotos } from "@/content/photos";
-import { doctors, locations, treatments, type DoctorBranch } from "@/content/site";
+import { doctors, isByAppointmentAt, locations, treatments, type DoctorBranch } from "@/content/site";
 
 export function generateStaticParams() {
   return locations.map((location) => ({ slug: location.slug }));
@@ -106,7 +106,7 @@ export default async function LocationPage({ params }: { params: Promise<{ slug:
                   <li key={d.slug}>
                     <Link href={`/doctors/${d.slug}/`} className="inline-flex min-h-10 items-center rounded-full bg-white px-3.5 text-sm font-medium ring-1 ring-line">
                       {d.name}
-                      {d.availabilityNote && location.slug === "swastik-plaza" && <span className="ml-1.5 text-ink-soft">· by appointment</span>}
+                      {isByAppointmentAt(d, location.slug) && <span className="ml-1.5 text-ink-soft">· by appointment</span>}
                     </Link>
                   </li>
                 ))}

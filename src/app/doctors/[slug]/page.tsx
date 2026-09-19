@@ -10,7 +10,7 @@ import { SmileNote } from "@/components/kheni/smile-note";
 import { TreatmentRow } from "@/components/kheni/treatment-poster";
 import { Container } from "@/components/ui/container";
 import { editorialLines } from "@/content/review-sample";
-import { doctors, treatments } from "@/content/site";
+import { availabilityNote, doctors, isByAppointmentAt, treatments } from "@/content/site";
 
 export function generateStaticParams() {
   return doctors.map((doctor) => ({ slug: doctor.slug }));
@@ -70,7 +70,7 @@ export default async function DoctorPage({ params }: { params: Promise<{ slug: s
                     <p className="font-semibold">{l.displayArea}</p>
                     <p className="t-small mt-0.5 text-ink-soft">{l.landmark}</p>
                     <p className="t-small mt-1 text-ink-soft">{l.hours}</p>
-                    {doctor.availabilityNote && l.slug === "swastik-plaza" && <p className="t-small mt-1 text-ink-soft">{doctor.availabilityNote}</p>}
+                    {isByAppointmentAt(doctor, l.slug) && <p className="t-small mt-1 text-ink-soft">{availabilityNote(doctor)}</p>}
                   </li>
                 ))}
               </ul>

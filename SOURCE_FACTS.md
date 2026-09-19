@@ -10,7 +10,7 @@ Snapshot prepared 27 August 2026, updated 29 August 2026 (Google counts), 3 Sept
 - Patient-facing email selected: smile@khenidentalcare.com
 
 ### Doctors (updated from the clinic information form, 14 September 2026)
-- Dr. Mayur Kheni, B.D.S., Dental Surgeon, Implantologist & Cosmetic Dentistry, 15 years experience, both clinics (Yogi Chowk by appointment). Reg. A-6277 and IDA/VDA/KDA memberships stated by the clinic, evidence pending.
+- Dr. Mayur Kheni, B.D.S., Dental Surgeon, Implantologist & Cosmetic Dentistry, 15 years experience, both clinics. **By appointment at Hirabaug** (corrected by the clinic, 19 September 2026; the form's page 10 had been read as Yogi Chowk by appointment, which was the wrong way round). Yogi Chowk is his regular clinic, which is consistent with implant planning and treatment being based there. Reg. A-6277 and IDA/VDA/KDA memberships stated by the clinic, evidence pending.
 - Dr. Jinali Monpara (spelling corrected by the clinic; was "Jinal Monapara"), B.D.S., Cosmetic Dental Surgeon, 10 years experience (was 9), both clinics. Reg. A-15753 stated, evidence pending.
 - Dr. Ishita Dobariya, B.D.S., Dental Surgeon & Kids Specialist, 4 years experience, Yogi Chowk only. AMC Dental College, Ahmedabad.
 - Dr. Parita Vastarpara, B.D.S., Dental Surgeon, 4 years experience, both clinics. Ahmedabad Dental College & Hospital.
