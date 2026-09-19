@@ -36,11 +36,33 @@ declare global {
 export function pushTrackingEvent(payload: TrackingPayload) {
   if (typeof window === "undefined") return;
 
+  const { event, ...rest } = payload;
+  const params = Object.fromEntries(
+    Object.entries(rest).filter(([, value]) => value !== undefined),
+  );
+
   window.dataLayer = window.dataLayer || [];
 
   // Keep analytics context operational and generic. Do not send symptoms,
   // diagnoses, medical history, form values or treatment-specific patient data.
+  //
+  // This push is read by Google Tag Manager, and by GTM only. A plain object
+  // pushed to the dataLayer is a custom event trigger; gtag.js does not
+  // interpret it, so it reaches GA4 only if a tag inside the container sends
+  // it there.
   window.dataLayer.push(payload);
+
+  // GA4, directly. It loads from `analytics.tsx` rather than from inside the
+  // container, so without this call the events above land nowhere: the
+  // container holds no GA4 tag, on purpose, because running both routes
+  // double-counts every session.
+  //
+  // Off the clinic's domain `gtag.js` is never loaded, so this only queues
+  // into the dataLayer and transmits nothing. See `tracking-ids.ts`.
+  //
+  // If a GA4 tag is ever added inside GTM-MDNBGRX, delete this call the same
+  // day or every conversion is counted twice.
+  window.gtag?.("event", event, params);
 
   // Meta receives only a coarse standard Contact event. No placement, branch,
   // treatment, form field or other custom parameter is sent.
