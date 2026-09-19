@@ -1,6 +1,11 @@
 import Script from "next/script";
 
-import { GA4_ID, GTM_ID, PRODUCTION_HOST } from "@/lib/tracking-ids";
+import {
+  GA4_ID,
+  GOOGLE_ADS_ID,
+  GTM_ID,
+  PRODUCTION_HOST,
+} from "@/lib/tracking-ids";
 
 /**
  * Google Tag Manager and GA4, on every page. The Meta Pixel is separate, in
@@ -13,12 +18,20 @@ import { GA4_ID, GTM_ID, PRODUCTION_HOST } from "@/lib/tracking-ids";
  * therefore ships the snippet but sends nothing. See `tracking-ids.ts` for
  * why this is a runtime check and not an environment variable.
  *
- * GA4 LOADS FROM HERE, NOT FROM INSIDE GTM. Both routes work and running
- * both at once double-counts every session, which is how a clinic ends up
- * reporting twice the traffic it has. The container is deliberately left
- * empty of a GA4 tag and kept for the Google Ads conversion tags, which is
- * what a container is actually for. If a GA4 configuration tag is ever
- * added inside GTM-MDNBGRX, delete the GA4 block below the same day.
+ * GA4 AND GOOGLE ADS LOAD FROM HERE, NOT FROM INSIDE GTM. Both routes work
+ * and running both at once double-counts every session, which is how a
+ * clinic ends up reporting twice the traffic it has. The container is
+ * deliberately left empty of a GA4 tag. If a GA4 configuration tag is ever
+ * added inside GTM-MGBFWXLV, delete the GA4 block below the same day.
+ *
+ * One gtag.js load serves both ids. The Google Ads config is what makes
+ * remarketing audiences and conversion tracking possible; the conversions
+ * themselves fire from `tracking.ts` once the labels exist.
+ *
+ * There is no GTM <noscript> iframe. It only runs for visitors with
+ * JavaScript disabled, who have no dataLayer and so fire no events anyway,
+ * and it cannot be limited to the clinic's domain the way everything else
+ * here is, because the whole point of it is that no script runs.
  *
  * Consent Mode v2 denies storage before either tag loads;
  * `consent-banner.tsx` grants on the visitor's choice. The tags still load
@@ -38,9 +51,9 @@ export function AnalyticsScripts() {
         {`if(location.hostname==='${PRODUCTION_HOST}'){(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GTM_ID}');}`}
       </Script>
 
-      {/* Google tag (gtag.js) for GA4 */}
+      {/* Google tag (gtag.js), configured for both GA4 and Google Ads */}
       <Script id="ga4-loader" strategy="afterInteractive">
-        {`if(location.hostname==='${PRODUCTION_HOST}'){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=${GA4_ID}';document.head.appendChild(s);gtag('js',new Date());gtag('config','${GA4_ID}');}`}
+        {`if(location.hostname==='${PRODUCTION_HOST}'){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=${GA4_ID}';document.head.appendChild(s);gtag('js',new Date());gtag('config','${GA4_ID}');gtag('config','${GOOGLE_ADS_ID}');}`}
       </Script>
     </>
   );

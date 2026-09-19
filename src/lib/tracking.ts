@@ -1,4 +1,5 @@
-import { META_CONTACT_EVENTS } from "@/lib/meta";
+import { META_STANDARD_EVENTS } from "@/lib/meta";
+import { ADS_CONVERSION_LABELS, GOOGLE_ADS_ID } from "@/lib/tracking-ids";
 
 export type TrackingEventName =
   | "whatsapp_click"
@@ -60,13 +61,26 @@ export function pushTrackingEvent(payload: TrackingPayload) {
   // Off the clinic's domain `gtag.js` is never loaded, so this only queues
   // into the dataLayer and transmits nothing. See `tracking-ids.ts`.
   //
-  // If a GA4 tag is ever added inside GTM-MDNBGRX, delete this call the same
-  // day or every conversion is counted twice.
+  // If a GA4 tag is ever added inside the container, delete this call the
+  // same day or every conversion is counted twice.
   window.gtag?.("event", event, params);
 
-  // Meta receives only a coarse standard Contact event. No placement, branch,
-  // treatment, form field or other custom parameter is sent.
-  if (META_CONTACT_EVENTS.has(payload.event)) {
-    window.fbq?.("track", "Contact");
+  // Google Ads, but only for the handful of events that have a conversion
+  // action behind them, and only once those actions exist. See
+  // ADS_CONVERSION_LABELS. No placement or branch is sent: an advertising
+  // platform gets the fact that someone made contact, nothing describing
+  // them.
+  const label = ADS_CONVERSION_LABELS[event];
+  if (label) {
+    window.gtag?.("event", "conversion", {
+      send_to: `${GOOGLE_ADS_ID}/${label}`,
+    });
+  }
+
+  // Meta receives a standard event and no custom parameters at all. See
+  // META_STANDARD_EVENTS for what is deliberately withheld.
+  const metaEvent = META_STANDARD_EVENTS[event];
+  if (metaEvent) {
+    window.fbq?.("track", metaEvent);
   }
 }
