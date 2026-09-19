@@ -2,13 +2,14 @@
 
 import { ChevronDown, Menu, Phone } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
 import { BrandMark } from "@/components/kheni/brand-mark";
 import { BookButton } from "@/components/ui/cta";
 import { Container } from "@/components/ui/container";
 import { MobileMenu } from "@/components/layout/mobile-menu";
-import { featuredTreatmentSlugs, primaryNav, site, treatments } from "@/content/site";
+import { featuredTreatmentSlugs, primaryNav, site, treatments, type NavItem } from "@/content/site";
 import { cn } from "@/lib/utils";
 
 const menuTreatments = featuredTreatmentSlugs
@@ -16,15 +17,38 @@ const menuTreatments = featuredTreatmentSlugs
   .filter((t): t is (typeof treatments)[number] => Boolean(t));
 
 /**
+ * Which nav item is the page we are on.
+ *
+ * Home only matches exactly; every other item also matches its own
+ * children. Where two items both match, the longer href wins, so the
+ * dental implants page lights Dental Implants and not Treatments as well.
+ * Two lit items looked like a bug rather than like a breadcrumb.
+ *
+ * Returns the winning href, or undefined off-nav.
+ */
+export function currentNavHref(pathname: string, items: NavItem[]) {
+  const path = pathname.endsWith("/") ? pathname : `${pathname}/`;
+  const matches = items.filter((item) => (item.href === "/" ? path === "/" : path === item.href || path.startsWith(item.href)));
+  if (!matches.length) return undefined;
+  return matches.reduce((best, item) => (item.href.length > best.href.length ? item : best)).href;
+}
+
+/**
  * Site header. Near-black, with the name in ivory and "Elite Implant
- * Center" in gold. Quiet ivory navigation, the featured link in gold, one
- * outlined phone action and one gold Book. Frosted once the page scrolls.
- * The treatments menu opens on hover for a mouse and on focus for a
- * keyboard, and every item is a real link.
+ * Center" in gold. Quiet ivory navigation, one outlined phone action and
+ * one gold Book. Frosted once the page scrolls. The treatments menu opens
+ * on hover for a mouse and on focus for a keyboard, and every item is a
+ * real link.
+ *
+ * Gold in the navigation means one thing: the page you are on. It used to
+ * mean "Dental Implants", which painted that link gold on every page
+ * including its own, so the colour carried no information.
  */
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+  const current = currentNavHref(pathname, primaryNav);
   const closeMenu = useCallback(() => setOpen(false), []);
 
   useEffect(() => {
@@ -56,7 +80,11 @@ export function Navbar() {
                   <div key={link.href} className="group relative">
                     <Link
                       href={link.href}
-                      className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-2 text-[.9375rem] text-ivory/75 xl:px-3 transition-colors hover:text-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+                      aria-current={current === link.href ? "page" : undefined}
+                      className={cn(
+                        "inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-2 text-[.9375rem] xl:px-3 transition-colors hover:text-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold",
+                        current === link.href ? "text-gold" : "text-ivory/75",
+                      )}
                     >
                       {link.label}
                       <ChevronDown className="size-3.5 transition-transform group-hover:rotate-180" aria-hidden="true" />
@@ -88,13 +116,15 @@ export function Navbar() {
                   <Link
                     key={link.href}
                     href={link.href}
+                    aria-current={current === link.href ? "page" : undefined}
                     className={cn(
                       "whitespace-nowrap rounded-full px-2.5 py-2 text-[.9375rem] transition-colors hover:text-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold xl:px-3",
                       // Between 1024 and 1279 the full set overflows the header
-                      // and clips the Book button. The accented implants link is
-                      // the one item that duplicates a destination already in the
+                      // and clips the Book button. Dental Implants is the one
+                      // item that repeats a destination already in the
                       // Treatments dropdown, so it is the honest one to drop.
-                      link.accent ? "hidden text-gold xl:inline-flex" : "text-ivory/75",
+                      link.wideOnly && "hidden xl:inline-flex",
+                      current === link.href ? "text-gold" : "text-ivory/75",
                     )}
                   >
                     {link.label}

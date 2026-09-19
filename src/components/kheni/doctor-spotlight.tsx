@@ -40,7 +40,13 @@ export function doctorBranches(doctor: Doctor) {
   return locations.filter((l) => doctor.branchSlugs.includes(l.slug as Doctor["branchSlugs"][number]));
 }
 
-export function Portrait({ doctor, className, ratio = "4 / 5", mobileRatio, from = "sm", tone = "dark" }: { doctor: Doctor; className?: string; ratio?: string; mobileRatio?: string; from?: "sm" | "md" | "lg"; tone?: "dark" | "light" }) {
+/**
+ * `nameplate={false}` suppresses the placeholder's own name line, for a
+ * caller that puts its own caption over the frame. Without it the hero
+ * showed "DR. MAYUR" inside the panel and "Dr. Mayur Kheni" on the plate
+ * below it, six words apart.
+ */
+export function Portrait({ doctor, className, ratio = "4 / 5", mobileRatio, from = "sm", tone = "dark", nameplate = true }: { doctor: Doctor; className?: string; ratio?: string; mobileRatio?: string; from?: "sm" | "md" | "lg"; tone?: "dark" | "light"; nameplate?: boolean }) {
   const initials = doctor.name.replace(/^Dr\.?\s*/i, "").split(/\s+/).slice(0, 2).map((p) => p[0]).join("");
   const photo = doctorPhotos[doctor.slug];
   return (
@@ -50,8 +56,12 @@ export function Portrait({ doctor, className, ratio = "4 / 5", mobileRatio, from
         <span aria-hidden="true" className={cn("absolute inset-0 grid place-items-center font-serif text-[clamp(3rem,9vw,5.5rem)] tracking-[-.04em]", tone === "dark" ? "text-gold" : "text-ink/20")}>
           {initials}
         </span>
-        <span aria-hidden="true" className={cn("absolute bottom-5 left-5 right-5 h-px", tone === "dark" ? "rule-gold" : "bg-ink/10")} />
-        <span className={cn("absolute bottom-7 left-5 t-eyebrow", tone === "dark" ? "text-ivory/60" : "text-ink-soft")}>{doctor.shortName}</span>
+        {nameplate && (
+          <>
+            <span aria-hidden="true" className={cn("absolute bottom-5 left-5 right-5 h-px", tone === "dark" ? "rule-gold" : "bg-ink/10")} />
+            <span className={cn("absolute bottom-7 left-5 t-eyebrow", tone === "dark" ? "text-ivory/60" : "text-ink-soft")}>{doctor.shortName}</span>
+          </>
+        )}
       </div>
     </MediaFrame>
   );

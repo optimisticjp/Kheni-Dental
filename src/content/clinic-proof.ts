@@ -47,14 +47,14 @@ export type ProofMetric = {
    * them one per inner page meant a visitor who never left the homepage saw
    * none of them.
    */
-  placements: ("home" | "about" | "implants" | "kids" | "nri" | "full-mouth" | "smile" | "rct")[];
+  placements: ("home" | "about" | "doctors" | "implants" | "kids" | "nri" | "full-mouth" | "smile" | "rct")[];
 };
 
 const form = "Clinic information form, 14 September 2026";
 
 export const proofMetrics: ProofMetric[] = [
-  { id: "years", value: String(site.yearsInSurat), label: "Years in Surat", source: "form p7 (Correct)", verification: "clinic_supplied", asOf: "2026-09-14", display: true, placements: ["about"] },
-  { id: "doctors", value: String(site.doctorCount), label: "Dentists", source: "form p15-27", verification: "clinic_supplied", asOf: "2026-09-14", display: true, placements: ["about"] },
+  { id: "years", value: String(site.yearsInSurat), label: "Years in Surat", source: "form p7 (Correct)", verification: "clinic_supplied", asOf: "2026-09-14", display: true, placements: ["about", "doctors"] },
+  { id: "doctors", value: String(site.doctorCount), label: "Dentists", source: "form p15-27", verification: "clinic_supplied", asOf: "2026-09-14", display: true, placements: ["about", "doctors"] },
   { id: "clinics", value: String(site.clinicCount), label: "Clinics in Surat", source: "form p9-12", verification: "clinic_supplied", asOf: "2026-09-14", display: true, placements: ["about"] },
   ...(googleReputation.sharedRating
     ? [
@@ -72,7 +72,7 @@ export const proofMetrics: ProofMetric[] = [
         },
       ]
     : []),
-  { id: "patients", value: "45,000", label: "Patients treated", source: `${form}, p2 (repeated p44)`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Basis and date needed before launch.", display: true, placements: ["home", "about"] },
+  { id: "patients", value: "45,000", label: "Patients treated", source: `${form}, p2 (repeated p44)`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Basis and date needed before launch.", display: true, placements: ["home", "about", "doctors"] },
   { id: "implants", value: "3,700", label: "Implants placed", source: `${form}, p2`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Basis and date needed before launch.", display: true, placements: ["home", "about", "implants"] },
   { id: "full-mouth", value: "950", label: "Full mouth cases", source: `${form}, p2`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Basis and date needed before launch.", display: true, placements: ["home", "about", "full-mouth"] },
   { id: "rct", value: "90,000", suffix: "+", label: "Root canals", source: `${form}, p2`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Stored exactly as typed. It is double the stated patient count, so the clinic still needs to confirm what is being counted (ledger C12).", display: true, placements: ["home", "rct"] },

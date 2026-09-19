@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 
 import { CtaBand } from "@/components/kheni/cta-band";
 import { PageHero } from "@/components/kheni/page-hero";
-import { GoogleQuotes } from "@/components/kheni/proof";
+import { GoogleQuotes, MetricStrip } from "@/components/kheni/proof";
 import { ResultsPreview } from "@/components/kheni/results-preview";
 import { SectionIntro } from "@/components/kheni/section-intro";
 import { Container } from "@/components/ui/container";
+import { metricsFor } from "@/content/clinic-proof";
 import { caseCategories, caseResults } from "@/content/cases";
 import { sampleCases } from "@/content/review-sample";
 
@@ -37,6 +38,10 @@ export default function SmileGalleryPage() {
 
       <section className="sec">
         <Container width="7xl">
+          {/* Until consented before-and-after photographs arrive, the gallery
+              shows neutral sample frames. The one real figure it can stand on
+              is how many of these cases the clinic has done. */}
+          <MetricStrip metrics={metricsFor("smile")} className="mb-8 max-w-xs" />
           <ResultsPreview limit={caseResults.length || sampleCases.length} placement="gallery" />
         </Container>
       </section>

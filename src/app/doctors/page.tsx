@@ -3,11 +3,11 @@ import type { Metadata } from "next";
 import { CtaBand } from "@/components/kheni/cta-band";
 import { DoctorRoster, DoctorSpotlight } from "@/components/kheni/doctor-spotlight";
 import { PageHero } from "@/components/kheni/page-hero";
-import { ProofCluster } from "@/components/kheni/proof";
+import { MetricStrip, ProofCluster } from "@/components/kheni/proof";
 import { SectionIntro } from "@/components/kheni/section-intro";
 import { SmileNote } from "@/components/kheni/smile-note";
 import { Container } from "@/components/ui/container";
-import { languages } from "@/content/clinic-proof";
+import { languages, metricsFor } from "@/content/clinic-proof";
 import { locations, smileNotes } from "@/content/site";
 
 export const metadata: Metadata = {
@@ -55,6 +55,9 @@ export default function DoctorsPage() {
 
       <section className="sec-b">
         <Container width="7xl">
+          {/* The team, counted. A roster of four names says less on its own
+              than the years and the volume behind them. */}
+          <MetricStrip metrics={metricsFor("doctors")} className="mb-8" />
           <ProofCluster placement="doctors_proof" />
         </Container>
       </section>

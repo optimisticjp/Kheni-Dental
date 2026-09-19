@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Check } from "lucide-react";
 
 import { Accordion } from "@/components/ui/accordion";
 import { Container } from "@/components/ui/container";
@@ -9,20 +9,20 @@ import { BranchLocator } from "@/components/kheni/branch-locator";
 import { ClinicShorts } from "@/components/kheni/clinic-shorts";
 import { ConcernFinder } from "@/components/kheni/concern-finder";
 import { CtaBand } from "@/components/kheni/cta-band";
-import { DoctorRoster, DoctorSpotlight } from "@/components/kheni/doctor-spotlight";
+import { DoctorRoster, DoctorSpotlight, Portrait } from "@/components/kheni/doctor-spotlight";
 import { FollowLine, InstagramReels } from "@/components/kheni/instagram-reels";
 import { ProcessSteps } from "@/components/kheni/process-steps";
-import { GoogleQuotes, MetricRow, ProofChip, ProofPanel, Stars } from "@/components/kheni/proof";
+import { GoogleQuotes, MetricStrip, ProofChip, ProofPanel, Stars } from "@/components/kheni/proof";
 import { Highlighted, SectionIntro } from "@/components/kheni/section-intro";
 import { TreatmentRail } from "@/components/kheni/treatment-rail";
 import { TreatmentTile } from "@/components/kheni/treatment-poster";
 import { photoSrcSet } from "@/components/kheni/media-frame";
 import { headlineCapabilities } from "@/content/capabilities";
-import { metricsFor } from "@/content/clinic-proof";
+import { heroAssurances, metricsFor } from "@/content/clinic-proof";
 import { googleReputation, verifiedBranches } from "@/content/google-reputation";
 import { implantHero, implantProcess } from "@/content/implant-center";
 import { instagramHandle, instagramReels } from "@/content/instagram";
-import { homepageFaqs, site, treatments } from "@/content/site";
+import { doctors, homepageFaqs, site, treatments } from "@/content/site";
 import { clinicVideos } from "@/content/videos";
 import { placeUrl } from "@/lib/maps";
 
@@ -53,12 +53,15 @@ const abroadVideos = clinicVideos.filter((v) => ["eex02jLikGk", "7n0mOTFirzI"].i
 
 /** Every volume the clinic gave on its form. Eight, so they sit 2 x 4. */
 const homeMetrics = metricsFor("home");
-const heroFrames = ["consultation-desk", "kids-camp"].map((id) => instagramReels.find((r) => r.id === id)).filter((r): r is NonNullable<typeof r> => Boolean(r));
+/** The principal dentist leads the hero. */
+const principal = doctors.find((d) => d.principal) ?? doctors[0];
+/** One real frame from the clinic's own Instagram, beside the portrait. */
+const heroFrame = instagramReels.find((r) => r.id === "consultation-desk");
 
 export default function Home() {
   return (
     <>
-      {/* ── Hero: dark, gold detail, real Kheni frames ───────────────── */}
+      {/* ── Hero: dark, gold detail, the principal dentist ────────────── */}
       <section className="on-dark grain relative isolate overflow-hidden bg-ink text-ivory">
         <div aria-hidden="true" className="bloom-gold pointer-events-none absolute inset-0" />
         <Container width="7xl" className="relative grid gap-8 sec-hero lg:grid-cols-[1.05fr_.95fr] lg:items-center lg:gap-14">
@@ -80,61 +83,90 @@ export default function Home() {
               <WhatsAppButton placement="home_hero" size="lg" variant="onDark" className="px-4 sm:px-7 [&>svg]:text-gold" />
             </div>
             <ProofChip placement="home_hero" tone="dark" className="mt-5" />
+
+            {/* Three things that are true and that a nervous patient wants to
+                know before anything else. Not numbers: the counted figures get
+                their own band directly below, and saying them twice in one
+                screen would read as a mistake rather than as emphasis. */}
+            <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-1.5">
+              {heroAssurances.map((line) => (
+                <li key={line} className="flex items-center gap-2 text-[.8125rem] text-ivory/60">
+                  <Check className="size-3.5 shrink-0 text-gold" aria-hidden="true" />
+                  {line}
+                </li>
+              ))}
+            </ul>
           </div>
 
-          {/* Right: two frames from the clinic's own Instagram and the two
-              listings on one soft mint card. The one light accent in the
-              dark hero. */}
-          {/* 640 to 767 is the one width where three across still reads, because
-              the hero is stacked and the row has the full container. From 768
-              it goes back to the two-column composition used on desktop: the
-              tall frame beside a stacked square and proof card. Three across at
-              768 was the single worst thing on the tablet layout, a cramped row
-              with mismatched heights and a hole in the middle. */}
-          <div className="grid grid-cols-[1.1fr_.9fr] gap-3 sm:grid-cols-[1fr_.9fr_.9fr] md:grid-cols-[1.1fr_.9fr] md:gap-4">
-            {heroFrames.map((reel, index) => (
+          {/* Right: the principal dentist, with one frame from the clinic's
+              own Instagram and the two Google listings stacked beside him.
+
+              The portrait leads because a first-time patient is choosing a
+              person, not a building. `Portrait` renders the designed monogram
+              panel until the clinic sends a photograph, and a real one drops
+              into the same frame with no layout change: add the file to
+              `doctorPhotos` in src/content/photos.ts. See
+              docs/PHOTOS-STILL-NEEDED.md, item 1. No face is ever generated
+              for a named dentist. */}
+          {/* Two frames of equal weight, then the Google listings as a bar
+              beneath them. The portrait had the tall slot to itself at first
+              and, with no photograph in it yet, a half-metre of empty panel
+              carrying two initials led the hero. Equal frames read as a
+              composition in both states. */}
+          <div className="grid grid-cols-2 gap-3 md:gap-4">
+            <div className="relative">
+              <Portrait doctor={principal} ratio="4 / 5" nameplate={false} />
+              <div className="pointer-events-none absolute inset-x-2.5 bottom-2.5 rounded-xl bg-ink/75 px-3 py-2 backdrop-blur-sm">
+                <p className="font-serif text-[.95rem] leading-tight text-ivory">{principal.name}</p>
+                <p className="mt-0.5 text-[.7rem] text-gold">{principal.credentials} &middot; Principal dentist</p>
+              </div>
+            </div>
+
+            {heroFrame && (
               <a
-                key={reel.id}
-                href={reel.url}
+                href={heroFrame.url}
                 target="_blank"
                 rel="noreferrer"
                 data-track="instagram_reel_open"
                 data-placement="home_hero_frame"
-                aria-label={`${reel.title}. Watch on Instagram`}
-                className={index === 0 ? "row-span-2 sm:row-span-1 md:row-span-2" : "hidden sm:block"}
+                aria-label={`${heroFrame.title}. Watch on Instagram`}
               >
-                <span className="relative block overflow-hidden rounded-[1.25rem] border border-ivory/10 bg-ink-2" style={{ aspectRatio: index === 0 ? "4 / 5" : "1 / 1" }}>
-                  {reel.poster && (
+                <span className="relative block overflow-hidden rounded-[1.5rem] border border-ivory/10 bg-ink-2" style={{ aspectRatio: "4 / 5" }}>
+                  {heroFrame.poster && (
                     // eslint-disable-next-line @next/next/no-img-element -- images are unoptimized site-wide
                     <img
-                      src={reel.poster}
-                      srcSet={photoSrcSet(reel.poster)}
-                      sizes="(min-width: 1024px) 360px, 50vw"
-                      alt={reel.posterAlt ?? ""}
+                      src={heroFrame.poster}
+                      srcSet={photoSrcSet(heroFrame.poster)}
+                      sizes="(min-width: 1024px) 300px, 45vw"
+                      alt={heroFrame.posterAlt ?? ""}
                       loading="eager"
-                      fetchPriority={index === 0 ? "high" : undefined}
+                      fetchPriority="high"
                       decoding="async"
                       className="absolute inset-0 size-full object-cover"
-                      style={{ objectPosition: reel.objectPosition }}
+                      style={{ objectPosition: heroFrame.objectPosition }}
                     />
                   )}
                   <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
                   <span className="absolute bottom-3 left-3 right-3 flex items-end justify-between gap-2 text-[.7rem] text-ivory/85">
-                    <span className="min-w-0 truncate">{reel.title}</span>
+                    <span className="min-w-0 truncate">{heroFrame.title}</span>
                     <span className="shrink-0 text-gold">{instagramHandle}</span>
                   </span>
                 </span>
               </a>
-            ))}
-            <div className="flex flex-col justify-between rounded-[1.25rem] bg-mint p-4 text-ink sm:col-span-1">
-              <div className="flex items-center justify-between gap-2">
+            )}
+
+            {/* The two listings as a bar under both frames. In a narrow
+                column the branch names wrapped mid-word; across the full
+                width they sit on one line each. */}
+            <div className="col-span-2 rounded-[1.5rem] bg-mint p-4 text-ink">
+              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                 <span className="font-serif text-3xl leading-none">{googleReputation.sharedRating}</span>
-                <Stars size="size-3" />
+                <Stars size="size-3.5" />
+                <p className="t-small text-ink-soft">
+                  {googleReputation.combinedReviews} Google reviews, {googleReputation.combinedShort}.
+                </p>
               </div>
-              <p className="t-small mt-2 text-ink-soft">
-                {googleReputation.combinedReviews} Google reviews, {googleReputation.combinedShort}.
-              </p>
-              <ul className="mt-3 divide-y divide-ink/10">
+              <ul className="mt-2 grid gap-x-5 sm:grid-cols-2">
                 {verifiedBranches.map((b) => (
                   <li key={b.location.slug}>
                     <a
@@ -144,10 +176,10 @@ export default function Home() {
                       data-track="google_reviews_click"
                       data-placement="home_hero_branch"
                       data-branch={b.location.slug}
-                      className="flex min-h-10 items-center justify-between gap-2 text-sm"
+                      className="flex min-h-10 items-center justify-between gap-2 border-t border-ink/10 text-sm"
                     >
-                      <span className="font-semibold">{b.location.displayArea}</span>
-                      <span className="flex items-center gap-1.5 text-ink-soft">
+                      <span className="whitespace-nowrap font-semibold">{b.location.displayArea}</span>
+                      <span className="flex items-center gap-1.5 whitespace-nowrap text-ink-soft">
                         <span className="font-serif text-ink">{b.rating}</span>
                         {b.reviewCount}
                         <ArrowUpRight className="size-3 text-gold-text" aria-hidden="true" />
@@ -158,6 +190,26 @@ export default function Home() {
               </ul>
             </div>
           </div>
+        </Container>
+      </section>
+
+      {/* ── The counted work, straight under the hero. ─────────────────
+          These eight used to sit three quarters of the way down the page,
+          which meant most phone visitors never reached them. They are the
+          clinic's strongest plain fact, so they now land while the hero is
+          still on screen. */}
+      <section className="relative isolate overflow-hidden bg-sand sec-tight">
+        <Container width="7xl">
+          <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-2">
+            <p className="t-eyebrow flex items-center gap-3 text-gold-text">
+              Kheni Dental in numbers
+              <span aria-hidden="true" className="rule-gold h-px w-10" />
+            </p>
+            <p className="t-small max-w-[46ch] text-ink-soft">
+              The clinic&rsquo;s own figures since 2012, across both Surat clinics. Numbers do not tell you whether a dentist is right for you, but they do tell you this is not anyone&rsquo;s first week.
+            </p>
+          </div>
+          <MetricStrip metrics={homeMetrics} className="mt-5" />
         </Container>
       </section>
 
@@ -263,24 +315,6 @@ export default function Home() {
           </div>
           <div className="mt-4">
             <DoctorRoster exclude="dr-mayur-kheni" compact />
-          </div>
-        </Container>
-      </section>
-
-      {/* ── The clinic's own numbers. Every volume it gave us, in one place. ── */}
-      <section className="bg-sand sec">
-        <Container width="7xl">
-          <div className="grid gap-8 lg:grid-cols-[.85fr_1.15fr] lg:items-center lg:gap-14">
-            <SectionIntro
-              eyebrow="Kheni Dental in numbers"
-              title="Fifteen years of work, counted."
-              highlight="counted"
-              copy="The clinic's own figures for what it has treated since 2012, across both Surat clinics. Numbers do not tell you whether a dentist is right for you, but they do tell you this is not anyone's first week."
-            />
-            {/* Two-up until 1360. Four across is too tight for "90,000+" while
-                the intro still takes a column: it overflowed at 1024 and again
-                at exactly 1280, so the switch sits above xl rather than on it. */}
-            <MetricRow metrics={homeMetrics} className="lg:grid-cols-2 min-[1360px]:grid-cols-4" />
           </div>
         </Container>
       </section>

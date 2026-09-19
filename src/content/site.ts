@@ -48,12 +48,31 @@ export const clinicHours = {
   compact: "Mon to Sat · 9:30 AM to 1 PM · 4 PM to 8 PM",
 } as const;
 
-export type NavItem = { href: string; label: string; hasMenu?: boolean; accent?: boolean };
+export type NavItem = {
+  href: string;
+  label: string;
+  hasMenu?: boolean;
+  /**
+   * Shown in the header only from 1280 up.
+   *
+   * Dental Implants is the one top-level link that repeats a destination
+   * already sitting in the Treatments dropdown, so between 1024 and 1279 it
+   * is the honest one to drop rather than letting the row push the Book
+   * button off the edge.
+   *
+   * This used to be called `accent` and it also painted the link gold at
+   * rest. Gold at rest said "this is special" on every page, including the
+   * page it links to, which is noise. Gold now means "you are on this page"
+   * and nothing else.
+   */
+  wideOnly?: boolean;
+};
 
 /** Header and mobile menu. Short on purpose. */
 export const primaryNav: NavItem[] = [
+  { href: "/", label: "Home" },
   { href: "/treatments/", label: "Treatments", hasMenu: true },
-  { href: "/treatments/dental-implants-surat/", label: "Dental Implants", accent: true },
+  { href: "/treatments/dental-implants-surat/", label: "Dental Implants", wideOnly: true },
   { href: "/doctors/", label: "Doctors" },
   { href: "/locations/", label: "Clinics" },
   { href: "/reviews/", label: "Reviews" },

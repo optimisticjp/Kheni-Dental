@@ -245,6 +245,32 @@ export function GoogleQuotes({ className, placement, tone = "light" }: { classNa
  * that still needs evidence carries the TO CONFIRM marker. Numbers never
  * appear in JSX; only the metric objects do.
  */
+/**
+ * The counted work, set as an editorial strip rather than a grid of cards.
+ *
+ * `MetricRow` below puts each figure in its own bordered white box, which
+ * works inside a page where the numbers are a supporting detail. On the
+ * homepage they are the point, and eight white boxes read as a table of
+ * statistics. Here each figure sits under a hairline in the serif, at a
+ * size that carries across a band, with nothing boxed in.
+ */
+export function MetricStrip({ metrics, className }: { metrics: ProofMetric[]; className?: string }) {
+  if (!metrics.length) return null;
+  return (
+    <dl className={cn("grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-4 sm:gap-x-8", className)}>
+      {metrics.map((m) => (
+        <div key={m.id} className="border-t border-ink/15 pt-3">
+          <dd className="font-serif text-[clamp(1.75rem,4.5vw,2.5rem)] leading-none tracking-[-.02em] text-gold-text">
+            {m.value}
+            {m.suffix ?? ""}
+          </dd>
+          <dt className="mt-2 text-[.8125rem] font-semibold leading-snug text-ink">{m.label}</dt>
+        </div>
+      ))}
+    </dl>
+  );
+}
+
 export function MetricRow({ metrics, className, tone = "light" }: { metrics: ProofMetric[]; className?: string; tone?: "light" | "dark" }) {
   if (!metrics.length) return null;
   const dark = tone === "dark";
