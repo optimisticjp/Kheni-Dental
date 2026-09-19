@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Photographs We Need</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0b0908; --ink-2:#14100d; --ink-soft:#5a544e;
+    --ivory:#faf8f5; --sand:#f1ede6; --sand-deep:#e4ded2;
+    --gold:#e1af4a; --gold-text:#886627; --gold-deep:#b47825; --gold-tint:#f8f1df;
+    --red:#a3352b; --green:#2f6b4f;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  @page{ size:A4; margin:14mm 0 16mm; }
+  html{font-family:"Inter",sans-serif;color:var(--ink);font-size:10.2pt;line-height:1.5}
+  body{background:#fff}
+  .pad{padding:0 16mm}
+  h1,h2,h3,.serif{font-family:"Fraunces",Georgia,serif;font-weight:600;letter-spacing:-.01em}
+
+  /* ---------- cover ---------- */
+  .cover{background:var(--ink);color:var(--ivory);padding:26mm 16mm 18mm;margin-bottom:10mm;
+         break-after:page;min-height:250mm;display:flex;flex-direction:column}
+  .mark{display:flex;align-items:center;gap:9px;margin-bottom:34mm}
+  .mark svg{width:26px;height:26px}
+  .mark b{font-size:11.5pt;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
+  .mark span{display:block;font-size:7.6pt;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-top:2px}
+  .cover h1{font-size:40pt;line-height:1.04;margin-bottom:7mm}
+  .cover h1 em{font-style:italic;color:var(--gold)}
+  .cover .lede{font-size:12pt;line-height:1.55;color:rgba(250,248,245,.76);max-width:118mm}
+  .cover .foot{margin-top:auto;padding-top:14mm;border-top:1px solid rgba(225,175,74,.3);
+               display:flex;justify-content:space-between;font-size:8.6pt;
+               letter-spacing:.1em;text-transform:uppercase;color:rgba(250,248,245,.55)}
+  .tally{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:16mm;
+         border-top:1px solid rgba(225,175,74,.3)}
+  .tally div{padding:7mm 5mm 0 0}
+  .tally .n{font-family:"Fraunces",serif;font-size:30pt;color:var(--gold);line-height:1}
+  .tally .l{font-size:8.4pt;color:rgba(250,248,245,.7);margin-top:3mm;line-height:1.4}
+
+  /* ---------- sections ---------- */
+  section{break-inside:avoid}
+  .band{background:var(--sand);padding:7mm 16mm;margin:0 0 7mm}
+  .eyebrow{font-size:8pt;letter-spacing:.17em;text-transform:uppercase;font-weight:700;color:var(--gold-text)}
+  h2{font-size:21pt;margin:2mm 0 3mm;line-height:1.12}
+  h3{font-size:12.5pt;margin-bottom:2mm}
+  p{margin-bottom:3mm;max-width:165mm}
+  .muted{color:var(--ink-soft)}
+  .small{font-size:9pt}
+
+  /* ---------- how to shoot ---------- */
+  .rules{display:grid;grid-template-columns:1fr 1fr;gap:4mm 7mm;margin-top:4mm}
+  .rule{border-left:2px solid var(--gold);padding-left:4mm}
+  .rule b{display:block;font-size:10pt;margin-bottom:1mm}
+  .rule span{font-size:9pt;color:var(--ink-soft);line-height:1.45}
+
+  /* ---------- shot cards ---------- */
+  .shot{border:1px solid var(--sand-deep);border-radius:4mm;padding:5mm;margin-bottom:4mm;
+        break-inside:avoid;background:#fff}
+  .shot.urgent{border-color:#e3c4bf;background:#fdf8f7}
+  .shead{display:flex;gap:4mm;align-items:flex-start;margin-bottom:3mm}
+  .num{flex:0 0 auto;width:8mm;height:8mm;border-radius:50%;background:var(--ink);color:var(--gold);
+       font-family:"Fraunces",serif;font-size:10.5pt;display:flex;align-items:center;justify-content:center}
+  .shot.urgent .num{background:var(--red);color:#fff}
+  .stitle{flex:1}
+  .stitle h3{margin:0;line-height:1.25}
+  .stitle .meta{font-size:8.4pt;color:var(--ink-soft);margin-top:1mm}
+  .tag{display:inline-block;font-size:7.4pt;letter-spacing:.09em;text-transform:uppercase;font-weight:700;
+       padding:1.2mm 2.4mm;border-radius:1.5mm;white-space:nowrap}
+  .tag.now{background:#f6e3e0;color:var(--red)}
+  .tag.gap{background:var(--gold-tint);color:var(--gold-deep)}
+  .tag.new{background:#e3efe9;color:var(--green)}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:5mm;font-size:9pt}
+  .cols b{display:block;font-size:8pt;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-text);margin-bottom:1.5mm}
+  .cols ul{margin:0;padding-left:4mm}
+  .cols li{margin-bottom:1.2mm;line-height:1.42}
+  .ask{background:var(--sand);border-radius:2.5mm;padding:3.5mm 4mm;margin-top:3.5mm;font-size:9pt}
+  .ask b{display:block;font-size:8pt;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-text);margin-bottom:1.5mm}
+  .ask ol{margin:0;padding-left:4.5mm}
+  .ask li{margin-bottom:1mm}
+
+  .liveswap{display:flex;gap:3mm;font-size:8.6pt;margin-bottom:3mm;
+            background:#fff;border:1px dashed #e3c4bf;border-radius:2.5mm;padding:3mm}
+  .liveswap div{flex:1}
+  .liveswap b{display:block;font-size:7.6pt;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1mm}
+  .liveswap .a b{color:var(--red)} .liveswap .b b{color:var(--green)}
+
+  table{width:100%;border-collapse:collapse;font-size:9pt;margin-top:3mm}
+  th{text-align:left;font-size:7.8pt;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-text);
+     padding:0 3mm 2mm 0;border-bottom:1px solid var(--sand-deep)}
+  td{padding:2.2mm 3mm 2.2mm 0;border-bottom:1px solid var(--sand);vertical-align:top;line-height:1.4}
+  tr:last-child td{border-bottom:none}
+
+  .check{columns:2;column-gap:8mm;font-size:9.2pt;margin-top:4mm}
+  .check div{break-inside:avoid;padding:1.6mm 0 1.6mm 6mm;position:relative}
+  .check div:before{content:"";position:absolute;left:0;top:2.1mm;width:3.4mm;height:3.4mm;
+                    border:1px solid var(--ink-soft);border-radius:.8mm}
+
+  .note{background:var(--ink);color:var(--ivory);border-radius:4mm;padding:6mm;margin-top:5mm}
+  .note h3{color:var(--gold);margin-bottom:2mm}
+  .note p{color:rgba(250,248,245,.78);margin:0;max-width:none}
+  .pagebreak{break-before:page}
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<div class="cover">
+  <div class="mark">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M12 3.6c-2 0-2.6 1-4.3 1C5.3 4.6 4 6.4 4 9c0 3.4 1.6 7.3 2.9 9.5.7 1.2 1.4 1.9 2.2 1.9 1 0 1.4-1 1.9-2.6.4-1.3.7-2.1 1-2.1s.6.8 1 2.1c.5 1.6.9 2.6 1.9 2.6.8 0 1.5-.7 2.2-1.9C18.4 16.3 20 12.4 20 9c0-2.6-1.3-4.4-3.7-4.4-1.7 0-2.3-1-4.3-1Z" fill="#e1af4a"/></svg>
+    <div><b>Kheni Dental</b><span>Elite Implant Center</span></div>
+  </div>
+
+  <h1>The photographs<br>we need from<br><em>the clinic</em></h1>
+  <p class="lede">A shot list for the website. Everything here can be taken on a
+     modern phone in about two hours across the two clinics. No photographer,
+     no studio, no closing early.</p>
+
+  <div class="tally">
+    <div><div class="n">6</div><div class="l">Pictures on the site right now that are not your clinic. These matter most.</div></div>
+    <div><div class="n">18</div><div class="l">Empty slots already built and waiting for a real photograph.</div></div>
+    <div><div class="n">2 hrs</div><div class="l">Roughly what the whole list takes, both branches included.</div></div>
+  </div>
+
+  <div class="foot"><span>Prepared 19 September 2026</span><span>www.khenidentalcare.com</span></div>
+</div>
+
+<!-- ============ WHY ============ -->
+<div class="band">
+  <div class="eyebrow">Please read this part first</div>
+  <h2>Six pictures on your website are not your clinic</h2>
+</div>
+<div class="pad">
+  <p>When the site was built, some photographs were not available yet, so
+     computer-generated stand-ins were used to finish the layouts. They were
+     always meant to be temporary.</p>
+  <p>Six of them are still there, and they are the ones that matter, because
+     they are captioned as <b>your rooms</b>. The waiting area shown at Yogi
+     Chowk has teal armchairs, a terrazzo table and a tropical plant. It is a
+     nice room. It is not your room.</p>
+  <p>This is worth fixing before advertising starts, for three plain reasons:
+     a patient who arrives expecting that room and finds a different one
+     starts the visit already unsure; Google Ads can treat a landing page that
+     misrepresents a business as a policy problem; and your actual clinics
+     look good, so there is nothing to gain by hiding them.</p>
+
+  <div class="note">
+    <h3>The good news</h3>
+    <p>Every one of these slots is already built and sized on the website.
+       Send the photographs and they drop straight in. Nothing needs
+       redesigning, and no page changes shape.</p>
+  </div>
+</div>
+
+<!-- ============ HOW TO SHOOT ============ -->
+<div class="band">
+  <div class="eyebrow">Before you start</div>
+  <h2>How to take them</h2>
+</div>
+<div class="pad">
+  <p>A phone from the last few years is genuinely fine. These eight habits
+     matter far more than the camera.</p>
+  <div class="rules">
+    <div class="rule"><b>Daylight, lights on</b><span>Shoot in the morning or late afternoon with blinds open and the room lights on. Never use the phone flash.</span></div>
+    <div class="rule"><b>Hold it level</b><span>Phone upright, roughly chest height, back straight. Tilting up or down makes rooms look smaller than they are.</span></div>
+    <div class="rule"><b>Tidy first, then shoot</b><span>Clear cups, papers, cables, bins and personal items. Thirty seconds of tidying beats any editing.</span></div>
+    <div class="rule"><b>Landscape for rooms</b><span>Turn the phone sideways for rooms and buildings. Keep it upright only for people.</span></div>
+    <div class="rule"><b>Stand in the corner</b><span>For a room, stand in a corner and shoot across it. You get the whole space rather than one wall.</span></div>
+    <div class="rule"><b>No filters, no beauty mode</b><span>Send the original file. Filters and skin smoothing are obvious on a dental website and cost trust.</span></div>
+    <div class="rule"><b>Send as files, not photos</b><span>On WhatsApp choose <i>Document</i> rather than <i>Gallery</i>. Sending as a photo shrinks it badly.</span></div>
+    <div class="rule"><b>Take three of each</b><span>Two steps left, two steps right. It costs nothing and one is always better than the others.</span></div>
+  </div>
+  <p class="small muted" style="margin-top:5mm"><b>On patients:</b> nobody needs to appear in
+     any photograph on this list. Where a person helps, a staff member works
+     perfectly. If a patient is ever in a picture, we need their written
+     permission first, and no faces are needed for anything here.</p>
+</div>
+
+<!-- ============ PRIORITY 1 ============ -->
+<div class="band pagebreak" style="background:#fdf8f7">
+  <div class="eyebrow" style="color:var(--red)">Priority one &middot; replaces something wrong</div>
+  <h2>Your six rooms</h2>
+  <p class="small muted" style="margin:0">These replace the generated pictures. Take them first.</p>
+</div>
+<div class="pad">
+
+  <div class="shot urgent">
+    <div class="shead"><div class="num">1</div><div class="stitle">
+      <h3>Yogi Chowk waiting area</h3>
+      <div class="meta">Landscape &middot; Swastik Plaza Ground</div>
+    </div><span class="tag now">Replacing a fake</span></div>
+    <div class="liveswap">
+      <div class="a"><b>On the site now</b>Teal armchairs, terrazzo table, tropical plant, a tree outside the window. Generated.</div>
+      <div class="b"><b>What we need</b>Your waiting area exactly as a patient sees it when they sit down.</div>
+    </div>
+    <div class="cols">
+      <div><b>How to shoot it</b><ul>
+        <li>Stand at the entrance looking in</li>
+        <li>Phone sideways, chest height</li>
+        <li>Include the seating and any window</li>
+        <li>Three versions from slightly different spots</li>
+      </ul></div>
+      <div><b>Tidy first</b><ul>
+        <li>Straighten the chairs</li>
+        <li>Clear cups, bags and papers</li>
+        <li>Bin out of shot</li>
+        <li>Lights on even in daytime</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="shot urgent">
+    <div class="shead"><div class="num">2</div><div class="stitle">
+      <h3>Yogi Chowk treatment room</h3>
+      <div class="meta">Landscape &middot; the room a family is usually seen in</div>
+    </div><span class="tag now">Replacing a fake</span></div>
+    <div class="cols">
+      <div><b>How to shoot it</b><ul>
+        <li>From the doorway, across the room</li>
+        <li>Chair, light and any screen in frame</li>
+        <li>Blinds open if there is a window</li>
+      </ul></div>
+      <div><b>Tidy first</b><ul>
+        <li>Chair upright and clean</li>
+        <li>Tray covered or cleared</li>
+        <li>Cables tucked away</li>
+        <li>No used instruments visible</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="shot urgent">
+    <div class="shead"><div class="num">3</div><div class="stitle">
+      <h3>Yogi Chowk children's corner or low basin</h3>
+      <div class="meta">Landscape or upright &middot; whatever you actually have</div>
+    </div><span class="tag now">Replacing a fake</span></div>
+    <p class="small muted" style="margin:0 0 3mm">The site currently shows a
+      child-height basin with a step stool and a green towel. If you have
+      something for children, photograph that. If you do not, tell us and we
+      will remove the claim rather than invent one.</p>
+  </div>
+
+  <div class="shot urgent">
+    <div class="shead"><div class="num">4</div><div class="stitle">
+      <h3>Hirabaug treatment room</h3>
+      <div class="meta">Landscape &middot; Varachha Main Road</div>
+    </div><span class="tag now">Replacing a fake</span></div>
+    <div class="cols">
+      <div><b>How to shoot it</b><ul>
+        <li>Same approach as the Yogi Chowk room</li>
+        <li>From the doorway, across the room</li>
+      </ul></div>
+      <div><b>Tidy first</b><ul>
+        <li>Same checklist as above</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="shot urgent">
+    <div class="shead"><div class="num">5</div><div class="stitle">
+      <h3>Hirabaug reception counter</h3>
+      <div class="meta">Landscape &middot; the first thing a patient reaches</div>
+    </div><span class="tag now">Replacing a fake</span></div>
+    <div class="cols">
+      <div><b>How to shoot it</b><ul>
+        <li>From where a patient walks in</li>
+        <li>Counter and anyone behind it</li>
+        <li>Staff member is welcome, no patients</li>
+      </ul></div>
+      <div><b>Tidy first</b><ul>
+        <li>Clear the counter top</li>
+        <li>Registers and files out of shot</li>
+        <li>No screens showing patient names</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="shot urgent">
+    <div class="shead"><div class="num">6</div><div class="stitle">
+      <h3>Sterilisation area and sealed pouches</h3>
+      <div class="meta">Landscape &middot; either clinic</div>
+    </div><span class="tag now">Replacing a fake</span></div>
+    <p class="small muted" style="margin:0 0 3mm">The website tells patients
+      instruments are sterilised under pressure and kept in sealed pouches.
+      A real photograph of your autoclave and a row of dated pouches is one
+      of the most reassuring pictures a dental website can carry, and almost
+      no competitor in Surat shows it.</p>
+    <div class="cols">
+      <div><b>Two shots please</b><ul>
+        <li>The autoclave, door closed, in its corner</li>
+        <li>Close up of sealed pouches, dates visible</li>
+      </ul></div>
+      <div><b>Tidy first</b><ul>
+        <li>Wipe the surface</li>
+        <li>Pouches lined up neatly</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PRIORITY 2 ============ -->
+<div class="band">
+  <div class="eyebrow">Priority two &middot; empty slots on the site</div>
+  <h2>Finding the door, and what you work with</h2>
+</div>
+<div class="pad">
+
+  <div class="shot">
+    <div class="shead"><div class="num">7</div><div class="stitle">
+      <h3>Both clinic exteriors</h3>
+      <div class="meta">Landscape &middot; one for each branch</div>
+    </div><span class="tag new">Would improve the site</span></div>
+    <p class="small" style="margin:0 0 3mm">This is the single most useful
+      photograph on the list and the site has no slot for it yet, so we will
+      build one. A first-time patient in an autorickshaw is looking for a
+      door, not an address. Show them the door.</p>
+    <div class="cols">
+      <div><b>Yogi Chowk</b><ul>
+        <li>Stand across the road</li>
+        <li>Include the building and signboard</li>
+        <li>Enough of the street to recognise it</li>
+      </ul></div>
+      <div><b>Hirabaug</b><ul>
+        <li>Show the entrance above Shiv Plywood</li>
+        <li>Signboard readable</li>
+        <li>Daylight, not evening</li>
+      </ul></div>
+    </div>
+    <div class="ask"><b>Also tell us</b>
+      <ol><li>Any landmark people use to find you, in the words locals use</li>
+          <li>Where a patient parks, and whether there is a lift</li></ol></div>
+  </div>
+
+  <div class="shot">
+    <div class="shead"><div class="num">8</div><div class="stitle">
+      <h3>Your equipment, twelve items</h3>
+      <div class="meta">Upright or square &middot; one photo each</div>
+    </div><span class="tag gap">Slot built, empty</span></div>
+    <p class="small" style="margin:0 0 3mm">The technology page lists twelve
+      things with no picture of any of them. Most Surat clinics list the same
+      words. Photographs of the actual machines in your actual rooms is the
+      difference between a claim and proof.</p>
+    <table>
+      <tr><th style="width:50%">Photograph</th><th>And tell us the make and model</th></tr>
+      <tr><td>Digital X-ray unit</td><td>Brand and model on the label</td></tr>
+      <tr><td>Intraoral scanner</td><td>Brand and model</td></tr>
+      <tr><td>Intraoral camera</td><td>Brand and model</td></tr>
+      <tr><td>Dental microscope</td><td>Brand and model</td></tr>
+      <tr><td>Rotary root canal system</td><td>Brand and model</td></tr>
+      <tr><td>Apex locator</td><td>Brand and model</td></tr>
+      <tr><td>Dental laser</td><td>Brand, model, and what you use it for</td></tr>
+      <tr><td>Implant planning software</td><td>Which software</td></tr>
+      <tr><td>Guided implant kit</td><td>Which system</td></tr>
+      <tr><td>Autoclave</td><td>Brand, model, class</td></tr>
+      <tr><td>Ultrasonic scaler</td><td>Brand and model</td></tr>
+      <tr><td>CAD/CAM restorations</td><td>Which lab partner, in-house or sent out</td></tr>
+    </table>
+    <div class="ask"><b>Why the model matters</b>
+      <ol><li>It lets the website say "a Carestream digital X-ray" rather than "digital X-ray", which reads as a fact instead of a boast</li>
+          <li>Patients comparing clinics search these names</li>
+          <li>We will never publish a brand you have not confirmed</li></ol></div>
+  </div>
+
+  <div class="shot">
+    <div class="shead"><div class="num">9</div><div class="stitle">
+      <h3>Six treatment photographs</h3>
+      <div class="meta">Landscape &middot; objects and rooms, no mouths</div>
+    </div><span class="tag gap">Slot built, empty</span></div>
+    <p class="small" style="margin:0 0 3mm">Six treatment pages have no picture.
+      These are simple still photographs of things on a clean surface by a
+      window, or the corner of a room. No patients involved.</p>
+    <div class="cols">
+      <div><b>Needed</b><ul>
+        <li>Root canal treatment</li>
+        <li>Teeth whitening</li>
+        <li>Dentures</li>
+        <li>Kids dentistry</li>
+        <li>Smile design</li>
+        <li>Full mouth rehabilitation</li>
+      </ul></div>
+      <div><b>What works</b><ul>
+        <li>The kit for that treatment laid out neatly</li>
+        <li>A denture or model on a clean surface</li>
+        <li>The corner of the room it happens in</li>
+        <li>Shade guide, whitening trays, a study model</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PRIORITY 3 ============ -->
+<div class="band">
+  <div class="eyebrow">Priority three &middot; makes the site feel like a real place</div>
+  <h2>People at work, and results</h2>
+</div>
+<div class="pad">
+
+  <div class="shot">
+    <div class="shead"><div class="num">10</div><div class="stitle">
+      <h3>Each dentist at work</h3>
+      <div class="meta">Upright &middot; one per dentist</div>
+    </div><span class="tag new">Would improve the site</span></div>
+    <p class="small" style="margin:0 0 3mm">We have the four standing
+      portraits, and they are good. A second photograph of each dentist
+      actually doing something, looking at a screen, explaining a scan,
+      writing notes, makes a profile page read as a person rather than a
+      staff card. Dr. Mayur already has his.</p>
+    <div class="cols">
+      <div><b>Still needed</b><ul>
+        <li>Dr. Jinali Monpara</li><li>Dr. Ishita Dobariya</li><li>Dr. Parita Vastarpara</li>
+      </ul></div>
+      <div><b>What works</b><ul>
+        <li>At the screen looking at an X-ray</li>
+        <li>At the desk, mid-conversation</li>
+        <li>Not looking at the camera</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="shot">
+    <div class="shead"><div class="num">11</div><div class="stitle">
+      <h3>A team photograph with all four dentists</h3>
+      <div class="meta">Landscape</div>
+    </div><span class="tag new">Improves what we have</span></div>
+    <p class="small" style="margin:0">The one we have shows Dr. Mayur and
+      Dr. Jinali with two of the team, so the website has to call it "the
+      clinic team" rather than name everyone. One frame with all four
+      dentists and the staff lets the page say what it wants to say.</p>
+  </div>
+
+  <div class="shot">
+    <div class="shead"><div class="num">12</div><div class="stitle">
+      <h3>Before and after cases</h3>
+      <div class="meta">Matched pairs &middot; the highest value thing on this list</div>
+    </div><span class="tag gap">Slot built, empty</span></div>
+    <p class="small" style="margin:0 0 3mm">Nothing persuades a patient
+      considering implants or braces like seeing finished work. The gallery
+      page is built and waiting. Four to six cases would fill it properly.</p>
+    <div class="cols">
+      <div><b>Shooting the pair</b><ul>
+        <li>Same angle, same distance, same light</li>
+        <li>Same retractors both times</li>
+        <li>Change only the mouth, never the camera</li>
+        <li>Send the originals, not screenshots</li>
+      </ul></div>
+      <div><b>Good spread</b><ul>
+        <li>One or two implant cases</li>
+        <li>One full mouth rehabilitation</li>
+        <li>One braces or aligner case</li>
+        <li>One crown or smile design</li>
+      </ul></div>
+    </div>
+    <div class="ask"><b>For every case, we need</b>
+      <ol>
+        <li>Written permission from the patient to publish the photographs</li>
+        <li>What they came in with, one line</li>
+        <li>What was done, one line</li>
+        <li>How long it took, and when the "after" was taken</li>
+        <li>Which photo is the before and which is the after, clearly labelled</li>
+      </ol></div>
+    <p class="small muted" style="margin:3mm 0 0"><b>A note on the ortho case
+      already sent:</b> the two halves appear to be labelled the wrong way
+      round. The one marked "after" has crowded lower teeth and the one marked
+      "before" has them straight. Please confirm which is which before we
+      publish it.</p>
+  </div>
+</div>
+
+<!-- ============ DETAILS ============ -->
+<div class="band">
+  <div class="eyebrow">Not photographs</div>
+  <h2>Six things written down</h2>
+</div>
+<div class="pad">
+  <p>These are holding the website back more than any picture. Each one is a
+     sentence or a document, not a job.</p>
+  <table>
+    <tr><th style="width:38%">What</th><th>Why it is needed</th></tr>
+    <tr><td><b>Dental council registration certificates</b><br><span class="small muted">All four dentists</span></td>
+        <td>The site currently shows registration numbers A-6277 and A-15753 that nobody has verified. A wrong number published against a named dentist is worse than no number. Send the certificates or we remove the numbers and keep the qualifications.</td></tr>
+    <tr><td><b>Memberships</b><br><span class="small muted">IDA, VDA, KDA</span></td>
+        <td>Listed on the site, unconfirmed. Confirm which dentist holds which, or they come off.</td></tr>
+    <tr><td><b>Implant warranty, in writing</b></td>
+        <td>The form said "lifetime warranty implant". We need the actual terms, including what happens to the crown on top, before the site or any advertisement mentions a warranty.</td></tr>
+    <tr><td><b>Twelve aftercare guides</b><br><span class="small muted">A doctor must read these</span></td>
+        <td>The site publishes aftercare advice for extractions, implants, scaling, crowns, braces, aligners, retainers, children's brushing and out-of-hours. The wording is careful and general, but it is not yours. A patient who has just had a tooth out will read it as instructions from their dentist. Dr. Mayur should approve or correct each one.</td></tr>
+    <tr><td><b>Six real patient quotes</b><br><span class="small muted">Or permission to remove the section</span></td>
+        <td>The reviews page carries six written testimonials that were placeholders and read as real. Either six genuine consented quotes, or we take the section down. Your Google reviews stay either way.</td></tr>
+    <tr><td><b>Confirm the Google numbers</b></td>
+        <td>The site says 4.9 across 1,971 reviews, 1,761 at Yogi Chowk and 210 at Hirabaug. Please open both listings and confirm the current figures.</td></tr>
+  </table>
+</div>
+
+<!-- ============ CHECKLIST ============ -->
+<div class="band pagebreak">
+  <div class="eyebrow">Tick as you go</div>
+  <h2>The whole list on one page</h2>
+</div>
+<div class="pad">
+  <h3 style="color:var(--red);margin-top:3mm">Do these first</h3>
+  <div class="check">
+    <div>Yogi Chowk waiting area</div>
+    <div>Yogi Chowk treatment room</div>
+    <div>Yogi Chowk children's area or low basin</div>
+    <div>Hirabaug treatment room</div>
+    <div>Hirabaug reception counter</div>
+    <div>Autoclave, door closed</div>
+    <div>Sealed pouches, dates visible</div>
+  </div>
+
+  <h3 style="margin-top:6mm">Then these</h3>
+  <div class="check">
+    <div>Yogi Chowk exterior and signboard</div>
+    <div>Hirabaug exterior and signboard</div>
+    <div>Twelve equipment photos, with makes and models</div>
+    <div>Root canal treatment</div>
+    <div>Teeth whitening</div>
+    <div>Dentures</div>
+    <div>Kids dentistry</div>
+    <div>Smile design</div>
+    <div>Full mouth rehabilitation</div>
+  </div>
+
+  <h3 style="margin-top:6mm">When you can</h3>
+  <div class="check">
+    <div>Dr. Jinali at work</div>
+    <div>Dr. Ishita at work</div>
+    <div>Dr. Parita at work</div>
+    <div>Team photo, all four dentists</div>
+    <div>Four to six before and after cases</div>
+    <div>Patient permission for each case</div>
+  </div>
+
+  <h3 style="margin-top:6mm">Written, not photographed</h3>
+  <div class="check">
+    <div>Four registration certificates</div>
+    <div>Memberships confirmed per dentist</div>
+    <div>Implant warranty terms</div>
+    <div>Twelve aftercare guides approved</div>
+    <div>Six patient quotes, or remove</div>
+    <div>Google review numbers confirmed</div>
+    <div>Which ortho photo is before</div>
+    <div>Parking and lift, per branch</div>
+  </div>
+
+  <div class="note">
+    <h3>How to send everything</h3>
+    <p>WhatsApp is fine. Choose <b>Document</b> rather than <b>Gallery</b> so
+       the files keep their full size, and name them as you go, for example
+       <i>yogi-waiting-1.jpg</i>. If it is easier, put everything in one
+       Google Drive folder and share the link. Partial is welcome: send the
+       six room photographs on their own and they go live the same day.</p>
+  </div>
+</div>
+
+</body>
+</html>
