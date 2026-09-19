@@ -66,9 +66,14 @@ export default function Home() {
         <div aria-hidden="true" className="bloom-gold pointer-events-none absolute inset-0" />
         <Container width="7xl" className="relative grid gap-8 sec-hero lg:grid-cols-[1.05fr_.95fr] lg:items-center lg:gap-14">
           <div>
+            {/* The rating opens the hero. It used to sit under the buttons,
+                which is after the ask; a first-time visitor deciding whether
+                to read on gets it first instead. */}
+            <ProofChip placement="home_hero" tone="dark" />
+
             {/* The logo directly above already says the clinic's name, so the
                 eyebrow names the two clinics instead of repeating it. */}
-            <p className="t-eyebrow flex items-center gap-3 text-gold">
+            <p className="t-eyebrow mt-5 flex items-center gap-3 text-gold">
               Yogi Chowk &middot; Hirabaug &middot; Surat
               <span aria-hidden="true" className="rule-gold h-px w-14" />
             </p>
@@ -82,7 +87,6 @@ export default function Home() {
               <BookButton placement="home_hero" size="lg" className="px-4 sm:px-7" />
               <WhatsAppButton placement="home_hero" size="lg" variant="onDark" className="px-4 sm:px-7 [&>svg]:text-gold" />
             </div>
-            <ProofChip placement="home_hero" tone="dark" className="mt-5" />
 
             {/* Three things that are true and that a nervous patient wants to
                 know before anything else. Not numbers: the counted figures get
