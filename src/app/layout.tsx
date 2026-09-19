@@ -7,6 +7,7 @@ import { MobileDock } from "@/components/kheni/mobile-dock";
 import { MovingStrip } from "@/components/kheni/moving-strip";
 import { AnalyticsScripts } from "@/components/tracking/analytics";
 import { ConsentBanner } from "@/components/tracking/consent-banner";
+import { MetaPixel } from "@/components/tracking/meta-pixel";
 import { TrackLinks } from "@/components/tracking/track-links";
 import { StructuredData } from "@/components/tracking/structured-data";
 import { ogImage } from "@/content/photos";
@@ -88,6 +89,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       {/* Bottom padding reserves the floating action pill plus the phone's safe area. */}
       <body className="flex min-h-dvh flex-col pb-[calc(5rem+env(safe-area-inset-bottom))] md:pb-0">
         <AnalyticsScripts />
+        <MetaPixel />
         <StructuredData />
         <TrackLinks />
         {/* The strip sits above the header and stays there. Both are pinned:
