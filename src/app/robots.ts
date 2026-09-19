@@ -18,6 +18,20 @@ export const dynamic = "force-static";
  */
 const SEARCH_CRAWLERS = ["Googlebot", "Googlebot-Image", "Bingbot", "Slurp", "DuckDuckBot", "Baiduspider", "YandexBot"];
 
+/**
+ * The ad landing-page crawlers, allowed even while search indexing is off.
+ *
+ * These check that an ad's destination works and matches what the ad claims.
+ * They do not index anything, so allowing them does not put the site into
+ * search results, and blocking them gets ads disapproved for an unreachable
+ * destination.
+ *
+ * Google documents that AdsBot ignores the `User-agent: *` group and has to
+ * be named to be blocked, so ads would most likely have run anyway. Naming
+ * them removes the "most likely" from a paid launch.
+ */
+const AD_CRAWLERS = ["AdsBot-Google", "AdsBot-Google-Mobile", "AdsBot-Google-Mobile-Apps"];
+
 export default function robots(): MetadataRoute.Robots {
   const allowIndexing = process.env.NEXT_PUBLIC_ALLOW_INDEXING === "true";
   const base = (process.env.NEXT_PUBLIC_SITE_URL || site.domain).replace(/\/$/, "");
@@ -27,6 +41,7 @@ export default function robots(): MetadataRoute.Robots {
       rules: [
         { userAgent: "*", disallow: "/" },
         ...SEARCH_CRAWLERS.map((userAgent) => ({ userAgent, disallow: "/" })),
+        ...AD_CRAWLERS.map((userAgent) => ({ userAgent, allow: "/" })),
       ],
     };
   }
