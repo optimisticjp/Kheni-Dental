@@ -38,7 +38,8 @@ export function ConsentBanner() {
     getServerConsentSnapshot,
   );
 
-  const trackingEnabled = Boolean(process.env.NEXT_PUBLIC_GTM_ID || META_PIXEL_ID);
+  // Any one of the three tags being configured means a banner is owed.
+  const trackingEnabled = Boolean(process.env.NEXT_PUBLIC_GTM_ID || process.env.NEXT_PUBLIC_GA4_ID || META_PIXEL_ID);
 
   useEffect(() => {
     if (!trackingEnabled) return;

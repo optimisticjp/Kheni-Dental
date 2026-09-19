@@ -33,8 +33,24 @@ jobs:
       - name: Type check
         run: npm run typecheck
 
+      # The three marketing ids live here, on the production deploy only.
+      #
+      # They are not secrets. A GTM container id, a GA4 measurement id and a
+      # Meta Pixel id are each served in the HTML of every page that uses
+      # them, so hiding them buys nothing. They sit here rather than in the
+      # code so that the preview workflow, which sets none of them, cannot
+      # send a single hit to the clinic's real properties. Preview traffic
+      # in the conversion data would be indistinguishable from real traffic
+      # once campaigns are optimising against it.
+      #
+      # NEXT_PUBLIC_ALLOW_INDEXING is deliberately absent. Search indexing
+      # stays off until the clinic approves launch, and ads do not need it.
       - name: Build for Cloudflare
         run: npm run build:vinext
+        env:
+          NEXT_PUBLIC_GTM_ID: GTM-MDNBGRX
+          NEXT_PUBLIC_GA4_ID: G-2WFM87BNQ1
+          NEXT_PUBLIC_META_PIXEL_ID: "1055188140670527"
 
       - name: Deploy to Cloudflare
         run: npm run deploy:vinext

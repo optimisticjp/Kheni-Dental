@@ -15,7 +15,7 @@ function initializeMetaPixel() {
 
   const fbq = function (...args: unknown[]) {
     if (fbq.callMethod) {
-      fbq.callMethod.apply(fbq, args);
+      fbq.callMethod(...args);
     } else {
       fbq.queue.push(args);
     }
@@ -54,6 +54,9 @@ export function MetaPixel() {
   const previousPath = useRef(pathname);
 
   useEffect(() => {
+    // No id means a preview build. Load nothing.
+    if (!META_PIXEL_ID) return;
+
     if (consent !== "accepted") {
       if (initialized.current) {
         window.fbq?.("consent", "revoke");
