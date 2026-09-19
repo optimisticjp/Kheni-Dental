@@ -8,23 +8,7 @@ import {
   getServerConsentSnapshot,
   subscribeConsent,
 } from "@/lib/consent";
-import { META_PIXEL_ID } from "@/lib/meta";
-
-type Fbq = ((...args: unknown[]) => void) & {
-  callMethod?: (...args: unknown[]) => void;
-  queue: unknown[][];
-  loaded: boolean;
-  version: string;
-  push: Fbq;
-  disablePushState?: boolean;
-};
-
-declare global {
-  interface Window {
-    fbq?: Fbq;
-    _fbq?: Fbq;
-  }
-}
+import { META_PIXEL_ID, type MetaFbq } from "@/lib/meta";
 
 function initializeMetaPixel() {
   if (window.fbq) return window.fbq;
@@ -35,7 +19,7 @@ function initializeMetaPixel() {
     } else {
       fbq.queue.push(args);
     }
-  } as Fbq;
+  } as MetaFbq;
 
   fbq.push = fbq;
   fbq.loaded = true;
