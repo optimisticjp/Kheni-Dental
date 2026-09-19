@@ -34,14 +34,46 @@ export type Photo = {
 export const ogImage = "/brand/og-card.jpg";
 
 /**
- * Doctor portraits, keyed by slug. Empty until the clinic sends real
- * photographs: no generated face is ever attached to a named dentist. A
- * doctor without a portrait renders as a designed monogram field, and the
- * layouts are built to look finished that way. Portrait 4:5, head and
- * shoulders, plain background. Add the file under public/images/doctors/,
- * fill the slot, and run `node scripts/resize-images.mjs`.
+ * Doctor portraits, keyed by slug. No generated face is ever attached to a
+ * named dentist, so a slot stays empty until the clinic sends that dentist's
+ * own photograph. A doctor without one renders as a designed monogram field
+ * and the layouts are built to look finished that way, which is why a
+ * half-filled roster is fine.
+ *
+ * The clinic sent these on 19 September 2026. Both are identified by the name
+ * embroidered on the coat, not by guesswork, and both were shot against the
+ * same wood panel at the same distance, so the roster reads as one set.
+ *
+ * `objectPosition` is set for the 16:10 mobile crop in `DoctorSpotlight`,
+ * which shows only the middle half of a 4:5 file. At "center" it would cut
+ * the face; 15% keeps the eyes on the centre line.
+ *
+ * Still missing: Dr. Ishita Dobariya and Dr. Parita Vastarpara. Add the file
+ * under public/images/doctors/, fill the slot, and run
+ * `node scripts/resize-images.mjs`.
  */
-export const doctorPhotos: Record<string, Photo> = {};
+export const doctorPhotos: Record<string, Photo> = {
+  "dr-mayur-kheni": {
+    src: "/images/doctors/dr-mayur-kheni.jpg",
+    alt: "Dr. Mayur Kheni in a white coat embroidered with his name, standing against a wood panelled wall",
+    objectPosition: "center 15%",
+  },
+  "dr-jinali-monpara": {
+    src: "/images/doctors/dr-jinali-monpara.jpg",
+    alt: "Dr. Jinali Monpara in a white coat embroidered with her name, standing against a wood panelled wall",
+    objectPosition: "center 15%",
+  },
+};
+
+/**
+ * The clinic team. Two of the four dentists, Dr. Mayur Kheni and Dr. Jinali
+ * Monpara, with two of the clinic staff, so the caption says team rather than
+ * naming a line-up that is not all of them.
+ */
+export const teamPhoto: Photo = {
+  src: "/images/about/team.jpg",
+  alt: "Dr. Mayur Kheni and Dr. Jinali Monpara standing with two members of the clinic team, below a framed dental surgery degree",
+};
 
 /**
  * Treatment photography, keyed by slug. Each one is used twice: the poster on
@@ -119,8 +151,15 @@ export function treatmentVisual(slug: string): Photo | undefined {
   return undefined;
 }
 
-/** The clinic's own frame of a doctor at the consultation desk, for the About page. */
-export const aboutPhoto: Photo | undefined = (() => {
-  const reel = instagramReels.find((r) => r.id === "consultation-desk");
-  return reel?.poster ? { src: reel.poster, alt: reel.posterAlt ?? reel.title, objectPosition: reel.objectPosition } : undefined;
-})();
+/**
+ * Dr. Mayur at the consultation desk, for the About page hero.
+ *
+ * This was an Instagram still until the clinic sent its own photographs on
+ * 19 September 2026. A real working shot beats a video frame here, and it
+ * leaves the consultation-desk reel to do its one job on the homepage rather
+ * than appearing twice on the same site.
+ */
+export const aboutPhoto: Photo | undefined = {
+  src: "/images/about/dr-mayur-at-work.jpg",
+  alt: "Dr. Mayur Kheni writing up notes at his consultation desk",
+};

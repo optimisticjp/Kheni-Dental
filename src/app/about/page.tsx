@@ -12,7 +12,7 @@ import { SectionIntro } from "@/components/kheni/section-intro";
 import { SmileNote } from "@/components/kheni/smile-note";
 import { Container } from "@/components/ui/container";
 import { metricsFor } from "@/content/clinic-proof";
-import { aboutPhoto } from "@/content/photos";
+import { aboutPhoto, teamPhoto } from "@/content/photos";
 import { site, smileNotes } from "@/content/site";
 import { technology } from "@/content/technology";
 
@@ -41,18 +41,46 @@ export default function AboutPage() {
   const metrics = metricsFor("about");
   return (
     <>
+      {/* `w-full` on the aside frame is load-bearing. Everything inside
+          MediaFrame is absolutely positioned, so the box has no intrinsic
+          width; paired with `lg:ml-auto` the auto margin took all the free
+          space and collapsed it to 0px wide from lg up. The photograph was in
+          the page and measured 0x1 on every desktop since this hero was
+          built. */}
       <PageHero
         eyebrow="About Kheni Dental"
         title={`${site.yearsInSurat} years in Surat, still explaining every step.`}
         highlight="explaining"
         copy="Dr. Mayur Kheni founded the practice in 2012, and three more dentists now see patients alongside him across two clinics. A visit still begins the same way: by asking what brought you in and listening to the answer."
         hue="gold"
-        aside={aboutPhoto ? <MediaFrame ratio="4 / 5" mobileRatio="4 / 3" from="lg" src={aboutPhoto.src} alt={aboutPhoto.alt} objectPosition={aboutPhoto.objectPosition} tone="dark" className="max-w-md rounded-[1.5rem] border border-ivory/10 lg:ml-auto" /> : undefined}
+        aside={aboutPhoto ? <MediaFrame ratio="4 / 5" mobileRatio="4 / 3" from="lg" src={aboutPhoto.src} alt={aboutPhoto.alt} objectPosition={aboutPhoto.objectPosition} tone="dark" className="w-full max-w-md rounded-[1.5rem] border border-ivory/10 lg:ml-auto" /> : undefined}
       />
 
       <section className="sec-tight">
         <Container width="7xl">
           <MetricRow metrics={metrics} />
+        </Container>
+      </section>
+
+      {/* Four people standing together, which is the one thing a monogram
+          cannot do. Landscape because a group photograph needs width: at 4:5
+          the two on the ends would be cropped out of their own picture. */}
+      <section className="sec-tight">
+        <Container width="7xl">
+          <figure className="mx-auto max-w-3xl">
+            <MediaFrame
+              ratio="3 / 2"
+              mobileRatio="4 / 3"
+              src={teamPhoto.src}
+              alt={teamPhoto.alt}
+              objectPosition={teamPhoto.objectPosition}
+              sizes="(min-width: 768px) 768px, 100vw"
+              className="rounded-[1.5rem]"
+            />
+            <figcaption className="t-small mt-3 text-ink-soft">
+              Dr. Mayur Kheni and Dr. Jinali Monpara with the clinic team.
+            </figcaption>
+          </figure>
         </Container>
       </section>
 

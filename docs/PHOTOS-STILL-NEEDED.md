@@ -52,12 +52,14 @@ with gold, which is the site's own accent, so the logo and the palette now agree
 
 ## Priority list
 
-1. **Four doctor portraits.** Dr. Mayur Kheni, Dr. Jinali Monpara, Dr. Ishita Dobariya,
-   Dr. Parita Vastarpara. Photo permission is ticked Correct on pages 21, 24 and 27
-   (page 18 blank for Dr. Mayur; please confirm). Head and shoulders, plain
-   background, 4:5, at least 1600 px tall. Same light and distance for all four so the
-   roster reads as one team.
-2. **Dr. Mayur Kheni working shot** (16:10) for the principal-dentist spread.
+1. **Two doctor portraits still missing:** Dr. Ishita Dobariya and
+   Dr. Parita Vastarpara. Head and shoulders, plain background, 4:5, at least
+   1600 px tall. Match the two already in: same wood panel, same distance,
+   same light, so the roster reads as one team.
+   *Received 19 September 2026: Dr. Mayur Kheni and Dr. Jinali Monpara, both
+   identified by the name embroidered on the coat rather than by guesswork.*
+2. ~~**Dr. Mayur Kheni working shot.**~~ Received 19 September 2026, cropped
+   4:5 and now the About page hero.
 3. **Yogi Chowk exterior**, so a first-time patient recognises the door at Swastik Plaza.
 4. **Hirabaug exterior**, the entrance above Shiv Plywood on Varachha Main Road.
 5. **Yogi Chowk reception and waiting area** (facilities ticked: waiting area, lift,
@@ -66,7 +68,11 @@ with gold, which is the site's own accent, so the logo and the palette now agree
 7. **One treatment room per clinic.** The Hirabaug alt text no longer calls it an
    "implant room" because page 12 did not tick "dedicated implant room".
 8. **Sterilisation area**, pouches and autoclave (supports the technology section).
-9. **Team photograph**, all four dentists and staff together.
+9. **Team photograph with all four dentists.** One arrived on 19 September
+   2026 and is on the About page, but it is Dr. Mayur and Dr. Jinali with two
+   of the clinic staff, so the caption says "the clinic team" rather than
+   naming a line-up that is not all of them. Worth reshooting once all four
+   dentists are in one frame.
 10. **Consultation in progress** with a consenting patient, back of head or hands only
     if the patient prefers.
 11. **Children's area or a child's visit** with parental consent (Dr. Ishita).
@@ -103,10 +109,13 @@ in the repo is always **JPEG, sRGB**, because `photoSrcSet` in
 **Do not pre-crop.** Several slots crop the same file two or three ways, and the crop
 point is set per photo in `src/content/photos.ts`.
 
-### Doctor portraits, 4 needed, highest priority
+### Doctor portraits, 2 still needed
 
-`dr-mayur-kheni.jpg`, `dr-jinali-monpara.jpg`, `dr-ishita-dobariya.jpg`,
-`dr-parita-vastarpara.jpg`. **2000 x 2500 (4:5).**
+`dr-ishita-dobariya.jpg`, `dr-parita-vastarpara.jpg`. **2000 x 2500 (4:5).**
+
+`dr-mayur-kheni.jpg` and `dr-jinali-monpara.jpg` arrived on 19 September
+2026 and are wired into `doctorPhotos`. They came as 1333 x 2000 and were
+cropped off the bottom to 4:5, which is why they keep their headroom.
 
 These are cropped two ways: 4:5 on desktop and 16:10 on phones
 (`doctor-spotlight.tsx`, `ratio="4 / 5" mobileRatio="16 / 10"`). A tight head and
@@ -147,9 +156,12 @@ signage legible, enough street that the building is placeable. A first-time pati
 needs to recognise the door above Shiv Plywood, and the Swastik Plaza entrance.
 No slot is wired for these yet; add the frames when the files arrive.
 
-### Team photograph, 1. 2400 x 1600 (3:2)
+### Team photograph. 2400 x 1600 (3:2)
 
-`team.jpg`, all four dentists plus staff. Also needs a slot adding.
+`team.jpg` arrived on 19 September 2026 and has its slot on the About page,
+capped at `max-w-3xl` and landscape because at 4:5 the two people on the ends
+get cropped out of their own picture. It shows Dr. Mayur, Dr. Jinali and two
+of the clinic staff. Still worth a reshoot with all four dentists in frame.
 
 ### Before and after cases. 1600 x 1200 (4:3), two files per case
 
