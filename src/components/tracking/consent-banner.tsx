@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useSyncExternalStore } from "react";
 
 import { Button } from "@/components/ui/button";
+import { trackingAllowedHere } from "@/lib/tracking-ids";
 import {
   CONSENT_EVENT,
   CONSENT_STORAGE_KEY,
@@ -12,7 +13,7 @@ import {
   subscribeConsent,
   type ConsentState,
 } from "@/lib/consent";
-import { META_PIXEL_ID } from "@/lib/meta";
+
 
 function updateConsent(analytics: boolean, marketing: boolean) {
   window.gtag?.("consent", "update", {
@@ -39,7 +40,10 @@ export function ConsentBanner() {
   );
 
   // Any one of the three tags being configured means a banner is owed.
-  const trackingEnabled = Boolean(process.env.NEXT_PUBLIC_GTM_ID || process.env.NEXT_PUBLIC_GA4_ID || META_PIXEL_ID);
+  // Tags are always installed now, so the banner is always owed. It is
+  // still suppressed off the production host, where nothing fires anyway
+  // and a cookie banner would only get in the doctor's way on a preview.
+  const trackingEnabled = trackingAllowedHere();
 
   useEffect(() => {
     if (!trackingEnabled) return;

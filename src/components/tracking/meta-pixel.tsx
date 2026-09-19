@@ -9,6 +9,7 @@ import {
   subscribeConsent,
 } from "@/lib/consent";
 import { META_PIXEL_ID, type MetaFbq } from "@/lib/meta";
+import { trackingAllowedHere } from "@/lib/tracking-ids";
 
 function initializeMetaPixel() {
   if (window.fbq) return window.fbq;
@@ -54,8 +55,10 @@ export function MetaPixel() {
   const previousPath = useRef(pathname);
 
   useEffect(() => {
-    // No id means a preview build. Load nothing.
-    if (!META_PIXEL_ID) return;
+    // Preview deploy, workers.dev or localhost. Load nothing, so the
+    // clinic's conversion data and audiences only ever hear from real
+    // visitors on the real domain.
+    if (!trackingAllowedHere()) return;
 
     if (consent !== "accepted") {
       if (initialized.current) {
