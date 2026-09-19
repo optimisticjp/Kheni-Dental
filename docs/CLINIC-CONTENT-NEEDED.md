@@ -57,13 +57,15 @@ Already published: 15 years, 4 dentists, 2 clinics, 4.9 on Google across
 1,971 reviews on two listings (Yogi Chowk 1,761 from the clinic form of
 14 September 2026, Hirabaug 210). Recheck monthly; next due 14 October 2026.
 
-The figures the clinic gave (45,000+ patients, 2,500+ implants, 550+ full
+**Approved 19 September 2026, nothing needed.** The clinic confirmed its
+eight volume figures as final: 45,000+ patients, 2,500+ implants, 550+ full
 mouth cases, 90,000+ root canals, 720+ smile designs, 4,500+ children, 640+
-NRI patients from 23+ countries) now render on
-the page with no marker, and are held in `src/content/clinic-proof.ts` as
-"needs evidence". The build refuses to switch indexing on until each one is
-either evidenced or removed. Please confirm what each figure counts and as of
-when. See docs/CLINIC-FORM-IMPLEMENTATION.md.
+NRI patients from 23+ countries. They are published on the clinic's own
+authority and no longer block an indexable build.
+
+Two small things would still improve them, neither blocking: what 90,000+
+root canals counts (canals, teeth or sittings, since it is double the patient
+count), and a list of the 23 countries so the NRI page could name a few.
 
 ## Placeholder content currently on the page
 

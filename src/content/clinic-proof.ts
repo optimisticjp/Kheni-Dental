@@ -7,12 +7,19 @@
  *
  *   verified_public                  checked against a public source.
  *   clinic_supplied                  the clinic's own description of itself.
- *   clinic_supplied_needs_evidence   a volume or statistic typed on the
- *                                    clinic form (14 September 2026) that
- *                                    needs evidence before production. It
- *                                    renders unmarked; the build refuses to
- *                                    go indexable while any is displayed.
+ *   clinic_supplied_needs_evidence   a volume or statistic that still needs
+ *                                    evidence before production. It renders
+ *                                    unmarked; the build refuses to go
+ *                                    indexable while any is displayed.
+ *                                    Only `implant-success` carries this
+ *                                    now, and that one is never rendered.
  *   review_sample                    placeholder for layout only.
+ *
+ * The clinic approved its eight volume figures as final on 19 September
+ * 2026, so they moved from `clinic_supplied_needs_evidence` to
+ * `clinic_supplied`. That is what the status means: the clinic's own
+ * description of itself, published on its authority. It is not an audit,
+ * and nobody here has counted anything.
  *
  * Figures are stored as the clinic states them and are never adjusted here
  * to look better. Where the same figure was asked twice on the form and the
@@ -86,14 +93,14 @@ export const proofMetrics: ProofMetric[] = [
         },
       ]
     : []),
-  { id: "patients", value: "45,000", suffix: "+", label: "Patients treated", source: `${form}, p2 (repeated p44)`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Basis and date needed before launch.", display: true, placements: ["home", "about", "doctors"] },
-  { id: "implants", value: "2,500", suffix: "+", label: "Implants placed", source: `${form}, p2; corrected by the clinic 19 September 2026 (was 3,700)`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-19", evidenceNote: "Basis and date needed before launch.", display: true, placements: ["home", "about", "implants"] },
-  { id: "full-mouth", value: "550", suffix: "+", label: "Full mouth cases", source: `${form}, p2; corrected by the clinic 19 September 2026 (was 950)`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-19", evidenceNote: "Basis and date needed before launch.", display: true, placements: ["home", "about", "full-mouth"] },
-  { id: "rct", value: "90,000", suffix: "+", label: "Root canals", source: `${form}, p2`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Stored exactly as typed. It is double the stated patient count, so the clinic still needs to confirm what is being counted (ledger C12).", display: true, placements: ["home", "rct"] },
-  { id: "smile-design", value: "720", suffix: "+", label: "Smile design cases", source: `${form}, p2`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Basis and date needed before launch.", display: true, placements: ["home", "smile"] },
-  { id: "children", value: "4,500", suffix: "+", label: "Children treated", source: `${form}, p3 (p45 blank)`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Basis and date needed before launch.", display: true, placements: ["home", "kids"] },
-  { id: "nri", value: "640", suffix: "+", label: "NRI patients", source: `${form}, p3 (Correct)`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Basis and date needed before launch.", display: true, placements: ["home", "nri"] },
-  { id: "countries", value: "23", suffix: "+", label: "Countries", source: `${form}, p3 (Correct)`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "A list of countries would let the site name a few.", display: true, placements: ["home", "nri"] },
+  { id: "patients", value: "45,000", suffix: "+", label: "Patients treated", source: `${form}, p2 (repeated p44); approved as final by the clinic, 19 September 2026`, verification: "clinic_supplied", asOf: "2026-09-19", evidenceNote: "The clinic's own count, approved for publication 19 September 2026.", display: true, placements: ["home", "about", "doctors"] },
+  { id: "implants", value: "2,500", suffix: "+", label: "Implants placed", source: `${form}, p2; corrected by the clinic 19 September 2026 (was 3,700)`, verification: "clinic_supplied", asOf: "2026-09-19", evidenceNote: "The clinic's own count, approved for publication 19 September 2026.", display: true, placements: ["home", "about", "implants"] },
+  { id: "full-mouth", value: "550", suffix: "+", label: "Full mouth cases", source: `${form}, p2; corrected by the clinic 19 September 2026 (was 950)`, verification: "clinic_supplied", asOf: "2026-09-19", evidenceNote: "The clinic's own count, approved for publication 19 September 2026.", display: true, placements: ["home", "about", "full-mouth"] },
+  { id: "rct", value: "90,000", suffix: "+", label: "Root canals", source: `${form}, p2; approved as final by the clinic, 19 September 2026`, verification: "clinic_supplied", asOf: "2026-09-19", evidenceNote: "The clinic's own count, approved for publication 19 September 2026. It is double the stated patient count; the clinic has confirmed the figure but has still not said what it counts (canals, teeth or sittings), so the site never explains it (ledger C12).", display: true, placements: ["home", "rct"] },
+  { id: "smile-design", value: "720", suffix: "+", label: "Smile design cases", source: `${form}, p2; approved as final by the clinic, 19 September 2026`, verification: "clinic_supplied", asOf: "2026-09-19", evidenceNote: "The clinic's own count, approved for publication 19 September 2026.", display: true, placements: ["home", "smile"] },
+  { id: "children", value: "4,500", suffix: "+", label: "Children treated", source: `${form}, p3 (p45 blank); approved as final by the clinic, 19 September 2026`, verification: "clinic_supplied", asOf: "2026-09-19", evidenceNote: "The clinic's own count, approved for publication 19 September 2026.", display: true, placements: ["home", "kids"] },
+  { id: "nri", value: "640", suffix: "+", label: "NRI patients", source: `${form}, p3 (Correct); approved as final by the clinic, 19 September 2026`, verification: "clinic_supplied", asOf: "2026-09-19", evidenceNote: "The clinic's own count, approved for publication 19 September 2026.", display: true, placements: ["home", "nri"] },
+  { id: "countries", value: "23", suffix: "+", label: "Countries", source: `${form}, p3 (Correct); approved as final by the clinic, 19 September 2026`, verification: "clinic_supplied", asOf: "2026-09-19", evidenceNote: "The clinic's own count, approved for publication 19 September 2026. A list of the countries would still let the site name a few.", display: true, placements: ["home", "nri"] },
   { id: "implant-success", value: "98.6", suffix: "%", label: "Implant success", source: `${form}, p3`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Never rendered: p30 'track implant success' is ticked Do not show (ledger C10).", display: false, placements: ["implants"] },
 ];
 
@@ -105,15 +112,6 @@ export const needsMarker = (m: ProofMetric) => m.verification === "clinic_suppli
 
 /** Metrics that block an indexable build while displayed. */
 export const unprovenDisplayedMetrics = proofMetrics.filter((m) => m.display && needsMarker(m));
-
-/**
- * Backwards-compatible view used by the About page's first row: the four
- * settled facts. Kept so older imports still typecheck.
- */
-export type ProofStat = { id: string; value: string; label: string; detail?: string };
-export const proofStats: ProofStat[] = proofMetrics
-  .filter((m) => m.display && m.verification !== "clinic_supplied_needs_evidence" && m.placements.includes("about"))
-  .map(({ id, value, suffix, label, detail }) => ({ id, value: `${value}${suffix ?? ""}`, label, detail }));
 
 /**
  * Languages the team consults in. Surat patients frequently prefer Gujarati,

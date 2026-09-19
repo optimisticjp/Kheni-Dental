@@ -420,7 +420,7 @@ This is still NEEDS_CLINIC_CONFIRMATION, and it is now impossible to miss: if th
 7. IDA, VDA, KDA: please give the full names so we can expand them correctly.
 8. Dr. Jinali's certificate courses: issuing organisation and year for each, and whether the instructor's name may be printed.
 9. What does 90,000+ root canals count (teeth, canals, sittings)? The site hides it until you confirm.
-10. May we show 45,000+ patients, 2,500+ implants, 550+ full mouth cases, 720+ smile designs, 4,500+ children, 640+ NRI patients from 23+ countries on the live site? What is each figure based on, and as of when? (Implants and full mouth were corrected down from 3,700 and 950 on 19 September 2026; the rest have not been rechecked since the form.)
+10. ~~May we show 45,000+ patients, 2,500+ implants, 550+ full mouth cases, 720+ smile designs, 4,500+ children, 640+ NRI patients from 23+ countries on the live site?~~ **Answered 19 September 2026: yes, all eight approved as final.** Implants and full mouth were corrected down from 3,700 and 950 the same day. Still open within this: what 90,000+ root canals counts (canals, teeth or sittings), and a list of the 23 countries so the site could name a few.
 11. Do you want the 98.6% implant success figure published? Page 3 says yes, page 30 says do not show.
 12. Implant warranty: exact terms you are willing to print, if any. We will not print "lifetime guarantee".
 13. Is CBCT (3D scan) available in-house, at one clinic, or referred out?
@@ -457,11 +457,24 @@ the guard stops complaining about it.
 | NRI planning workflow | NRI page | Form p55 ticked nothing | 5 steps |
 | Aftercare and preparation guides | Patient resources | p58 approved 2 topics; the rest were pending | 12 guides |
 
-Clinic figures that render unmarked and also trip the guard, from
-`src/content/clinic-proof.ts`: 45,000+ patients, 2,500+ implants, 550+ full
-mouth cases, 90,000+ root canals, 720+ smile design cases, 4,500+ children,
-640+ NRI patients, 23+ countries. All are as the clinic states them; none is
-audited.
+**Settled 19 September 2026.** The clinic approved its eight volume figures
+as final: 45,000+ patients, 2,500+ implants, 550+ full mouth cases, 90,000+
+root canals, 720+ smile design cases, 4,500+ children, 640+ NRI patients,
+23+ countries. In `src/content/clinic-proof.ts` they moved from
+`clinic_supplied_needs_evidence` to `clinic_supplied`, so they no longer
+block an indexable build.
+
+What that status means has not changed: the clinic's own description of
+itself, published on its authority. Nobody here has counted anything and no
+document was produced. If any figure is ever challenged, the clinic is the
+one who stands behind it.
+
+One thing is still unstated rather than unapproved. The clinic has confirmed
+90,000+ root canals as the figure it wants published, but has still not said
+what it counts: canals, teeth or sittings. It is double the stated patient
+count, so the site never breaks it down or explains it (ledger C12). Worth
+asking once more, not because the number needs approving again but because
+someone will eventually do the division out loud.
 
 Every one of these carries a "+", at the clinic's request on 19 September
 2026, because each counts work done and therefore only goes up. The dentist
