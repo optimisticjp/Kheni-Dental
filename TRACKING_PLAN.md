@@ -1,49 +1,79 @@
 # Tracking Plan
 
-Tracking is intentionally dormant until the design and URLs are stable.
+Kheni Dental uses deliberately limited website tracking. Healthcare privacy is the governing rule: advertising platforms must never receive medical details, form-entered values, treatment choices, symptoms, diagnoses or other sensitive health information.
 
-## Architecture
+## Current architecture
 
-Website data layer -> Google Tag Manager -> GA4 / Google Ads / Meta as needed
+- Website data layer -> Google Tag Manager -> GA4 / Google Ads when configured
+- Website -> consent-gated Meta Pixel for basic Meta measurement
+- Consent banner controls optional analytics and marketing technologies
 
-Configure through:
+Google Tag Manager remains optional and is configured through:
 
 `NEXT_PUBLIC_GTM_ID`
 
-The consent banner does not appear when GTM is not configured.
+Meta Pixel:
 
-## Primary conversions
+`1055188140670527`
+
+The Meta Pixel does not load until the visitor chooses **Accept all**. Choosing **Essential only** leaves Meta disabled.
+
+## Meta events
+
+Meta receives only:
+
+- `PageView`
+- standard `Contact`
+
+`Contact` is sent for these generic website actions:
+
+- `whatsapp_click`
+- `phone_click`
+- `appointment_submit`
+
+No custom parameters are attached to Meta events. In particular, Meta does not receive branch, treatment, placement, form field, symptom, diagnosis or medical-history values.
+
+Automatic Meta Pixel configuration is disabled. No advanced-matching fields are supplied.
+
+## Website data-layer events
+
+Primary conversions:
 
 - `appointment_submit`
 - `whatsapp_click`
 - `phone_click`
 
-## Secondary events
+Secondary events:
 
 - `appointment_start`
 - `directions_click`
 - `treatment_view`
-- `problem_interaction`
+- `concern_interaction`
+- `implant_navigator_interaction`
 - `international_patient_contact`
+- `google_reviews_click`
 - `review_click`
-- `resource_download`
+- `navigation_click`
 - `video_play`
 - `instagram_reel_open`
 - `instagram_profile_click`
+- `location_switch`
+
+The website data layer can contain operational context such as placement or branch. That context is not forwarded to Meta by the direct Pixel integration.
 
 ## Healthcare privacy rule
 
-Never send symptoms, diagnoses, medical history, form values, treatment-specific patient details or other sensitive health information to analytics or advertising platforms.
+Never send symptoms, diagnoses, medical history, form values, treatment-specific patient details, treatment selections or other sensitive health information to analytics or advertising platforms.
 
-Branch name can be tracked because it is operational location context, not medical information.
+Do not use Meta custom events or custom parameters to encode dental concerns, procedures or patient status.
 
-## Launch validation
+## Validation before paid-media optimisation
 
-Before enabling paid media:
-
-1. Test GTM in preview mode.
-2. Confirm consent defaults are denied until user choice where required.
-3. Confirm WhatsApp, phone, appointment and direction events fire once.
-4. Confirm no form-entered values enter the data layer.
-5. Test Google Ads conversions with Tag Assistant.
-6. Test Meta Pixel only after reviewing current healthcare advertising restrictions.
+1. Confirm Meta Pixel does not load before marketing consent.
+2. Confirm **Essential only** leaves Meta disabled.
+3. Confirm **Accept all** sends one initial `PageView`.
+4. Confirm client-side navigation sends one `PageView` per route.
+5. Confirm phone, WhatsApp and appointment-submit actions send only standard `Contact`.
+6. Confirm no form-entered values or health-related fields appear in Meta Test Events.
+7. Keep Automatic Advanced Matching and automatic event detection disabled in Events Manager.
+8. Test GTM separately if/when it is configured.
