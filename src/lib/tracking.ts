@@ -1,3 +1,5 @@
+import { META_CONTACT_EVENTS } from "@/lib/meta";
+
 export type TrackingEventName =
   | "whatsapp_click"
   | "phone_click"
@@ -11,15 +13,9 @@ export type TrackingEventName =
   | "review_click"
   | "navigation_click"
   | "video_play"
-  // Which of the two clinics a patient switched to. A branch choice is a
-  // convenience preference, not health information.
   | "location_switch"
-  // Section-level engagement only. Never carries which concern or which
-  // situation was chosen, because that could describe the visitor's mouth.
   | "concern_interaction"
   | "implant_navigator_interaction"
-  // Instagram. A reel was opened (on Instagram, in a new tab) or the profile
-  // link was tapped. Carries the placement only, never which reel.
   | "instagram_reel_open"
   | "instagram_profile_click";
 
@@ -34,13 +30,22 @@ declare global {
   interface Window {
     dataLayer?: Record<string, unknown>[];
     gtag?: (...args: unknown[]) => void;
+    fbq?: (...args: unknown[]) => void;
   }
 }
 
 export function pushTrackingEvent(payload: TrackingPayload) {
   if (typeof window === "undefined") return;
+
   window.dataLayer = window.dataLayer || [];
-  // Keep marketing events generic. Do not send symptoms, diagnoses, form
-  // values, medical history or other sensitive health information.
+
+  // Keep analytics context operational and generic. Do not send symptoms,
+  // diagnoses, medical history, form values or treatment-specific patient data.
   window.dataLayer.push(payload);
+
+  // Meta receives only a coarse standard Contact event. No placement, branch,
+  // treatment, form field or other custom parameter is sent.
+  if (META_CONTACT_EVENTS.has(payload.event)) {
+    window.fbq?.("track", "Contact");
+  }
 }
