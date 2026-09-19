@@ -47,25 +47,29 @@ export const META_PIXEL_ID = "1055188140670527";
  * Google Ads conversion labels, keyed by the site event that should count as
  * that conversion.
  *
- * EMPTY UNTIL THE CONVERSION ACTIONS EXIST. A label is the second half of a
- * send_to value, the part after the slash in `AW-11301338948/AbC-D_efGh`.
- * Google generates it when a conversion action is created in the Ads account,
- * so it cannot be guessed or written ahead of time.
+ * A label is the second half of a send_to value, the part after the slash in
+ * `AW-11301338948/AbC-D_efGh`. Google generates it when a conversion action
+ * is created in the Ads account, so these are copied from there and cannot be
+ * derived from anything.
  *
- * To turn a conversion on: create the action in Google Ads (Goals,
- * Conversions, New conversion action, Website, set up manually), copy the
- * label out of the tag it shows you, and add a line here. Nothing else needs
- * to change. Until then the events still reach GA4, and Google Ads can count
- * them by importing the GA4 key events instead.
+ * Created 19 September 2026 in Google Ads account 578-789-3486, all three
+ * "Manually with code" against the Google tag already on the site, each
+ * counting One per click so that three WhatsApp taps stay one lead. Their
+ * conversion id reads 11301338948, which is GOOGLE_ADS_ID above without the
+ * AW- prefix; if that ever stops matching, the tag and the account have
+ * drifted apart and no conversion will record.
  *
- * Keys are TrackingEventName values. Deliberately kept to contact and
- * appointment events: which treatment a visitor read is not sent to an
- * advertising platform. See the note in `tracking.ts`.
+ * Deliberately only contact and appointment events. Which treatment a visitor
+ * read is not sent to an advertising platform. See the note in `tracking.ts`.
+ *
+ * To add another: create the action in Google Ads (Goals, Conversions, New
+ * conversion action, Website, Manually with code), then add a line here.
+ * Nothing else needs to change.
  */
 export const ADS_CONVERSION_LABELS: Readonly<Record<string, string>> = {
-  // appointment_submit: "paste-the-label-here",
-  // whatsapp_click: "paste-the-label-here",
-  // phone_click: "paste-the-label-here",
+  appointment_submit: "2qF_CISw__wcEMT-8owq",
+  whatsapp_click: "dMyfCOqA__wcEMT-8owq",
+  phone_click: "dJEfCO2A__wcEMT-8owq",
 };
 
 /** The only host the clinic's real properties should ever hear from. */
