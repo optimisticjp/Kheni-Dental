@@ -70,7 +70,16 @@ export type CaseResult = {
  * shows them evenly aligned. Alignment is the whole point of an orthodontic
  * case, so one reading has the pair inverted, and a before and after
  * published the wrong way round says the clinic made a patient's teeth
- * worse. Confirm, then fill this in.
+ * worse.
+ *
+ * The two halves are cut and sitting at
+ * `/images/cases/case-01-ortho-panel-top.jpg` and `-bottom.jpg`. They are
+ * named for where they sat in the file the clinic sent rather than for what
+ * they show, because naming a file `-before` is already making the claim
+ * this entry is waiting on. Nothing references them, so nothing renders.
+ *
+ * To publish: confirm which panel is which, then map them onto
+ * `beforeImage` and `afterImage` below. Renaming the files is optional.
  */
 export const caseResults: CaseResult[] = [];
 
