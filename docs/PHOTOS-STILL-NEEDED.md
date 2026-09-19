@@ -52,12 +52,10 @@ with gold, which is the site's own accent, so the logo and the palette now agree
 
 ## Priority list
 
-1. **Two doctor portraits still missing:** Dr. Ishita Dobariya and
-   Dr. Parita Vastarpara. Head and shoulders, plain background, 4:5, at least
-   1600 px tall. Match the two already in: same wood panel, same distance,
-   same light, so the roster reads as one team.
-   *Received 19 September 2026: Dr. Mayur Kheni and Dr. Jinali Monpara, both
-   identified by the name embroidered on the coat rather than by guesswork.*
+1. ~~**Four doctor portraits.**~~ All four received 19 September 2026 and
+   wired into `doctorPhotos`. Dr. Mayur and Dr. Jinali were identified by the
+   name embroidered on the coat; Dr. Ishita and Dr. Parita were named by the
+   clinic when it sent them, because neither coat carries a name.
 2. ~~**Dr. Mayur Kheni working shot.**~~ Received 19 September 2026, cropped
    4:5 and now the About page hero.
 3. **Yogi Chowk exterior**, so a first-time patient recognises the door at Swastik Plaza.
@@ -109,13 +107,27 @@ in the repo is always **JPEG, sRGB**, because `photoSrcSet` in
 **Do not pre-crop.** Several slots crop the same file two or three ways, and the crop
 point is set per photo in `src/content/photos.ts`.
 
-### Doctor portraits, 2 still needed
+### Doctor portraits: all four in, none outstanding
 
-`dr-ishita-dobariya.jpg`, `dr-parita-vastarpara.jpg`. **2000 x 2500 (4:5).**
+All four arrived on 19 September 2026, every one against the same wood
+panel, which is what makes the roster read as one set.
 
-`dr-mayur-kheni.jpg` and `dr-jinali-monpara.jpg` arrived on 19 September
-2026 and are wired into `doctorPhotos`. They came as 1333 x 2000 and were
-cropped off the bottom to 4:5, which is why they keep their headroom.
+| File | Source | Crop |
+| --- | --- | --- |
+| `dr-mayur-kheni.jpg` | 1333 x 2000 | off the bottom to 4:5 |
+| `dr-jinali-monpara.jpg` | 1333 x 2000 | off the bottom to 4:5 |
+| `dr-ishita-dobariya.jpg` | 1500 x 2000 | off the bottom to 4:5 |
+| `dr-parita-vastarpara.jpg` | 1920 x 1280 | horizontal, centred on her |
+
+`objectPosition` is per photograph, not shared, because the phone crop shows
+only the middle half of the file and the four are framed slightly
+differently. Dr. Ishita sits highest in her frame at 8%; the other three are
+at 15%. Replacing a photograph means rechecking its percentage at 390px.
+
+Permission: the clinic's form ticked photo permission only for Dr. Jinali
+(p21), leaving pages 18, 24 and 27 blank. The clinic then sent all four
+photographs itself, named, for publication, which is the practice supplying
+them directly rather than the form being relied on.
 
 These are cropped two ways: 4:5 on desktop and 16:10 on phones
 (`doctor-spotlight.tsx`, `ratio="4 / 5" mobileRatio="16 / 10"`). A tight head and

@@ -40,17 +40,21 @@ export const ogImage = "/brand/og-card.jpg";
  * and the layouts are built to look finished that way, which is why a
  * half-filled roster is fine.
  *
- * The clinic sent these on 19 September 2026. Both are identified by the name
- * embroidered on the coat, not by guesswork, and both were shot against the
- * same wood panel at the same distance, so the roster reads as one set.
+ * The clinic sent all four on 19 September 2026, every one against the same
+ * wood panel, so the roster reads as one set. Dr. Mayur and Dr. Jinali were
+ * identified by the name embroidered on the coat; Dr. Ishita and Dr. Parita
+ * were named by the clinic when it sent them, because neither coat carries a
+ * name and a face on the wrong dentist is not a thing to guess at.
  *
  * `objectPosition` is set for the 16:10 mobile crop in `DoctorSpotlight`,
  * which shows only the middle half of a 4:5 file. At "center" it would cut
- * the face; 15% keeps the eyes on the centre line.
+ * the face. The percentage is per photograph because the four are framed
+ * slightly differently: Dr. Ishita sits highest in her frame and needs the
+ * window near the top, Dr. Parita was shot in landscape and cropped
+ * horizontally, so hers matches the two standing portraits.
  *
- * Still missing: Dr. Ishita Dobariya and Dr. Parita Vastarpara. Add the file
- * under public/images/doctors/, fill the slot, and run
- * `node scripts/resize-images.mjs`.
+ * To replace one: drop the file under public/images/doctors/, keep the name,
+ * and run `node scripts/resize-images.mjs`.
  */
 export const doctorPhotos: Record<string, Photo> = {
   "dr-mayur-kheni": {
@@ -61,6 +65,16 @@ export const doctorPhotos: Record<string, Photo> = {
   "dr-jinali-monpara": {
     src: "/images/doctors/dr-jinali-monpara.jpg",
     alt: "Dr. Jinali Monpara in a white coat embroidered with her name, standing against a wood panelled wall",
+    objectPosition: "center 15%",
+  },
+  "dr-ishita-dobariya": {
+    src: "/images/doctors/dr-ishita-dobariya.jpg",
+    alt: "Dr. Ishita Dobariya in a white coat, arms folded, standing against a wood panelled wall",
+    objectPosition: "center 8%",
+  },
+  "dr-parita-vastarpara": {
+    src: "/images/doctors/dr-parita-vastarpara.jpg",
+    alt: "Dr. Parita Vastarpara in a white coat, arms folded, standing against a wood panelled wall",
     objectPosition: "center 15%",
   },
 };
