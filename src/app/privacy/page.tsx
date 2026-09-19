@@ -23,7 +23,7 @@ export default function PrivacyPage() {
           <h2>Videos</h2>
           <p>Videos on this site are hosted on YouTube and load only after you tap play, on YouTube&rsquo;s privacy-enhanced domain. Map imagery on clinic pages is provided by Microsoft Bing Maps.</p>
           <h2>Analytics and advertising</h2>
-          <p>Analytics and advertising tools are optional. They load only if we have switched them on and only where you have given the consent that applies to you. We do not send your medical details, or anything you type into a form on this site, to advertising platforms.</p>
+          <p>Optional analytics and advertising technologies load only after you choose to accept them. This site uses the Meta Pixel for page views and a coarse standard Contact signal when someone uses a phone, WhatsApp or appointment-request action. We do not send Meta your form entries, medical details, treatment choice, branch choice, symptoms, diagnoses or other sensitive health information.</p>
           <h2>Contact</h2>
           <p>
             If you have a question about any of this, please write to <a href={`mailto:${site.email}`}>{site.email}</a>.
