@@ -14,9 +14,12 @@
  *                                    go indexable while any is displayed.
  *   review_sample                    placeholder for layout only.
  *
- * Figures the clinic typed are stored exactly as typed, never "corrected".
- * Where the same figure was asked twice on the form and the later field was
- * blank, the earlier answer is kept (form p44, p45 duplicate p2, p3).
+ * Figures are stored as the clinic states them and are never adjusted here
+ * to look better. Where the same figure was asked twice on the form and the
+ * later field was blank, the earlier answer is kept (form p44, p45 duplicate
+ * p2, p3). When the clinic corrects a figure it replaces the value, and the
+ * figure it replaces is written into `source` so the change stays on the
+ * record rather than disappearing.
  */
 
 import { googleReputation } from "@/content/google-reputation";
@@ -28,7 +31,18 @@ export type ProofMetric = {
   id: string;
   /** The figure as it should read, digits grouped: "45,000". */
   value: string;
-  /** "+" when the clinic wrote it; nothing otherwise. */
+  /**
+   * "+" on every figure that counts work done and therefore only goes up.
+   *
+   * The clinic asked for this on 19 September 2026, and it is the honest
+   * reading of a running total: the number was true when it was counted and
+   * is true or larger now. Four figures deliberately do not take it, because
+   * there "+" would be a different claim rather than a safer one: the
+   * dentist count, the clinic count, the Google rating, and the years in
+   * Surat. Kheni has exactly four dentists and exactly two clinics, and
+   * "4+ dentists" beside a homepage that says "four dentists" is a
+   * contradiction, not a rounding.
+   */
   suffix?: string;
   label: string;
   /** Optional second line. */
@@ -72,14 +86,14 @@ export const proofMetrics: ProofMetric[] = [
         },
       ]
     : []),
-  { id: "patients", value: "45,000", label: "Patients treated", source: `${form}, p2 (repeated p44)`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Basis and date needed before launch.", display: true, placements: ["home", "about", "doctors"] },
-  { id: "implants", value: "3,700", label: "Implants placed", source: `${form}, p2`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Basis and date needed before launch.", display: true, placements: ["home", "about", "implants"] },
-  { id: "full-mouth", value: "950", label: "Full mouth cases", source: `${form}, p2`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Basis and date needed before launch.", display: true, placements: ["home", "about", "full-mouth"] },
+  { id: "patients", value: "45,000", suffix: "+", label: "Patients treated", source: `${form}, p2 (repeated p44)`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Basis and date needed before launch.", display: true, placements: ["home", "about", "doctors"] },
+  { id: "implants", value: "2,500", suffix: "+", label: "Implants placed", source: `${form}, p2; corrected by the clinic 19 September 2026 (was 3,700)`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-19", evidenceNote: "Basis and date needed before launch.", display: true, placements: ["home", "about", "implants"] },
+  { id: "full-mouth", value: "550", suffix: "+", label: "Full mouth cases", source: `${form}, p2; corrected by the clinic 19 September 2026 (was 950)`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-19", evidenceNote: "Basis and date needed before launch.", display: true, placements: ["home", "about", "full-mouth"] },
   { id: "rct", value: "90,000", suffix: "+", label: "Root canals", source: `${form}, p2`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Stored exactly as typed. It is double the stated patient count, so the clinic still needs to confirm what is being counted (ledger C12).", display: true, placements: ["home", "rct"] },
   { id: "smile-design", value: "720", suffix: "+", label: "Smile design cases", source: `${form}, p2`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Basis and date needed before launch.", display: true, placements: ["home", "smile"] },
   { id: "children", value: "4,500", suffix: "+", label: "Children treated", source: `${form}, p3 (p45 blank)`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Basis and date needed before launch.", display: true, placements: ["home", "kids"] },
   { id: "nri", value: "640", suffix: "+", label: "NRI patients", source: `${form}, p3 (Correct)`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Basis and date needed before launch.", display: true, placements: ["home", "nri"] },
-  { id: "countries", value: "23", label: "Countries", source: `${form}, p3 (Correct)`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "A list of countries would let the site name a few.", display: true, placements: ["home", "nri"] },
+  { id: "countries", value: "23", suffix: "+", label: "Countries", source: `${form}, p3 (Correct)`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "A list of countries would let the site name a few.", display: true, placements: ["home", "nri"] },
   { id: "implant-success", value: "98.6", suffix: "%", label: "Implant success", source: `${form}, p3`, verification: "clinic_supplied_needs_evidence", asOf: "2026-09-14", evidenceNote: "Never rendered: p30 'track implant success' is ticked Do not show (ledger C10).", display: false, placements: ["implants"] },
 ];
 

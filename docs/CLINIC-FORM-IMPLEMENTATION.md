@@ -70,8 +70,8 @@ value before this pass · decision · where it appears.
 | Page | Topic | Clinic answer | Status | Before | Decision | Where |
 |---|---|---|---|---|---|---|
 | 2 | Patients treated | `45000` typed | CLINIC_SUPPLIED_NEEDS_PROOF | not shown | `ProofMetric` id `patients`, value 45,000, verification `clinic_supplied_needs_evidence`. Renders unmarked; blocks an indexable build until evidenced. | About page metrics, `src/content/clinic-proof.ts` |
-| 2 | Implants placed | `3700` typed | CLINIC_SUPPLIED_NEEDS_PROOF | not shown | Metric `implants`, 3,700. Renders unmarked; blocks an indexable build until evidenced. | About, implant page |
-| 2 | Full mouth cases | `950` typed | CLINIC_SUPPLIED_NEEDS_PROOF | not shown | Metric `full-mouth`, 950. Renders unmarked; blocks an indexable build until evidenced. | About, full mouth page |
+| 2 | Implants placed | `3700` typed; **clinic corrected to 2,500 on 19 Sep 2026** | CLINIC_SUPPLIED_NEEDS_PROOF | not shown | Metric `implants`, now 2,500+. The form's 3,700 is kept in the metric's `source` field. Renders unmarked; blocks an indexable build until evidenced. | About, implant page |
+| 2 | Full mouth cases | `950` typed; **clinic corrected to 550 on 19 Sep 2026** | CLINIC_SUPPLIED_NEEDS_PROOF | not shown | Metric `full-mouth`, now 550+. The form's 950 is kept in the metric's `source` field. Renders unmarked; blocks an indexable build until evidenced. | About, full mouth page |
 | 2 | Root canals | `90000+` typed | CLINIC_SUPPLIED_NEEDS_PROOF | not shown | Stored exactly as `90,000+`, NOT corrected. Now displayed on the root canal page at the owner's instruction, though it is double the total patient count, so the clinic still needs to confirm what it counts (canals? teeth? visits?). | Root canal page |
 | 2 | Smile design cases | `720+` typed | CLINIC_SUPPLIED_NEEDS_PROOF | not shown | Metric `smile-design`, 720+. Renders unmarked; blocks an indexable build until evidenced. | About, smile design page |
 | 2 | Correct / Change boxes | none ticked | AMBIGUOUS | | Typed values treated as the answer. | |
@@ -420,7 +420,7 @@ This is still NEEDS_CLINIC_CONFIRMATION, and it is now impossible to miss: if th
 7. IDA, VDA, KDA: please give the full names so we can expand them correctly.
 8. Dr. Jinali's certificate courses: issuing organisation and year for each, and whether the instructor's name may be printed.
 9. What does 90,000+ root canals count (teeth, canals, sittings)? The site hides it until you confirm.
-10. May we show 45,000 patients, 3,700 implants, 950 full mouth cases, 720+ smile designs, 4,500+ children, 640+ NRI patients from 23 countries on the live site? What is each figure based on, and as of when?
+10. May we show 45,000+ patients, 2,500+ implants, 550+ full mouth cases, 720+ smile designs, 4,500+ children, 640+ NRI patients from 23+ countries on the live site? What is each figure based on, and as of when? (Implants and full mouth were corrected down from 3,700 and 950 on 19 September 2026; the rest have not been rechecked since the form.)
 11. Do you want the 98.6% implant success figure published? Page 3 says yes, page 30 says do not show.
 12. Implant warranty: exact terms you are willing to print, if any. We will not print "lifetime guarantee".
 13. Is CBCT (3D scan) available in-house, at one clinic, or referred out?
@@ -458,9 +458,16 @@ the guard stops complaining about it.
 | Aftercare and preparation guides | Patient resources | p58 approved 2 topics; the rest were pending | 12 guides |
 
 Clinic figures that render unmarked and also trip the guard, from
-`src/content/clinic-proof.ts`: 45,000 patients, 3,700 implants, 950 full mouth
-cases, 90,000+ root canals, 720+ smile design cases, 4,500+ children, 640+ NRI
-patients, 23 countries. All are exactly as the clinic typed them; none is audited.
+`src/content/clinic-proof.ts`: 45,000+ patients, 2,500+ implants, 550+ full
+mouth cases, 90,000+ root canals, 720+ smile design cases, 4,500+ children,
+640+ NRI patients, 23+ countries. All are as the clinic states them; none is
+audited.
+
+Every one of these carries a "+", at the clinic's request on 19 September
+2026, because each counts work done and therefore only goes up. The dentist
+count, the clinic count, the Google rating and the years in Surat do not: the
+clinic has exactly four dentists and exactly two clinics, so a "+" there would
+be a different claim rather than a safer one.
 
 Doctor credential fields awaiting evidence, which also trip the guard: Dr. Mayur's
 registration A-6277 and IDA/VDA/KDA memberships, Dr. Jinali's registration A-15753,
