@@ -88,7 +88,7 @@ export default function InternationalPage() {
         hue="sky"
         aside={<div className="rounded-[1.5rem] border border-ivory/10 bg-ivory p-4 lg:ml-auto lg:max-w-md"><GlobeSurat className="mx-auto w-full max-w-[20rem] lg:max-w-none" /></div>}
       >
-        <div className="mt-5 flex flex-col gap-2.5 sm:flex-row">
+        <div data-hero-actions className="mt-5 flex flex-col gap-2.5 sm:flex-row">
           <WhatsAppButton placement="international_hero" message={NRI_MESSAGE} label="Plan your visit on WhatsApp" track="international_patient_contact" />
         </div>
       </PageHero>

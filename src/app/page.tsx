@@ -83,7 +83,9 @@ export default function Home() {
             <p className="t-stand measure-stand mt-5 text-ivory/70">
               {site.yearsInSurat} years in Surat. Four dentists, two clinics, and one habit we have never dropped: you hear what we found, in words you can repeat at home, before anyone picks up an instrument.
             </p>
-            <div className="mt-7 grid gap-2.5 sm:flex sm:flex-wrap">
+            {/* `data-hero-actions` holds the floating mobile pill back until
+                these have scrolled away. See mobile-dock.tsx. */}
+            <div data-hero-actions className="mt-7 grid gap-2.5 sm:flex sm:flex-wrap">
               <BookButton placement="home_hero" size="lg" className="px-4 sm:px-7" />
               <WhatsAppButton placement="home_hero" size="lg" variant="onDark" className="px-4 sm:px-7 [&>svg]:text-gold" />
             </div>

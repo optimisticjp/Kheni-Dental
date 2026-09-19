@@ -63,7 +63,7 @@ export default function DentalImplantsPage() {
             </h1>
             <p className="t-stand measure-stand mt-4 text-ivory/70">{implantHero.standfirst}</p>
             <ProofChip placement="implant_hero" tone="dark" className="mt-5" />
-            <div className="mt-6 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
+            <div data-hero-actions className="mt-6 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
               <BookButton placement="implant_hero" label="Book an implant consultation" />
               <WhatsAppButton placement="implant_hero" message={implantHero.whatsappMessage} variant="onDark" />
               <CallButton placement="implant_hero" variant="onDark" className="hidden sm:inline-flex" />
